@@ -2,7 +2,7 @@
    App shell is pre-cached so the note reads fully offline; navigations go
    network-first (fresh content when online), everything else cache-first. */
 
-const CACHE = "pup-capability-note-v5";
+const CACHE = "pup-capability-note-v6";
 const ASSETS = [
   "./",
   "./index.html",

@@ -53,6 +53,19 @@ def main():
             uno.systemPathToFileUrl(docx_path), "_blank", 0,
             (prop("Hidden", True),))
 
+        # LibreOffice applies a default ~3.2mm frame margin to inline images,
+        # ignoring the docx's zero wrap distance — zero it so the logo ink
+        # aligns with the text margin exactly as Word renders it.
+        graphics = doc.getGraphicObjects()
+        for i in range(graphics.getCount()):
+            g = graphics.getByIndex(i)
+            for pname in ("LeftMargin", "RightMargin", "TopMargin",
+                          "BottomMargin"):
+                try:
+                    g.setPropertyValue(pname, 0)
+                except Exception:
+                    pass
+
         # Update fields and indexes; repeat so pagination settles after the
         # TOC changes page flow.
         for _ in range(3):

@@ -429,9 +429,9 @@ _buf = io.BytesIO()
 _logo.save(_buf, "PNG")
 _buf.seek(0)
 doc.add_picture(_buf, width=Mm(60))
-
-spacer = doc.add_paragraph()
-spacer.paragraph_format.space_after = Pt(96)
+logo_para = doc.paragraphs[-1]
+logo_para.paragraph_format.space_before = Pt(44)
+logo_para.paragraph_format.space_after = Pt(64)
 
 title_p = doc.add_paragraph()
 title_p.paragraph_format.space_after = Pt(10)
