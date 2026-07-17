@@ -233,8 +233,16 @@ body_html = "\n".join(body)
 nav_html = "".join(
     f'<li><a href="#{sid}">{esc(label)}</a></li>' for sid, label in nav)
 
-with open(LOGO_FILE, "rb") as fh:
-    logo_b64 = base64.b64encode(fh.read()).decode()
+# Trim the logo's transparent margins so its visible ink left-aligns with
+# the text column, then embed it.
+import io
+from PIL import Image
+_logo = Image.open(LOGO_FILE).convert("RGBA")
+_logo = _logo.crop(_logo.getchannel("A").getbbox())
+LOGO_W, LOGO_H = _logo.size
+_buf = io.BytesIO()
+_logo.save(_buf, "PNG")
+logo_b64 = base64.b64encode(_buf.getvalue()).decode()
 
 meta_line = " · ".join([DOCUMENT_REFERENCE, ORIGINATOR, VERSION])
 
@@ -459,7 +467,7 @@ footer .force span {{ display: block; color: var(--moawhango); }}
   <div class="logo-band">
     <div class="wrap">
       <img src="data:image/png;base64,{logo_b64}"
-           alt="Ngāti Tūmatauenga — New Zealand Army" width="1370" height="366">
+           alt="Ngāti Tūmatauenga — New Zealand Army" width="{LOGO_W}" height="{LOGO_H}">
     </div>
   </div>
   <div class="masthead">
