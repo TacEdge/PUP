@@ -22,9 +22,9 @@ BRAND_PAGE_LINK    = ""                       # nz-army-brand-components.html no
 PDF_DOWNLOAD_PATH  = "./output/capability-note.pdf"
 SITE_TITLE         = "Performance Under Pressure & Combat Mindset"
 PROTECTIVE_MARKING = "UNCLASSIFIED"
-DOCUMENT_REFERENCE = "NZALC/____/____"
+DOCUMENT_REFERENCE = "NZIOC 2026"
 DATE               = "____ 2026"
-ORIGINATOR         = "Maj M Coom, Chief Instructor, New Zealand Army Leadership Centre"
+ORIGINATOR         = "Major M Coom, Chief Instructor, New Zealand Army Leadership Centre"
 VERSION            = "Draft v0.1"
 SUBTITLE           = "Draft Capability Note"
 
@@ -236,7 +236,7 @@ nav_html = "".join(
 with open(LOGO_FILE, "rb") as fh:
     logo_b64 = base64.b64encode(fh.read()).decode()
 
-meta_line = " · ".join([DOCUMENT_REFERENCE, DATE, ORIGINATOR, VERSION])
+meta_line = " · ".join([DOCUMENT_REFERENCE, ORIGINATOR, VERSION])
 
 brand_link_html = ""
 if BRAND_PAGE_LINK:
