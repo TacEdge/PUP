@@ -419,7 +419,16 @@ for r in add_field(info, "NUMPAGES", "1"):
 
 # ------------------------------------------------------------------ cover ---
 
-doc.add_picture(LOGO_FILE, width=Mm(60))
+# Trim the logo's transparent margins so its visible ink left-aligns with
+# the title text below it.
+import io
+from PIL import Image
+_logo = Image.open(LOGO_FILE).convert("RGBA")
+_logo = _logo.crop(_logo.getchannel("A").getbbox())
+_buf = io.BytesIO()
+_logo.save(_buf, "PNG")
+_buf.seek(0)
+doc.add_picture(_buf, width=Mm(60))
 
 spacer = doc.add_paragraph()
 spacer.paragraph_format.space_after = Pt(96)
