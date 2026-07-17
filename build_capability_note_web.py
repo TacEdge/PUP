@@ -251,7 +251,13 @@ page = f"""<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(SITE_TITLE)} — {esc(SUBTITLE)}</title>
-<link rel="icon" href="data:,">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="{SWAMP_GREEN}">
+<link rel="icon" href="./icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="NZ Army PUP">
 <style>
 :root {{
   --red: {ARMY_RED};
@@ -511,6 +517,10 @@ footer .force span {{ display: block; color: var(--moawhango); }}
     document.querySelectorAll('section.doc-section').forEach(function (s) {{
       io.observe(s);
     }});
+  }}
+
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {{
+    navigator.serviceWorker.register('./sw.js');
   }}
 }})();
 </script>
