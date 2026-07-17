@@ -26,7 +26,7 @@ DOCUMENT_REFERENCE = "NZALC 2026"
 DATE               = "July 2026"
 ORIGINATOR         = "Major M Coom, Chief Instructor, New Zealand Army Leadership Centre"
 VERSION            = "Draft v0.1"
-DISTRIBUTION       = "ACS; Comd ATG; Comd NZALC"
+DISTRIBUTION       = "COMDT ACS; COMD ATG"
 LIST_STYLE         = "bullets"
 
 TITLE    = "Performance Under Pressure and Combat Mindset in the New Zealand Army"
