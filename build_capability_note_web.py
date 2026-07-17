@@ -301,21 +301,21 @@ body {{
 }}
 
 /* --------------------------------------------------------- masthead ---- */
+.logo-band {{
+  background: var(--white);
+  padding: 1.3rem 0 1.1rem;
+}}
+.logo-band img {{ display: block; width: 13.5rem; max-width: 60%; height: auto; }}
 .masthead {{
   background: var(--swamp); color: var(--white);
   border-bottom: 6px solid var(--red);
-  padding: 2.2rem 0 2.4rem;
+  padding: 2rem 0 2.4rem;
 }}
 .wrap {{ max-width: 72rem; margin: 0 auto; padding: 0 1.25rem; }}
 .eyebrow {{
   font-family: var(--mono); font-size: .8rem; letter-spacing: .18em;
   text-transform: uppercase; color: var(--moawhango); margin: 0 0 1.4rem;
 }}
-.logo-plate {{
-  background: var(--white); display: inline-block;
-  padding: .9rem 1.4rem; margin: 0 0 1.6rem;
-}}
-.logo-plate img {{ display: block; width: 13.5rem; max-width: 100%; height: auto; }}
 .masthead h1 {{
   font-family: var(--sans); font-weight: 800;
   font-size: clamp(1.7rem, 4.5vw, 3rem); line-height: 1.12;
@@ -455,16 +455,19 @@ footer .force span {{ display: block; color: var(--moawhango); }}
 <a class="skip" href="#main">Skip to content</a>
 <div class="marking" role="note" aria-label="Protective marking">{esc(PROTECTIVE_MARKING)}</div>
 
-<header class="masthead">
-  <div class="wrap">
-    <p class="eyebrow"><span lang="mi">Ngāti Tūmatauenga</span> · New Zealand Army</p>
-    <div class="logo-plate">
+<header>
+  <div class="logo-band">
+    <div class="wrap">
       <img src="data:image/png;base64,{logo_b64}"
            alt="Ngāti Tūmatauenga — New Zealand Army" width="1370" height="366">
     </div>
-    <h1>{esc(SITE_TITLE)}</h1>
-    <p class="subtitle">{esc(SUBTITLE)}</p>
-    <p class="meta">{esc(meta_line)}</p>
+  </div>
+  <div class="masthead">
+    <div class="wrap">
+      <h1>{esc(SITE_TITLE)}</h1>
+      <p class="subtitle">{esc(SUBTITLE)}</p>
+      <p class="meta">{esc(meta_line)}</p>
+    </div>
   </div>
 </header>
 
