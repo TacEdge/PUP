@@ -225,13 +225,17 @@ async function icon(name, hex, strokeWidth = 1.6) {
 
   // ---- delivery ribbon ---------------------------------------------------
   const rib = [];
-  rib.push({ text: "Delivered across the Prepare – Perform – Recover cycle   ·   Lead Self", options: { color: SWAMP } });
+  rib.push({ text: "Developed across the Prepare – Perform – Recover cycle   ·   Lead Self", options: { color: SWAMP } });
   ["Lead Teams", "Lead Leaders", "Lead Systems"].forEach((t) => {
     rib.push({ text: "  \u25BA  ", options: { color: RED, fontSize: 6.2 } });
     rib.push({ text: t, options: { color: SWAMP } });
   });
-  s.addText(rib, { x: L, y: 9.44, w: W, h: 0.2, fontFace: F, fontSize: 8,
+  s.addText(rib, { x: L, y: 9.4, w: W, h: 0.18, fontFace: F, fontSize: 8,
     bold: true, align: "center", valign: "middle", margin: 0 });
+  s.addText(
+    "Delivered by approved training establishments, units and existing instructor workforces across Army",
+    { x: L, y: 9.59, w: W, h: 0.15, fontFace: F, fontSize: 7, italic: true,
+      color: BLACK, align: "center", valign: "middle", margin: 0 });
 
   // ---- governance / programme -------------------------------------------
   const colW = 3.55, gx = L, px2 = 4.22;
@@ -254,16 +258,15 @@ async function icon(name, hex, strokeWidth = 1.6) {
 
   s.addShape("rect", { x: px2, y: 9.84, w: colW, h: 1.18, fill: { color: MOAWHANGO, transparency: 72 } });
   s.addImage({ data: I.clipboard, x: px2 + 0.14, y: 9.94, w: 0.22, h: 0.22 });
-  s.addText("PROGRAMME OF WORK — PHASES 0–5", { x: px2 + 0.44, y: 9.93, w: colW - 0.52,
+  s.addText("PROGRAMME OF WORK — PHASES 0–4", { x: px2 + 0.44, y: 9.93, w: colW - 0.52,
     h: 0.22, fontFace: F, fontSize: 8.8, bold: true, color: SWAMP,
     align: "left", valign: "middle", margin: 0 });
   const prog = [
     "0.  Define terms, sponsorship and relationship",
-    "1.  Map current capabilities and products",
+    "1.  Map current capabilities, products and evidence",
     "2.  Draft the Army Combat Mindset Framework",
     "3.  Validate with stakeholders and force employers",
-    "4.  Limited COGCON MVP integration trial (subject to capacity)",
-    "5.  Report back — Framework v1.0, November 2026",
+    "4.  Report back — Framework v1.0, November 2026",
   ];
   s.addText(prog.map((t, i) => ({
     text: t, options: { breakLine: i < prog.length - 1 },
