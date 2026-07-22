@@ -8,21 +8,13 @@ This paper responds to COMDT ACS direction of 16 July 2026 for NZALC and the Hum
 
 ---
 
-## References
-
-* A. COMDT ACS email — Combat Mindset, dated 16 July 2026.
-* B. COMDT ACS — Combat Mindset Guidance [Draft], July 2026.
-* C. NZALC Draft Capability Note — Performance Under Pressure and Combat Mindset in the New Zealand Army, July 2026.
-
----
-
 ## 1. The problem
 
-Reference A identifies that Army has no defined doctrine or policy supporting Combat Mindset, despite the term being in active use and despite Army's drive toward an increased Warfighter Focus. References B and C independently reach the same diagnosis:
+Army has no defined doctrine or policy supporting Combat Mindset, despite the term being in active use and despite Army's drive toward an increased Warfighter Focus. The COMDT ACS guidance and the NZALC capability note independently reach the same diagnosis:
 
 > The challenge is not a lack of content. It is a lack of visibility, integration, doctrine and strategic ownership across the substantial capability that already exists within ACS, NZALC, the Human Performance Cell, NZDF Psychology and ILD.
 
-The underlying operational problem remains as stated at Reference C:
+The underlying operational problem remains as stated in the NZALC capability note:
 
 > Under operational pressure, trained individuals and teams do not always retain access to their full capability.
 
@@ -32,7 +24,7 @@ NZALC and HPC agree this diagnosis requires no further analysis before work begi
 
 ## 2. Terminology — decision sought
 
-References B and C differ on one structural point: which term sits at the top of the hierarchy. This is the single decision required before the framework can be drafted. Two options are offered.
+The COMDT ACS guidance and the NZALC capability note differ on one structural point: which term sits at the top of the hierarchy. This is the single decision required before the framework can be drafted. Two options are offered.
 
 ### Option 1 — Combat Mindset as the brand; Performance Under Pressure as the mechanism (recommended)
 
@@ -50,9 +42,9 @@ Combat Mindset is the Army-owned banner and orienting purpose, aligned to Warfig
 Combat Mindset is the overarching capability, integrating leadership, human performance, resilience, mental skills and performance cognition, with performance under pressure expressed as its intended effect.
 
 * Maximises simplicity: one term, one capability, one framework.
-* Risks excluding the majority of Army activity that is demanding but not combat, and re-importing the definitional confusion identified at Reference C.
+* Risks excluding the majority of Army activity that is demanding but not combat, and re-importing the definitional confusion identified in the capability note.
 
-Both options deliver Reference B's end state. NZALC and HPC jointly recommend Option 1, and will implement whichever option COMDT ACS selects.
+Both options deliver the end state described in the COMDT ACS guidance. NZALC and HPC jointly recommend Option 1, and will implement whichever option COMDT ACS selects.
 
 ---
 
@@ -83,7 +75,7 @@ Initial review indicates the NZALC mental-skills toolkit and the COGCON construc
 6. **Phase 5 — Report back (November 2026).**
    Present Framework v1.0, the validated capability map, and an implementation and assurance plan for endorsement.
 
-This sequence creates coherence across existing initiatives while avoiding duplication of effort and investment, consistent with Reference B.
+This sequence creates coherence across existing initiatives while avoiding duplication of effort and investment, consistent with the COMDT ACS guidance.
 
 ---
 
@@ -108,7 +100,7 @@ It is recommended that COMDT ACS:
 2. **Select the terminology construct** at paragraph 2 (Option 1 recommended).
 3. **Confirm governance arrangements** at paragraph 5, including confirmation of the Army Sponsor.
 4. **Approve the programme of work** at paragraph 4, including the joint mapping, stakeholder forum and pilot.
-5. **Note** that NZALC and HPC will deliver this programme jointly, with the capability note at Reference C and the COGCON evidence base as its foundation inputs.
+5. **Note** that NZALC and HPC will deliver this programme jointly, with the NZALC capability note and the COGCON evidence base as its foundation inputs.
 
 +++
 

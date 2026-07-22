@@ -551,7 +551,7 @@ while i < len(lines):
         i += 1
         continue
 
-    if line.startswith("# ") or line.startswith("*Draft Capability Note*"):
+    if line.startswith("# ") or line.strip() == f"*{SUBTITLE}*":
         i += 1  # title/subtitle already on cover
         continue
 
