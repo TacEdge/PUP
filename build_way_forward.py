@@ -25,7 +25,7 @@ PROTECTIVE_MARKING = "UNCLASSIFIED"
 DOCUMENT_REFERENCE = "NZALC/HPC 2026"
 DATE               = "July 2026"
 ORIGINATOR         = "Major M Coom, CI NZALC · Jacques Rousseau, Human Performance Cell"
-VERSION            = "Draft v0.1"
+VERSION            = "Draft v0.2"
 DISTRIBUTION       = "COMDT ACS"
 LIST_STYLE         = "bullets"
 
@@ -370,12 +370,17 @@ def add_table(rows):
         el.set(qn("w:color"), WAIOURU_HILLS)
         borders.append(el)
     tblPr.append(borders)
-    for tr in t.rows:
+    for ri, tr in enumerate(t.rows):
         trPr = tr._tr.get_or_add_trPr()
         cant = OxmlElement("w:cantSplit")
         trPr.append(cant)
-    if rows[0][0] == "Function":
-        widths = [Cm(3.4), Cm(2.4), Cm(10.2)]
+        if ri == 0:
+            hdr = OxmlElement("w:tblHeader")
+            trPr.append(hdr)
+    if ncols == 2:
+        widths = [Cm(4.4), Cm(11.6)]
+    elif rows[0][0] == "Function":
+        widths = [Cm(3.6), Cm(4.6), Cm(7.8)]
     else:
         widths = [Cm(4.4), Cm(5.2), Cm(6.4)]
     for r, row in enumerate(rows):
@@ -499,7 +504,7 @@ s.font.size = Pt(13)
 force_color(s, SWAMP_GREEN)
 
 promise_p = doc.add_paragraph()
-promise_p.paragraph_format.space_after = Pt(96)
+promise_p.paragraph_format.space_after = Pt(4)
 pr = promise_p.add_run("HARDER TO KILL")
 force_font(pr, FONT_HEAD)
 pr.font.size = Pt(15)
@@ -509,6 +514,13 @@ prPr = pr._r.get_or_add_rPr()
 from docx.oxml import OxmlElement as _OE
 from docx.oxml.ns import qn as _qn
 sp = _OE("w:spacing"); sp.set(_qn("w:val"), "60"); prPr.append(sp)
+
+qual_p = doc.add_paragraph()
+qual_p.paragraph_format.space_after = Pt(88)
+q = qual_p.add_run("Proposed Warfighter Focus line — subject to sponsor endorsement")
+force_font(q, FONT_HEAD)
+q.font.size = Pt(9)
+force_color(q, SWAMP_GREEN)
 
 meta_rows = [
     ("Reference", DOCUMENT_REFERENCE),
