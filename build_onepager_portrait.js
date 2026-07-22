@@ -50,7 +50,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   s.addText("UNCLASSIFIED", { x: 0, y: 11.51, w: 8.27, h: 0.18, align: "center",
     valign: "middle", fontFace: F, fontSize: 7.5, bold: true, color: WHITE,
     charSpacing: 4, margin: 0 });
-  s.addText("NZALC / HPC  ·  Draft v0.3  ·  July 2026", {
+  s.addText("NZALC / HPC  ·  Draft v0.4  ·  July 2026", {
     x: L, y: 11.51, w: 2.6, h: 0.18, align: "left", valign: "middle",
     fontFace: F, fontSize: 6, color: MOAWHANGO, margin: 0 });
   s.addText("Distribution: COMDT ACS", { x: 5.7, y: 11.51, w: 2.07, h: 0.18,
