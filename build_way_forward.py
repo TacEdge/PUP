@@ -355,6 +355,54 @@ def add_divider():
     return p
 
 
+
+def add_table(rows):
+    ncols = len(rows[0])
+    t = doc.add_table(rows=len(rows), cols=ncols)
+    t.autofit = False
+    tblPr = t._tbl.tblPr
+    borders = OxmlElement("w:tblBorders")
+    for side in ("top", "left", "bottom", "right", "insideH", "insideV"):
+        el = OxmlElement(f"w:{side}")
+        el.set(qn("w:val"), "single")
+        el.set(qn("w:sz"), "4")
+        el.set(qn("w:space"), "0")
+        el.set(qn("w:color"), WAIOURU_HILLS)
+        borders.append(el)
+    tblPr.append(borders)
+    for tr in t.rows:
+        trPr = tr._tr.get_or_add_trPr()
+        cant = OxmlElement("w:cantSplit")
+        trPr.append(cant)
+    if rows[0][0] == "Function":
+        widths = [Cm(3.4), Cm(2.4), Cm(10.2)]
+    else:
+        widths = [Cm(4.4), Cm(5.2), Cm(6.4)]
+    for r, row in enumerate(rows):
+        for c, text in enumerate(row):
+            cell = t.cell(r, c)
+            cell.width = widths[c]
+            p = cell.paragraphs[0]
+            p.paragraph_format.space_before = Pt(2)
+            p.paragraph_format.space_after = Pt(2)
+            run = p.add_run(text)
+            if r == 0:
+                force_font(run, FONT_HEAD)
+                run.bold = True
+                run.font.size = Pt(9.5)
+                force_color(run, RUAPEHU_WHITE)
+                shd = OxmlElement("w:shd")
+                shd.set(qn("w:val"), "clear")
+                shd.set(qn("w:fill"), SWAMP_GREEN)
+                cell._tc.get_or_add_tcPr().append(shd)
+            else:
+                force_font(run, FONT_BODY)
+                run.font.size = Pt(9.5)
+                force_color(run, DARKEST_HOUR)
+    tail = doc.add_paragraph()
+    tail.paragraph_format.space_after = Pt(8)
+
+
 def add_page_break():
     from docx.enum.text import WD_BREAK
     p = doc.add_paragraph()
@@ -505,6 +553,21 @@ while i < len(lines):
 
     if line.startswith("# ") or line.startswith("*Draft Capability Note*"):
         i += 1  # title/subtitle already on cover
+        continue
+
+    if line.strip() == "+++":
+        add_page_break()
+        i += 1
+        continue
+
+    if line.strip().startswith("|"):
+        tbl = []
+        while i < len(lines) and lines[i].strip().startswith("|"):
+            cells = [c.strip() for c in lines[i].strip().strip("|").split("|")]
+            if not all(set(c) <= set("-: ") for c in cells):
+                tbl.append(cells)
+            i += 1
+        add_table(tbl)
         continue
 
     if line.strip() == "---":

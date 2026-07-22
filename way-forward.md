@@ -109,3 +109,38 @@ It is recommended that COMDT ACS:
 3. **Confirm governance arrangements** at paragraph 5, including confirmation of the Army Sponsor.
 4. **Approve the programme of work** at paragraph 4, including the joint mapping, stakeholder forum and pilot.
 5. **Note** that NZALC and HPC will deliver this programme jointly, with the capability note at Reference C and the COGCON evidence base as its foundation inputs.
+
++++
+
+## Annex A — Common lexicon and division of functions
+
+These tables give effect to the integration described at paragraphs 2 and 3. They are the joint NZALC–HPC working baseline and will be validated during Phase 1 mapping.
+
+### A1. Common lexicon — one construct, two layers
+
+The framework adopts the cognitive-fitness dimensions as the science layer (HPC) and the NZALC mental-skills toolkit as the soldier-facing technique layer. One name per technique is used in delivery; programme-specific protocol names sit beneath it — for example, rhythm breathing is the COGCON conditioning protocol for tactical breathing.
+
+| Cognitive dimension (science layer) | Soldier-facing techniques (NZALC toolkit) | COGCON conditioning methods |
+|---|---|---|
+| Arousal regulation | Tactical breathing; grounding | Rhythm-breathing injects during high-intensity physical training; within-session heart-rate down-regulation |
+| Attention | Noticing; chunking | Go/no-go attention drills; threat-identification dual-tasks; agility cones |
+| Cognitive control | Motivational and instructional self-talk | Inhibition performance under load; adaptive difficulty progression |
+| Working memory | Chunking; individual and team game planning | Audio-brief retention and recall during concurrent tasks |
+| Self-knowledge | Structured reflection; psychometrics; Red Head–Blue Head | Performance monitoring; coach scoring and feedback; Team Awareness drills |
+
+### A2. Division of functions — by function, not organisation
+
+| Function | Lead | What it looks like |
+|---|---|---|
+| Educate | NZALC | Concepts and toolkit taught and applied through leadership development, Lead Self to Lead Systems |
+| Condition | HPC | COGCON dual-task repetitions embedded in physical training, with adaptive difficulty |
+| Expose | Joint | Scenario and experiential pressure training, co-designed |
+| Measure | HPC | Heart-rate regulation, attention and inhibition thresholds, progression level reached |
+| Review and recover | NZALC | Structured reflection, self and peer feedback, Leadership Development Plans |
+| Assure | Joint | Cognitive-readiness metrics (HPC) alongside observed leadership behaviour (NZALC) |
+
+### A3. Shared frames
+
+* Prepare–Perform–Recover is the common delivery rhythm: COGCON operates principally in Prepare and Perform; NZALC closes the loop in Recover.
+* Lead Self to Lead Systems is the common progression: conditioning is densest in initial and individual training; leadership application deepens up the continuum.
+* The Phase 4 pilot embeds the COGCON adaptive dual-task protocol within an existing NZALC serial — NZALC teaching and reviewing, HPC conditioning and measuring — to prove the integration in delivery.
