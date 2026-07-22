@@ -238,8 +238,12 @@ strands.forEach((t, i) => {
 
 slide.addShape("rect", { x: L, y: 6.4, w: W, h: 0.2, fill: { color: SWAMP } });
 slide.addText("TRAINING PRODUCTS AND METHODS — HOW WE BUILD IT", {
-  x: L + 0.12, y: 6.4, w: W - 0.24, h: 0.2, fontFace: F, fontSize: 8.5,
+  x: L + 0.12, y: 6.4, w: 6.0, h: 0.2, fontFace: F, fontSize: 8.5,
   bold: true, color: WHITE, align: "left", valign: "middle", margin: 0,
+});
+slide.addText("each product contributes across multiple strands — columns do not pair one-to-one", {
+  x: L + 6.1, y: 6.4, w: W - 6.22, h: 0.2, fontFace: F, fontSize: 7.2,
+  italic: true, color: MOAWHANGO, align: "right", valign: "middle", margin: 0,
 });
 const products = [
   ["NZALC Performance Under Pressure package", null],
@@ -279,7 +283,7 @@ slide.addShape("line", {
 
 // caption row
 slide.addText(
-  "COGCON develops selected elements of Performance Under Pressure — not a complete Combat Mindset programme or a validated operational-readiness measure.",
+  "COGCON MVP is nested within the performance-cognition strand (dashed link). It develops selected elements of Performance Under Pressure — not a complete Combat Mindset programme or a validated operational-readiness measure.",
   { x: L, y: 7.13, w: 7.7, h: 0.15, fontFace: F, fontSize: 6.8, italic: true,
     color: BLACK, align: "left", valign: "middle", margin: 0 });
 slide.addText(
