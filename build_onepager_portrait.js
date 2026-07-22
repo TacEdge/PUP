@@ -50,10 +50,10 @@ async function icon(name, hex, strokeWidth = 1.6) {
   s.addText("UNCLASSIFIED", { x: 0, y: 11.51, w: 8.27, h: 0.18, align: "center",
     valign: "middle", fontFace: F, fontSize: 7.5, bold: true, color: WHITE,
     charSpacing: 4, margin: 0 });
-  s.addText("NZALC / HPC  ·  Draft v0.4  ·  July 2026", {
+  s.addText("Army Command School  ·  ACS 2026", {
     x: L, y: 11.51, w: 2.6, h: 0.18, align: "left", valign: "middle",
     fontFace: F, fontSize: 6, color: MOAWHANGO, margin: 0 });
-  s.addText("Distribution: COMDT ACS", { x: 5.7, y: 11.51, w: 2.07, h: 0.18,
+  s.addText("Draft v0.5  ·  July 2026", { x: 5.7, y: 11.51, w: 2.07, h: 0.18,
     align: "right", valign: "middle", fontFace: F, fontSize: 6, color: MOAWHANGO, margin: 0 });
 
   // ---- header ------------------------------------------------------------
@@ -61,7 +61,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   s.addText("COMBAT MINDSET — THE WAY FORWARD", {
     x: 1.85, y: 0.3, w: 5.92, h: 0.28, fontFace: F, fontSize: 15.5, bold: true,
     color: BLACK, align: "left", valign: "middle", margin: 0 });
-  s.addText("Joint NZALC and Human Performance Cell response to COMDT ACS", {
+  s.addText("Defining, developing and assuring the human-performance capability Army requires to remain effective in combat.", {
     x: 1.85, y: 0.58, w: 5.92, h: 0.18, fontFace: F, fontSize: 8, italic: true,
     color: BLACK, align: "left", valign: "middle", margin: 0 });
 

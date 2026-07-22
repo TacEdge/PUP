@@ -22,15 +22,15 @@ SOURCE_FILE        = "./way-forward.md"
 LOGO_FILE          = "./assets/nz-army-logo.png"
 OUTPUT_DOCX        = "./output/combat-mindset-way-forward.docx"
 PROTECTIVE_MARKING = "UNCLASSIFIED"
-DOCUMENT_REFERENCE = "NZALC/HPC 2026"
+DOCUMENT_REFERENCE = "ACS 2026"
 DATE               = "July 2026"
-ORIGINATOR         = "Major M Coom, CI NZALC · Jacques Rousseau, Human Performance Cell"
-VERSION            = "Draft v0.4"
+ORIGINATOR         = "Army Command School"
+VERSION            = "Draft v0.5"
 DISTRIBUTION       = "COMDT ACS"
 LIST_STYLE         = "bullets"
 
 TITLE    = "Combat Mindset — Proposed Way Forward"
-SUBTITLE = "Joint NZALC and Human Performance Cell response to COMDT ACS"
+SUBTITLE = "Defining, developing and assuring the human-performance capability Army requires to remain effective in combat."
 FOOTER_LEFT = "Combat Mindset — Proposed Way Forward"
 
 # Brand palette (NZDF Visual Identity Standards — NZ Army)
@@ -527,7 +527,6 @@ meta_rows = [
     ("Date", DATE),
     ("Originator", ORIGINATOR),
     ("Version", VERSION),
-    ("Distribution", DISTRIBUTION),
 ]
 for i, (label, value) in enumerate(meta_rows):
     p = doc.add_paragraph()
@@ -549,6 +548,32 @@ for i, (label, value) in enumerate(meta_rows):
 
 add_page_break()
 
+# --------------------------------------------------------------- contents ---
+
+toc_head = doc.add_paragraph()
+toc_head.paragraph_format.space_after = Pt(12)
+set_border(toc_head, "left", ARMY_RED, 24, space=8)
+_r = toc_head.add_run("Contents")
+force_font(_r, FONT_HEAD)
+_r.font.size = Pt(14)
+_r.bold = True
+force_color(_r, SWAMP_GREEN)
+
+toc_p = doc.add_paragraph()
+add_field(toc_p, r'TOC \o "1-1" \h \z \u',
+          "Update fields to generate the table of contents.")
+
+add_page_break()
+
+# ---------------------------------------------------- the model on a page ---
+
+ONEPAGER_EMBED = ("/tmp/claude-0/-home-user-PUP/"
+                  "2d4cec0e-a52e-5368-bb54-803c6f37698d/scratchpad/"
+                  "onepager-embed.png")
+add_section_heading("The Model on a Page")
+doc.add_picture(ONEPAGER_EMBED, width=Cm(15.4))
+doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+add_page_break()
 
 # ------------------------------------------------------------------- body ---
 

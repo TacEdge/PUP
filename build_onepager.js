@@ -37,11 +37,11 @@ slide.addText("UNCLASSIFIED", {
   x: 0, y: 7.32, w: 13.333, h: 0.18, align: "center", valign: "middle",
   fontFace: F, fontSize: 8, bold: true, color: WHITE, charSpacing: 4, margin: 0,
 });
-slide.addText("NZALC / Human Performance Cell   ·   NZALC/HPC 2026   ·   Draft v0.4   ·   July 2026", {
+slide.addText("Army Command School   ·   ACS 2026   ·   Draft v0.5   ·   July 2026", {
   x: L, y: 7.32, w: 6.4, h: 0.18, align: "left", valign: "middle",
   fontFace: F, fontSize: 6.5, color: MOAWHANGO, margin: 0,
 });
-slide.addText("Distribution: COMDT ACS", {
+slide.addText("", {
   x: 10.3, y: 7.32, w: 2.59, h: 0.18, align: "right", valign: "middle",
   fontFace: F, fontSize: 6.5, color: MOAWHANGO, margin: 0,
 });
