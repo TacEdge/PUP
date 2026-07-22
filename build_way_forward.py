@@ -25,7 +25,7 @@ PROTECTIVE_MARKING = "UNCLASSIFIED"
 DOCUMENT_REFERENCE = "NZALC/HPC 2026"
 DATE               = "July 2026"
 ORIGINATOR         = "Major M Coom, CI NZALC · Jacques Rousseau, Human Performance Cell"
-VERSION            = "Draft v0.2"
+VERSION            = "Draft v0.3"
 DISTRIBUTION       = "COMDT ACS"
 LIST_STYLE         = "bullets"
 
