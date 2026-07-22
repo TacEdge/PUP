@@ -76,9 +76,9 @@ A simple hierarchy is required. Additional overlapping terms risk creating seman
 
 ### Performance Under Pressure
 
-The overarching capability.
+The enabling, trainable human-performance capability.
 
-> Performance Under Pressure is the trained individual and collective capacity to prepare for, remain effective through, adapt within and recover from demanding conditions, while preserving judgement, disciplined behaviour, cohesion and mission effectiveness.
+> Performance Under Pressure is the trainable individual and collective human-performance capability to prepare for, maintain effective performance through, adapt within and recover from conditions that create significant physiological, cognitive, emotional or social interference.
 
 This term is broad enough to apply across:
 
@@ -104,7 +104,7 @@ NZALC’s material already defines resilience through the capacity to perform un
 
 The combat-specific expression of Performance Under Pressure.
 
-> Combat Mindset is the readiness and trained ability to act decisively, persistently and ethically in the presence of enemy action, danger, uncertainty, fatigue and consequence.
+> Combat Mindset is the combat-specific expression of Performance Under Pressure: the individual and collective readiness and disposition to remain effective and act decisively, persistently, adaptively and ethically under the threat, adversity and uncertainty of combat in order to achieve the mission.
 
 This distinguishes Combat Mindset from generic resilience or performance by accounting for:
 
@@ -136,9 +136,15 @@ NZALC’s existing toolkit includes:
 * healthy habits; and
 * structured reflection and recovery. PUP Workbook.pdf
 
+### The Army Combat Mindset Framework
+
+The organising model.
+
+> The Army Combat Mindset Framework is the organising model through which Army defines, develops, integrates and assures the individual and collective capabilities that enable Combat Mindset.
+
 ### The relationship in one line
 
->! Performance Under Pressure is the capability. Resilience sustains it. Combat Mindset is its expression in combat. Mental skills are how it is trained and applied.
+>! Performance Under Pressure is the capability. Resilience sustains it. Combat Mindset is its expression in combat. Mental skills are how it is trained and applied. The Army Combat Mindset Framework organises how the capability is defined, developed, integrated and assured.
 
 ---
 

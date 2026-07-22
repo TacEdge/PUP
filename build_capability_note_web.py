@@ -25,7 +25,7 @@ PROTECTIVE_MARKING = "UNCLASSIFIED"
 DOCUMENT_REFERENCE = "NZALC 2026"
 DATE               = "____ 2026"
 ORIGINATOR         = "Major M Coom, Chief Instructor, New Zealand Army Leadership Centre"
-VERSION            = "Draft v0.1"
+VERSION            = "Draft v0.2"
 SUBTITLE           = "Draft Capability Note"
 
 # Brand palette (NZDF Visual Identity Standards — NZ Army)
