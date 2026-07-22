@@ -149,7 +149,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   s.addText("It organises:", { x: PX + 0.16, y: 5.84, w: 1.2, h: 0.16, fontFace: F,
     fontSize: 7.6, italic: true, color: BLACK, align: "left", valign: "middle", margin: 0 });
   const org = [
-    ["Doctrinal definitions", "Desired outcomes", "Capability strands"],
+    ["Doctrinal definitions", "Desired outcomes", "Capability pillars"],
     ["Developmental progression", "Products and methods", "Delivery responsibilities"],
     ["Governance", "Evidence", "Assurance"],
   ];
@@ -163,7 +163,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
 
   // ---- capability strands ------------------------------------------------
   s.addShape("rect", { x: L, y: 6.74, w: W, h: 1.24, fill: { color: MOAWHANGO, transparency: 72 } });
-  s.addText("CAPABILITY STRANDS", { x: L, y: 6.82, w: W, h: 0.2, fontFace: F,
+  s.addText("CAPABILITY PILLARS", { x: L, y: 6.82, w: W, h: 0.2, fontFace: F,
     fontSize: 10.5, bold: true, color: SWAMP, charSpacing: 2, align: "center",
     valign: "middle", margin: 0 });
   const strands = [
@@ -187,7 +187,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   // connector + clarifier
   s.addShape("triangle", { x: L + W / 2 - 0.08, y: 8.06, w: 0.16, h: 0.12,
     fill: { color: SWAMP }, rotate: 180 });
-  s.addText("each product contributes across multiple strands", {
+  s.addText("each product contributes across multiple pillars", {
     x: L + W / 2 + 0.16, y: 8.04, w: 3.2, h: 0.16, fontFace: F, fontSize: 7.5,
     italic: true, color: BLACK, align: "left", valign: "middle", margin: 0 });
 
@@ -224,17 +224,20 @@ async function icon(name, hex, strokeWidth = 1.6) {
   });
 
   // ---- delivery ribbon ---------------------------------------------------
-  s.addShape("rect", { x: L, y: 9.46, w: W, h: 0.26, fill: { color: MOAWHANGO } });
-  s.addText(
-    "Delivered across the Prepare – Perform – Recover cycle and the Lead Self → Lead Teams → Lead Leaders → Lead Systems progression",
-    { x: L, y: 9.46, w: W, h: 0.26, fontFace: F, fontSize: 7.8, bold: true,
-      color: SWAMP, align: "center", valign: "middle", margin: 0 });
+  const rib = [];
+  rib.push({ text: "Delivered across the Prepare – Perform – Recover cycle   ·   Lead Self", options: { color: SWAMP } });
+  ["Lead Teams", "Lead Leaders", "Lead Systems"].forEach((t) => {
+    rib.push({ text: "  \u25BA  ", options: { color: RED, fontSize: 6.2 } });
+    rib.push({ text: t, options: { color: SWAMP } });
+  });
+  s.addText(rib, { x: L, y: 9.44, w: W, h: 0.2, fontFace: F, fontSize: 8,
+    bold: true, align: "center", valign: "middle", margin: 0 });
 
   // ---- governance / programme -------------------------------------------
   const colW = 3.55, gx = L, px2 = 4.22;
-  s.addShape("rect", { x: gx, y: 9.88, w: colW, h: 1.14, fill: { color: MOAWHANGO, transparency: 72 } });
-  s.addImage({ data: I.landmark, x: gx + 0.12, y: 9.97, w: 0.22, h: 0.22 });
-  s.addText("GOVERNANCE AND ASSURANCE", { x: gx + 0.42, y: 9.96, w: colW - 0.5,
+  s.addShape("rect", { x: gx, y: 9.84, w: colW, h: 1.18, fill: { color: MOAWHANGO, transparency: 72 } });
+  s.addImage({ data: I.landmark, x: gx + 0.14, y: 9.94, w: 0.22, h: 0.22 });
+  s.addText("GOVERNANCE AND ASSURANCE", { x: gx + 0.44, y: 9.93, w: colW - 0.52,
     h: 0.22, fontFace: F, fontSize: 8.8, bold: true, color: SWAMP,
     align: "left", valign: "middle", margin: 0 });
   const gov = [
@@ -249,9 +252,9 @@ async function icon(name, hex, strokeWidth = 1.6) {
   })), { x: gx + 0.18, y: 10.2, w: colW - 0.3, h: 0.78, fontFace: F, fontSize: 7,
     color: BLACK, align: "left", valign: "top", margin: 0, paraSpaceAfter: 2 });
 
-  s.addShape("rect", { x: px2, y: 9.88, w: colW, h: 1.14, fill: { color: MOAWHANGO, transparency: 72 } });
-  s.addImage({ data: I.clipboard, x: px2 + 0.12, y: 9.97, w: 0.22, h: 0.22 });
-  s.addText("PROGRAMME OF WORK — PHASES 0–5", { x: px2 + 0.42, y: 9.96, w: colW - 0.5,
+  s.addShape("rect", { x: px2, y: 9.84, w: colW, h: 1.18, fill: { color: MOAWHANGO, transparency: 72 } });
+  s.addImage({ data: I.clipboard, x: px2 + 0.14, y: 9.94, w: 0.22, h: 0.22 });
+  s.addText("PROGRAMME OF WORK — PHASES 0–5", { x: px2 + 0.44, y: 9.93, w: colW - 0.52,
     h: 0.22, fontFace: F, fontSize: 8.8, bold: true, color: SWAMP,
     align: "left", valign: "middle", margin: 0 });
   const prog = [
@@ -268,21 +271,14 @@ async function icon(name, hex, strokeWidth = 1.6) {
     color: BLACK, align: "left", valign: "top", margin: 0, paraSpaceAfter: 2 });
 
   // ---- footer: harder to kill + key point --------------------------------
-  s.addShape("rect", { x: gx, y: 11.08, w: colW, h: 0.38, fill: { color: BLACK } });
-  s.addImage({ data: I.star, x: gx + 0.12, y: 11.17, w: 0.2, h: 0.2 });
-  s.addText("HARDER TO KILL", { x: gx + 0.42, y: 11.12, w: colW - 0.5, h: 0.16,
-    fontFace: F, fontSize: 9.5, bold: true, color: RED, charSpacing: 2,
-    align: "left", valign: "middle", margin: 0 });
-  s.addText("Proposed Warfighter Focus line — subject to sponsor endorsement", {
-    x: gx + 0.42, y: 11.28, w: colW - 0.5, h: 0.14, fontFace: F, fontSize: 6.2,
-    color: WHITE, align: "left", valign: "middle", margin: 0 });
-  s.addShape("rect", { x: px2, y: 11.08, w: colW, h: 0.38, fill: { color: MOAWHANGO, transparency: 55 } });
+  s.addShape("rect", { x: L, y: 11.16, w: W, h: 0.3, fill: { color: BLACK } });
+  s.addImage({ data: I.star, x: L + 0.14, y: 11.21, w: 0.2, h: 0.2 });
   s.addText([
-    { text: "KEY POINT  ", options: { bold: true, fontSize: 7.4, color: SWAMP } },
-    { text: "Performance Under Pressure is developed across relevant settings. When expressed in combat and aligned with purpose, identity, values, leadership and the willingness to act, it contributes to Combat Mindset.",
-      options: { fontSize: 6.8, color: BLACK } },
-  ], { x: px2 + 0.08, y: 11.08, w: colW - 0.16, h: 0.38, fontFace: F, align: "left",
-    valign: "middle", margin: 0 });
+    { text: "HARDER TO KILL", options: { bold: true, fontSize: 10, color: RED, charSpacing: 2.5 } },
+    { text: "      Proposed Warfighter Focus line — subject to sponsor endorsement",
+      options: { fontSize: 7, color: WHITE } },
+  ], { x: L + 0.46, y: 11.16, w: W - 0.56, h: 0.3, fontFace: F,
+    align: "left", valign: "middle", margin: 0 });
 
   await pres.writeFile({ fileName: "output/combat-mindset-onepager-portrait.pptx" });
   console.log("written output/combat-mindset-onepager-portrait.pptx");
