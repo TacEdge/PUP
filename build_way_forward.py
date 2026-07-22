@@ -24,7 +24,7 @@ OUTPUT_DOCX        = "./output/combat-mindset-way-forward.docx"
 PROTECTIVE_MARKING = "UNCLASSIFIED"
 DOCUMENT_REFERENCE = "NZALC/HPC 2026"
 DATE               = "July 2026"
-ORIGINATOR         = "Major M Coom, CI NZALC · ____, Human Performance Cell"
+ORIGINATOR         = "Major M Coom, CI NZALC · Jacques Rousseau, Human Performance Cell"
 VERSION            = "Draft v0.1"
 DISTRIBUTION       = "COMDT ACS"
 LIST_STYLE         = "bullets"
@@ -444,11 +444,23 @@ force_color(t, DARKEST_HOUR)
 
 sub_p = doc.add_paragraph()
 sub_p.paragraph_format.space_before = Pt(6)
-sub_p.paragraph_format.space_after = Pt(120)
+sub_p.paragraph_format.space_after = Pt(14)
 s = sub_p.add_run(SUBTITLE)
 force_font(s, FONT_HEAD)
 s.font.size = Pt(13)
 force_color(s, SWAMP_GREEN)
+
+promise_p = doc.add_paragraph()
+promise_p.paragraph_format.space_after = Pt(96)
+pr = promise_p.add_run("HARDER TO KILL")
+force_font(pr, FONT_HEAD)
+pr.font.size = Pt(15)
+pr.bold = True
+force_color(pr, ARMY_RED)
+prPr = pr._r.get_or_add_rPr()
+from docx.oxml import OxmlElement as _OE
+from docx.oxml.ns import qn as _qn
+sp = _OE("w:spacing"); sp.set(_qn("w:val"), "60"); prPr.append(sp)
 
 meta_rows = [
     ("Reference", DOCUMENT_REFERENCE),

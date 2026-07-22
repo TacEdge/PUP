@@ -36,11 +36,11 @@ References B and C differ on one structural point: which term sits at the top of
 
 ### Option 1 — Combat Mindset as the brand; Performance Under Pressure as the mechanism (recommended)
 
-Combat Mindset is the Army-owned banner and orienting purpose, aligned to Warfighter Focus. Performance Under Pressure is the doctrinal mechanism that sits beneath it — the trained individual and collective capacity the brand runs on.
+Combat Mindset is the Army-owned banner and orienting purpose, aligned to Warfighter Focus and carrying the brand promise: **Harder to Kill**. Performance Under Pressure is the doctrinal mechanism that sits beneath it — the trained individual and collective capacity the brand runs on.
 
->! Combat Mindset is why: acting decisively, persistently and ethically in combat, and being harder to kill. Performance Under Pressure is how: the trained capacity to prepare for, remain effective through, adapt within and recover from pressure.
+>! Combat Mindset is why: acting decisively, persistently and ethically in combat — Harder to Kill. Performance Under Pressure is how: the trained capacity to prepare for, remain effective through, adapt within and recover from pressure.
 
-* Preserves Combat Mindset as the recognisable, operationally credible Army brand.
+* Preserves Combat Mindset as the recognisable, operationally credible Army brand, with Harder to Kill as its memorable, warfighter-focused promise.
 * Keeps the underlying doctrine applicable Army-wide — command, crisis response, garrison leadership and high-risk technical activity, where pressure exists without an enemy.
 * Guards against Combat Mindset being misread as aggression or motivation alone.
 * Allows the doctrinal construct to nest cleanly beneath the brand in doctrine, learning design and assessment.
