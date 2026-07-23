@@ -53,7 +53,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   s.addText("Army Command School  ·  ACS 2026", {
     x: L, y: 11.51, w: 2.6, h: 0.18, align: "left", valign: "middle",
     fontFace: F, fontSize: 6, color: MOAWHANGO, margin: 0 });
-  s.addText("Draft v0.5  ·  July 2026", { x: 5.7, y: 11.51, w: 2.07, h: 0.18,
+  s.addText("Draft v0.6  ·  July 2026", { x: 5.7, y: 11.51, w: 2.07, h: 0.18,
     align: "right", valign: "middle", fontFace: F, fontSize: 6, color: MOAWHANGO, margin: 0 });
 
   // ---- header ------------------------------------------------------------
@@ -121,8 +121,8 @@ async function icon(name, hex, strokeWidth = 1.6) {
     { x: PX + 0.16, y: 3.74, w: PW - 0.32, h: 0.34, fontFace: F, fontSize: 8.7,
       bold: true, color: SWAMP, align: "left", valign: "top", margin: 0 });
   const checks = [
-    ["Prepare for pressure", "Adapt within pressure"],
-    ["Maintain performance through pressure", "Recover from pressure"],
+    ["Prepare for pressure", "Recover from pressure"],
+    ["Maintain performance through pressure"],
   ];
   checks.forEach((row, r) => {
     row.forEach((t, c) => {
@@ -198,11 +198,11 @@ async function icon(name, hex, strokeWidth = 1.6) {
   const prods = [
     ["NZALC Performance Under Pressure package", false],
     ["NZDF Psychology products", false],
-    ["COGCON MVP", true],
+    ["COGCON", true],
     ["Scenario & experiential training", false],
     ["Physical conditioning", false],
     ["Structured reflection & recovery", false],
-    ["Other products identified in Phase 1 mapping", false],
+    ["Other products identified in Phase 1 stocktake", false],
   ];
   const pw = (W - 0.06 * 6) / 7;
   prods.forEach(([label, isCogcon], i) => {
@@ -212,9 +212,9 @@ async function icon(name, hex, strokeWidth = 1.6) {
                      : { color: WAIOURU, width: 0.75 } });
     if (isCogcon) {
       s.addText([
-        { text: "COGCON MVP", options: { bold: true, fontSize: 7.2, breakLine: true } },
+        { text: "COGCON", options: { bold: true, fontSize: 7.2, breakLine: true } },
         { text: "(Performance cognition)", options: { fontSize: 6.2, italic: true, breakLine: true } },
-        { text: "Developmental MVP", options: { fontSize: 6.2, italic: true } },
+        { text: "Developmental product", options: { fontSize: 6.2, italic: true } },
       ], { x: px + 0.03, y: 8.52, w: pw - 0.06, h: 0.78, fontFace: F, color: BLACK,
         align: "center", valign: "middle", margin: 0 });
     } else {
@@ -263,9 +263,9 @@ async function icon(name, hex, strokeWidth = 1.6) {
     align: "left", valign: "middle", margin: 0 });
   const prog = [
     "0.  Define terms, sponsorship and relationship",
-    "1.  Map current capabilities, products and evidence",
+    "1.  Stocktake current capabilities, products and evidence",
     "2.  Draft the Army Combat Mindset Framework",
-    "3.  Validate with stakeholders and force employers",
+    "3.  Validate with stakeholders and units",
     "4.  Report back — Framework v1.0, November 2026",
   ];
   s.addText(prog.map((t, i) => ({
@@ -278,7 +278,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   s.addImage({ data: I.star, x: L + 0.14, y: 11.21, w: 0.2, h: 0.2 });
   s.addText([
     { text: "HARDER TO KILL", options: { bold: true, fontSize: 10, color: RED, charSpacing: 2.5 } },
-    { text: "      Proposed Warfighter Focus line — subject to sponsor endorsement",
+    { text: "      Proposed Warfighter Focus tagline — subject to sponsor endorsement",
       options: { fontSize: 7, color: WHITE } },
   ], { x: L + 0.46, y: 11.16, w: W - 0.56, h: 0.3, fontFace: F,
     align: "left", valign: "middle", margin: 0 });

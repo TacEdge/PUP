@@ -25,7 +25,7 @@ PROTECTIVE_MARKING = "UNCLASSIFIED"
 DOCUMENT_REFERENCE = "ACS 2026"
 DATE               = "July 2026"
 ORIGINATOR         = "Army Command School"
-VERSION            = "Draft v0.5"
+VERSION            = "Draft v0.6"
 DISTRIBUTION       = "COMDT ACS"
 LIST_STYLE         = "bullets"
 
@@ -337,7 +337,7 @@ def add_numbered(num, lead, continuation):
     p.paragraph_format.tab_stops.add_tab_stop(Cm(0.75))
     n = p.add_run(f"{num}.\t")
     force_font(n, FONT_HEAD)
-    n.bold = True
+    n.bold = False
     add_text_runs(p, lead)
     if continuation:
         c = doc.add_paragraph()
