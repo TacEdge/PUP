@@ -517,7 +517,7 @@ sp = _OE("w:spacing"); sp.set(_qn("w:val"), "60"); prPr.append(sp)
 
 qual_p = doc.add_paragraph()
 qual_p.paragraph_format.space_after = Pt(88)
-q = qual_p.add_run("Proposed Warfighter Focus line — subject to sponsor endorsement")
+q = qual_p.add_run("Proposed Warfighter Focus tagline — subject to sponsor endorsement")
 force_font(q, FONT_HEAD)
 q.font.size = Pt(9)
 force_color(q, SWAMP_GREEN)

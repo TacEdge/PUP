@@ -86,11 +86,11 @@ Initial review indicates considerable conceptual alignment across existing produ
 
 ## 4. Proposed programme of work
 
-### Phase 0 — Governance and definition (by end July 2026)
+### Phase 0: Governance and definition (by end July 2026)
 
 Confirm interim sponsorship and capability-integration arrangements, endorse the problem statement, select the terminology option at paragraph 2, and draft for staffing the Army-endorsed definitions of Combat Mindset, Performance Under Pressure and the Army Combat Mindset Framework, together with the agreed relationship between the three.
 
-### Phase 1 — Capability and product stocktake (August 2026)
+### Phase 1: Capability and product stocktake (August 2026)
 
 Conduct a stocktake of existing doctrine, content, products, courses, instructor capability, delivery activity, evidence, ownership and assurance arrangements across ACS, NZALC, HPC, NZDF Psychology, ILD, training establishments and selected units. The stocktake will distinguish:
 
@@ -105,17 +105,17 @@ Conduct a stocktake of existing doctrine, content, products, courses, instructor
 
 The stocktake will identify which products contribute to the broader Performance Under Pressure capability and which support its combat-specific expression. COGCON will be assessed as one developmental product within this stocktake, with particular attention to its product boundary, evidence base — including its completed feasibility trials in live military training — ownership, workforce requirements and scalability.
 
-### Phase 2 — Framework and product architecture (September 2026)
+### Phase 2: Framework and product architecture (September 2026)
 
 Draft the Army Combat Mindset Framework as the organising model through which Army will define, develop, integrate and assure Performance Under Pressure and its combat-specific expression. The framework will include the endorsed definitions and desired operational effect; the integrated capability pillars; developmental outcomes from Lead Self through Lead Systems; the relationship between doctrine, framework, products and delivery; common assurance principles; and the criteria by which existing and future products may be recognised as contributing to the framework.
 
 Existing products, including the NZALC Performance Under Pressure package and COGCON, will be mapped beneath the relevant capability pillars rather than treated as the framework itself.
 
-### Phase 3 — Stakeholder forum (September 2026)
+### Phase 3: Stakeholder forum (September 2026)
 
 Convene ACS, NZALC, HPC, NZDF Psychology, ILD, selected training providers and units to refine the framework, product architecture, governance model, implementation priorities, definition clarity and doctrinal coherence.
 
-### Phase 4 — Report back (November 2026)
+### Phase 4: Report back (November 2026)
 
 Present the endorsed definitions and the confirmed relationship between Combat Mindset and Performance Under Pressure; Framework v1.0 and its agreed architecture; the validated capability and product map; the proposed governance and assurance model; and a prioritised implementation plan. The report will identify whether COGCON should remain a developmental product; undergo further controlled evaluation; be integrated selectively into existing training; be prepared for broader scaling; or cease or change direction.
 

@@ -60,7 +60,7 @@ slide.addText("HARDER TO KILL", {
   x: 9.8, y: 0.28, w: 3.09, h: 0.28, fontFace: F, fontSize: 15, bold: true,
   color: RED, charSpacing: 3, align: "right", valign: "middle", margin: 0,
 });
-slide.addText("Proposed Warfighter Focus line — subject to sponsor endorsement", {
+slide.addText("Proposed Warfighter Focus tagline — subject to sponsor endorsement", {
   x: 9.0, y: 0.57, w: 3.89, h: 0.18, fontFace: F, fontSize: 7.5,
   color: BLACK, align: "right", valign: "middle", margin: 0,
 });
