@@ -25,7 +25,7 @@ PROTECTIVE_MARKING = "UNCLASSIFIED"
 DOCUMENT_REFERENCE = "ACS 2026"
 DATE               = "July 2026"
 ORIGINATOR         = "Army Command School"
-VERSION            = "Draft v0.7"
+VERSION            = "Draft v0.8"
 DISTRIBUTION       = "COMDT ACS"
 LIST_STYLE         = "bullets"
 

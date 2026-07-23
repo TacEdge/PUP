@@ -37,7 +37,7 @@ slide.addText("UNCLASSIFIED", {
   x: 0, y: 7.32, w: 13.333, h: 0.18, align: "center", valign: "middle",
   fontFace: F, fontSize: 8, bold: true, color: WHITE, charSpacing: 4, margin: 0,
 });
-slide.addText("Army Command School   ·   ACS 2026   ·   Draft v0.7   ·   July 2026", {
+slide.addText("Army Command School   ·   ACS 2026   ·   Draft v0.8   ·   July 2026", {
   x: L, y: 7.32, w: 6.4, h: 0.18, align: "left", valign: "middle",
   fontFace: F, fontSize: 6.5, color: MOAWHANGO, margin: 0,
 });
@@ -108,7 +108,7 @@ connector(1.66, null, RED);
 
 // 2 — Combat Mindset
 band(1.84, 0.78, RED, "COMBAT MINDSET", "COMBAT-SPECIFIC EXPRESSION",
-  "The individual and collective readiness and disposition to remain effective and act decisively, persistently, adaptively and ethically under the threat, adversity and uncertainty of combat in order to achieve the mission.",
+  "The individual and collective readiness and disposition to remain effective and act decisively and ethically under the threat, adversity and uncertainty of combat in order to achieve the mission.",
   9);
 connector(2.66, "enabled by", SWAMP);
 
@@ -153,7 +153,7 @@ slide.addShape("rect", {
   line: { color: WAIOURU, width: 0.75 },
 });
 const govRows = [
-  ["Army Sponsor", "Strategic sponsorship and policy direction"],
+  ["Army Sponsor", "Strategic sponsorship and policy direction (to be confirmed)"],
   ["COMDT ACS", "Interim capability integrator"],
   ["ACS", "Framework development and capability-integration lead"],
   ["Human Performance Cell", "COGCON product steward; performance-cognition adviser"],

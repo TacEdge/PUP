@@ -53,7 +53,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   s.addText("Army Command School  ·  ACS 2026", {
     x: L, y: 11.51, w: 2.6, h: 0.18, align: "left", valign: "middle",
     fontFace: F, fontSize: 6, color: MOAWHANGO, margin: 0 });
-  s.addText("Draft v0.7  ·  July 2026", { x: 5.7, y: 11.51, w: 2.07, h: 0.18,
+  s.addText("Draft v0.8  ·  July 2026", { x: 5.7, y: 11.51, w: 2.07, h: 0.18,
     align: "right", valign: "middle", fontFace: F, fontSize: 6, color: MOAWHANGO, margin: 0 });
 
   // ---- header ------------------------------------------------------------
@@ -106,7 +106,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   leftBlock(2.48, 0.88, RED, "swords", "COMBAT MINDSET", "Combat-specific expression");
   panel(2.48, 0.88);
   s.addText(
-    "Combat Mindset is the individual and collective readiness and disposition to remain effective and act decisively, persistently, adaptively and ethically under the threat, adversity and uncertainty of combat in order to achieve the mission.",
+    "Combat Mindset is the individual and collective readiness and disposition to remain effective and act decisively and ethically under the threat, adversity and uncertainty of combat in order to achieve the mission.",
     { x: PX + 0.16, y: 2.55, w: PW - 0.32, h: 0.5, fontFace: F, fontSize: 8.4,
       bold: true, color: SWAMP, align: "left", valign: "top", margin: 0 });
   s.addText(
@@ -251,7 +251,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
     h: 0.22, fontFace: F, fontSize: 8.8, bold: true, color: SWAMP,
     align: "left", valign: "middle", margin: 0 });
   const gov = [
-    "Army Sponsor — strategic sponsorship and policy direction",
+    "Army Sponsor (to be confirmed) — strategic sponsorship and policy direction",
     "COMDT ACS — interim capability integrator",
     "ACS — framework development and capability-integration lead",
     "HPC — COGCON product steward; performance-cognition adviser",
