@@ -25,7 +25,7 @@ PROTECTIVE_MARKING = "UNCLASSIFIED"
 DOCUMENT_REFERENCE = "ACS 2026"
 DATE               = "July 2026"
 ORIGINATOR         = "Army Command School"
-VERSION            = "Draft v0.6"
+VERSION            = "Draft v0.7"
 DISTRIBUTION       = "COMDT ACS"
 LIST_STYLE         = "bullets"
 
@@ -333,7 +333,6 @@ def add_numbered(num, lead, continuation):
     p.paragraph_format.first_line_indent = Cm(-0.75)
     p.paragraph_format.space_before = Pt(4)
     p.paragraph_format.space_after = Pt(2)
-    p.paragraph_format.keep_with_next = True
     p.paragraph_format.tab_stops.add_tab_stop(Cm(0.75))
     n = p.add_run(f"{num}.\t")
     force_font(n, FONT_HEAD)
@@ -356,7 +355,12 @@ def add_divider():
 
 
 
+LANDSCAPE_TABLES = False
+FLATTEN_NEXT_HEADING = False
+
+
 def add_table(rows):
+    global LANDSCAPE_TABLES
     ncols = len(rows[0])
     t = doc.add_table(rows=len(rows), cols=ncols)
     t.autofit = False
@@ -377,7 +381,9 @@ def add_table(rows):
         if ri == 0:
             hdr = OxmlElement("w:tblHeader")
             trPr.append(hdr)
-    if ncols == 2:
+    if LANDSCAPE_TABLES and rows[0][0] == "Function":
+        widths = [Cm(6.0), Cm(7.2), Cm(12.5)]
+    elif ncols == 2:
         widths = [Cm(4.4), Cm(11.6)]
     elif rows[0][0] == "Function":
         widths = [Cm(3.6), Cm(4.6), Cm(7.8)]
@@ -388,8 +394,8 @@ def add_table(rows):
             cell = t.cell(r, c)
             cell.width = widths[c]
             p = cell.paragraphs[0]
-            p.paragraph_format.space_before = Pt(2)
-            p.paragraph_format.space_after = Pt(2)
+            p.paragraph_format.space_before = Pt(1)
+            p.paragraph_format.space_after = Pt(1)
             run = p.add_run(text)
             if r == 0:
                 force_font(run, FONT_HEAD)
@@ -439,36 +445,39 @@ marking_paragraph(section.first_page_footer)
 marking_paragraph(section.header)
 
 # Content pages footer: marking centre + info line
-marking_paragraph(section.footer)
-info = section.footer.add_paragraph()
-info.paragraph_format.space_before = Pt(2)
-info.paragraph_format.space_after = Pt(0)
-info.paragraph_format.tab_stops.add_tab_stop(
-    Cm(TEXT_WIDTH_CM / 2), WD_TAB_ALIGNMENT.CENTER)
-info.paragraph_format.tab_stops.add_tab_stop(
-    Cm(TEXT_WIDTH_CM), WD_TAB_ALIGNMENT.RIGHT)
+def build_info_footer(footer, width_cm):
+    """Marking + document info line sized to the section's text width."""
+    marking_paragraph(footer)
+    info = footer.add_paragraph()
+    info.paragraph_format.space_before = Pt(2)
+    info.paragraph_format.space_after = Pt(0)
+    info.paragraph_format.tab_stops.add_tab_stop(
+        Cm(width_cm / 2), WD_TAB_ALIGNMENT.CENTER)
+    info.paragraph_format.tab_stops.add_tab_stop(
+        Cm(width_cm), WD_TAB_ALIGNMENT.RIGHT)
+
+    def footer_run(text, bold=False):
+        run = info.add_run(text)
+        force_font(run, FONT_HEAD)
+        run.font.size = Pt(8.5)
+        run.bold = bold
+        force_color(run, DARKEST_HOUR)
+        return run
+
+    footer_run(FOOTER_LEFT)
+    footer_run("\t")
+    footer_run(DOCUMENT_REFERENCE)
+    footer_run("\tPage ")
+    for r in add_field(info, "PAGE", "1"):
+        force_font(r, FONT_HEAD)
+        r.font.size = Pt(8.5)
+    footer_run(" of ")
+    for r in add_field(info, "NUMPAGES", "1"):
+        force_font(r, FONT_HEAD)
+        r.font.size = Pt(8.5)
 
 
-def footer_run(text, bold=False):
-    run = info.add_run(text)
-    force_font(run, FONT_HEAD)
-    run.font.size = Pt(8.5)
-    run.bold = bold
-    force_color(run, DARKEST_HOUR)
-    return run
-
-
-footer_run(FOOTER_LEFT)
-footer_run("\t")
-footer_run(DOCUMENT_REFERENCE)
-footer_run("\tPage ")
-for r in add_field(info, "PAGE", "1"):
-    force_font(r, FONT_HEAD)
-    r.font.size = Pt(8.5)
-footer_run(" of ")
-for r in add_field(info, "NUMPAGES", "1"):
-    force_font(r, FONT_HEAD)
-    r.font.size = Pt(8.5)
+build_info_footer(section.footer, TEXT_WIDTH_CM)
 
 # ------------------------------------------------------------------ cover ---
 
@@ -571,17 +580,37 @@ toc_p = doc.add_paragraph()
 add_field(toc_p, r'TOC \o "1-1" \h \z \u',
           "Update fields to generate the table of contents.")
 
-add_page_break()
-
 # ---------------------------------------------------- the model on a page ---
+# The model gets its own narrow-margin section so the A4-portrait
+# illustration renders near native size (full printable page).
+
+from docx.enum.section import WD_SECTION_START, WD_ORIENTATION
 
 ONEPAGER_EMBED = ("/tmp/claude-0/-home-user-PUP/"
                   "2d4cec0e-a52e-5368-bb54-803c6f37698d/scratchpad/"
                   "onepager-embed.png")
-add_section_heading("The Model on a Page")
-doc.add_picture(ONEPAGER_EMBED, width=Cm(15.4))
+model_sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
+model_sec.different_first_page_header_footer = False
+model_sec.top_margin = Cm(1.2)
+model_sec.bottom_margin = Cm(1.4)
+model_sec.left_margin = Cm(0.75)
+model_sec.right_margin = Cm(0.75)
+model_sec.footer.is_linked_to_previous = False
+build_info_footer(model_sec.footer, 19.5)
+
+_mh = add_section_heading("The Model on a Page")
+_mh.paragraph_format.space_before = Pt(0)
+doc.add_picture(ONEPAGER_EMBED, width=Cm(18.4))
 doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
-add_page_break()
+
+body_sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
+body_sec.different_first_page_header_footer = False
+body_sec.top_margin = Cm(2.4)
+body_sec.bottom_margin = Cm(2.4)
+body_sec.left_margin = Cm(2.5)
+body_sec.right_margin = Cm(2.5)
+body_sec.footer.is_linked_to_previous = False
+build_info_footer(body_sec.footer, TEXT_WIDTH_CM)
 
 # ------------------------------------------------------------------- body ---
 
@@ -601,7 +630,21 @@ while i < len(lines):
         continue
 
     if line.strip() == "+++":
-        add_page_break()
+        # Annex on a landscape page so the division-of-functions table
+        # fits comfortably on one page.
+        land_sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
+        land_sec.orientation = WD_ORIENTATION.LANDSCAPE
+        land_sec.page_width = Mm(297)
+        land_sec.page_height = Mm(210)
+        land_sec.top_margin = Cm(1.5)
+        land_sec.bottom_margin = Cm(1.5)
+        land_sec.left_margin = Cm(2.0)
+        land_sec.right_margin = Cm(2.0)
+        land_sec.different_first_page_header_footer = False
+        land_sec.footer.is_linked_to_previous = False
+        build_info_footer(land_sec.footer, 25.7)
+        LANDSCAPE_TABLES = True
+        FLATTEN_NEXT_HEADING = True
         i += 1
         continue
 
@@ -621,7 +664,10 @@ while i < len(lines):
         continue
 
     if line.startswith("## "):
-        add_section_heading(line[3:].strip())
+        _h = add_section_heading(line[3:].strip())
+        if FLATTEN_NEXT_HEADING:
+            _h.paragraph_format.space_before = Pt(0)
+            FLATTEN_NEXT_HEADING = False
         i += 1
         continue
 
@@ -703,6 +749,13 @@ for rFonts in styles_el.iter(qn("w:rFonts")):
     for attr in ("asciiTheme", "hAnsiTheme", "cstheme", "eastAsiaTheme",
                  "eastAsia"):
         rFonts.attrib.pop(qn(f"w:{attr}"), None)
+
+# Drop trailing empty paragraphs so a full final page doesn't push a blank
+# page after it.
+while doc.paragraphs and not doc.paragraphs[-1].text.strip() \
+        and not doc.paragraphs[-1]._p.findall(qn("w:r") + "/" + qn("w:drawing")):
+    _el = doc.paragraphs[-1]._element
+    _el.getparent().remove(_el)
 
 mark_update_fields(doc)
 

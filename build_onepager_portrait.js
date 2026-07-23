@@ -28,7 +28,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
     swords: ["LuSwords", WHITE], brain: ["LuBrain", WHITE], puzzle: ["LuPuzzle", WHITE],
     users: ["LuUsers", SWAMP], mskills: ["LuBrain", SWAMP], target: ["LuCrosshair", WHITE],
     heart: ["LuHeartPulse", SWAMP], dumbbell: ["LuDumbbell", SWAMP], medal: ["LuMedal", SWAMP],
-    flame: ["LuFlame", SWAMP], landmark: ["LuLandmark", SWAMP], clipboard: ["LuClipboardList", SWAMP],
+    compass: ["LuCompass", SWAMP], landmark: ["LuLandmark", SWAMP], clipboard: ["LuClipboardList", SWAMP],
     star: ["LuStar", RED], crosshairHero: ["LuCrosshair", MOAWHANGO],
   };
   for (const [k, [n, c]] of Object.entries(need)) I[k] = await icon(n, c);
@@ -53,7 +53,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   s.addText("Army Command School  ·  ACS 2026", {
     x: L, y: 11.51, w: 2.6, h: 0.18, align: "left", valign: "middle",
     fontFace: F, fontSize: 6, color: MOAWHANGO, margin: 0 });
-  s.addText("Draft v0.6  ·  July 2026", { x: 5.7, y: 11.51, w: 2.07, h: 0.18,
+  s.addText("Draft v0.7  ·  July 2026", { x: 5.7, y: 11.51, w: 2.07, h: 0.18,
     align: "right", valign: "middle", fontFace: F, fontSize: 6, color: MOAWHANGO, margin: 0 });
 
   // ---- header ------------------------------------------------------------
@@ -105,13 +105,14 @@ async function icon(name, hex, strokeWidth = 1.6) {
   // Combat Mindset
   leftBlock(2.48, 0.88, RED, "swords", "COMBAT MINDSET", "Combat-specific expression");
   panel(2.48, 0.88);
-  s.addText("Combat Mindset is the combat-specific expression of Performance Under Pressure.",
-    { x: PX + 0.16, y: 2.55, w: PW - 0.32, h: 0.34, fontFace: F, fontSize: 8.7,
+  s.addText(
+    "Combat Mindset is the individual and collective readiness and disposition to remain effective and act decisively, persistently, adaptively and ethically under the threat, adversity and uncertainty of combat in order to achieve the mission.",
+    { x: PX + 0.16, y: 2.55, w: PW - 0.32, h: 0.5, fontFace: F, fontSize: 8.4,
       bold: true, color: SWAMP, align: "left", valign: "top", margin: 0 });
   s.addText(
-    "The individual and collective readiness and disposition to remain effective and act decisively, persistently, adaptively and ethically under the threat, adversity and uncertainty of combat in order to achieve the mission.",
-    { x: PX + 0.16, y: 2.92, w: PW - 0.32, h: 0.42, fontFace: F, fontSize: 8.2,
-      color: BLACK, align: "left", valign: "top", margin: 0 });
+    "It is the combat-specific expression of Performance Under Pressure.",
+    { x: PX + 0.16, y: 3.08, w: PW - 0.32, h: 0.2, fontFace: F, fontSize: 8.2,
+      italic: true, color: BLACK, align: "left", valign: "top", margin: 0 });
   flowArrow(3.44, SWAMP, "enabled by");
 
   // Performance Under Pressure
@@ -121,8 +122,8 @@ async function icon(name, hex, strokeWidth = 1.6) {
     { x: PX + 0.16, y: 3.74, w: PW - 0.32, h: 0.34, fontFace: F, fontSize: 8.7,
       bold: true, color: SWAMP, align: "left", valign: "top", margin: 0 });
   const checks = [
-    ["Prepare for pressure", "Recover from pressure"],
-    ["Maintain performance through pressure"],
+    ["Prepare for pressure", "Adapt within pressure"],
+    ["Maintain performance through pressure", "Recover from pressure"],
   ];
   checks.forEach((row, r) => {
     row.forEach((t, c) => {
@@ -149,7 +150,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   s.addText("It organises:", { x: PX + 0.16, y: 5.84, w: 1.2, h: 0.16, fontFace: F,
     fontSize: 7.6, italic: true, color: BLACK, align: "left", valign: "middle", margin: 0 });
   const org = [
-    ["Doctrinal definitions", "Desired outcomes", "Capability pillars"],
+    ["Doctrinal definitions", "Desired outcomes", "Provisional pillars"],
     ["Developmental progression", "Products and methods", "Delivery responsibilities"],
     ["Governance", "Evidence", "Assurance"],
   ];
@@ -163,23 +164,26 @@ async function icon(name, hex, strokeWidth = 1.6) {
 
   // ---- capability strands ------------------------------------------------
   s.addShape("rect", { x: L, y: 6.74, w: W, h: 1.24, fill: { color: MOAWHANGO, transparency: 72 } });
-  s.addText("CAPABILITY PILLARS", { x: L, y: 6.82, w: W, h: 0.2, fontFace: F,
-    fontSize: 10.5, bold: true, color: SWAMP, charSpacing: 2, align: "center",
+  s.addText("PROVISIONAL CAPABILITY PILLARS", { x: L, y: 6.79, w: W, h: 0.18, fontFace: F,
+    fontSize: 10, bold: true, color: SWAMP, charSpacing: 2, align: "center",
     valign: "middle", margin: 0 });
+  s.addText("Provisional working pillars — subject to Phase 1 validation", {
+    x: L, y: 6.96, w: W, h: 0.13, fontFace: F, fontSize: 6.5, italic: true,
+    color: BLACK, align: "center", valign: "middle", margin: 0 });
   const strands = [
-    ["users", "Leadership"], ["mskills", "Mental skills"], ["target", "Performance cognition"],
+    ["compass", "Leadership"], ["mskills", "Self-regulation"], ["target", "Performance cognition"],
     ["heart", "Resilience & recovery"], ["dumbbell", "Physical performance"],
-    ["medal", "Professional identity & values"], ["flame", "Individual & collective exposure to pressure"],
+    ["medal", "Identity, values & will"], ["users", "Collective performance"],
   ];
   const cellW = W / 7;
   strands.forEach(([ic, label], i) => {
     const cx = L + i * cellW + cellW / 2;
     const filled = ic === "target";
-    s.addShape("ellipse", { x: cx - 0.19, y: 7.08, w: 0.38, h: 0.38,
+    s.addShape("ellipse", { x: cx - 0.19, y: 7.12, w: 0.38, h: 0.38,
       fill: { color: filled ? SWAMP : WHITE },
       line: { color: SWAMP, width: 1.25 } });
-    s.addImage({ data: filled ? I.target : I[ic], x: cx - 0.11, y: 7.16, w: 0.22, h: 0.22 });
-    s.addText(label, { x: L + i * cellW + 0.03, y: 7.5, w: cellW - 0.06, h: 0.42,
+    s.addImage({ data: filled ? I.target : I[ic], x: cx - 0.11, y: 7.2, w: 0.22, h: 0.22 });
+    s.addText(label, { x: L + i * cellW + 0.03, y: 7.54, w: cellW - 0.06, h: 0.42,
       fontFace: F, fontSize: 6.8, bold: true, color: SWAMP, align: "center",
       valign: "top", margin: 0 });
   });
@@ -199,8 +203,8 @@ async function icon(name, hex, strokeWidth = 1.6) {
     ["NZALC Performance Under Pressure package", false],
     ["NZDF Psychology products", false],
     ["COGCON", true],
-    ["Scenario & experiential training", false],
-    ["Physical conditioning", false],
+    ["Scenario, experiential & progressive pressure training", false],
+    ["Physical & cognitive conditioning", false],
     ["Structured reflection & recovery", false],
     ["Other products identified in Phase 1 stocktake", false],
   ];
@@ -213,8 +217,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
     if (isCogcon) {
       s.addText([
         { text: "COGCON", options: { bold: true, fontSize: 7.2, breakLine: true } },
-        { text: "(Performance cognition)", options: { fontSize: 6.2, italic: true, breakLine: true } },
-        { text: "Developmental product", options: { fontSize: 6.2, italic: true } },
+        { text: "Developmental performance-cognition product", options: { fontSize: 6.2, italic: true } },
       ], { x: px + 0.03, y: 8.52, w: pw - 0.06, h: 0.78, fontFace: F, color: BLACK,
         align: "center", valign: "middle", margin: 0 });
     } else {
@@ -224,6 +227,9 @@ async function icon(name, hex, strokeWidth = 1.6) {
   });
 
   // ---- delivery ribbon ---------------------------------------------------
+  s.addText("Dashed outline indicates developmental status pending the Phase 1 stocktake", {
+    x: L, y: 9.31, w: W, h: 0.1, fontFace: F, fontSize: 6, italic: true,
+    color: BLACK, align: "center", valign: "middle", margin: 0 });
   const rib = [];
   rib.push({ text: "Developed across the Prepare – Perform – Recover cycle   ·   Lead Self", options: { color: SWAMP } });
   ["Lead Teams", "Lead Leaders", "Lead Systems"].forEach((t) => {
@@ -247,7 +253,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   const gov = [
     "Army Sponsor — strategic sponsorship and policy direction",
     "COMDT ACS — interim capability integrator",
-    "ACS — framework development and delivery coordination",
+    "ACS — framework development and capability-integration lead",
     "HPC — COGCON product steward; performance-cognition adviser",
     "Layered doctrine, evidence, professional and delivery assurance",
   ];

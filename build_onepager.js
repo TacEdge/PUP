@@ -37,7 +37,7 @@ slide.addText("UNCLASSIFIED", {
   x: 0, y: 7.32, w: 13.333, h: 0.18, align: "center", valign: "middle",
   fontFace: F, fontSize: 8, bold: true, color: WHITE, charSpacing: 4, margin: 0,
 });
-slide.addText("Army Command School   ·   ACS 2026   ·   Draft v0.5   ·   July 2026", {
+slide.addText("Army Command School   ·   ACS 2026   ·   Draft v0.7   ·   July 2026", {
   x: L, y: 7.32, w: 6.4, h: 0.18, align: "left", valign: "middle",
   fontFace: F, fontSize: 6.5, color: MOAWHANGO, margin: 0,
 });
@@ -136,7 +136,7 @@ band(4.28, 1.07, KAWAKAWA, "ARMY COMBAT MINDSET FRAMEWORK", "ORGANISING MODEL",
   "The organising model through which Army defines, develops, integrates and assures the capabilities, products and governance arrangements that enable Combat Mindset.",
   9);
 slide.addText(
-  "Organises:  definitions  ·  desired outcomes  ·  capability pillars  ·  developmental progression  ·  products and methods  ·  delivery  ·  governance  ·  evidence  ·  assurance",
+  "Organises:  definitions  ·  desired outcomes  ·  provisional pillars  ·  developmental progression  ·  products and methods  ·  delivery  ·  governance  ·  evidence  ·  assurance",
   { x: L + 0.18, y: 5.06, w: MAINW - 0.36, h: 0.24, fontFace: F, fontSize: 7.5,
     italic: true, color: MOAWHANGO, align: "left", valign: "top", margin: 0 });
 connector(5.39, "delivered through", SWAMP);
@@ -155,7 +155,7 @@ slide.addShape("rect", {
 const govRows = [
   ["Army Sponsor", "Strategic sponsorship and policy direction"],
   ["COMDT ACS", "Interim capability integrator"],
-  ["ACS", "Framework development and delivery coordination"],
+  ["ACS", "Framework development and capability-integration lead"],
   ["Human Performance Cell", "COGCON product steward; performance-cognition adviser"],
   ["Domain advisers", "NZDF Psychology, ILD, doctrine, physical performance"],
   ["Delivery", "Training establishments, units, existing instructors"],
@@ -181,7 +181,7 @@ slide.addShape("rect", {
   x: RX, y: 3.8, w: RW, h: 0.72, fill: { color: WHITE },
   line: { color: WAIOURU, width: 0.75 },
 });
-const steps = ["DEFINE", "MAP", "DEVELOP", "VALIDATE", "REPORT"];
+const steps = ["DEFINE", "STOCKTAKE", "DEVELOP", "VALIDATE", "REPORT"];
 const stepW = (RW - 0.24 - 0.05 * 4) / 5;
 steps.forEach((t, i) => {
   const sx = RX + 0.12 + i * (stepW + 0.05);
@@ -192,7 +192,7 @@ steps.forEach((t, i) => {
   });
 });
 slide.addText(
-  "COGCON\u2019s completed feasibility trials enter Phase 1 as mapped evidence. Report back November 2026: Framework v1.0, capability and product map, implementation plan.",
+  "COGCON\u2019s completed feasibility trials enter the Phase 1 stocktake as evidence. Report back November 2026: Framework v1.0, capability and product architecture, implementation plan.",
   { x: RX + 0.12, y: 4.17, w: RW - 0.24, h: 0.32, fontFace: F, fontSize: 7.3,
     italic: true, color: BLACK, align: "left", valign: "top", margin: 0 });
 
@@ -212,13 +212,17 @@ const cells = 7;
 const cw = (W - 0.06 * (cells - 1)) / cells;
 
 slide.addShape("rect", { x: L, y: 5.62, w: W, h: 0.2, fill: { color: SWAMP } });
-slide.addText("CAPABILITY PILLARS — WHAT WE BUILD", {
-  x: L + 0.12, y: 5.62, w: W - 0.24, h: 0.2, fontFace: F, fontSize: 8.5,
+slide.addText("PROVISIONAL CAPABILITY PILLARS — WHAT WE BUILD", {
+  x: L + 0.12, y: 5.62, w: 6.5, h: 0.2, fontFace: F, fontSize: 8.5,
   bold: true, color: WHITE, align: "left", valign: "middle", margin: 0,
 });
+slide.addText("provisional working pillars — subject to Phase 1 validation", {
+  x: L + 6.6, y: 5.62, w: W - 6.72, h: 0.2, fontFace: F, fontSize: 7.2,
+  italic: true, color: MOAWHANGO, align: "right", valign: "middle", margin: 0,
+});
 const strands = [
-  "Leadership", "Mental skills", "Performance cognition", "Resilience & recovery",
-  "Physical performance", "Professional identity & values", "Individual & collective exposure to pressure",
+  "Leadership", "Self-regulation", "Performance cognition", "Resilience & recovery",
+  "Physical performance", "Identity, values & will", "Collective performance",
 ];
 strands.forEach((t, i) => {
   const cx = L + i * (cw + 0.06);
@@ -243,11 +247,11 @@ slide.addText("each product contributes across multiple pillars — columns do n
 const products = [
   ["NZALC Performance Under Pressure package", null],
   ["NZDF Psychology products", null],
-  ["COGCON MVP", "Developmental product — performance-cognition pillar"],
-  ["Scenario & experiential training", null],
-  ["Physical conditioning", null],
+  ["COGCON", "Developmental performance-cognition product"],
+  ["Scenario, experiential & progressive pressure training", null],
+  ["Physical & cognitive conditioning", null],
   ["Structured reflection & recovery", null],
-  ["Other products identified in Phase 1 mapping", null],
+  ["Other products identified in Phase 1 stocktake", null],
 ];
 products.forEach((p, i) => {
   const cx = L + i * (cw + 0.06);
@@ -270,7 +274,7 @@ products.forEach((p, i) => {
     });
   }
 });
-// dashed link: COGCON MVP (cell 3) contributes to Performance cognition strand
+// dashed link: COGCON (cell 3) contributes to Performance cognition strand
 slide.addShape("line", {
   x: L + 2 * (cw + 0.06) + cw / 2, y: 6.31, w: 0, h: 0.32,
   line: { color: RED, width: 1.25, dashType: "dash", beginArrowType: "triangle" },
@@ -278,7 +282,7 @@ slide.addShape("line", {
 
 // caption row
 slide.addText(
-  "COGCON MVP is nested within the performance-cognition pillar (dashed link). It develops selected elements of Performance Under Pressure — not a complete Combat Mindset programme or a validated operational-readiness measure.",
+  "COGCON is nested within the performance-cognition pillar (dashed link) as one developmental product. Its status and appropriate future role will be confirmed through the Phase 1 stocktake.",
   { x: L, y: 7.13, w: 7.7, h: 0.15, fontFace: F, fontSize: 6.8, italic: true,
     color: BLACK, align: "left", valign: "middle", margin: 0 });
 slide.addText(
