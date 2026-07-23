@@ -487,13 +487,21 @@ logo_para.paragraph_format.space_before = Pt(44)
 logo_para.paragraph_format.space_after = Pt(64)
 
 title_p = doc.add_paragraph()
-title_p.paragraph_format.space_after = Pt(10)
-set_border(title_p, "bottom", ARMY_RED, 20, space=10)
-t = title_p.add_run(TITLE)
+title_p.paragraph_format.space_after = Pt(2)
+t = title_p.add_run("Combat Mindset")
 force_font(t, FONT_HEAD)
-t.font.size = Pt(26)
+t.font.size = Pt(36)
 t.bold = True
 force_color(t, DARKEST_HOUR)
+
+sub_title_p = doc.add_paragraph()
+sub_title_p.paragraph_format.space_after = Pt(10)
+set_border(sub_title_p, "bottom", ARMY_RED, 20, space=10)
+st = sub_title_p.add_run("Proposed Way Forward")
+force_font(st, FONT_HEAD)
+st.font.size = Pt(17)
+st.bold = True
+force_color(st, SWAMP_GREEN)
 
 sub_p = doc.add_paragraph()
 sub_p.paragraph_format.space_before = Pt(6)
