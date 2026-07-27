@@ -75,10 +75,10 @@ const patch = (centre) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 
 </svg>`;
 
 (async () => {
-  const heroA = await svgPng(patch(focusPointCentre(WHITE, RED)), 1200);
-  const altB = await svgPng(patch(objectiveCentre(WHITE, RED)));
-  const monoA = await svgPng(patch(focusPointCentre(WHITE, WHITE)));
-  const tonal = await svgPng(patch(focusPointCentre(MOAWHANGO, RED)));
+  const heroA = await svgPng(patch(objectiveCentre(WHITE, RED)), 1200);
+  const altB = await svgPng(patch(focusPointCentre(WHITE, RED)));
+  const monoA = await svgPng(patch(objectiveCentre(WHITE, WHITE)));
+  const tonal = await svgPng(patch(objectiveCentre(MOAWHANGO, RED)));
 
   const pres = new pptxgen();
   pres.defineLayout({ name: "A4P", width: 8.27, height: 11.69 });
@@ -115,11 +115,11 @@ const patch = (centre) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 
 
   // hero
   s.addImage({ data: heroA, x: 8.27 / 2 - 2.0, y: 1.25, w: 4.0, h: 4.0 });
-  s.addText("9A  FOCUS POINT PATCH", { x: L, y: 5.4, w: W, h: 0.22,
+  s.addText("9B  OBJECTIVE PATCH", { x: L, y: 5.4, w: W, h: 0.22,
     fontFace: F, fontSize: 11, bold: true, color: SWAMP, charSpacing: 2,
     align: "center", valign: "middle", margin: 0 });
   s.addText(
-    "The clean focus-point reticle at the heart of the patch: a broken ring gathering on a single red centre — focus held under pressure. No weapons, no letters; one idea.",
+    "The clean objective reticle at the heart of the patch: sight ticks crossing the ring on a single red centre — the mission remains the centre. No weapons, no letters; one idea.",
     { x: 1.2, y: 5.68, w: 5.87, h: 0.4, fontFace: F, fontSize: 8, italic: true,
       color: BLACK, align: "center", valign: "top", margin: 0 });
 
@@ -128,7 +128,7 @@ const patch = (centre) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 
   s.addShape("rect", { x: L, y: RY, w: W, h: 2.85, fill: { color: WHITE },
     line: { color: WAIOURU, width: 0.75 } });
   s.addImage({ data: altB, x: 0.95, y: RY + 0.35, w: 1.6, h: 1.6 });
-  s.addText("alternative — objective centre", { x: 0.65, y: RY + 2.05, w: 2.2, h: 0.16,
+  s.addText("alternative — focus-point centre", { x: 0.65, y: RY + 2.05, w: 2.2, h: 0.16,
     fontFace: F, fontSize: 6.8, italic: true, color: BLACK, align: "center",
     valign: "middle", margin: 0 });
   s.addImage({ data: tonal, x: 3.35, y: RY + 0.35, w: 1.6, h: 1.6 });
@@ -150,7 +150,7 @@ const patch = (centre) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 
   // notes
   const notes = [
     "Chassis unchanged from 7G: black disc, Moawhango ring, arc wordmark and tagline.",
-    "Centre reticle drawn from the clean brandmark exploration (focus point; objective offered as alternative).",
+    "Centre reticle drawn from the clean brandmark exploration, option 3 — Objective (focus point offered as alternative).",
     "Tagline wording (“Act Decisive” vs “Act decisively”) remains to be confirmed.",
     "All marks remain subject to sponsor endorsement and Defence heraldry check.",
   ];
