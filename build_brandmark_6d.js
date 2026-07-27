@@ -53,7 +53,7 @@ const crest = () => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 25
   <circle cx="128" cy="128" r="124" fill="#000000" stroke="#${MOAWHANGO}" stroke-width="4"/>
   <circle cx="128" cy="128" r="88" fill="none" stroke="#${MOAWHANGO}" stroke-width="2.5"/>
   ${arcGlyphs("COMBAT MINDSET", 102, -62, 62, 25, WHITE, false)}
-  ${arcGlyphs("REMAIN EFFECTIVE · ACT DECISIVE", 103, 180 + 66, 180 - 66, 13, MOAWHANGO, true)}
+  ${arcGlyphs("REMAIN EFFECTIVE · ACT DECISIVE", 112, 180 + 66, 180 - 66, 13, MOAWHANGO, true)}
   <line x1="128" y1="34" x2="128" y2="58" stroke="#${RED}" stroke-width="10" stroke-linecap="round"/>
   <line x1="128" y1="198" x2="128" y2="222" stroke="#${RED}" stroke-width="10" stroke-linecap="round"/>
   <line x1="34" y1="128" x2="58" y2="128" stroke="#${RED}" stroke-width="10" stroke-linecap="round"/>
