@@ -1,5 +1,8 @@
-// COMBAT MINDSET — THE WAY FORWARD : portrait A4 one-pager, design iteration 2
-// Hero treatment of the warfighting imperative, soft-tint panels, line icons.
+// COMBAT MINDSET — THE WAY FORWARD : portrait A4 one-pager, design iteration 3
+// Top-down hierarchy: Combat Mindset (warfighting imperative) → Performance
+// Under Pressure (enabling capability) → Army Combat Mindset Framework, with
+// three balanced columns: governance & assurance, current delivery system,
+// framework development programme.
 
 const pptxgen = require("pptxgenjs");
 const React = require("react");
@@ -25,11 +28,12 @@ async function icon(name, hex, strokeWidth = 1.6) {
 (async () => {
   const I = {};
   const need = {
-    swords: ["LuSwords", WHITE], brain: ["LuBrain", WHITE], puzzle: ["LuPuzzle", WHITE],
-    users: ["LuUsers", SWAMP], mskills: ["LuBrain", SWAMP], target: ["LuCrosshair", WHITE],
-    heart: ["LuHeartPulse", SWAMP], dumbbell: ["LuDumbbell", SWAMP], medal: ["LuMedal", SWAMP],
-    compass: ["LuCompass", SWAMP], landmark: ["LuLandmark", SWAMP], clipboard: ["LuClipboardList", SWAMP],
-    star: ["LuStar", RED], crosshairHero: ["LuCrosshair", MOAWHANGO],
+    crosshairHero: ["LuCrosshair", MOAWHANGO],
+    brainW: ["LuBrain", WHITE], puzzleW: ["LuPuzzle", WHITE],
+    shieldW: ["LuShieldCheck", WHITE], usersW: ["LuUsers", WHITE],
+    gearW: ["LuSettings", WHITE],
+    chevronsG: ["LuChevronsUp", SWAMP], brainG: ["LuBrain", SWAMP],
+    landmarkG: ["LuLandmark", SWAMP], usersG: ["LuUsers", SWAMP],
   };
   for (const [k, [n, c]] of Object.entries(need)) I[k] = await icon(n, c);
 
@@ -40,6 +44,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   s.background = { color: WHITE };
 
   const L = 0.5, W = 7.27, R = L + W; // 7.77
+  const MID = L + W / 2;
 
   // ---- markings ----------------------------------------------------------
   s.addShape("rect", { x: 0, y: 0, w: 8.27, h: 0.18, fill: { color: BLACK } });
@@ -64,230 +69,185 @@ async function icon(name, hex, strokeWidth = 1.6) {
   s.addText("Defining, developing and assuring the human-performance capability Army requires to remain effective in combat.", {
     x: 1.85, y: 0.58, w: 5.92, h: 0.18, fontFace: F, fontSize: 8, italic: true,
     color: BLACK, align: "left", valign: "middle", margin: 0 });
+  s.addShape("line", { x: L, y: 0.9, w: W, h: 0,
+    line: { color: BLACK, width: 1 } });
 
-  // ---- hero --------------------------------------------------------------
-  s.addShape("rect", { x: L, y: 0.95, w: W, h: 1.35, fill: { color: BLACK } });
-  s.addImage({ data: I.crosshairHero, x: 6.62, y: 1.18, w: 0.88, h: 0.88, transparency: 45 });
-  s.addText("WARFIGHTING IMPERATIVE", { x: 0.78, y: 1.08, w: 4.5, h: 0.18,
-    fontFace: F, fontSize: 8.5, bold: true, color: MOAWHANGO, charSpacing: 3, margin: 0 });
-  s.addText([
-    { text: "REMAIN EFFECTIVE. ", options: { color: WHITE } },
-    { text: "ACT DECISIVELY.", options: { color: RED } },
-  ], { x: 0.78, y: 1.27, w: 5.6, h: 0.42, fontFace: F, fontSize: 21, bold: true,
-    align: "left", valign: "middle", margin: 0 });
-  s.addText(
-    "Army requires individuals, teams and leaders who remain effective and act decisively, persistently, adaptively and ethically under the threat, adversity and uncertainty of combat.",
-    { x: 0.78, y: 1.74, w: 5.7, h: 0.44, fontFace: F, fontSize: 8.5,
-      color: WHITE, align: "left", valign: "top", margin: 0 });
-
-  // ---- relationship rows -------------------------------------------------
-  const LB = 2.05, PX = 2.72, PW = R - PX; // left block width, panel x/w
-  function leftBlock(y, h, fill, iconKey, label, descriptor) {
-    s.addShape("rect", { x: L, y, w: LB, h, fill: { color: fill } });
-    s.addImage({ data: I[iconKey], x: L + 0.16, y: y + 0.14, w: 0.34, h: 0.34 });
-    s.addText(label, { x: L + 0.6, y: y + 0.1, w: LB - 0.72, h: 0.46, fontFace: F,
-      fontSize: 10.5, bold: true, color: WHITE, align: "left", valign: "middle", margin: 0 });
-    s.addText(descriptor, { x: L + 0.16, y: y + h - 0.3, w: LB - 0.32, h: 0.24,
-      fontFace: F, fontSize: 7.5, italic: true, color: MOAWHANGO,
-      align: "left", valign: "middle", margin: 0 });
+  // ---- shared helpers ----------------------------------------------------
+  function pill(y, w, text, fill) {
+    const x = MID - w / 2;
+    s.addShape("roundRect", { x, y, w, h: 0.24, fill: { color: fill },
+      rectRadius: 0.12, line: { color: WHITE, width: 1 } });
+    s.addText(text, { x, y, w, h: 0.24, fontFace: F, fontSize: 7.8, bold: true,
+      color: WHITE, charSpacing: 1.2, align: "center", valign: "middle", margin: 0 });
   }
-  function panel(y, h) {
-    s.addShape("rect", { x: PX, y, w: PW, h, fill: { color: MOAWHANGO, transparency: 72 } });
-  }
-  function flowArrow(y, color, label) {
-    s.addShape("triangle", { x: L + LB / 2 - 0.08, y, w: 0.16, h: 0.12,
-      fill: { color }, rotate: 180 });
-    s.addText(label, { x: L + LB / 2 + 0.16, y: y - 0.02, w: 3.2, h: 0.16,
-      fontFace: F, fontSize: 7.5, italic: true, color: BLACK,
-      align: "left", valign: "middle", margin: 0 });
+  function midConnector(y, label) {
+    s.addShape("triangle", { x: MID - 0.07, y, w: 0.14, h: 0.11,
+      fill: { color: SWAMP }, rotate: 180 });
+    s.addText(label, { x: MID - 1.9, y: y + 0.13, w: 3.8, h: 0.16, fontFace: F,
+      fontSize: 8.5, italic: true, color: BLACK, align: "center",
+      valign: "middle", margin: 0 });
+    s.addShape("line", { x: L + 0.55, y: y + 0.21, w: MID - 1.95 - (L + 0.55), h: 0,
+      line: { color: WAIOURU, width: 0.75 } });
+    s.addShape("line", { x: MID + 1.95, y: y + 0.21, w: R - 0.55 - (MID + 1.95), h: 0,
+      line: { color: WAIOURU, width: 0.75 } });
   }
 
-  // Combat Mindset
-  leftBlock(2.48, 0.88, RED, "swords", "COMBAT MINDSET", "Combat-specific expression");
-  panel(2.48, 0.88);
-  s.addText(
-    "Combat Mindset is the individual and collective readiness and disposition to remain effective and act decisively and ethically under the threat, adversity and uncertainty of combat in order to achieve the mission.",
-    { x: PX + 0.16, y: 2.55, w: PW - 0.32, h: 0.5, fontFace: F, fontSize: 8.4,
-      bold: true, color: SWAMP, align: "left", valign: "top", margin: 0 });
-  s.addText(
-    "It is the combat-specific expression of Performance Under Pressure.",
-    { x: PX + 0.16, y: 3.08, w: PW - 0.32, h: 0.2, fontFace: F, fontSize: 8.2,
-      italic: true, color: BLACK, align: "left", valign: "top", margin: 0 });
-  flowArrow(3.44, SWAMP, "enabled by");
+  // ---- section 1: warfighting imperative — COMBAT MINDSET ----------------
+  s.addShape("rect", { x: L, y: 1.12, w: W, h: 1.3, fill: { color: BLACK } });
+  pill(1.0, 2.4, "1)  WARFIGHTING IMPERATIVE", RED);
+  s.addImage({ data: I.crosshairHero, x: 6.5, y: 1.42, w: 0.78, h: 0.78, transparency: 40 });
+  s.addText("COMBAT MINDSET", {
+    x: L + 0.3, y: 1.42, w: 5.75, h: 0.55, fontFace: F, fontSize: 33, bold: true,
+    color: WHITE, align: "left", valign: "middle", margin: 0 });
+  s.addText("Remain effective. Act decisively. Harder to kill.", {
+    x: L + 0.32, y: 2.0, w: 5.75, h: 0.26, fontFace: F, fontSize: 13, bold: true,
+    color: RED, align: "left", valign: "middle", margin: 0 });
+  s.addText("Tagline subject to sponsor endorsement", {
+    x: 4.4, y: 2.24, w: 3.2, h: 0.12, fontFace: F, fontSize: 5.8, italic: true,
+    color: MOAWHANGO, align: "right", valign: "middle", margin: 0 });
 
-  // Performance Under Pressure
-  leftBlock(3.66, 1.26, SWAMP, "brain", "PERFORMANCE UNDER PRESSURE", "Enabling human-performance capability");
-  panel(3.66, 1.26);
-  s.addText("Performance Under Pressure is the trainable individual and collective human-performance capability to:",
-    { x: PX + 0.16, y: 3.74, w: PW - 0.32, h: 0.34, fontFace: F, fontSize: 8.7,
-      bold: true, color: SWAMP, align: "left", valign: "top", margin: 0 });
-  const checks = [
-    ["Prepare for pressure", "Adapt within pressure"],
-    ["Maintain performance through pressure", "Recover from pressure"],
+  midConnector(2.5, "enabled by");
+
+  // ---- section 2: enabling capability — PUP -------------------------------
+  s.addShape("rect", { x: L, y: 3.1, w: W, h: 1.06, fill: { color: SWAMP } });
+  pill(2.98, 4.0, "2)  ENABLING HUMAN-PERFORMANCE CAPABILITY", SWAMP);
+  s.addImage({ data: I.brainW, x: L + 0.24, y: 3.42, w: 0.5, h: 0.5 });
+  s.addText("PERFORMANCE UNDER PRESSURE", {
+    x: L + 0.9, y: 3.32, w: W - 1.15, h: 0.42, fontFace: F, fontSize: 23,
+    bold: true, color: WHITE, align: "center", valign: "middle", margin: 0 });
+  s.addText(
+    "Prepare for pressure   ·   Perform through pressure   ·   Adapt within pressure   ·   Recover from pressure",
+    { x: L + 0.15, y: 3.79, w: W - 0.3, h: 0.2, fontFace: F, fontSize: 8.6,
+      bold: true, color: WHITE, align: "center", valign: "middle", margin: 0 });
+
+  midConnector(4.24, "developed, organised and assured through");
+
+  // ---- section 3: organising system — the framework ----------------------
+  s.addShape("rect", { x: L, y: 4.84, w: W, h: 0.92, fill: { color: KAWAKAWA } });
+  pill(4.72, 2.1, "3)  ORGANISING SYSTEM", KAWAKAWA);
+  s.addImage({ data: I.puzzleW, x: L + 0.24, y: 5.06, w: 0.46, h: 0.46 });
+  s.addText("THE ARMY COMBAT MINDSET FRAMEWORK", {
+    x: L + 0.85, y: 4.98, w: W - 1.05, h: 0.36, fontFace: F, fontSize: 19,
+    bold: true, color: WHITE, align: "center", valign: "middle", margin: 0 });
+  s.addText("The Army system through which Combat Mindset is governed, developed, delivered and assured.", {
+    x: L + 0.85, y: 5.37, w: W - 1.05, h: 0.2, fontFace: F, fontSize: 9,
+    color: WHITE, align: "center", valign: "middle", margin: 0 });
+
+  // ---- three framework columns -------------------------------------------
+  const GAP = 0.12, colW = (W - 2 * GAP) / 3;
+  const CX = [L, L + colW + GAP, L + 2 * (colW + GAP)];
+  const HY = 5.92, CARD_Y = HY + 0.36, CARD_H = 4.82;
+
+  const heads = [
+    ["shieldW", "1. GOVERNANCE & ASSURANCE"],
+    ["usersW", "2. CURRENT DELIVERY SYSTEM"],
+    ["gearW", "3. FRAMEWORK DEVELOPMENT PROGRAMME"],
   ];
-  checks.forEach((row, r) => {
-    row.forEach((t, c) => {
-      s.addText([
-        { text: "✓ ", options: { bold: true, color: KAWAKAWA } },
-        { text: t, options: { color: BLACK } },
-      ], { x: PX + 0.16 + c * 2.55, y: 4.12 + r * 0.2, w: 2.5, h: 0.2,
-        fontFace: F, fontSize: 8.2, align: "left", valign: "middle", margin: 0 });
-    });
-  });
-  s.addText(
-    "Applicable across combat, command, crisis response, training, garrison leadership and high-risk technical activity.",
-    { x: PX + 0.16, y: 4.58, w: PW - 0.32, h: 0.3, fontFace: F, fontSize: 7.5,
-      italic: true, color: BLACK, align: "left", valign: "top", margin: 0 });
-  flowArrow(5.0, KAWAKAWA, "developed and organised through");
-
-  // Framework
-  leftBlock(5.22, 1.18, KAWAKAWA, "puzzle", "ARMY COMBAT MINDSET FRAMEWORK", "Organising model");
-  panel(5.22, 1.18);
-  s.addText(
-    "The Army Combat Mindset Framework is the organising model through which Army defines, develops, integrates and assures the capabilities, products and governance arrangements that enable Combat Mindset.",
-    { x: PX + 0.16, y: 5.3, w: PW - 0.32, h: 0.52, fontFace: F, fontSize: 8.7,
-      bold: true, color: SWAMP, align: "left", valign: "top", margin: 0 });
-  s.addText("It organises:", { x: PX + 0.16, y: 5.84, w: 1.2, h: 0.16, fontFace: F,
-    fontSize: 7.6, italic: true, color: BLACK, align: "left", valign: "middle", margin: 0 });
-  const org = [
-    ["Doctrinal definitions", "Desired outcomes", "Provisional pillars"],
-    ["Developmental progression", "Products and methods", "Delivery responsibilities"],
-    ["Governance", "Evidence", "Assurance"],
-  ];
-  org.forEach((col, c) => {
-    s.addText(col.map((t, i) => ({
-      text: "·  " + t, options: { breakLine: i < col.length - 1 },
-    })), { x: PX + 0.16 + c * 1.72, y: 6.02, w: 1.7, h: 0.34, fontFace: F,
-      fontSize: 7.2, color: BLACK, align: "left", valign: "top", margin: 0 });
-  });
-  flowArrow(6.52, SWAMP, "delivered through");
-
-  // ---- capability strands ------------------------------------------------
-  s.addShape("rect", { x: L, y: 6.74, w: W, h: 1.24, fill: { color: MOAWHANGO, transparency: 72 } });
-  s.addText("PROVISIONAL CAPABILITY PILLARS", { x: L, y: 6.79, w: W, h: 0.18, fontFace: F,
-    fontSize: 10, bold: true, color: SWAMP, charSpacing: 2, align: "center",
-    valign: "middle", margin: 0 });
-  s.addText("Provisional working pillars — subject to Phase 1 validation", {
-    x: L, y: 6.96, w: W, h: 0.13, fontFace: F, fontSize: 6.5, italic: true,
-    color: BLACK, align: "center", valign: "middle", margin: 0 });
-  const strands = [
-    ["compass", "Leadership"], ["mskills", "Self-regulation"], ["target", "Performance cognition"],
-    ["heart", "Resilience & recovery"], ["dumbbell", "Physical performance"],
-    ["medal", "Identity, values & will"], ["users", "Collective performance"],
-  ];
-  const cellW = W / 7;
-  strands.forEach(([ic, label], i) => {
-    const cx = L + i * cellW + cellW / 2;
-    const filled = ic === "target";
-    s.addShape("ellipse", { x: cx - 0.19, y: 7.12, w: 0.38, h: 0.38,
-      fill: { color: filled ? SWAMP : WHITE },
-      line: { color: SWAMP, width: 1.25 } });
-    s.addImage({ data: filled ? I.target : I[ic], x: cx - 0.11, y: 7.2, w: 0.22, h: 0.22 });
-    s.addText(label, { x: L + i * cellW + 0.03, y: 7.54, w: cellW - 0.06, h: 0.42,
-      fontFace: F, fontSize: 6.8, bold: true, color: SWAMP, align: "center",
-      valign: "top", margin: 0 });
+  heads.forEach(([ic, title], i) => {
+    s.addShape("rect", { x: CX[i], y: HY, w: colW, h: 0.36, fill: { color: SWAMP } });
+    s.addImage({ data: I[ic], x: CX[i] + 0.08, y: HY + 0.08, w: 0.2, h: 0.2 });
+    s.addText(title, { x: CX[i] + 0.34, y: HY, w: colW - 0.4, h: 0.36,
+      fontFace: F, fontSize: 7.6, bold: true, color: WHITE, align: "left",
+      valign: "middle", margin: 0 });
+    s.addShape("rect", { x: CX[i], y: CARD_Y, w: colW, h: CARD_H,
+      fill: { color: WHITE }, line: { color: WAIOURU, width: 0.75 } });
   });
 
-  // connector + clarifier
-  s.addShape("triangle", { x: L + W / 2 - 0.08, y: 8.06, w: 0.16, h: 0.12,
-    fill: { color: SWAMP }, rotate: 180 });
-  s.addText("each product contributes across multiple pillars", {
-    x: L + W / 2 + 0.16, y: 8.04, w: 3.2, h: 0.16, fontFace: F, fontSize: 7.5,
-    italic: true, color: BLACK, align: "left", valign: "middle", margin: 0 });
-
-  // ---- products ----------------------------------------------------------
-  s.addText("TRAINING PRODUCTS AND METHODS", { x: L, y: 8.26, w: W, h: 0.2,
-    fontFace: F, fontSize: 10.5, bold: true, color: SWAMP, charSpacing: 2,
-    align: "center", valign: "middle", margin: 0 });
-  const prods = [
-    ["NZALC Performance Under Pressure package", false],
-    ["NZDF Psychology products", false],
-    ["COGCON", true],
-    ["Scenario, experiential & progressive pressure training", false],
-    ["Physical & cognitive conditioning", false],
-    ["Structured reflection & recovery", false],
-    ["Other products identified in Phase 1 stocktake", false],
-  ];
-  const pw = (W - 0.06 * 6) / 7;
-  prods.forEach(([label, isCogcon], i) => {
-    const px = L + i * (pw + 0.06);
-    s.addShape("rect", { x: px, y: 8.52, w: pw, h: 0.78, fill: { color: WHITE },
-      line: isCogcon ? { color: SWAMP, width: 1.5, dashType: "dash" }
-                     : { color: WAIOURU, width: 0.75 } });
-    if (isCogcon) {
-      s.addText([
-        { text: "COGCON", options: { bold: true, fontSize: 7.2, breakLine: true } },
-        { text: "Developmental performance-cognition product", options: { fontSize: 6.2, italic: true } },
-      ], { x: px + 0.03, y: 8.52, w: pw - 0.06, h: 0.78, fontFace: F, color: BLACK,
-        align: "center", valign: "middle", margin: 0 });
-    } else {
-      s.addText(label, { x: px + 0.04, y: 8.52, w: pw - 0.08, h: 0.78, fontFace: F,
-        fontSize: 7.2, bold: true, color: BLACK, align: "center", valign: "middle", margin: 0 });
-    }
-  });
-
-  // ---- delivery ribbon ---------------------------------------------------
-  s.addText("Dashed outline indicates developmental status pending the Phase 1 stocktake", {
-    x: L, y: 9.31, w: W, h: 0.1, fontFace: F, fontSize: 6, italic: true,
-    color: BLACK, align: "center", valign: "middle", margin: 0 });
-  const rib = [];
-  rib.push({ text: "Developed across the Prepare – Perform – Recover cycle   ·   Lead Self", options: { color: SWAMP } });
-  ["Lead Teams", "Lead Leaders", "Lead Systems"].forEach((t) => {
-    rib.push({ text: "  \u25BA  ", options: { color: RED, fontSize: 6.2 } });
-    rib.push({ text: t, options: { color: SWAMP } });
-  });
-  s.addText(rib, { x: L, y: 9.4, w: W, h: 0.18, fontFace: F, fontSize: 8,
-    bold: true, align: "center", valign: "middle", margin: 0 });
-  s.addText(
-    "Delivered by approved training establishments, units and existing instructor workforces across Army",
-    { x: L, y: 9.59, w: W, h: 0.15, fontFace: F, fontSize: 7, italic: true,
-      color: BLACK, align: "center", valign: "middle", margin: 0 });
-
-  // ---- governance / programme -------------------------------------------
-  const colW = 3.55, gx = L, px2 = 4.22;
-  s.addShape("rect", { x: gx, y: 9.84, w: colW, h: 1.18, fill: { color: MOAWHANGO, transparency: 72 } });
-  s.addImage({ data: I.landmark, x: gx + 0.14, y: 9.94, w: 0.22, h: 0.22 });
-  s.addText("GOVERNANCE AND ASSURANCE", { x: gx + 0.44, y: 9.93, w: colW - 0.52,
-    h: 0.22, fontFace: F, fontSize: 8.8, bold: true, color: SWAMP,
-    align: "left", valign: "middle", margin: 0 });
+  // Column 1 — governance & assurance
   const gov = [
-    "Army Sponsor (to be confirmed) — strategic sponsorship and policy direction",
-    "COMDT ACS — interim capability integrator",
-    "ACS — framework development and capability-integration lead",
-    "HPC — COGCON product steward; performance-cognition adviser",
-    "Layered doctrine, evidence, professional and delivery assurance",
+    "Strategic sponsorship and policy direction",
+    "Capability integration",
+    "Technical and professional authorities",
+    "Product recognition and evidence requirements",
+    "Delivery standards",
+    "Evaluation and assurance",
   ];
   s.addText(gov.map((t, i) => ({
-    text: t, options: { bullet: { characterCode: "2022", indent: 8 }, breakLine: i < gov.length - 1 },
-  })), { x: gx + 0.18, y: 10.2, w: colW - 0.3, h: 0.78, fontFace: F, fontSize: 7,
-    color: BLACK, align: "left", valign: "top", margin: 0, paraSpaceAfter: 2 });
+    text: t, options: { bullet: { characterCode: "2022", indent: 10 },
+      breakLine: i < gov.length - 1 },
+  })), { x: CX[0] + 0.14, y: CARD_Y + 0.18, w: colW - 0.26, h: CARD_H - 0.36,
+    fontFace: F, fontSize: 8.2, color: BLACK, align: "left", valign: "top",
+    margin: 0, paraSpaceAfter: 12 });
 
-  s.addShape("rect", { x: px2, y: 9.84, w: colW, h: 1.18, fill: { color: MOAWHANGO, transparency: 72 } });
-  s.addImage({ data: I.clipboard, x: px2 + 0.14, y: 9.94, w: 0.22, h: 0.22 });
-  s.addText("PROGRAMME OF WORK — PHASES 0–4", { x: px2 + 0.44, y: 9.93, w: colW - 0.52,
-    h: 0.22, fontFace: F, fontSize: 8.8, bold: true, color: SWAMP,
-    align: "left", valign: "middle", margin: 0 });
-  const prog = [
-    "0.  Define terms, sponsorship and relationship",
-    "1.  Stocktake current capabilities, products and evidence",
-    "2.  Draft the Army Combat Mindset Framework",
-    "3.  Validate with stakeholders and units",
-    "4.  Report back — Framework v1.0, November 2026",
-  ];
-  s.addText(prog.map((t, i) => ({
-    text: t, options: { breakLine: i < prog.length - 1 },
-  })), { x: px2 + 0.18, y: 10.2, w: colW - 0.3, h: 0.78, fontFace: F, fontSize: 7,
-    color: BLACK, align: "left", valign: "top", margin: 0, paraSpaceAfter: 2 });
-
-  // ---- footer: harder to kill + key point --------------------------------
-  s.addShape("rect", { x: L, y: 11.16, w: W, h: 0.3, fill: { color: BLACK } });
-  s.addImage({ data: I.star, x: L + 0.14, y: 11.21, w: 0.2, h: 0.2 });
+  // Column 2 — current delivery system
+  function deliveryGroup(iconKey, title, items, y, itemSize) {
+    s.addImage({ data: I[iconKey], x: CX[1] + 0.12, y: y + 0.01, w: 0.24, h: 0.24 });
+    s.addText(title, { x: CX[1] + 0.44, y, w: colW - 0.56, h: 0.26, fontFace: F,
+      fontSize: 8.3, bold: true, color: SWAMP, align: "left", valign: "middle",
+      margin: 0 });
+    s.addText(items.map((t, i) => ({
+      text: t, options: { bullet: { characterCode: "2022", indent: 8 },
+        breakLine: i < items.length - 1 },
+    })), { x: CX[1] + 0.44, y: y + 0.27, w: colW - 0.56, h: 1.3, fontFace: F,
+      fontSize: itemSize, color: BLACK, align: "left", valign: "top", margin: 0,
+      paraSpaceAfter: 3 });
+  }
+  deliveryGroup("chevronsG", "NZALC", [
+    "ELDA Lead Leaders",
+    "ELDA Lead Systems",
+    "ELDA Resilience",
+    "Performance Under Pressure — Lead Self",
+    "Performance Under Pressure — Lead Teams",
+  ], CARD_Y + 0.14, 7.3);
+  s.addShape("line", { x: CX[1] + 0.12, y: CARD_Y + 1.72, w: colW - 0.24, h: 0,
+    line: { color: WAIOURU, width: 0.5 } });
+  deliveryGroup("brainG", "HUMAN PERFORMANCE CELL", [
+    "COGCON",
+    "Performance conditioning",
+  ], CARD_Y + 1.84, 7.3);
+  s.addShape("line", { x: CX[1] + 0.12, y: CARD_Y + 2.62, w: colW - 0.24, h: 0,
+    line: { color: WAIOURU, width: 0.5 } });
+  s.addImage({ data: I.landmarkG, x: CX[1] + 0.12, y: CARD_Y + 2.75, w: 0.24, h: 0.24 });
+  s.addText("UNITS AND TRAINING ESTABLISHMENTS", {
+    x: CX[1] + 0.44, y: CARD_Y + 2.72, w: colW - 0.56, h: 0.34, fontFace: F,
+    fontSize: 8.3, bold: true, color: SWAMP, align: "left", valign: "middle",
+    margin: 0 });
   s.addText([
-    { text: "HARDER TO KILL", options: { bold: true, fontSize: 10, color: RED, charSpacing: 2.5 } },
-    { text: "      Proposed Warfighter Focus tagline — subject to sponsor endorsement",
-      options: { fontSize: 7, color: WHITE } },
-  ], { x: L + 0.46, y: 11.16, w: W - 0.56, h: 0.3, fontFace: F,
-    align: "left", valign: "middle", margin: 0 });
+    "Training", "Exercises", "Mission rehearsal", "Field activity",
+  ].map((t, i, a) => ({
+    text: t, options: { bullet: { characterCode: "2022", indent: 8 },
+      breakLine: i < a.length - 1 },
+  })), { x: CX[1] + 0.44, y: CARD_Y + 3.08, w: colW - 0.56, h: 0.75, fontFace: F,
+    fontSize: 7.3, color: BLACK, align: "left", valign: "top", margin: 0,
+    paraSpaceAfter: 3 });
+  s.addShape("rect", { x: CX[1] + 0.12, y: CARD_Y + 3.98, w: colW - 0.24, h: 0.72,
+    fill: { color: WHITE }, line: { color: SWAMP, width: 1, dashType: "dash" } });
+  s.addImage({ data: I.usersG, x: CX[1] + 0.2, y: CARD_Y + 4.22, w: 0.24, h: 0.24 });
+  s.addText("Units contextualise and express Combat Mindset under realistic warfighting conditions.", {
+    x: CX[1] + 0.5, y: CARD_Y + 4.02, w: colW - 0.72, h: 0.64, fontFace: F,
+    fontSize: 7.2, italic: true, color: BLACK, align: "left", valign: "middle",
+    margin: 0 });
+
+  // Column 3 — framework development programme
+  const phases = [
+    ["0", "Phase 0 — Define and govern",
+      "Confirm terminology, sponsorship, ownership and interim governance."],
+    ["1", "Phase 1 — Understand",
+      "Stocktake existing doctrine, products, delivery, evidence, ownership and assurance."],
+    ["2", "Phase 2 — Design",
+      "Develop the framework, delivery architecture, outcomes and product-recognition criteria."],
+    ["3", "Phase 3 — Validate",
+      "Refine the framework with stakeholders, training establishments and units."],
+    ["4", "Phase 4 — Endorse and implement",
+      "Deliver Framework v1.0 and a prioritised implementation plan."],
+  ];
+  const P0 = CARD_Y + 0.18, PITCH = 0.92;
+  s.addShape("line", { x: CX[2] + 0.29, y: P0 + 0.15,
+    w: 0, h: PITCH * 4, line: { color: SWAMP, width: 1.25 } });
+  phases.forEach(([n, title, desc], i) => {
+    const py = P0 + i * PITCH;
+    s.addShape("ellipse", { x: CX[2] + 0.14, y: py, w: 0.3, h: 0.3,
+      fill: { color: SWAMP }, line: { color: WHITE, width: 1 } });
+    s.addText(n, { x: CX[2] + 0.14, y: py, w: 0.3, h: 0.3, fontFace: F,
+      fontSize: 10, bold: true, color: WHITE, align: "center",
+      valign: "middle", margin: 0 });
+    s.addText(title, { x: CX[2] + 0.54, y: py - 0.02, w: colW - 0.66, h: 0.34,
+      fontFace: F, fontSize: 8.2, bold: true, color: SWAMP, align: "left",
+      valign: "top", margin: 0 });
+    s.addText(desc, { x: CX[2] + 0.54, y: py + 0.3, w: colW - 0.66, h: 0.56,
+      fontFace: F, fontSize: 7.2, color: BLACK, align: "left", valign: "top",
+      margin: 0 });
+  });
 
   await pres.writeFile({ fileName: "output/combat-mindset-onepager-portrait.pptx" });
   console.log("written output/combat-mindset-onepager-portrait.pptx");

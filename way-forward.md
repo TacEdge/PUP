@@ -164,7 +164,7 @@ It is recommended that COMDT ACS:
 3. **Approve** development of the Army Combat Mindset Framework through the proposed capability and product stocktake, framework-development activity and stakeholder forum, noting that the provisional capability pillars and the contribution, maturity, evidence, ownership and appropriate nesting of existing products — including the NZALC Performance Under Pressure package, COGCON and NZDF Psychology products — will be validated through this process.
 4. **Confirm** the interim governance arrangements at paragraph 5, including COMDT ACS as interim capability integrator pending confirmation of the Army Sponsor, ACS as framework development and capability-integration lead, and technical and professional authority distributed by domain.
 5. **Seek** confirmation of the Army Sponsor by 31 August 2026, with candidate options identified by ACS.
-6. **Decide** the status of Harder to Kill as the proposed Warfighter Focus tagline — endorse, defer or reject — noting "Remain Effective. Act Decisively." as the alternative already presented in the Model on a Page.
+6. **Decide** the status of Harder to Kill within the proposed Combat Mindset tagline — Remain effective. Act decisively. Harder to kill. — endorsing, deferring or rejecting its inclusion.
 7. **Direct** a report back in November 2026 containing the endorsed definitions; Framework v1.0; the validated capability and product architecture; proposed governance and assurance arrangements; an assessment of existing product maturity, evidence and scalability; and a prioritised implementation plan.
 
 +++
