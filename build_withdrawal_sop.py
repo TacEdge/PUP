@@ -26,7 +26,7 @@ DATE               = "July 2026"
 ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
 VERSION            = "Draft v0.1"
 
-TITLE       = "Adventure Race — Participant Withdrawal SOP"
+TITLE       = "Warrant Officer Adventure Race — Participant Withdrawal SOP"
 FOOTER_LEFT = "Participant Withdrawal SOP"
 
 ARMY_RED      = "C62026"

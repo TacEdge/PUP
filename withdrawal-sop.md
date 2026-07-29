@@ -1,4 +1,4 @@
-# Adventure Race — Participant Withdrawal SOP
+# Warrant Officer Adventure Race — Participant Withdrawal SOP
 
 ## 1. Purpose
 
