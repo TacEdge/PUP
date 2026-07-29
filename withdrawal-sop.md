@@ -36,7 +36,7 @@ A slower team, greater workload or frustration alone will not normally meet this
 2. **Intervene and reassess** — provide clear feedback; apply authorised adjustments; reassess whether safe and meaningful participation remains achievable.
 3. **Decide and record** — if withdrawal remains necessary, staff provide observations and a recommendation to the designated uniformed authority.
 
-For non-immediate withdrawal, CI or SI NZALC and CI NCO School discuss the case; CI NCO School recommends withdrawal to COMDT ACS for confirmation.
+For non-immediate withdrawal, CI NZALC and CI NCO School discuss the case; CI NZALC recommends withdrawal to COMDT ACS for confirmation.
 
 **Immediate withdrawal.** An instructor, safety staff member or medical practitioner may immediately stop or withdraw a participant to manage an immediate safety or medical risk, informing CI NZALC and CI NCO School as soon as practicable.
 
