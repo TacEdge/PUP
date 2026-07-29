@@ -26,8 +26,9 @@ DATE               = "July 2026"
 ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
 VERSION            = "Draft v0.1"
 
-TITLE       = "Warrant Officer Adventure Race — Participant Withdrawal SOP"
-FOOTER_LEFT = "Participant Withdrawal SOP"
+TITLE       = "ELDA Lead Systems Withdrawal SOP"
+SUBTITLE_LINE = "Warrant Officers Adventure Race"
+FOOTER_LEFT = "ELDA Lead Systems Withdrawal SOP"
 
 ARMY_RED      = "C62026"
 DARKEST_HOUR  = "000000"
@@ -305,13 +306,21 @@ logo_para.paragraph_format.space_before = Pt(0)
 logo_para.paragraph_format.space_after = Pt(14)
 
 title_p = doc.add_paragraph()
-title_p.paragraph_format.space_after = Pt(2)
-set_border(title_p, "bottom", ARMY_RED, 18, space=8)
+title_p.paragraph_format.space_after = Pt(1)
 t = title_p.add_run(TITLE)
 force_font(t, FONT_HEAD)
-t.font.size = Pt(19)
+t.font.size = Pt(20)
 t.bold = True
 force_color(t, DARKEST_HOUR)
+
+sub_title_p = doc.add_paragraph()
+sub_title_p.paragraph_format.space_after = Pt(4)
+set_border(sub_title_p, "bottom", ARMY_RED, 18, space=8)
+st = sub_title_p.add_run(SUBTITLE_LINE)
+force_font(st, FONT_HEAD)
+st.font.size = Pt(12)
+st.bold = True
+force_color(st, SWAMP_GREEN)
 
 org_p = doc.add_paragraph()
 org_p.paragraph_format.space_before = Pt(6)
