@@ -20,7 +20,8 @@ SOURCE_FILE        = "./withdrawal-sop.md"
 LOGO_FILE          = "./assets/nz-army-logo.png"
 OUTPUT_DOCX        = "./output/withdrawal-sop.docx"
 PROTECTIVE_MARKING = "UNCLASSIFIED"
-DOCUMENT_REFERENCE = "ACS 2026"
+DOCUMENT_REFERENCE = "ELDA Lead Systems Course Workbook, pp 60–62 (Learning Objectives)"
+FOOTER_REFERENCE   = "ACS 2026"
 DATE               = "July 2026"
 ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
 VERSION            = "Draft v0.1"
@@ -281,7 +282,7 @@ def footer_run(text):
 
 footer_run(FOOTER_LEFT)
 footer_run("\t")
-footer_run(DOCUMENT_REFERENCE)
+footer_run(FOOTER_REFERENCE)
 footer_run("\tPage ")
 for r in add_field(info, "PAGE", "1"):
     force_font(r, FONT_HEAD)
