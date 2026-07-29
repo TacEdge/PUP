@@ -26,9 +26,9 @@ DATE               = "July 2026"
 ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
 VERSION            = "Draft v0.1"
 
-TITLE       = "ELDA Lead Systems Withdrawal SOP"
+TITLE       = "ELDA Lead Systems Student Withdrawal SOP"
 SUBTITLE_LINE = "Warrant Officers Adventure Race"
-FOOTER_LEFT = "ELDA Lead Systems Withdrawal SOP"
+FOOTER_LEFT = "ELDA Lead Systems Student Withdrawal SOP"
 
 ARMY_RED      = "C62026"
 DARKEST_HOUR  = "000000"
