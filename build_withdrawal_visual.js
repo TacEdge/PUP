@@ -43,20 +43,18 @@ async function icon(name, hex, strokeWidth = 1.7) {
 
   const L = 0.5, W = 7.27, R = L + W;
 
-  // ---- markings ----------------------------------------------------------
-  s.addShape("rect", { x: 0, y: 0, w: 8.27, h: 0.18, fill: { color: BLACK } });
-  s.addText("UNCLASSIFIED", { x: 0, y: 0, w: 8.27, h: 0.18, align: "center",
-    valign: "middle", fontFace: F, fontSize: 7.5, bold: true, color: WHITE,
+  // ---- markings (plain text, no banner) -----------------------------------
+  s.addText("UNCLASSIFIED", { x: 0, y: 0.02, w: 8.27, h: 0.18, align: "center",
+    valign: "middle", fontFace: F, fontSize: 7.5, bold: true, color: BLACK,
     charSpacing: 4, margin: 0 });
-  s.addShape("rect", { x: 0, y: 11.51, w: 8.27, h: 0.18, fill: { color: BLACK } });
-  s.addText("UNCLASSIFIED", { x: 0, y: 11.51, w: 8.27, h: 0.18, align: "center",
-    valign: "middle", fontFace: F, fontSize: 7.5, bold: true, color: WHITE,
+  s.addText("UNCLASSIFIED", { x: 0, y: 11.49, w: 8.27, h: 0.18, align: "center",
+    valign: "middle", fontFace: F, fontSize: 7.5, bold: true, color: BLACK,
     charSpacing: 4, margin: 0 });
   s.addText("Army Command School  ·  ACS 2026", {
-    x: L, y: 11.51, w: 2.6, h: 0.18, align: "left", valign: "middle",
-    fontFace: F, fontSize: 6, color: MOAWHANGO, margin: 0 });
-  s.addText("Draft v0.1  ·  July 2026", { x: 5.7, y: 11.51, w: 2.07, h: 0.18,
-    align: "right", valign: "middle", fontFace: F, fontSize: 6, color: MOAWHANGO, margin: 0 });
+    x: L, y: 11.49, w: 2.6, h: 0.18, align: "left", valign: "middle",
+    fontFace: F, fontSize: 6, color: BLACK, margin: 0 });
+  s.addText("Draft v0.1  ·  July 2026", { x: 5.7, y: 11.49, w: 2.07, h: 0.18,
+    align: "right", valign: "middle", fontFace: F, fontSize: 6, color: BLACK, margin: 0 });
 
   // ---- header ------------------------------------------------------------
   s.addImage({ path: LOGO, x: L, y: 0.32, w: 1.05, h: 0.254 });
