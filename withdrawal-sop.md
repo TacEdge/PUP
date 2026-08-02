@@ -9,16 +9,16 @@ Provide a consistent, fair and defensible process for deciding whether a partici
 The Adventure Race deliberately exposes participants and teams to pressure, fatigue, adversity, uncertainty and interpersonal friction in support of approved learning objectives. Withdrawal is justified only where a participant's condition, capability or conduct materially prevents:
 
 * safe participation;
-* meaningful individual participation; or
-* maintenance of learning and assessment conditions.
+* the intended learning and assessment conditions; or
+* the safe and effective conduct of the activity.
 
 ## 3. Grounds for withdrawal
 
-1. **Safety or medical risk.** Continued participation is unsafe or breaches an authorised medical restriction.
-2. **Physical participation.** The participant cannot safely undertake sufficient required activity despite reasonable adaptation.
-3. **Learning and assessment validity.** The participant can no longer be meaningfully exposed to, develop against, or be assessed against approved objectives.
-4. **Conduct.** Repeated refusal, deliberate non-compliance, or behaviour that creates risk or prevents team functioning after feedback.
-5. **Developmental welfare.** Continued participation is likely to cause harm and no longer provides meaningful developmental benefit.
+Each ground protects a different thing: the individual, the learning environment, and the activity itself.
+
+1. **Medical and safety.** The participant cannot continue safely because of a medical condition or safety risk.
+2. **Learning and assessment.** Continued participation by the participant prevents the activity from providing the intended learning and assessment conditions.
+3. **Conduct.** The participant refuses to follow lawful instructions or behaves in a way that prevents the safe and effective conduct of the activity.
 
 ## 4. Not grounds by themselves
 

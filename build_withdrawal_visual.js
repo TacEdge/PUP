@@ -97,8 +97,8 @@ async function icon(name, hex, strokeWidth = 1.7) {
       color: BLACK, align: "left", valign: "top", margin: 0 });
   const circles = [
     ["shield", "Safe participation"],
-    ["users", "Meaningful individual participation"],
-    ["book", "Maintenance of learning and assessment conditions"],
+    ["book", "The intended learning and assessment conditions"],
+    ["users", "The safe and effective conduct of the activity"],
   ];
   const cw = LW / 3;
   circles.forEach(([ic, label], i) => {
@@ -143,35 +143,34 @@ async function icon(name, hex, strokeWidth = 1.7) {
   const GY = 4.32;
   bar(L, GY, W, "3. GROUNDS FOR WITHDRAWAL", 0.28);
   const grounds = [
-    ["cross", "Safety or medical risk",
-      "Continued participation is unsafe or breaches an authorised medical restriction."],
-    ["activity", "Physical participation",
-      "Cannot safely undertake sufficient required activity despite reasonable adaptation."],
-    ["brain", "Learning and assessment validity",
-      "Can no longer be meaningfully exposed to, develop against, or be assessed against approved objectives."],
-    ["alert", "Conduct",
-      "Repeated refusal, deliberate non-compliance, or behaviour that creates risk or prevents team functioning after feedback."],
-    ["heart", "Developmental welfare",
-      "Continued participation is likely to cause harm and no longer provides meaningful developmental benefit."],
+    ["cross", "Medical and safety", "Protects the individual",
+      "The participant cannot continue safely because of a medical condition or safety risk."],
+    ["brain", "Learning and assessment", "Protects the learning environment",
+      "Continued participation by the participant prevents the activity from providing the intended learning and assessment conditions."],
+    ["alert", "Conduct", "Protects the activity",
+      "The participant refuses to follow lawful instructions or behaves in a way that prevents the safe and effective conduct of the activity."],
   ];
-  const gw = (W - 4 * 0.08) / 5;
-  grounds.forEach(([ic, name, desc], i) => {
-    const gx = L + i * (gw + 0.08);
+  const gw = (W - 2 * 0.12) / 3;
+  grounds.forEach(([ic, name, protects, desc], i) => {
+    const gx = L + i * (gw + 0.12);
     s.addShape("rect", { x: gx, y: GY + 0.36, w: gw, h: 1.62, fill: { color: WHITE },
       line: { color: WAIOURU, width: 0.75 } });
-    s.addShape("rect", { x: gx + 0.06, y: GY + 0.42, w: 0.17, h: 0.17,
+    s.addShape("rect", { x: gx + 0.08, y: GY + 0.44, w: 0.19, h: 0.19,
       fill: { color: KAWAKAWA } });
-    s.addText(String(i + 1), { x: gx + 0.06, y: GY + 0.42, w: 0.17, h: 0.17,
-      fontFace: F, fontSize: 7.5, bold: true, color: WHITE, align: "center",
+    s.addText(String(i + 1), { x: gx + 0.08, y: GY + 0.44, w: 0.19, h: 0.19,
+      fontFace: F, fontSize: 8, bold: true, color: WHITE, align: "center",
       valign: "middle", margin: 0 });
-    s.addShape("ellipse", { x: gx + gw / 2 - 0.2, y: GY + 0.44, w: 0.4, h: 0.4,
+    s.addShape("ellipse", { x: gx + gw / 2 - 0.21, y: GY + 0.44, w: 0.42, h: 0.42,
       fill: { color: SWAMP } });
-    s.addImage({ data: I[ic], x: gx + gw / 2 - 0.11, y: GY + 0.53, w: 0.22, h: 0.22 });
-    s.addText(name, { x: gx + 0.04, y: GY + 0.88, w: gw - 0.08, h: 0.3,
-      fontFace: F, fontSize: 7, bold: true, color: SWAMP, align: "center",
+    s.addImage({ data: I[ic], x: gx + gw / 2 - 0.115, y: GY + 0.535, w: 0.23, h: 0.23 });
+    s.addText(name, { x: gx + 0.06, y: GY + 0.9, w: gw - 0.12, h: 0.2,
+      fontFace: F, fontSize: 8.2, bold: true, color: SWAMP, align: "center",
       valign: "middle", margin: 0 });
-    s.addText(desc, { x: gx + 0.06, y: GY + 1.18, w: gw - 0.12, h: 0.76,
-      fontFace: F, fontSize: 6.1, color: BLACK, align: "center", valign: "top", margin: 0 });
+    s.addText(protects, { x: gx + 0.06, y: GY + 1.1, w: gw - 0.12, h: 0.16,
+      fontFace: F, fontSize: 6.6, italic: true, color: RED, align: "center",
+      valign: "middle", margin: 0 });
+    s.addText(desc, { x: gx + 0.12, y: GY + 1.3, w: gw - 0.24, h: 0.64,
+      fontFace: F, fontSize: 6.8, color: BLACK, align: "center", valign: "top", margin: 0 });
   });
 
   // ---- row C: withdrawal test ---------------------------------------------
