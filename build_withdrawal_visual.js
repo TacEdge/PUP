@@ -67,16 +67,17 @@ async function icon(name, hex, strokeWidth = 1.7) {
   s.addText("1. PURPOSE", { x: L + 0.42, y: 1.2, w: LW - 0.42, h: 0.2, fontFace: F,
     fontSize: 10, bold: true, color: SWAMP, charSpacing: 1.5, align: "left",
     valign: "middle", margin: 0 });
-  s.addText("Provide a fair, consistent and defensible process for participant withdrawal.",
-    { x: L + 0.42, y: 1.4, w: LW - 0.47, h: 0.36, fontFace: F, fontSize: 8.6,
+  s.addText(
+    "The purpose of the Adventure Race is to expose participants and teams to physical, mental and interpersonal pressure within a race environment. This SOP provides a fair, consistent and defensible process for participant withdrawal.",
+    { x: L + 0.42, y: 1.4, w: LW - 0.47, h: 0.6, fontFace: F, fontSize: 8.6,
       color: BLACK, align: "left", valign: "top", margin: 0 });
 
-  bar(L, 1.92, LW, "2. GOVERNING PRINCIPLE");
-  s.addShape("rect", { x: L, y: 2.22, w: LW, h: 2.0,
+  bar(L, 2.06, LW, "2. GOVERNING PRINCIPLE");
+  s.addShape("rect", { x: L, y: 2.36, w: LW, h: 1.86,
     fill: { color: MOAWHANGO, transparency: 72 } });
   s.addText(
     "The Adventure Race deliberately creates pressure, fatigue, uncertainty and adversity to achieve approved learning objectives. Withdrawal is justified only where a participant's condition or conduct materially prevents:",
-    { x: L + 0.16, y: 2.34, w: LW - 0.32, h: 0.66, fontFace: F, fontSize: 8.2,
+    { x: L + 0.16, y: 2.48, w: LW - 0.32, h: 0.66, fontFace: F, fontSize: 8.2,
       color: BLACK, align: "left", valign: "top", margin: 0 });
   const circles = [
     ["shield", "Safe participation"],
@@ -86,12 +87,12 @@ async function icon(name, hex, strokeWidth = 1.7) {
   const cw = LW / 3;
   circles.forEach(([ic, label], i) => {
     const cx = L + i * cw + cw / 2;
-    if (i) s.addShape("line", { x: L + i * cw - 0.25, y: 3.32, w: 0.5, h: 0,
+    if (i) s.addShape("line", { x: L + i * cw - 0.25, y: 3.43, w: 0.5, h: 0,
       line: { color: SWAMP, width: 1 } });
-    s.addShape("ellipse", { x: cx - 0.27, y: 3.05, w: 0.54, h: 0.54,
+    s.addShape("ellipse", { x: cx - 0.27, y: 3.16, w: 0.54, h: 0.54,
       fill: { color: WHITE }, line: { color: SWAMP, width: 1.25 } });
-    s.addImage({ data: I[ic], x: cx - 0.145, y: 3.175, w: 0.29, h: 0.29 });
-    s.addText(label, { x: L + i * cw + 0.05, y: 3.64, w: cw - 0.1, h: 0.5,
+    s.addImage({ data: I[ic], x: cx - 0.145, y: 3.285, w: 0.29, h: 0.29 });
+    s.addText(label, { x: L + i * cw + 0.05, y: 3.74, w: cw - 0.1, h: 0.44,
       fontFace: F, fontSize: 6.9, bold: true, color: SWAMP, align: "center",
       valign: "top", margin: 0 });
   });
