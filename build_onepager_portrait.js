@@ -141,7 +141,7 @@ const emblemFW = (ink, accent) => `
   s.addText("COMBAT MINDSET FRAMEWORK", {
     x: L, y: 5.86, w: W, h: 0.44, fontFace: F, fontSize: 22.5, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
-  s.addText("The Army system through which Combat Mindset is governed, developed, delivered and assured.", {
+  s.addText("The framework through which Combat Mindset is governed, developed, delivered and assured.", {
     x: L, y: 6.33, w: W, h: 0.24, fontFace: F, fontSize: 9.5,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
 
