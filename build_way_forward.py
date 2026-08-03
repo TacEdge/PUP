@@ -23,15 +23,15 @@ LOGO_FILE          = "./assets/nz-army-logo.png"
 OUTPUT_DOCX        = "./output/combat-mindset-way-forward.docx"
 PROTECTIVE_MARKING = "UNCLASSIFIED"
 DOCUMENT_REFERENCE = "ACS 2026"
-DATE               = "July 2026"
+DATE               = "August 2026"
 ORIGINATOR         = "Army Command School"
-VERSION            = "Draft v0.8"
+VERSION            = "Draft v0.9"
 DISTRIBUTION       = "COMDT ACS"
 LIST_STYLE         = "bullets"
 
-TITLE    = "Combat Mindset — Proposed Way Forward"
+TITLE    = "Combat Mindset Framework Proposal"
 SUBTITLE = "Defining, developing and assuring the human-performance capability Army requires to remain effective in combat."
-FOOTER_LEFT = "Combat Mindset — Proposed Way Forward"
+FOOTER_LEFT = "Combat Mindset Framework Proposal"
 
 # Brand palette (NZDF Visual Identity Standards — NZ Army)
 ARMY_RED       = "C62026"
@@ -506,7 +506,7 @@ force_color(t, DARKEST_HOUR)
 sub_title_p = doc.add_paragraph()
 sub_title_p.paragraph_format.space_after = Pt(10)
 set_border(sub_title_p, "bottom", ARMY_RED, 20, space=10)
-st = sub_title_p.add_run("Proposed Way Forward")
+st = sub_title_p.add_run("Framework Proposal")
 force_font(st, FONT_HEAD)
 st.font.size = Pt(17)
 st.bold = True
@@ -521,20 +521,23 @@ s.font.size = Pt(13)
 force_color(s, SWAMP_GREEN)
 
 promise_p = doc.add_paragraph()
-promise_p.paragraph_format.space_after = Pt(4)
-pr = promise_p.add_run("HARDER TO KILL")
+promise_p.paragraph_format.space_after = Pt(2)
+pr = promise_p.add_run("Remain effective. Act decisively.")
 force_font(pr, FONT_HEAD)
-pr.font.size = Pt(15)
-pr.bold = True
-force_color(pr, ARMY_RED)
-prPr = pr._r.get_or_add_rPr()
-from docx.oxml import OxmlElement as _OE
-from docx.oxml.ns import qn as _qn
-sp = _OE("w:spacing"); sp.set(_qn("w:val"), "60"); prPr.append(sp)
+pr.font.size = Pt(13)
+force_color(pr, DARKEST_HOUR)
+
+promise2_p = doc.add_paragraph()
+promise2_p.paragraph_format.space_after = Pt(4)
+pr2 = promise2_p.add_run("Harder to kill.")
+force_font(pr2, FONT_HEAD)
+pr2.font.size = Pt(13)
+pr2.bold = True
+force_color(pr2, ARMY_RED)
 
 qual_p = doc.add_paragraph()
-qual_p.paragraph_format.space_after = Pt(88)
-q = qual_p.add_run("Proposed Warfighter Focus tagline — subject to sponsor endorsement")
+qual_p.paragraph_format.space_after = Pt(84)
+q = qual_p.add_run("Proposed tagline, subject to sponsor endorsement")
 force_font(q, FONT_HEAD)
 q.font.size = Pt(9)
 force_color(q, SWAMP_GREEN)
