@@ -112,15 +112,15 @@ async function icon(name, hex, strokeWidth = 1.6) {
   pill(7.24, 3.7, "4)  FRAMEWORK DEVELOPMENT PROGRAMME", SWAMP);
 
   const phases = [
-    ["1", "Define and govern",
+    ["1", "DEFINE",
       "Confirm terminology, governance, roles and responsibilities."],
-    ["2", "Understand",
+    ["2", "UNDERSTAND",
       "Assess existing doctrine, products, delivery and governance."],
-    ["3", "Design",
+    ["3", "DESIGN",
       "Develop the Combat Mindset Framework, delivery architecture and outcomes."],
-    ["4", "Validate",
+    ["4", "VALIDATE",
       "Refine the framework with key stakeholders and conduct bounded pilots."],
-    ["5", "Endorse and implement",
+    ["5", "IMPLEMENT",
       "Deliver the framework for approval and implementation."],
   ];
   const LN = L + 0.62;      // vertical line x
@@ -134,11 +134,11 @@ async function icon(name, hex, strokeWidth = 1.6) {
     s.addText(n, { x: LN - CD / 2, y: cy - CD / 2, w: CD, h: CD, fontFace: F,
       fontSize: 13, bold: true, color: WHITE, align: "center",
       valign: "middle", margin: 0 });
-    s.addText(title, { x: LN + 0.4, y: cy - 0.26, w: R - LN - 0.6, h: 0.24,
-      fontFace: F, fontSize: 11, bold: true, color: SWAMP, align: "left",
-      valign: "middle", margin: 0 });
-    s.addText(desc, { x: LN + 0.4, y: cy - 0.01, w: R - LN - 0.6, h: 0.24,
-      fontFace: F, fontSize: 8.5, color: BLACK, align: "left",
+    s.addText(title, { x: LN + 0.42, y: cy - 0.2, w: 1.85, h: 0.4,
+      fontFace: F, fontSize: 11.5, bold: true, color: SWAMP, charSpacing: 1.5,
+      align: "left", valign: "middle", margin: 0 });
+    s.addText(desc, { x: LN + 2.32, y: cy - 0.24, w: R - LN - 2.52, h: 0.48,
+      fontFace: F, fontSize: 8.6, color: BLACK, align: "left",
       valign: "middle", margin: 0 });
   });
 
