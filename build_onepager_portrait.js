@@ -46,31 +46,18 @@ async function icon(name, hex, strokeWidth = 1.6) {
   const L = 0.5, W = 7.27, R = L + W; // 7.77
   const MID = L + W / 2;
 
-  // ---- markings ----------------------------------------------------------
-  s.addShape("rect", { x: 0, y: 0, w: 8.27, h: 0.18, fill: { color: BLACK } });
-  s.addText("UNCLASSIFIED", { x: 0, y: 0, w: 8.27, h: 0.18, align: "center",
-    valign: "middle", fontFace: F, fontSize: 7.5, bold: true, color: WHITE,
-    charSpacing: 4, margin: 0 });
-  s.addShape("rect", { x: 0, y: 11.51, w: 8.27, h: 0.18, fill: { color: BLACK } });
-  s.addText("UNCLASSIFIED", { x: 0, y: 11.51, w: 8.27, h: 0.18, align: "center",
-    valign: "middle", fontFace: F, fontSize: 7.5, bold: true, color: WHITE,
-    charSpacing: 4, margin: 0 });
+  // ---- footer credits (plain text, no banners) ---------------------------
   s.addText("Army Command School  ·  ACS 2026", {
-    x: L, y: 11.51, w: 2.6, h: 0.18, align: "left", valign: "middle",
-    fontFace: F, fontSize: 6, color: MOAWHANGO, margin: 0 });
-  s.addText("Draft v0.8  ·  July 2026", { x: 5.7, y: 11.51, w: 2.07, h: 0.18,
-    align: "right", valign: "middle", fontFace: F, fontSize: 6, color: MOAWHANGO, margin: 0 });
+    x: L, y: 11.45, w: 2.6, h: 0.18, align: "left", valign: "middle",
+    fontFace: F, fontSize: 6, color: BLACK, margin: 0 });
+  s.addText("Draft v0.8  ·  July 2026", { x: 5.7, y: 11.45, w: 2.07, h: 0.18,
+    align: "right", valign: "middle", fontFace: F, fontSize: 6, color: BLACK, margin: 0 });
 
   // ---- header ------------------------------------------------------------
-  s.addImage({ path: LOGO, x: L, y: 0.34, w: 1.1, h: 0.266 });
-  s.addText("COMBAT MINDSET — THE WAY FORWARD", {
-    x: 1.85, y: 0.3, w: 5.92, h: 0.28, fontFace: F, fontSize: 15.5, bold: true,
+  s.addImage({ path: LOGO, x: L, y: 0.5, w: 1.1, h: 0.266 });
+  s.addText("COMBAT MINDSET THE WAY FORWARD", {
+    x: 1.85, y: 0.47, w: 5.92, h: 0.32, fontFace: F, fontSize: 15.5, bold: true,
     color: BLACK, align: "left", valign: "middle", margin: 0 });
-  s.addText("Defining, developing and assuring the human-performance capability Army requires to remain effective in combat.", {
-    x: 1.85, y: 0.58, w: 5.92, h: 0.18, fontFace: F, fontSize: 8, italic: true,
-    color: BLACK, align: "left", valign: "middle", margin: 0 });
-  s.addShape("line", { x: L, y: 0.9, w: W, h: 0,
-    line: { color: BLACK, width: 1 } });
 
   // ---- shared helpers ----------------------------------------------------
   function pill(y, w, text, fill) {
@@ -86,25 +73,18 @@ async function icon(name, hex, strokeWidth = 1.6) {
     s.addText(label, { x: MID - 1.9, y: y + 0.13, w: 3.8, h: 0.16, fontFace: F,
       fontSize: 8.5, italic: true, color: BLACK, align: "center",
       valign: "middle", margin: 0 });
-    s.addShape("line", { x: L + 0.55, y: y + 0.21, w: MID - 1.95 - (L + 0.55), h: 0,
-      line: { color: WAIOURU, width: 0.75 } });
-    s.addShape("line", { x: MID + 1.95, y: y + 0.21, w: R - 0.55 - (MID + 1.95), h: 0,
-      line: { color: WAIOURU, width: 0.75 } });
   }
 
   // ---- section 1: warfighting imperative — COMBAT MINDSET ----------------
   s.addShape("rect", { x: L, y: 1.12, w: W, h: 1.3, fill: { color: BLACK } });
   pill(1.0, 2.4, "1)  WARFIGHTING IMPERATIVE", RED);
-  s.addImage({ data: I.crosshairHero, x: 6.5, y: 1.42, w: 0.78, h: 0.78, transparency: 40 });
+  s.addImage({ data: I.crosshairHero, x: L + 0.28, y: 1.46, w: 0.66, h: 0.66, transparency: 40 });
   s.addText("COMBAT MINDSET", {
-    x: L + 0.3, y: 1.42, w: 5.75, h: 0.55, fontFace: F, fontSize: 33, bold: true,
-    color: WHITE, align: "left", valign: "middle", margin: 0 });
+    x: L, y: 1.44, w: W, h: 0.55, fontFace: F, fontSize: 33, bold: true,
+    color: WHITE, align: "center", valign: "middle", margin: 0 });
   s.addText("Remain effective. Act decisively. Harder to kill.", {
-    x: L + 0.32, y: 2.0, w: 5.75, h: 0.26, fontFace: F, fontSize: 13, bold: true,
-    color: RED, align: "left", valign: "middle", margin: 0 });
-  s.addText("Tagline subject to sponsor endorsement", {
-    x: 4.4, y: 2.24, w: 3.2, h: 0.12, fontFace: F, fontSize: 5.8, italic: true,
-    color: MOAWHANGO, align: "right", valign: "middle", margin: 0 });
+    x: L, y: 2.02, w: W, h: 0.26, fontFace: F, fontSize: 13, bold: true,
+    color: RED, align: "center", valign: "middle", margin: 0 });
 
   midConnector(2.5, "enabled by");
 
@@ -113,11 +93,10 @@ async function icon(name, hex, strokeWidth = 1.6) {
   pill(2.98, 4.0, "2)  ENABLING HUMAN-PERFORMANCE CAPABILITY", SWAMP);
   s.addImage({ data: I.brainW, x: L + 0.24, y: 3.42, w: 0.5, h: 0.5 });
   s.addText("PERFORMANCE UNDER PRESSURE", {
-    x: L + 0.9, y: 3.32, w: W - 1.15, h: 0.42, fontFace: F, fontSize: 23,
+    x: L, y: 3.32, w: W, h: 0.42, fontFace: F, fontSize: 23,
     bold: true, color: WHITE, align: "center", valign: "middle", margin: 0 });
-  s.addText(
-    "Prepare for pressure   ·   Perform through pressure   ·   Adapt within pressure   ·   Recover from pressure",
-    { x: L + 0.15, y: 3.79, w: W - 0.3, h: 0.2, fontFace: F, fontSize: 8.6,
+  s.addText("Prepare   •   Perform   •   Recover",
+    { x: L, y: 3.79, w: W, h: 0.2, fontFace: F, fontSize: 10.5,
       bold: true, color: WHITE, align: "center", valign: "middle", margin: 0 });
 
   midConnector(4.24, "developed, organised and assured through");
@@ -127,10 +106,10 @@ async function icon(name, hex, strokeWidth = 1.6) {
   pill(4.72, 2.1, "3)  ORGANISING SYSTEM", KAWAKAWA);
   s.addImage({ data: I.puzzleW, x: L + 0.24, y: 5.06, w: 0.46, h: 0.46 });
   s.addText("THE ARMY COMBAT MINDSET FRAMEWORK", {
-    x: L + 0.85, y: 4.98, w: W - 1.05, h: 0.36, fontFace: F, fontSize: 19,
+    x: L, y: 4.98, w: W, h: 0.36, fontFace: F, fontSize: 19,
     bold: true, color: WHITE, align: "center", valign: "middle", margin: 0 });
   s.addText("The Army system through which Combat Mindset is governed, developed, delivered and assured.", {
-    x: L + 0.85, y: 5.37, w: W - 1.05, h: 0.2, fontFace: F, fontSize: 9,
+    x: L, y: 5.37, w: W, h: 0.2, fontFace: F, fontSize: 9,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
 
   // ---- three framework columns -------------------------------------------
@@ -186,8 +165,8 @@ async function icon(name, hex, strokeWidth = 1.6) {
     "ELDA Lead Leaders",
     "ELDA Lead Systems",
     "ELDA Resilience",
-    "Performance Under Pressure — Lead Self",
-    "Performance Under Pressure — Lead Teams",
+    "Performance Under Pressure (Lead Self)",
+    "Performance Under Pressure (Lead Teams)",
   ], CARD_Y + 0.14, 7.3);
   s.addShape("line", { x: CX[1] + 0.12, y: CARD_Y + 1.72, w: colW - 0.24, h: 0,
     line: { color: WAIOURU, width: 0.5 } });
@@ -220,15 +199,15 @@ async function icon(name, hex, strokeWidth = 1.6) {
 
   // Column 3 — framework development programme
   const phases = [
-    ["0", "Phase 0 — Define and govern",
+    ["0", "Phase 0: Define and govern",
       "Confirm terminology, sponsorship, ownership and interim governance."],
-    ["1", "Phase 1 — Understand",
+    ["1", "Phase 1: Understand",
       "Stocktake existing doctrine, products, delivery, evidence, ownership and assurance."],
-    ["2", "Phase 2 — Design",
+    ["2", "Phase 2: Design",
       "Develop the framework, delivery architecture, outcomes and product-recognition criteria."],
-    ["3", "Phase 3 — Validate",
+    ["3", "Phase 3: Validate",
       "Refine the framework with stakeholders, training establishments and units."],
-    ["4", "Phase 4 — Endorse and implement",
+    ["4", "Phase 4: Endorse and implement",
       "Deliver Framework v1.0 and a prioritised implementation plan."],
   ];
   const P0 = CARD_Y + 0.18, PITCH = 0.92;
