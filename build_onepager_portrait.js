@@ -44,18 +44,15 @@ async function icon(name, hex, strokeWidth = 1.6) {
   const L = 0.5, W = 7.27, R = L + W, MID = L + W / 2;
 
   // ---- header ------------------------------------------------------------
-  s.addImage({ path: LOGO, x: L, y: 0.4, w: 1.38, h: 0.334 });
+  s.addImage({ path: LOGO, x: L, y: 0.36, w: 1.72, h: 0.416 });
   s.addText("COMBAT MINDSET FRAMEWORK PROPOSAL", {
-    x: L, y: 0.86, w: W, h: 0.34, fontFace: F, fontSize: 17, bold: true,
+    x: L, y: 0.9, w: W, h: 0.34, fontFace: F, fontSize: 17, bold: true,
     color: BLACK, align: "left", valign: "middle", margin: 0 });
   s.addText("Army Command School", {
-    x: L, y: 1.2, w: W, h: 0.2, fontFace: F, fontSize: 9, italic: true,
+    x: L, y: 1.24, w: W, h: 0.18, fontFace: F, fontSize: 9, italic: true,
     color: SWAMP, align: "left", valign: "middle", margin: 0 });
 
   // ---- footer ------------------------------------------------------------
-  s.addText("Army Command School", {
-    x: L, y: 11.42, w: 3.0, h: 0.18, align: "left", valign: "middle",
-    fontFace: F, fontSize: 6.5, color: BLACK, margin: 0 });
   s.addText("August 2026", { x: 4.77, y: 11.42, w: 3.0, h: 0.18,
     align: "right", valign: "middle", fontFace: F, fontSize: 6.5, color: BLACK, margin: 0 });
 
@@ -69,9 +66,9 @@ async function icon(name, hex, strokeWidth = 1.6) {
 
   function midConnector(y, label) {
     s.addShape("triangle", { x: MID - 0.07, y, w: 0.14, h: 0.11,
-      fill: { color: SWAMP }, rotate: 180 });
+      fill: { color: SWAMP, transparency: 45 }, rotate: 180 });
     s.addText(label, { x: MID - 1.9, y: y + 0.13, w: 3.8, h: 0.16, fontFace: F,
-      fontSize: 8.5, italic: true, color: BLACK, align: "center",
+      fontSize: 8, italic: true, color: "7F7F7F", align: "center",
       valign: "middle", margin: 0 });
   }
 
@@ -105,7 +102,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   s.addShape("rect", { x: L, y: 5.68, w: W, h: 1.12, fill: { color: KAWAKAWA } });
   pill(5.56, 2.1, "3)  ORGANISING SYSTEM", KAWAKAWA);
   s.addImage({ data: I.puzzleW, x: L + 0.22, y: 6.0, w: 0.44, h: 0.44 });
-  s.addText("THE ARMY COMBAT MINDSET FRAMEWORK", {
+  s.addText("NZ ARMY COMBAT MINDSET FRAMEWORK", {
     x: L, y: 5.9, w: W, h: 0.4, fontFace: F, fontSize: 17.5, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
   s.addText("The Army system through which Combat Mindset is governed, developed, delivered and assured.", {
@@ -125,7 +122,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
     ["2", "UNDERSTAND",
       "Assess existing doctrine, products, delivery and governance."],
     ["3", "DESIGN",
-      "Develop the Combat Mindset Framework, delivery architecture and outcomes."],
+      "Develop the Combat Mindset Framework, delivery system and outcomes."],
     ["4", "VALIDATE",
       "Refine the framework with key stakeholders and conduct bounded pilots."],
     ["5", "IMPLEMENT",
