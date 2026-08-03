@@ -75,12 +75,15 @@ async function icon(name, hex, strokeWidth = 1.6) {
   // ---- section 1: Combat Mindset -----------------------------------------
   s.addShape("rect", { x: L, y: 1.62, w: W, h: 1.5, fill: { color: BLACK } });
   pill(1.5, 2.4, "1)  WARFIGHTING IMPERATIVE", RED);
-  s.addImage({ data: I.crosshairHero, x: L + 0.3, y: 1.98, w: 0.78, h: 0.78, transparency: 40 });
+  s.addImage({ data: I.crosshairHero, x: L + 0.3, y: 1.94, w: 0.78, h: 0.78, transparency: 40 });
   s.addText("COMBAT MINDSET", {
-    x: L, y: 1.98, w: W, h: 0.6, fontFace: F, fontSize: 36, bold: true,
+    x: L, y: 1.92, w: W, h: 0.58, fontFace: F, fontSize: 36, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
-  s.addText("Remain effective. Act decisively. Harder to kill.", {
-    x: L, y: 2.62, w: W, h: 0.3, fontFace: F, fontSize: 14, bold: true,
+  s.addText("Remain effective. Act decisively.", {
+    x: L, y: 2.52, w: W, h: 0.24, fontFace: F, fontSize: 13.5,
+    color: WHITE, align: "center", valign: "middle", margin: 0 });
+  s.addText("Harder to kill.", {
+    x: L, y: 2.76, w: W, h: 0.28, fontFace: F, fontSize: 13.5, bold: true,
     color: RED, align: "center", valign: "middle", margin: 0 });
 
   midConnector(3.24, "enabled by");
@@ -96,7 +99,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
     x: L, y: 4.56, w: W, h: 0.26, fontFace: F, fontSize: 12, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
 
-  midConnector(5.12, "developed, organised and assured through");
+  midConnector(5.12, "organised through");
 
   // ---- section 3: the framework ------------------------------------------
   s.addShape("rect", { x: L, y: 5.68, w: W, h: 1.12, fill: { color: KAWAKAWA } });
