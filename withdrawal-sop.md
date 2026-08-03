@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-The purpose of the Adventure Race is to expose participants and teams to physical, mental and interpersonal pressure within a race environment. This SOP provides a consistent, fair and defensible process for deciding whether a participant is withdrawn for safety, medical, conduct or performance reasons.
+The Adventure Race creates a race environment that exposes participants and teams to physical, mental and interpersonal pressure to enable leadership development. This SOP provides a fair, consistent and defensible process for participant withdrawal.
 
 ## 2. Governing principle
 

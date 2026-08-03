@@ -68,7 +68,7 @@ async function icon(name, hex, strokeWidth = 1.7) {
     fontSize: 10, bold: true, color: SWAMP, charSpacing: 1.5, align: "left",
     valign: "middle", margin: 0 });
   s.addText(
-    "The purpose of the Adventure Race is to expose participants and teams to physical, mental and interpersonal pressure within a race environment. This SOP provides a fair, consistent and defensible process for participant withdrawal.",
+    "The Adventure Race creates a race environment that exposes participants and teams to physical, mental and interpersonal pressure to enable leadership development. This SOP provides a fair, consistent and defensible process for participant withdrawal.",
     { x: L + 0.42, y: 1.4, w: LW - 0.47, h: 0.6, fontFace: F, fontSize: 8.6,
       color: BLACK, align: "left", valign: "top", margin: 0 });
 
