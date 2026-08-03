@@ -14,22 +14,55 @@ const SWAMP = "002516", KAWAKAWA = "3A4B00", WAIOURU = "A89662", MOAWHANGO = "CD
 const F = "Arial";
 const LOGO = "/tmp/claude-0/-home-user-PUP/2d4cec0e-a52e-5368-bb54-803c6f37698d/scratchpad/logo-trimmed.png";
 
-async function icon(name, hex, strokeWidth = 1.6) {
-  const cmp = lu[name] || lu.LuCircle;
-  const el = React.createElement(cmp, { color: "#" + hex, size: 256, strokeWidth });
-  let svg = renderToStaticMarkup(el);
-  if (!svg.includes("xmlns")) svg = svg.replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" ');
-  const buf = await sharp(Buffer.from(svg)).resize(256, 256).png().toBuffer();
+async function svgPng(body, px = 600) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">${body}</svg>`;
+  const buf = await sharp(Buffer.from(svg)).resize(px, px).png().toBuffer();
   return "image/png;base64," + buf.toString("base64");
 }
 
+// ---- shield emblem family (family C) --------------------------------------
+function famArc(r, a0, a1, ink, w) {
+  const rad = (d) => (d * Math.PI) / 180;
+  const x0 = 128 + r * Math.sin(rad(a0)), y0 = 128 - r * Math.cos(rad(a0));
+  const x1 = 128 + r * Math.sin(rad(a1)), y1 = 128 - r * Math.cos(rad(a1));
+  return `<path d="M ${x0.toFixed(1)},${y0.toFixed(1)} A ${r},${r} 0 0,1 ${x1.toFixed(1)},${y1.toFixed(1)}"
+    fill="none" stroke="#${ink}" stroke-width="${w}" stroke-linecap="round"/>`;
+}
+
+const shieldCore = (ink, accent) => `
+  <g transform="translate(128 128) scale(0.78) translate(-128 -128)">
+    <path d="M128,26 L210,52 V128 C210,180 176,214 128,232 C80,214 46,180 46,128 V52 Z"
+      fill="none" stroke="#${ink}" stroke-width="12" stroke-linejoin="round"/>
+    <polyline points="86,150 128,102 170,150" fill="none" stroke="#${accent}"
+      stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>`;
+
+const emblemCM = (ink, accent) => `
+  <circle cx="128" cy="128" r="96" fill="none" stroke="#${ink}" stroke-width="8"/>
+  <g transform="translate(128 128) scale(0.74) translate(-128 -128)">${shieldCore(ink, accent)}</g>`;
+
+const emblemPUP = (ink, accent) => `
+  ${famArc(94, 15, 105, ink, 11)}
+  ${famArc(94, 135, 225, ink, 11)}
+  ${famArc(94, 255, 345, ink, 11)}
+  <g transform="translate(128 128) scale(0.6) translate(-128 -128)">${shieldCore(ink, accent)}</g>`;
+
+const emblemFW = (ink, accent) => `
+  <circle cx="128" cy="128" r="96" fill="none" stroke="#${ink}" stroke-width="8"/>
+  <g opacity="0.35">
+    <line x1="84" y1="42" x2="84" y2="214" stroke="#${ink}" stroke-width="4"/>
+    <line x1="172" y1="42" x2="172" y2="214" stroke="#${ink}" stroke-width="4"/>
+    <line x1="42" y1="84" x2="214" y2="84" stroke="#${ink}" stroke-width="4"/>
+    <line x1="42" y1="172" x2="214" y2="172" stroke="#${ink}" stroke-width="4"/>
+  </g>
+  <g transform="translate(128 128) scale(0.66) translate(-128 -128)">${shieldCore(ink, accent)}</g>`;
+
 (async () => {
-  const I = {};
-  const need = {
-    crosshairHero: ["LuCrosshair", MOAWHANGO],
-    brainW: ["LuBrain", WHITE], puzzleW: ["LuPuzzle", WHITE],
+  const I = {
+    cm: await svgPng(emblemCM(WHITE, RED)),
+    pup: await svgPng(emblemPUP(WHITE, RED)),
+    fw: await svgPng(emblemFW(WHITE, RED)),
   };
-  for (const [k, [n, c]] of Object.entries(need)) I[k] = await icon(n, c);
 
   const pres = new pptxgen();
   pres.defineLayout({ name: "A4P", width: 8.27, height: 11.69 });
@@ -75,7 +108,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   // ---- section 1: Combat Mindset -----------------------------------------
   s.addShape("rect", { x: L, y: 1.62, w: W, h: 1.5, fill: { color: BLACK } });
   pill(1.5, 2.4, "1)  WARFIGHTING IMPERATIVE", RED);
-  s.addImage({ data: I.crosshairHero, x: L + 0.3, y: 1.94, w: 0.78, h: 0.78, transparency: 40 });
+  s.addImage({ data: I.cm, x: L + 0.3, y: 1.94, w: 0.82, h: 0.82 });
   s.addText("COMBAT MINDSET", {
     x: L, y: 1.92, w: W, h: 0.58, fontFace: F, fontSize: 36, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
@@ -91,7 +124,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   // ---- section 2: Performance Under Pressure -----------------------------
   s.addShape("rect", { x: L, y: 3.8, w: W, h: 1.2, fill: { color: SWAMP } });
   pill(3.68, 4.0, "2)  ENABLING HUMAN-PERFORMANCE CAPABILITY", SWAMP);
-  s.addImage({ data: I.brainW, x: L + 0.22, y: 4.16, w: 0.48, h: 0.48 });
+  s.addImage({ data: I.pup, x: L + 0.26, y: 4.1, w: 0.6, h: 0.6 });
   s.addText("PERFORMANCE UNDER PRESSURE", {
     x: L, y: 4.06, w: W, h: 0.46, fontFace: F, fontSize: 22.5, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
@@ -104,7 +137,7 @@ async function icon(name, hex, strokeWidth = 1.6) {
   // ---- section 3: the framework ------------------------------------------
   s.addShape("rect", { x: L, y: 5.68, w: W, h: 1.12, fill: { color: KAWAKAWA } });
   pill(5.56, 2.1, "3)  ORGANISING SYSTEM", KAWAKAWA);
-  s.addImage({ data: I.puzzleW, x: L + 0.22, y: 6.0, w: 0.44, h: 0.44 });
+  s.addImage({ data: I.fw, x: L + 0.26, y: 5.94, w: 0.58, h: 0.58 });
   s.addText("NZ ARMY COMBAT MINDSET FRAMEWORK", {
     x: L, y: 5.9, w: W, h: 0.4, fontFace: F, fontSize: 17.5, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
