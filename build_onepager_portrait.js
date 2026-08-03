@@ -108,7 +108,7 @@ const emblemFW = (ink, accent) => `
   // ---- section 1: Combat Mindset -----------------------------------------
   s.addShape("rect", { x: L, y: 1.62, w: W, h: 1.5, fill: { color: BLACK } });
   pill(1.5, 2.4, "1)  WARFIGHTING IMPERATIVE", RED);
-  s.addImage({ data: I.cm, x: L + 0.3, y: 1.94, w: 0.82, h: 0.82 });
+  s.addImage({ data: I.cm, x: L + 0.24, y: 1.94, w: 0.82, h: 0.82 });
   s.addText("COMBAT MINDSET", {
     x: L, y: 1.92, w: W, h: 0.58, fontFace: F, fontSize: 36, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
