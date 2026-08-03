@@ -113,15 +113,15 @@ async function icon(name, hex, strokeWidth = 1.6) {
 
   const phases = [
     ["1", "Define and govern",
-      "Confirm terminology, sponsorship, ownership and interim governance."],
+      "Confirm terminology, governance, roles and responsibilities."],
     ["2", "Understand",
-      "Stocktake existing doctrine, products, delivery, evidence, ownership and assurance."],
+      "Assess existing doctrine, products, delivery and governance."],
     ["3", "Design",
-      "Develop the framework, delivery architecture, outcomes and product-recognition criteria."],
+      "Develop the Combat Mindset Framework, delivery architecture and outcomes."],
     ["4", "Validate",
-      "Refine the framework with stakeholders, training establishments and units."],
+      "Refine the framework with key stakeholders and conduct bounded pilots."],
     ["5", "Endorse and implement",
-      "Deliver Framework v1.0 and a prioritised implementation plan."],
+      "Deliver the framework for approval and implementation."],
   ];
   const LN = L + 0.62;      // vertical line x
   const CY0 = 7.98, PITCH = 0.66, CD = 0.42;
