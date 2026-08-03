@@ -106,7 +106,7 @@ const emblemFW = (ink, accent) => `
   }
 
   // ---- section 1: Combat Mindset -----------------------------------------
-  s.addShape("rect", { x: L, y: 1.62, w: W, h: 1.5, fill: { color: BLACK } });
+  s.addShape("roundRect", { x: L, y: 1.62, w: W, h: 1.5, rectRadius: 0.08, fill: { color: BLACK } });
   pill(1.5, 2.4, "1)  WARFIGHTING IMPERATIVE", RED);
   s.addImage({ data: I.cm, x: L + 0.24, y: 1.94, w: 0.82, h: 0.82 });
   s.addText("COMBAT MINDSET", {
@@ -122,7 +122,7 @@ const emblemFW = (ink, accent) => `
   midConnector(3.24, "enabled by");
 
   // ---- section 2: Performance Under Pressure -----------------------------
-  s.addShape("rect", { x: L, y: 3.8, w: W, h: 1.2, fill: { color: SWAMP } });
+  s.addShape("roundRect", { x: L, y: 3.8, w: W, h: 1.2, rectRadius: 0.08, fill: { color: SWAMP } });
   pill(3.68, 4.0, "2)  ENABLING HUMAN-PERFORMANCE CAPABILITY", SWAMP);
   s.addImage({ data: I.pup, x: L + 0.26, y: 4.1, w: 0.6, h: 0.6 });
   s.addText("PERFORMANCE UNDER PRESSURE", {
@@ -135,7 +135,7 @@ const emblemFW = (ink, accent) => `
   midConnector(5.12, "organised through");
 
   // ---- section 3: the framework ------------------------------------------
-  s.addShape("rect", { x: L, y: 5.68, w: W, h: 1.12, fill: { color: KAWAKAWA } });
+  s.addShape("roundRect", { x: L, y: 5.68, w: W, h: 1.12, rectRadius: 0.08, fill: { color: KAWAKAWA } });
   pill(5.56, 2.1, "3)  ORGANISING SYSTEM", KAWAKAWA);
   s.addImage({ data: I.fw, x: L + 0.26, y: 5.94, w: 0.58, h: 0.58 });
   s.addText("NZ ARMY COMBAT MINDSET FRAMEWORK", {
@@ -148,7 +148,7 @@ const emblemFW = (ink, accent) => `
   midConnector(6.92, "achieved through");
 
   // ---- section 4: framework development programme (vertical pathway) -----
-  s.addShape("rect", { x: L, y: 7.48, w: W, h: 3.76,
+  s.addShape("roundRect", { x: L, y: 7.48, w: W, h: 3.76, rectRadius: 0.08,
     fill: { color: MOAWHANGO, transparency: 72 } });
   pill(7.36, 3.7, "4)  FRAMEWORK DEVELOPMENT PROGRAMME", SWAMP);
 
