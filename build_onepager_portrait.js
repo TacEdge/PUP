@@ -123,7 +123,7 @@ const emblemFW = (ink, accent) => `
 
   // ---- section 2: Performance Under Pressure -----------------------------
   s.addShape("roundRect", { x: L, y: 3.8, w: W, h: 1.2, rectRadius: 0.08, fill: { color: SWAMP } });
-  pill(3.68, 4.0, "2)  ENABLING HUMAN-PERFORMANCE CAPABILITY", SWAMP);
+  pill(3.68, 2.35, "2)  ENABLING CAPABILITY", SWAMP);
   s.addImage({ data: I.pup, x: L + 0.26, y: 4.1, w: 0.6, h: 0.6 });
   s.addText("PERFORMANCE UNDER PRESSURE", {
     x: L, y: 4.06, w: W, h: 0.46, fontFace: F, fontSize: 22.5, bold: true,
