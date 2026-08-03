@@ -129,7 +129,7 @@ const emblemFW = (ink, accent) => `
     x: L, y: 4.06, w: W, h: 0.46, fontFace: F, fontSize: 22.5, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
   s.addText("Prepare   •   Perform   •   Recover", {
-    x: L, y: 4.56, w: W, h: 0.26, fontFace: F, fontSize: 9.5, bold: true,
+    x: L, y: 4.56, w: W, h: 0.26, fontFace: F, fontSize: 9.5,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
 
   midConnector(5.12, "organised through");
