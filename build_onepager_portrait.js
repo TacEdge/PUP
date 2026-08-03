@@ -1,8 +1,7 @@
-// COMBAT MINDSET THE WAY FORWARD : portrait A4, design iteration 5
-// One page, one story: Combat Mindset, enabled by Performance Under Pressure,
-// developed, organised and assured through the Army Combat Mindset Framework,
-// achieved through a five-phase Framework Development Programme (vertical
-// pathway, phases 1-5).
+// COMBAT MINDSET FRAMEWORK PROPOSAL : portrait A4, design iteration 6
+// Executive presentation: larger brand mark, clean header (logo / title /
+// originator), version control in document properties rather than on the
+// page, and a roomier five-phase vertical pathway.
 
 const pptxgen = require("pptxgenjs");
 const React = require("react");
@@ -35,21 +34,30 @@ async function icon(name, hex, strokeWidth = 1.6) {
   const pres = new pptxgen();
   pres.defineLayout({ name: "A4P", width: 8.27, height: 11.69 });
   pres.layout = "A4P";
+  pres.title = "Combat Mindset Framework Proposal";
+  pres.company = "Army Command School";
+  pres.revision = "9";
+  pres.subject = "Combat Mindset Framework Proposal";
   const s = pres.addSlide();
   s.background = { color: WHITE };
 
   const L = 0.5, W = 7.27, R = L + W, MID = L + W / 2;
 
-  // ---- chrome ------------------------------------------------------------
-  s.addImage({ path: LOGO, x: L, y: 0.5, w: 1.1, h: 0.266 });
-  s.addText("COMBAT MINDSET THE WAY FORWARD", {
-    x: 1.85, y: 0.47, w: 5.92, h: 0.32, fontFace: F, fontSize: 15.5, bold: true,
+  // ---- header ------------------------------------------------------------
+  s.addImage({ path: LOGO, x: L, y: 0.4, w: 1.38, h: 0.334 });
+  s.addText("COMBAT MINDSET FRAMEWORK PROPOSAL", {
+    x: L, y: 0.86, w: W, h: 0.34, fontFace: F, fontSize: 17, bold: true,
     color: BLACK, align: "left", valign: "middle", margin: 0 });
-  s.addText("Army Command School  ·  ACS 2026", {
-    x: L, y: 11.45, w: 2.6, h: 0.18, align: "left", valign: "middle",
-    fontFace: F, fontSize: 6, color: BLACK, margin: 0 });
-  s.addText("Draft v0.8  ·  July 2026", { x: 5.7, y: 11.45, w: 2.07, h: 0.18,
-    align: "right", valign: "middle", fontFace: F, fontSize: 6, color: BLACK, margin: 0 });
+  s.addText("Army Command School", {
+    x: L, y: 1.2, w: W, h: 0.2, fontFace: F, fontSize: 9, italic: true,
+    color: SWAMP, align: "left", valign: "middle", margin: 0 });
+
+  // ---- footer ------------------------------------------------------------
+  s.addText("Army Command School", {
+    x: L, y: 11.42, w: 3.0, h: 0.18, align: "left", valign: "middle",
+    fontFace: F, fontSize: 6.5, color: BLACK, margin: 0 });
+  s.addText("August 2026", { x: 4.77, y: 11.42, w: 3.0, h: 0.18,
+    align: "right", valign: "middle", fontFace: F, fontSize: 6.5, color: BLACK, margin: 0 });
 
   function pill(y, w, text, fill) {
     const x = MID - w / 2;
@@ -68,48 +76,48 @@ async function icon(name, hex, strokeWidth = 1.6) {
   }
 
   // ---- section 1: Combat Mindset -----------------------------------------
-  s.addShape("rect", { x: L, y: 1.14, w: W, h: 1.56, fill: { color: BLACK } });
-  pill(1.02, 2.4, "1)  WARFIGHTING IMPERATIVE", RED);
-  s.addImage({ data: I.crosshairHero, x: L + 0.3, y: 1.52, w: 0.8, h: 0.8, transparency: 40 });
+  s.addShape("rect", { x: L, y: 1.62, w: W, h: 1.5, fill: { color: BLACK } });
+  pill(1.5, 2.4, "1)  WARFIGHTING IMPERATIVE", RED);
+  s.addImage({ data: I.crosshairHero, x: L + 0.3, y: 1.98, w: 0.78, h: 0.78, transparency: 40 });
   s.addText("COMBAT MINDSET", {
-    x: L, y: 1.52, w: W, h: 0.62, fontFace: F, fontSize: 37, bold: true,
+    x: L, y: 1.98, w: W, h: 0.6, fontFace: F, fontSize: 36, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
   s.addText("Remain effective. Act decisively. Harder to kill.", {
-    x: L, y: 2.2, w: W, h: 0.3, fontFace: F, fontSize: 14, bold: true,
+    x: L, y: 2.62, w: W, h: 0.3, fontFace: F, fontSize: 14, bold: true,
     color: RED, align: "center", valign: "middle", margin: 0 });
 
-  midConnector(2.84, "enabled by");
+  midConnector(3.24, "enabled by");
 
   // ---- section 2: Performance Under Pressure -----------------------------
-  s.addShape("rect", { x: L, y: 3.42, w: W, h: 1.24, fill: { color: SWAMP } });
-  pill(3.3, 4.0, "2)  ENABLING HUMAN-PERFORMANCE CAPABILITY", SWAMP);
-  s.addImage({ data: I.brainW, x: L + 0.22, y: 3.8, w: 0.48, h: 0.48 });
+  s.addShape("rect", { x: L, y: 3.8, w: W, h: 1.2, fill: { color: SWAMP } });
+  pill(3.68, 4.0, "2)  ENABLING HUMAN-PERFORMANCE CAPABILITY", SWAMP);
+  s.addImage({ data: I.brainW, x: L + 0.22, y: 4.16, w: 0.48, h: 0.48 });
   s.addText("PERFORMANCE UNDER PRESSURE", {
-    x: L, y: 3.7, w: W, h: 0.46, fontFace: F, fontSize: 22.5, bold: true,
+    x: L, y: 4.06, w: W, h: 0.46, fontFace: F, fontSize: 22.5, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
   s.addText("Prepare   •   Perform   •   Recover", {
-    x: L, y: 4.2, w: W, h: 0.26, fontFace: F, fontSize: 12, bold: true,
+    x: L, y: 4.56, w: W, h: 0.26, fontFace: F, fontSize: 12, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
 
-  midConnector(4.8, "developed, organised and assured through");
+  midConnector(5.12, "developed, organised and assured through");
 
   // ---- section 3: the framework ------------------------------------------
-  s.addShape("rect", { x: L, y: 5.38, w: W, h: 1.14, fill: { color: KAWAKAWA } });
-  pill(5.26, 2.1, "3)  ORGANISING SYSTEM", KAWAKAWA);
-  s.addImage({ data: I.puzzleW, x: L + 0.22, y: 5.72, w: 0.44, h: 0.44 });
+  s.addShape("rect", { x: L, y: 5.68, w: W, h: 1.12, fill: { color: KAWAKAWA } });
+  pill(5.56, 2.1, "3)  ORGANISING SYSTEM", KAWAKAWA);
+  s.addImage({ data: I.puzzleW, x: L + 0.22, y: 6.0, w: 0.44, h: 0.44 });
   s.addText("THE ARMY COMBAT MINDSET FRAMEWORK", {
-    x: L, y: 5.6, w: W, h: 0.4, fontFace: F, fontSize: 17.5, bold: true,
+    x: L, y: 5.9, w: W, h: 0.4, fontFace: F, fontSize: 17.5, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
   s.addText("The Army system through which Combat Mindset is governed, developed, delivered and assured.", {
-    x: L, y: 6.04, w: W, h: 0.24, fontFace: F, fontSize: 9.5,
+    x: L, y: 6.33, w: W, h: 0.24, fontFace: F, fontSize: 9.5,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
 
-  midConnector(6.66, "achieved through");
+  midConnector(6.92, "achieved through");
 
   // ---- section 4: framework development programme (vertical pathway) -----
-  s.addShape("rect", { x: L, y: 7.36, w: W, h: 3.72,
+  s.addShape("rect", { x: L, y: 7.48, w: W, h: 3.76,
     fill: { color: MOAWHANGO, transparency: 72 } });
-  pill(7.24, 3.7, "4)  FRAMEWORK DEVELOPMENT PROGRAMME", SWAMP);
+  pill(7.36, 3.7, "4)  FRAMEWORK DEVELOPMENT PROGRAMME", SWAMP);
 
   const phases = [
     ["1", "DEFINE",
@@ -123,8 +131,8 @@ async function icon(name, hex, strokeWidth = 1.6) {
     ["5", "IMPLEMENT",
       "Deliver the framework for approval and implementation."],
   ];
-  const LN = L + 0.62;      // vertical line x
-  const CY0 = 7.98, PITCH = 0.66, CD = 0.42;
+  const LN = L + 0.58;      // vertical line x
+  const CY0 = 8.1, PITCH = 0.71, CD = 0.42;
   s.addShape("line", { x: LN, y: CY0, w: 0, h: PITCH * 4,
     line: { color: SWAMP, width: 1.5 } });
   phases.forEach(([n, title, desc], i) => {
@@ -134,10 +142,10 @@ async function icon(name, hex, strokeWidth = 1.6) {
     s.addText(n, { x: LN - CD / 2, y: cy - CD / 2, w: CD, h: CD, fontFace: F,
       fontSize: 13, bold: true, color: WHITE, align: "center",
       valign: "middle", margin: 0 });
-    s.addText(title, { x: LN + 0.42, y: cy - 0.2, w: 1.85, h: 0.4,
-      fontFace: F, fontSize: 11.5, bold: true, color: SWAMP, charSpacing: 1.5,
+    s.addText(title, { x: LN + 0.4, y: cy - 0.2, w: 1.95, h: 0.4,
+      fontFace: F, fontSize: 11.5, bold: true, color: SWAMP, charSpacing: 1.2,
       align: "left", valign: "middle", margin: 0 });
-    s.addText(desc, { x: LN + 2.32, y: cy - 0.24, w: R - LN - 2.52, h: 0.48,
+    s.addText(desc, { x: LN + 2.4, y: cy - 0.24, w: R - LN - 2.58, h: 0.48,
       fontFace: F, fontSize: 8.6, color: BLACK, align: "left",
       valign: "middle", margin: 0 });
   });
