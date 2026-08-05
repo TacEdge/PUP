@@ -570,8 +570,8 @@ add_field(toc_p, r'TOC \o "1-1" \h \z \u',
           "Update fields to generate the table of contents.")
 
 # ---------------------------------------------------- the model on a page ---
-# The model gets its own narrow-margin section so the A4-portrait
-# illustration renders near native size (full printable page).
+# The model keeps the body margins so its heading, illustration and footer
+# share the same left edge as every other section.
 
 from docx.enum.section import WD_SECTION_START, WD_ORIENTATION
 
@@ -580,17 +580,17 @@ ONEPAGER_EMBED = ("/tmp/claude-0/-home-user-PUP/"
                   "onepager-embed.png")
 model_sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
 model_sec.different_first_page_header_footer = False
-model_sec.top_margin = Cm(1.2)
-model_sec.bottom_margin = Cm(1.4)
-model_sec.left_margin = Cm(0.75)
-model_sec.right_margin = Cm(0.75)
+model_sec.top_margin = Cm(2.4)
+model_sec.bottom_margin = Cm(2.4)
+model_sec.left_margin = Cm(2.5)
+model_sec.right_margin = Cm(2.5)
 model_sec.footer.is_linked_to_previous = False
-build_info_footer(model_sec.footer, 19.5)
+build_info_footer(model_sec.footer, TEXT_WIDTH_CM)
 
 _mh = add_section_heading("The Model on a Page")
 _mh.paragraph_format.space_before = Pt(0)
-doc.add_picture(ONEPAGER_EMBED, width=Cm(18.4))
-doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+doc.add_picture(ONEPAGER_EMBED, width=Cm(TEXT_WIDTH_CM))
+doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.LEFT
 
 body_sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
 body_sec.different_first_page_header_footer = False
