@@ -114,7 +114,7 @@ Assess holdings across ACS, NZALC, HPC, APS, ILD, training establishments and se
 * evidence maturity, scalability and resource requirements; and
 * gaps, duplication and integration opportunities.
 
-Apply the combat-specificity test at paragraph 2 to distinguish products that contribute to the broader Performance Under Pressure capability from those that support its combat-specific expression. Assess COGCON as one developmental product within this assessment, with particular attention to its product boundary, evidence base (including its completed feasibility trials in live military training), ownership, workforce requirements and scalability.
+Apply the combat-specificity test at paragraph 2 to distinguish products that contribute to the broader Performance Under Pressure capability from those that support its combat-specific expression. Assess COGCON as one developmental product, with particular attention to its product boundary, evidence base, ownership, workforce requirements and scalability.
 
 **Key output.** A capability and product baseline identifying holdings, gaps, duplication and integration opportunities.
 
@@ -140,7 +140,7 @@ Convene ACS, NZALC, HPC, APS, ILD, selected training providers and units to test
 
 Deliver the framework for approval and implementation.
 
-Present to COMDT ACS the endorsed definitions and the confirmed relationship between Combat Mindset and Performance Under Pressure; Framework v1.0 and its agreed architecture; the validated capability and product architecture; the proposed governance and assurance model; an assessment of existing product maturity, evidence and scalability; and a prioritised implementation plan.
+Present to COMDT ACS the endorsed definitions and confirmed relationship; Framework v1.0 and its validated capability and product architecture; the proposed governance and assurance model; and a prioritised implementation plan.
 
 **Key output.** Framework v1.0 submitted for approval, with an implementation plan and back brief to COMDT ACS.
 
@@ -155,32 +155,3 @@ It is recommended that COMDT ACS:
 3. **Endorse** the initial working definitions of Combat Mindset, Performance Under Pressure and the Combat Mindset Framework.
 4. **Approve** commencement of the proposed programme of work.
 5. **Note** that the programme timeframes are aspirational and that activity may extend into early 2027.
-
-+++
-
-## Foundation documents
-
-This paper draws on the following documents:
-
-* COMDT ACS Combat Mindset guidance, 16 July 2026.
-* Performance Under Pressure and Combat Mindset in the New Zealand Army (Draft Capability Note), NZALC, July 2026.
-* Human Performance Cell Performance Cognition paper (COGCON).
-
-Relevant APS, ILD and doctrinal holdings will be confirmed and referenced through the Phase 2 assessment.
-
-## Annex A: Interim governance and division of functions
-
-The following division of functions is proposed for confirmation at Phase 1 and refinement through the Phase 2 assessment and Phase 4 validation.
-
-| Function | Lead | Output |
-|---|---|---|
-| Define and govern | Army Sponsor / ACS | Endorsed doctrine, definitions, policy direction and capability outcomes |
-| Integrate capability and develop the framework | ACS | Framework architecture, product recognition criteria, stakeholder coordination and implementation priorities |
-| Develop products | Relevant product owner | Product design, protocols, instructor materials and updates |
-| Provide domain advice | Relevant technical or professional adviser | Specialist advice within leadership, psychology, cognition, learning design, physical performance and other domains |
-| Deliver | Approved training establishments, units and existing instructor workforces | Routine delivery of recognised products |
-| Measure training performance | Delivery organisation, using approved methods | Proportionate training feedback and product-level performance data |
-| Evaluate product effectiveness | Product owner, with independent evaluation or research support | Evidence of feasibility, effectiveness, transfer and scalability |
-| Assure | Layered governance and domain authorities | Doctrine, evidence, professional, learning, delivery and operational assurance |
-| Review and recover | Relevant leadership and training systems | Reflection, feedback, recovery and developmental planning |
-
