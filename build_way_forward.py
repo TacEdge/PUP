@@ -43,7 +43,7 @@ WAIOURU_HILLS  = "A89662"
 MOAWHANGO      = "CDD2B7"
 
 FONT_HEAD = "Arial"         # brand face: Haas Grotesk
-FONT_BODY = "Book Antiqua"  # brand face: Publico (fallback Georgia)
+FONT_BODY = "Arial"         # brand face: Haas Grotesk
 FONT_MONO = "Consolas"
 
 # Known source-document filenames to convert to reference markers.
@@ -230,10 +230,10 @@ TEXT_WIDTH_CM = 16.0  # 21 - 2.5 - 2.5
 normal = doc.styles["Normal"]
 strip_style_rpr(normal)
 force_font(normal, FONT_BODY)
-normal.font.size = Pt(11)
+normal.font.size = Pt(10.5)
 force_color(normal, DARKEST_HOUR)
 nf = normal.paragraph_format
-nf.line_spacing = 1.15
+nf.line_spacing = 1.2
 nf.space_after = Pt(6)
 nf.space_before = Pt(0)
 nf.alignment = WD_ALIGN_PARAGRAPH.LEFT
