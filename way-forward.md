@@ -40,11 +40,11 @@ The following formal definitions are proposed as the drafting baseline.
 
 > **Performance Under Pressure.** The trainable individual and collective human-performance capability to prepare for, maintain effective performance through, adapt within and recover from conditions that create significant physiological, cognitive, emotional or social interference.
 
-> **Combat Mindset Framework.** The framework through which Combat Mindset is governed, developed, delivered and assured.
+> **Combat Mindset Framework.** The framework through which Army governs, develops, delivers and assures Performance Under Pressure and its combat-specific expression, Combat Mindset.
 
-A product, method or activity is combat-specific where it develops or applies Performance Under Pressure in a context that represents or deliberately simulates the defining demands of combat: opposition or threat, consequence for mission and life, and ethical load. Products that do not represent these demands contribute to the enabling capability rather than its combat-specific expression.
+A product, method or activity is combat-specific where it develops or applies Performance Under Pressure in a context that represents or deliberately simulates the defining demands of combat: opposition or threat, significant consequence for mission or life, and ethical load. Products that do not represent these demands contribute to the enabling capability rather than its combat-specific expression.
 
-> Performance Under Pressure describes the trainable human-performance capability. Combat Mindset describes the specifically combat-oriented expression of that capability.
+> In summary, Performance Under Pressure is the trainable capability; Combat Mindset is its combat-specific expression.
 
 * Gives each term one clear purpose: Combat Mindset is the combat-specific expression; Performance Under Pressure is the enabling capability; the Combat Mindset Framework is the organising system.
 * Keeps Performance Under Pressure applicable wherever significant pressure exists without an enemy; command, crisis response, training, garrison leadership and high-risk technical activity.
@@ -54,12 +54,12 @@ A product, method or activity is combat-specific where it develops or applies Pe
 
 Combat Mindset is treated as the complete capability itself, integrating leadership, human performance, resilience, mental skills and performance cognition, with performance under pressure expressed within it.
 
-**Advantages.**
+**Advantages**
 
 * Maximises simplicity: one term serves as outcome, capability and framework alike.
 * Matches common soldier usage, in which Combat Mindset already serves as the umbrella term, and avoids a two-term hierarchy that requires sustained explanation.
 
-**Limitations.**
+**Limitations**
 
 * Conflates the combat-specific outcome with the broader human-performance capability, reducing applicability outside combat.
 * Makes it difficult to distinguish doctrine, capability, framework and product.
@@ -87,15 +87,17 @@ COGCON is a developmental cognitive-conditioning product targeting selected aspe
 
 These organisations hold additional professional expertise, learning products, delivery capability and assurance functions that will be confirmed during the Phase 2 assessment.
 
-Initial review indicates considerable conceptual alignment across existing products. The Combat Mindset Framework will establish a common doctrinal language beneath which individual products and methods can be appropriately nested. It will not require all products to use identical internal methodologies, provided they align to the endorsed framework, outcomes and assurance requirements.
+Initial review indicates considerable conceptual alignment across existing products. The Combat Mindset Framework will establish a common doctrinal language beneath which individual products and methods can be nested. It will not require identical internal methodologies, provided products align to the endorsed framework, outcomes and assurance requirements.
 
-A full assessment of existing capability and products will be completed during Phase 2. The products described above contribute to the development of Performance Under Pressure and, where applied in a warfighting context, to Combat Mindset. They do not constitute the doctrinal definitions or the complete framework in isolation.
+A full assessment of existing capability and products will be completed during Phase 2. The products described above contribute to Performance Under Pressure and, where applied in a warfighting context, to Combat Mindset; none constitutes the framework in isolation.
 
 ---
 
 ## 4. Programme of work
 
 August 2026 is set aside for this paper to be socialised through the chain of command, and the programme is therefore proposed to commence in September 2026. The timeframes below are aspirational and depend to varying extents on external stakeholder availability and input. As such, activity extending into early 2027 is anticipated rather than unforeseen.
+
+Phases may overlap where practical, however subsequent design decisions remain dependent upon the endorsed outputs of preceding phases.
 
 ### Phase 1: Define (September 2026)
 
@@ -119,11 +121,11 @@ Apply the combat-specificity test at paragraph 2 to distinguish products that co
 
 ### Phase 3: Design (October 2026)
 
-Develop the Combat Mindset Framework, delivery system and outcomes: the organising system through which Army will govern, develop, deliver and assure Performance Under Pressure and its combat-specific expression, covering the capability pillars, developmental outcomes from Lead Self through Lead Systems, common assurance principles, and the criteria by which products are recognised as contributing to the framework.
+Develop the Combat Mindset Framework, delivery system and outcomes: the organising system through which Army will govern, develop, deliver and assure Performance Under Pressure and its combat-specific expression. The design will establish developmental outcomes from Lead Self through Lead Systems, the architecture through which existing and future products contribute, common assurance principles, and the criteria by which products are recognised as part of the framework.
 
-The provisional working pillars are: leadership under pressure; self-regulation and mental skills; performance cognition; resilience, adaptation and recovery; physical readiness and performance; professional identity, values and will to act; and team and collective performance. Existing products, including the NZALC Leadership Development System and COGCON, will be mapped beneath the relevant pillars rather than treated as the framework itself. The design will also identify how progression, transfer to operationally relevant performance, product quality and institutional adoption will be assessed.
+Existing products, including the NZALC Leadership Development System and COGCON, will be mapped against the endorsed outcomes and framework requirements rather than treated as the framework itself. The design will also identify how progression, transfer to operationally relevant performance, product quality and institutional adoption will be assessed.
 
-**Key output.** Draft Framework v1.0, comprising the capability pillars, developmental outcomes, product architecture and assurance criteria.
+**Key output.** Draft Framework v1.0, comprising developmental outcomes, product architecture, governance arrangements and assurance criteria.
 
 ### Phase 4: Validate (November 2026)
 
@@ -133,7 +135,9 @@ Refine the framework with key stakeholders: convene ACS, NZALC, HPC, APS, ILD, s
 
 ### Phase 5: Implement (late November 2026)
 
-Deliver the framework for approval and implementation: present to COMDT ACS the endorsed definitions and confirmed relationship; Framework v1.0 and its validated capability and product architecture; the proposed governance and assurance model; and a prioritised implementation plan. Framework v1.0 establishes the initial approved architecture and priority implementation activity; further evidence development, product alignment and assurance maturity will continue through implementation.
+Deliver the framework for approval and implementation: present to COMDT ACS the endorsed definitions and confirmed relationship; Framework v1.0 and its validated product architecture; the proposed governance and assurance model; and a prioritised implementation plan.
+
+Framework v1.0 establishes the initial approved architecture and priority implementation activity. Further evidence development, product alignment and assurance maturity will continue through implementation.
 
 **Key output.** Framework v1.0 submitted for approval, with an implementation plan and back brief to COMDT ACS.
 
