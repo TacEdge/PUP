@@ -276,6 +276,14 @@ def add_sub_heading(text):
     return p
 
 
+def add_minor_heading(text):
+    """Fourth-level heading: names a product beneath a grouping sub-heading."""
+    p = doc.add_paragraph(style="Heading 3")
+    add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(10), bold=True,
+                  color=SWAMP_GREEN)
+    return p
+
+
 def add_body(text):
     p = doc.add_paragraph()
     add_text_runs(p, text)
@@ -657,6 +665,11 @@ while i < len(lines):
         if FLATTEN_NEXT_HEADING:
             _h.paragraph_format.space_before = Pt(0)
             FLATTEN_NEXT_HEADING = False
+        i += 1
+        continue
+
+    if line.startswith("#### "):
+        add_minor_heading(line[5:].strip())
         i += 1
         continue
 

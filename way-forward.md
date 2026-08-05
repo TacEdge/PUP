@@ -68,23 +68,25 @@ Both options deliver the end state described in the COMDT ACS guidance. NZALC an
 
 ## 3. What already exists
 
-Allied armies have fielded comparable integrated human-performance programmes, including US Army Holistic Health and Fitness [verify], UK Op SMART [verify] and ADF BattleSMART [verify]. The structure proposed in this paper (a single organising framework beneath which existing products are nested and assured) is consistent with that direction.
+### Within ACS
 
-A full assessment of existing capability and products will be completed during Phase 2. The products described below contribute to the development of Performance Under Pressure and, where applied in a warfighting context, to Combat Mindset. They do not constitute the doctrinal definitions or the complete framework in isolation. Initial holdings include the following.
-
-### NZALC Performance Under Pressure package
+#### NZALC Leadership Development System
 
 NZALC delivers a leadership-development approach incorporating Performance = Potential – Interference, Red Head–Blue Head, Prepare–Perform–Recover, mental-skills techniques, psychometrics, experiential activity, feedback and Leadership Development Plans. This material is embedded across Lead Self, Lead Teams, Lead Leaders and Lead Systems.
 
-### Human Performance Cell Cognitive Conditioning programme (COGCON)
+#### HPC Cognitive Conditioning (COGCON)
 
 COGCON is a developmental cognitive-conditioning product targeting selected aspects of performance cognition under physical and cognitive load, including arousal regulation, attention, cognitive control and working memory. Feasibility trials in military training have demonstrated acceptability and promising training trends. Its causal effectiveness, operational transfer, readiness validity, scalability and enduring delivery model have not yet been established. Its status and appropriate future role will be confirmed through the Phase 2 assessment.
 
-### NZDF Psychology, ILD and other stakeholders
+### Outside ACS
+
+#### Army Psychology Services, ILD and other stakeholders
 
 These organisations hold additional professional expertise, learning products, delivery capability and assurance functions that will be confirmed during the Phase 2 assessment.
 
 Initial review indicates considerable conceptual alignment across existing products. The Combat Mindset Framework will establish a common doctrinal language beneath which individual products and methods can be appropriately nested. It will not require all products to use identical internal methodologies, provided they align to the endorsed framework, outcomes and assurance requirements.
+
+A full assessment of existing capability and products will be completed during Phase 2. The products described above contribute to the development of Performance Under Pressure and, where applied in a warfighting context, to Combat Mindset. They do not constitute the doctrinal definitions or the complete framework in isolation.
 
 ---
 
