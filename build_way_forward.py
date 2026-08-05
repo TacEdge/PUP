@@ -25,7 +25,7 @@ PROTECTIVE_MARKING = "UNCLASSIFIED"
 DOCUMENT_REFERENCE = "ACS 2026"
 DATE               = "August 2026"
 ORIGINATOR         = "Army Command School"
-VERSION            = "Draft v0.9"
+VERSION            = "Draft v1.0"
 DISTRIBUTION       = "COMDT ACS"
 LIST_STYLE         = "bullets"
 
@@ -512,15 +512,8 @@ st.font.size = Pt(17)
 st.bold = True
 force_color(st, SWAMP_GREEN)
 
-sub_p = doc.add_paragraph()
-sub_p.paragraph_format.space_before = Pt(6)
-sub_p.paragraph_format.space_after = Pt(14)
-s = sub_p.add_run(SUBTITLE)
-force_font(s, FONT_HEAD)
-s.font.size = Pt(13)
-force_color(s, SWAMP_GREEN)
-
 promise_p = doc.add_paragraph()
+promise_p.paragraph_format.space_before = Pt(8)
 promise_p.paragraph_format.space_after = Pt(2)
 pr = promise_p.add_run("Remain effective. Act decisively.")
 force_font(pr, FONT_HEAD)
@@ -528,19 +521,12 @@ pr.font.size = Pt(13)
 force_color(pr, DARKEST_HOUR)
 
 promise2_p = doc.add_paragraph()
-promise2_p.paragraph_format.space_after = Pt(4)
+promise2_p.paragraph_format.space_after = Pt(84)
 pr2 = promise2_p.add_run("Harder to kill.")
 force_font(pr2, FONT_HEAD)
 pr2.font.size = Pt(13)
 pr2.bold = True
 force_color(pr2, ARMY_RED)
-
-qual_p = doc.add_paragraph()
-qual_p.paragraph_format.space_after = Pt(84)
-q = qual_p.add_run("Proposed tagline, subject to sponsor endorsement")
-force_font(q, FONT_HEAD)
-q.font.size = Pt(9)
-force_color(q, SWAMP_GREEN)
 
 meta_rows = [
     ("Reference", DOCUMENT_REFERENCE),
