@@ -80,7 +80,7 @@ COGCON is a developmental cognitive-conditioning product targeting selected aspe
 
 ### Outside ACS
 
-#### Army Psychology Services, ILD and other stakeholders
+#### Army Psychology Services (APS), ILD and other stakeholders
 
 These organisations hold additional professional expertise, learning products, delivery capability and assurance functions that will be confirmed during the Phase 2 assessment.
 
@@ -100,7 +100,7 @@ Confirm terminology, governance, roles and responsibilities: endorse the problem
 
 ### Phase 2: Understand (August–September 2026) (NZALC lead, HPC support) [proposed – confirm]
 
-Assess existing doctrine, content, products, courses, instructor capability, delivery activity, evidence, ownership and assurance arrangements across ACS, NZALC, HPC, NZDF Psychology, ILD, training establishments and selected units. The assessment will distinguish:
+Assess existing doctrine, content, products, courses, instructor capability, delivery activity, evidence, ownership and assurance arrangements across ACS, NZALC, HPC, APS, ILD, training establishments and selected units. The assessment will distinguish:
 
 * doctrinal and policy holdings;
 * capability outcomes;
@@ -119,11 +119,11 @@ Develop the Combat Mindset Framework, delivery system and outcomes: the organisi
 
 The provisional working pillars are: leadership under pressure; self-regulation and mental skills; performance cognition; resilience, adaptation and recovery; physical readiness and performance; professional identity, values and will to act; and team and collective performance. These are provisional working pillars, subject to validation through the Phase 2 assessment and Phase 4 validation. Each describes an enduring capability Army seeks to build. Training products and methods (including progressive exposure to pressure, scenario and experiential training, field and mission-relevant rehearsal, and physical and cognitive conditioning) are how Army builds them.
 
-Existing products, including the NZALC Performance Under Pressure package and COGCON, will be mapped beneath the relevant provisional capability pillars rather than treated as the framework itself.
+Existing products, including the NZALC Leadership Development System and COGCON, will be mapped beneath the relevant provisional capability pillars rather than treated as the framework itself.
 
 ### Phase 4: Validate (October 2026) (ACS convenes) [proposed – confirm]
 
-Refine the framework with key stakeholders and conduct bounded pilots: convene ACS, NZALC, HPC, NZDF Psychology, ILD, selected training providers and units to refine the framework, product architecture, governance model, implementation priorities, definition clarity and doctrinal coherence.
+Refine the framework with key stakeholders and conduct bounded pilots: convene ACS, NZALC, HPC, APS, ILD, selected training providers and units to refine the framework, product architecture, governance model, implementation priorities, definition clarity and doctrinal coherence.
 
 ### Phase 5: Implement (November 2026) (ACS) [proposed – confirm]
 
@@ -153,7 +153,7 @@ The following arrangements are proposed for confirmation at Phase 1. Technical a
 * Interim capability integrator: COMDT ACS, coordinating definition, framework development, stakeholder engagement and recommendations to the Army Sponsor.
 * Framework development and capability-integration lead: ACS, coordinating framework architecture, developmental progression, stakeholder integration, product recognition criteria and implementation planning, leveraging NZALC and wider ACS expertise, intellectual property and programmes.
 * COGCON product steward and performance-cognition adviser: Human Performance Cell, responsible for the integrity and further development of the COGCON method and for specialist advice on cognitive conditioning and proportionate measurement, within available capacity.
-* Domain advisers and authorities: NZDF Psychology, ILD, physical-performance specialists, doctrine staff and other relevant organisations, providing technical or professional advice within their respective domains.
+* Domain advisers and authorities: APS, ILD, physical-performance specialists, doctrine staff and other relevant organisations, providing technical or professional advice within their respective domains.
 * Delivery agencies: training establishments, units and existing instructor workforces approved to deliver recognised products.
 * Assurance: a layered assurance model covering doctrine, evidence, professional content, learning design, delivery quality and operational relevance, with sufficient independence from individual product owners and delivery organisations.
 
@@ -165,7 +165,7 @@ It is recommended that COMDT ACS:
 
 1. **Endorse** the problem statement at paragraph 1 and the recommended relationship between Combat Mindset and Performance Under Pressure at paragraph 2.
 2. **Endorse** the proposed definitions of Combat Mindset, Performance Under Pressure and the Combat Mindset Framework as the baseline for wider staffing and refinement.
-3. **Approve** development of the Combat Mindset Framework through the proposed capability and product assessment, framework design and validation activity, noting that the provisional capability pillars and the contribution, maturity, evidence, ownership and appropriate nesting of existing products (including the NZALC Performance Under Pressure package, COGCON and NZDF Psychology products) will be validated through this process.
+3. **Approve** development of the Combat Mindset Framework through the proposed capability and product assessment, framework design and validation activity, noting that the provisional capability pillars and the contribution, maturity, evidence, ownership and appropriate nesting of existing products (including the NZALC Leadership Development System, COGCON and APS products) will be validated through this process.
 4. **Confirm** the interim governance arrangements at paragraph 5, including COMDT ACS as interim capability integrator pending confirmation of the Army Sponsor, ACS as framework development and capability-integration lead, and technical and professional authority distributed by domain.
 5. **Seek** confirmation of the Army Sponsor by 31 August 2026, with candidate options identified by ACS.
 6. **Decide** the status of Harder to Kill within the proposed Combat Mindset tagline (Remain effective. Act decisively. Harder to kill.), endorsing, deferring or rejecting its inclusion.
@@ -181,7 +181,7 @@ This paper draws on the following documents:
 * Performance Under Pressure and Combat Mindset in the New Zealand Army (Draft Capability Note), NZALC, July 2026.
 * Human Performance Cell Performance Cognition paper (COGCON).
 
-Relevant NZDF Psychology, ILD and doctrinal holdings will be confirmed and referenced through the Phase 2 assessment.
+Relevant APS, ILD and doctrinal holdings will be confirmed and referenced through the Phase 2 assessment.
 
 ## Annex A: Interim governance and division of functions
 
