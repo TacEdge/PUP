@@ -12,7 +12,7 @@ Final recommendations and an implementation back brief will return to COMDT ACS 
 
 ## 1. The problem
 
-Considerable work on Combat Mindset and Performance Under Pressure already exists across Army (notably by NZDF Psychology) and elements of it have been endorsed in various settings. What Army does not yet have is a coherent, Army-wide doctrine, governance and assurance model for Combat Mindset, despite the term's active use and Army's drive toward an increased Warfighter Focus. The COMDT ACS guidance reaches the same diagnosis:
+Considerable work on Combat Mindset and Performance Under Pressure already exists across Army. What Army does not yet have is a coherent doctrine, governance and assurance model for Combat Mindset. The COMDT ACS guidance reaches the same diagnosis:
 
 > Substantial relevant capability already exists across ACS, NZALC, the Human Performance Cell, NZDF Psychology, ILD, training establishments and units. The challenge is not primarily a lack of content. It is a lack of visibility, integration, common terminology, strategic ownership and assurance across that existing capability.
 
@@ -20,7 +20,7 @@ The underlying operational problem remains:
 
 > Under operational pressure, trained individuals and teams do not always retain access to their full capability.
 
-The doctrinal requirement is therefore to define the human-performance capability Army requires, consolidate the substantial body of work that already exists beneath it, and describe its combat-specific expression. Sufficient evidence and existing capability are available to commence governance, the capability assessment and framework development immediately.
+The doctrinal requirement is therefore to define the human-performance capability Army requires, consolidate the substantial body of work that already exists beneath it, and describe its combat-specific expression. Sufficient evidence and existing capability are available to commence this programme of work in order to achieve that end state.
 
 ---
 
