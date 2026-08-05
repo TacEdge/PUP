@@ -120,7 +120,7 @@ const LOGO = "/tmp/claude-0/-home-user-PUP/2d4cec0e-a52e-5368-bb54-803c6f37698d/
 
   const modules = [
     ["Leadership fundamentals",
-     "Command, management and leadership; the four pillars of trust; identity against reputation; and the four competency domains."],
+     "Command, management and leadership; trust; identity and reputation; and the four competency domains."],
     ["Leadership Personality Report",
      "A validated Five Factor profile of everyday behaviour, behaviour under pressure, and underlying needs and drivers."],
     ["Self and peer feedback",
@@ -142,23 +142,23 @@ const LOGO = "/tmp/claude-0/-home-user-PUP/2d4cec0e-a52e-5368-bb54-803c6f37698d/
   });
 
   // ---- what a unit gets back ----------------------------------------------
-  s.addShape("roundRect", { x: L, y: 9.06, w: W, h: 0.88, rectRadius: 0.06,
+  s.addShape("roundRect", { x: L, y: 9.06, w: W, h: 0.8, rectRadius: 0.06,
     fill: { color: MOAWHANGO, transparency: 62 } });
   s.addText("WHAT A UNIT GETS BACK", { x: L + 0.22, y: 9.15, w: W - 0.44, h: 0.2,
     fontFace: F, fontSize: 8.5, bold: true, color: SWAMP, charSpacing: 1.4,
     align: "left", valign: "middle", margin: 0 });
   const gets = [
-    "Evidence of leadership behaviour under real load, not self-report.",
-    "Peer feedback on how each leader's behaviour affects others.",
-    "A written, observable plan for behavioural adaptation.",
-    "Alignment with the NZDF Leadership Framework, Lead Self to Lead Organisation.",
+    "Leadership behaviour evidenced under real load.",
+    "Peer feedback on how each leader affects others.",
+    "A written plan for behavioural adaptation.",
+    "Alignment with the NZDF Leadership Framework.",
   ];
   const gGap = 0.2, gW = (W - 0.44 - gGap) / 2;
   gets.forEach((t, i) => {
     const x = L + 0.22 + (i % 2) * (gW + gGap);
-    const y = 9.38 + Math.floor(i / 2) * 0.27;
+    const y = 9.4 + Math.floor(i / 2) * 0.24;
     s.addText([{ text: t, options: { bullet: { characterCode: "2022", indent: 10 } } }], {
-      x, y, w: gW, h: 0.25, fontFace: F, fontSize: 8.4, color: BLACK,
+      x, y, w: gW, h: 0.22, fontFace: F, fontSize: 8.4, color: BLACK,
       align: "left", valign: "top", margin: 0 });
   });
 
@@ -173,11 +173,14 @@ const LOGO = "/tmp/claude-0/-home-user-PUP/2d4cec0e-a52e-5368-bb54-803c6f37698d/
   ], { x: L + 0.18, y: 10.24, w: W - 0.36, h: 0.42, fontFace: F, fontSize: 8.4,
        align: "left", valign: "middle", margin: 0, lineSpacingMultiple: 1.1 });
 
-  // ---- close --------------------------------------------------------------
+  // ---- next step ----------------------------------------------------------
+  s.addText("NEXT STEP", { x: L, y: 10.86, w: W, h: 0.2, fontFace: F,
+    fontSize: 8.5, bold: true, color: SWAMP, charSpacing: 1.4, align: "left",
+    valign: "middle", margin: 0 });
   s.addText(
-    "NZALC can tailor a 2027 ELDA Command serial to 2nd Commando Regiment. Initial scoping would confirm participant " +
-    "profile, activity design, delivery model and support requirements.",
-    { x: L, y: 10.9, w: W, h: 0.32, fontFace: F, fontSize: 8.8, color: BLACK,
+    "Scope a tailored 2027 ELDA Command serial for 2nd Commando Regiment, confirming participant profile, activity " +
+    "design, delivery model and support requirements.",
+    { x: L, y: 11.08, w: W, h: 0.32, fontFace: F, fontSize: 8.8, color: BLACK,
       align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.1 });
 
   await pres.writeFile({ fileName: "output/elda-command-onepager.pptx" });
