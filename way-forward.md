@@ -14,7 +14,7 @@ Final recommendations and an implementation back brief will return to COMDT ACS 
 
 ## 1. The problem
 
-Considerable work on Combat Mindset and Performance Under Pressure already exists across Army. What Army does not yet have is a coherent doctrine, governance and assurance model for Combat Mindset. The COMDT ACS guidance reaches the same diagnosis:
+Considerable relevant capability, expertise and activity already exist across Army. What Army does not yet have is a coherent doctrine, governance and assurance model for Combat Mindset. The COMDT ACS guidance reaches the same diagnosis:
 
 > Substantial relevant capability already exists across ACS, NZALC, the Human Performance Cell, NZDF Psychology, ILD, training establishments and units. The challenge is not primarily a lack of content. It is a lack of visibility, integration, common terminology, strategic ownership and assurance across that existing capability.
 
@@ -42,7 +42,7 @@ The following formal definitions are proposed as the drafting baseline.
 
 > **Combat Mindset Framework.** The framework through which Army governs, develops, delivers and assures Performance Under Pressure and its combat-specific expression, Combat Mindset.
 
-A product, method or activity is combat-specific where it develops or applies Performance Under Pressure in a context that represents or deliberately simulates the defining demands of combat: opposition or threat, significant consequence for mission or life, and ethical load. Products that do not represent these demands contribute to the enabling capability rather than its combat-specific expression.
+A product, method or activity is combat-specific where it develops or applies Performance Under Pressure in a context that represents or deliberately simulates the defining demands of combat: opposition or threat, significant mission or human consequence, and ethical load. Products that do not represent these demands contribute to the enabling capability rather than its combat-specific expression.
 
 > In summary, Performance Under Pressure is the trainable capability; Combat Mindset is its combat-specific expression.
 
@@ -121,7 +121,7 @@ Apply the combat-specificity test at paragraph 2 to distinguish products that co
 
 ### Phase 3: Design (October 2026)
 
-Develop the Combat Mindset Framework, delivery system and outcomes: the organising system through which Army will govern, develop, deliver and assure Performance Under Pressure and its combat-specific expression. The design will establish developmental outcomes from Lead Self through Lead Systems, the architecture through which existing and future products contribute, common assurance principles, and the criteria by which products are recognised as part of the framework.
+Develop the Combat Mindset Framework, delivery system and outcomes. The framework will establish how Army governs, develops, delivers and assures Performance Under Pressure and its combat-specific expression. The design will set developmental outcomes from Lead Self through Lead Systems, the architecture through which existing and future products contribute, common assurance principles, and the criteria by which products are recognised as part of the framework.
 
 Existing products, including the NZALC Leadership Development System and COGCON, will be mapped against the endorsed outcomes and framework requirements rather than treated as the framework itself. The design will also identify how progression, transfer to operationally relevant performance, product quality and institutional adoption will be assessed.
 
@@ -129,7 +129,7 @@ Existing products, including the NZALC Leadership Development System and COGCON,
 
 ### Phase 4: Validate (November 2026)
 
-Refine the framework with key stakeholders: convene ACS, NZALC, HPC, APS, ILD, selected training providers and units to test the framework, product architecture, governance model, implementation priorities, definition clarity and doctrinal coherence. Where time and unit availability permit, bounded pilots will be conducted within this phase or earlier alongside Phase 2 or Phase 3.
+Refine the framework with key stakeholders: convene ACS, NZALC, HPC, APS, ILD, selected training providers and units to test the framework, product architecture, governance model, implementation priorities, definition clarity and doctrinal coherence. Where time and unit availability permit, bounded validation activities or pilots will be conducted within this phase or earlier alongside Phase 2 or Phase 3.
 
 **Key output.** A validated framework and product architecture, with stakeholder positions recorded.
 
@@ -149,6 +149,6 @@ It is recommended that COMDT ACS:
 
 1. **Endorse** the problem statement.
 2. **Approve** the recommended relationship between Combat Mindset and Performance Under Pressure.
-3. **Endorse** the initial working definitions of Combat Mindset, Performance Under Pressure and the Combat Mindset Framework.
+3. **Endorse** the initial working definitions of Combat Mindset, Performance Under Pressure and the Combat Mindset Framework as the drafting baseline for the programme.
 4. **Approve** commencement of the proposed programme of work.
 5. **Note** that the programme timeframes are aspirational and that activity may extend into early 2027.
