@@ -154,9 +154,7 @@ It is recommended that COMDT ACS:
 2. **Approve** the recommended relationship between Combat Mindset and Performance Under Pressure.
 3. **Endorse** the initial working definitions of Combat Mindset, Performance Under Pressure and the Combat Mindset Framework.
 4. **Approve** commencement of the proposed programme of work.
-5. **Seek** confirmation of the Army Sponsor by 30 September 2026, with candidate options identified by ACS.
-6. **Decide** the status of Harder to Kill within the proposed Combat Mindset tagline (Remain effective. Act decisively. Harder to kill.), endorsing, deferring or rejecting its inclusion.
-7. **Direct** a report back in November 2026 containing the endorsed definitions; Framework v1.0; the validated capability and product architecture; proposed governance and assurance arrangements; an assessment of existing product maturity, evidence and scalability; and a prioritised implementation plan.
+5. **Note** that the programme timeframes are aspirational and that activity may extend into early 2027.
 
 +++
 
