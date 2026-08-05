@@ -2,9 +2,11 @@
 
 ## Purpose
 
-This paper responds to COMDT ACS direction of 16 July 2026 for NZ Army Leadership Centre (NZALC), in conjunction with the Human Performance Cell (HPC), to develop a strategy to close the Combat Mindset policy and doctrine gap. It proposes a problem statement, initial working definitions and their relationship, the Combat Mindset Framework as the organising system, and a programme of work, for decision.
+This paper responds to COMDT ACS direction of 16 July 2026 for NZ Army Leadership Centre (NZALC), in conjunction with the Human Performance Cell (HPC), to develop a strategy to close the Combat Mindset policy and doctrine gap. It proposes the conceptual relationship between Combat Mindset and Performance Under Pressure, establishes the Combat Mindset Framework as the organising system, and seeks approval to commence a phased programme of work.
 
 The programme of work is phased: Phase 1 defines terminology, governance, roles and responsibilities; Phase 2 assesses existing doctrine, products, delivery and governance; Phase 3 designs the framework, its delivery system and outcomes; Phase 4 validates the framework with key stakeholders; and Phase 5 delivers the framework for approval and implementation.
+
+The decisions sought establish the drafting baseline and the authority to commence the programme. Final doctrine, governance and implementation arrangements remain subject to the appropriate Army approval processes.
 
 Final recommendations and an implementation back brief will return to COMDT ACS in November 2026.
 
@@ -20,7 +22,7 @@ The underlying operational problem remains:
 
 > Under operational pressure, trained individuals and teams do not always retain access to their full capability.
 
-The doctrinal requirement is therefore to define the human-performance capability Army requires, consolidate the substantial body of work that already exists beneath it, and describe its combat-specific expression. Sufficient evidence and existing capability are available to commence this programme of work in order to achieve that end state.
+Army must define the required human-performance capability, consolidate the substantial body of work already in existence, and describe its combat-specific expression. Existing evidence and capability are sufficient to commence that work.
 
 ---
 
@@ -30,11 +32,7 @@ One structural decision must be made before the framework can be drafted: the re
 
 ### Option 1: Combat Mindset as the combat-specific expression of Performance Under Pressure (recommended)
 
-Combat Mindset is the individual and collective readiness and disposition Army seeks under the threat, adversity and uncertainty of combat. It is the combat-specific expression of Performance Under Pressure.
-
-Performance Under Pressure is the enabling human-performance capability: the trainable individual and collective capacity to prepare for, maintain effective performance through, adapt within and recover from pressure. It is applicable across combat, command, crisis response, training, garrison leadership and high-risk technical activity. Combat Mindset places that broader capability within its specifically warfighting context and connects it to Army's mission, identity, values and operational purpose.
-
-The Combat Mindset Framework is the organising system through which Army will govern, develop, deliver and assure this effect across provisional capability pillars, developmental outcomes, training products and governance arrangements.
+Combat Mindset is the combat-specific expression of Performance Under Pressure, the enabling human-performance capability that remains applicable wherever significant pressure exists. The Combat Mindset Framework is the organising system through which Army governs, develops, delivers and assures both.
 
 The following formal definitions are proposed as the drafting baseline.
 
@@ -44,7 +42,7 @@ The following formal definitions are proposed as the drafting baseline.
 
 > **Combat Mindset Framework.** The framework through which Combat Mindset is governed, developed, delivered and assured.
 
-A product, method or activity is combat-specific where it develops or applies Performance Under Pressure under conditions characteristic of combat: an opposed or threat-bearing context, consequence for mission and life, and ethical load. Products lacking these conditions contribute to the enabling capability rather than its combat-specific expression.
+A product, method or activity is combat-specific where it develops or applies Performance Under Pressure in a context that represents or deliberately simulates the defining demands of combat: opposition or threat, consequence for mission and life, and ethical load. Products that do not represent these demands contribute to the enabling capability rather than its combat-specific expression.
 
 > Performance Under Pressure describes the trainable human-performance capability. Combat Mindset describes the specifically combat-oriented expression of that capability.
 
@@ -56,8 +54,13 @@ A product, method or activity is combat-specific where it develops or applies Pe
 
 Combat Mindset is treated as the complete capability itself, integrating leadership, human performance, resilience, mental skills and performance cognition, with performance under pressure expressed within it.
 
+**Advantages.**
+
 * Maximises simplicity: one term serves as outcome, capability and framework alike.
 * Matches common soldier usage, in which Combat Mindset already serves as the umbrella term, and avoids a two-term hierarchy that requires sustained explanation.
+
+**Limitations.**
+
 * Conflates the combat-specific outcome with the broader human-performance capability, reducing applicability outside combat.
 * Makes it difficult to distinguish doctrine, capability, framework and product.
 * Increases the risk that Combat Mindset is interpreted as motivation or aggression alone.
@@ -96,17 +99,13 @@ August 2026 is set aside for this paper to be socialised through the chain of co
 
 ### Phase 1: Define (September 2026)
 
-Confirm terminology, governance, roles and responsibilities.
+Confirm terminology, governance, roles and responsibilities. Select the terminology option at paragraph 2 and draft the endorsed definitions and their relationship for staffing. Confirm interim sponsorship, programme leadership, phase leads, stakeholder representation and decision authorities, while identifying the enduring capability ownership, technical-authority and assurance arrangements to be resolved through the programme.
 
-Endorse the problem statement, select the terminology option at paragraph 2, and confirm interim sponsorship, capability-integration arrangements and phase leads. Draft for staffing the endorsed definitions of Combat Mindset, Performance Under Pressure and the Combat Mindset Framework, together with the relationship between the three.
-
-**Key output.** Endorsed definitions and confirmed interim governance.
+**Key output.** Endorsed drafting baseline and confirmed interim governance.
 
 ### Phase 2: Understand (September 2026)
 
-Assess existing doctrine, products, delivery and governance.
-
-Assess holdings across ACS, NZALC, HPC, APS, ILD, training establishments and selected units against:
+Assess existing doctrine, products, delivery and governance across ACS, NZALC, HPC, APS, ILD, training establishments and selected units against:
 
 * doctrinal and policy holdings;
 * capability outcomes, training products and methods;
@@ -120,27 +119,21 @@ Apply the combat-specificity test at paragraph 2 to distinguish products that co
 
 ### Phase 3: Design (October 2026)
 
-Develop the Combat Mindset Framework, delivery system and outcomes.
+Develop the Combat Mindset Framework, delivery system and outcomes: the organising system through which Army will govern, develop, deliver and assure Performance Under Pressure and its combat-specific expression, covering the capability pillars, developmental outcomes from Lead Self through Lead Systems, common assurance principles, and the criteria by which products are recognised as contributing to the framework.
 
-Draft the organising system through which Army will govern, develop, deliver and assure Performance Under Pressure and its combat-specific expression, covering the capability pillars, developmental outcomes from Lead Self through Lead Systems, common assurance principles, and the criteria by which products are recognised as contributing to the framework.
-
-The provisional working pillars are: leadership under pressure; self-regulation and mental skills; performance cognition; resilience, adaptation and recovery; physical readiness and performance; professional identity, values and will to act; and team and collective performance. Existing products, including the NZALC Leadership Development System and COGCON, will be mapped beneath the relevant pillars rather than treated as the framework itself.
+The provisional working pillars are: leadership under pressure; self-regulation and mental skills; performance cognition; resilience, adaptation and recovery; physical readiness and performance; professional identity, values and will to act; and team and collective performance. Existing products, including the NZALC Leadership Development System and COGCON, will be mapped beneath the relevant pillars rather than treated as the framework itself. The design will also identify how progression, transfer to operationally relevant performance, product quality and institutional adoption will be assessed.
 
 **Key output.** Draft Framework v1.0, comprising the capability pillars, developmental outcomes, product architecture and assurance criteria.
 
 ### Phase 4: Validate (November 2026)
 
-Refine the framework with key stakeholders.
-
-Convene ACS, NZALC, HPC, APS, ILD, selected training providers and units to test the framework, product architecture, governance model, implementation priorities, definition clarity and doctrinal coherence. Where time and unit availability permit, bounded pilots will be conducted within this phase or earlier alongside Phase 2 or Phase 3.
+Refine the framework with key stakeholders: convene ACS, NZALC, HPC, APS, ILD, selected training providers and units to test the framework, product architecture, governance model, implementation priorities, definition clarity and doctrinal coherence. Where time and unit availability permit, bounded pilots will be conducted within this phase or earlier alongside Phase 2 or Phase 3.
 
 **Key output.** A validated framework and product architecture, with stakeholder positions recorded.
 
 ### Phase 5: Implement (late November 2026)
 
-Deliver the framework for approval and implementation.
-
-Present to COMDT ACS the endorsed definitions and confirmed relationship; Framework v1.0 and its validated capability and product architecture; the proposed governance and assurance model; and a prioritised implementation plan.
+Deliver the framework for approval and implementation: present to COMDT ACS the endorsed definitions and confirmed relationship; Framework v1.0 and its validated capability and product architecture; the proposed governance and assurance model; and a prioritised implementation plan. Framework v1.0 establishes the initial approved architecture and priority implementation activity; further evidence development, product alignment and assurance maturity will continue through implementation.
 
 **Key output.** Framework v1.0 submitted for approval, with an implementation plan and back brief to COMDT ACS.
 
