@@ -53,7 +53,6 @@ A product, method or activity is combat-specific where it develops or applies Pe
 **Limitations**
 
 * Requires Army to hold two related terms rather than one, so the distinction must be explained and sustained in doctrine, instruction and everyday use.
-* Runs against common soldier usage, in which Combat Mindset already serves as the umbrella term, so the hierarchy will need reinforcement to hold.
 
 ### Option 2: Combat Mindset as the complete umbrella capability
 
