@@ -4,7 +4,7 @@
 
 This paper responds to COMDT ACS direction of 16 July 2026 for NZ Army Leadership Centre (NZALC), in conjunction with the Human Performance Cell (HPC), to develop a strategy to close the Combat Mindset policy and doctrine gap. It proposes the conceptual relationship between Combat Mindset and Performance Under Pressure, establishes the Combat Mindset Framework as the organising system, and seeks approval to commence a phased programme of work.
 
-The programme of work is phased: Phase 1 defines terminology, governance, roles and responsibilities; Phase 2 assesses existing doctrine, products, delivery and governance; Phase 3 designs the framework, its delivery system and outcomes; Phase 4 validates the framework with key stakeholders; and Phase 5 delivers the framework for approval and implementation.
+The programme of work is phased: Phase 1 defines terminology, governance, roles and responsibilities; Phase 2 assesses existing doctrine, products and delivery; Phase 3 designs the framework, its delivery system and outcomes; Phase 4 validates the framework with key stakeholders; and Phase 5 delivers the framework for approval and implementation.
 
 The decisions sought establish the drafting baseline and the authority to commence the programme. Final doctrine, governance and implementation arrangements remain subject to the appropriate Army approval processes.
 
@@ -107,7 +107,7 @@ Confirm terminology, governance, roles and responsibilities. Select the terminol
 
 ### Phase 2: Understand (September 2026)
 
-Assess existing doctrine, products, delivery and governance across ACS, NZALC, HPC, APS, ILD, training establishments and selected units against:
+Assess existing doctrine, products and delivery across ACS, NZALC, HPC, APS, ILD, training establishments and selected units against:
 
 * doctrinal and policy holdings;
 * capability outcomes, training products and methods;

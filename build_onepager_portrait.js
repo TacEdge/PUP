@@ -156,7 +156,7 @@ const emblemFW = (ink, accent) => `
     ["1", "DEFINE",
       "Confirm terminology, governance, roles and responsibilities."],
     ["2", "UNDERSTAND",
-      "Assess existing doctrine, products, delivery and governance."],
+      "Assess existing doctrine, products and delivery."],
     ["3", "DESIGN",
       "Develop the Combat Mindset Framework, delivery system and outcomes."],
     ["4", "VALIDATE",
