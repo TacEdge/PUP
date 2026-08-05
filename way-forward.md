@@ -106,7 +106,7 @@ Phases may overlap, but each phase depends on the endorsed outputs of the one be
 
 ### Phase 1: Define (September 2026)
 
-Confirm terminology, governance, roles and responsibilities. Select the terminology option at paragraph 2 and draft the endorsed definitions and their relationship for staffing. Confirm interim sponsorship, programme leadership, phase leads, stakeholder representation and decision authorities, while identifying the enduring capability ownership, technical-authority and assurance arrangements to be resolved through the programme.
+Confirm terminology, governance, roles and responsibilities. Establish interim sponsorship, programme leadership, phase leads, stakeholder representation and decision authorities, while identifying the enduring capability ownership, technical-authority and assurance arrangements to be resolved through the programme.
 
 **Key output.** Endorsed drafting baseline and confirmed interim governance.
 
@@ -120,9 +120,9 @@ Assess existing doctrine, products and delivery across ACS, NZALC, HPC, APS, ILD
 * evidence maturity, scalability and resource requirements; and
 * gaps, duplication and integration opportunities.
 
-Apply the combat-specificity test at paragraph 2 to distinguish products that contribute to the broader Performance Under Pressure capability from those that support its combat-specific expression. Assess COGCON as one developmental product, with particular attention to its product boundary, evidence base, ownership, workforce requirements and scalability.
+Apply the combat-specificity test in section 2 to distinguish products that contribute to the broader Performance Under Pressure capability from those that support its combat-specific expression. Assess COGCON as one developmental product, establishing what it delivers, who owns it and whether it can be scaled.
 
-**Key output.** A capability and product baseline identifying holdings, gaps, duplication and integration opportunities.
+**Key output.** A capability and product baseline identifying what already exists, gaps, duplication and integration opportunities.
 
 ### Phase 3: Design (October 2026)
 
