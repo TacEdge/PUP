@@ -67,10 +67,10 @@ const emblemFW = (ink, accent) => `
   const pres = new pptxgen();
   pres.defineLayout({ name: "A4P", width: 8.27, height: 11.69 });
   pres.layout = "A4P";
-  pres.title = "Combat Mindset Framework Proposal";
+  pres.title = "NZ Army Combat Mindset Framework Proposal";
   pres.company = "Army Command School";
   pres.revision = "9";
-  pres.subject = "Combat Mindset Framework Proposal";
+  pres.subject = "NZ Army Combat Mindset Framework Proposal";
   const s = pres.addSlide();
   s.background = { color: WHITE };
 
@@ -78,8 +78,8 @@ const emblemFW = (ink, accent) => `
 
   // ---- header ------------------------------------------------------------
   s.addImage({ path: LOGO, x: L, y: 0.36, w: 1.72, h: 0.416 });
-  s.addText("COMBAT MINDSET FRAMEWORK PROPOSAL", {
-    x: L, y: 0.9, w: W, h: 0.34, fontFace: F, fontSize: 17, bold: true,
+  s.addText("NZ ARMY COMBAT MINDSET FRAMEWORK PROPOSAL", {
+    x: L, y: 0.9, w: W, h: 0.34, fontFace: F, fontSize: 16, bold: true,
     color: BLACK, align: "left", valign: "middle", margin: 0 });
   s.addText("Army Command School", {
     x: L, y: 1.24, w: W, h: 0.18, fontFace: F, fontSize: 9, italic: true,
@@ -97,14 +97,6 @@ const emblemFW = (ink, accent) => `
       color: WHITE, charSpacing: 1.2, align: "center", valign: "middle", margin: 0 });
   }
 
-  function midConnector(y, label) {
-    s.addShape("triangle", { x: MID - 0.07, y, w: 0.14, h: 0.11,
-      fill: { color: SWAMP, transparency: 45 }, rotate: 180 });
-    s.addText(label, { x: MID - 1.9, y: y + 0.13, w: 3.8, h: 0.16, fontFace: F,
-      fontSize: 8, italic: true, color: "7F7F7F", align: "center",
-      valign: "middle", margin: 0 });
-  }
-
   // ---- section 1: Combat Mindset -----------------------------------------
   s.addShape("roundRect", { x: L, y: 1.62, w: W, h: 1.5, rectRadius: 0.08, fill: { color: BLACK } });
   pill(1.5, 2.4, "1)  WARFIGHTING IMPERATIVE", RED);
@@ -119,38 +111,32 @@ const emblemFW = (ink, accent) => `
     x: L, y: 2.76, w: W, h: 0.28, fontFace: F, fontSize: 13.5, bold: true,
     color: RED, align: "center", valign: "middle", margin: 0 });
 
-  midConnector(3.24, "enabled by");
-
   // ---- section 2: Performance Under Pressure -----------------------------
-  s.addShape("roundRect", { x: L, y: 3.8, w: W, h: 1.2, rectRadius: 0.08, fill: { color: SWAMP } });
-  pill(3.68, 2.35, "2)  ENABLING CAPABILITY", SWAMP);
-  s.addImage({ data: I.pup, x: L + 0.26, y: 4.1, w: 0.6, h: 0.6 });
+  s.addShape("roundRect", { x: L, y: 3.54, w: W, h: 1.2, rectRadius: 0.08, fill: { color: SWAMP } });
+  pill(3.42, 2.35, "2)  ENABLING CAPABILITY", SWAMP);
+  s.addImage({ data: I.pup, x: L + 0.26, y: 3.84, w: 0.6, h: 0.6 });
   s.addText("PERFORMANCE UNDER PRESSURE", {
-    x: L, y: 4.06, w: W, h: 0.46, fontFace: F, fontSize: 22.5, bold: true,
+    x: L, y: 3.80, w: W, h: 0.46, fontFace: F, fontSize: 22.5, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
   s.addText("Prepare   •   Perform   •   Recover", {
-    x: L, y: 4.56, w: W, h: 0.26, fontFace: F, fontSize: 9.5,
+    x: L, y: 4.30, w: W, h: 0.26, fontFace: F, fontSize: 9.5,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
-
-  midConnector(5.12, "organised through");
 
   // ---- section 3: the framework ------------------------------------------
-  s.addShape("roundRect", { x: L, y: 5.68, w: W, h: 1.12, rectRadius: 0.08, fill: { color: KAWAKAWA } });
-  pill(5.56, 2.1, "3)  ORGANISING SYSTEM", KAWAKAWA);
-  s.addImage({ data: I.fw, x: L + 0.26, y: 5.94, w: 0.58, h: 0.58 });
+  s.addShape("roundRect", { x: L, y: 5.16, w: W, h: 1.12, rectRadius: 0.08, fill: { color: KAWAKAWA } });
+  pill(5.04, 2.1, "3)  ORGANISING SYSTEM", KAWAKAWA);
+  s.addImage({ data: I.fw, x: L + 0.26, y: 5.42, w: 0.58, h: 0.58 });
   s.addText("COMBAT MINDSET FRAMEWORK", {
-    x: L, y: 5.86, w: W, h: 0.44, fontFace: F, fontSize: 22.5, bold: true,
+    x: L, y: 5.34, w: W, h: 0.44, fontFace: F, fontSize: 22.5, bold: true,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
   s.addText("Governs, develops, delivers and assures Performance Under Pressure and Combat Mindset.", {
-    x: L, y: 6.33, w: W, h: 0.24, fontFace: F, fontSize: 9.5,
+    x: L, y: 5.81, w: W, h: 0.24, fontFace: F, fontSize: 9.5,
     color: WHITE, align: "center", valign: "middle", margin: 0 });
 
-  midConnector(6.92, "achieved through");
-
   // ---- section 4: framework development programme (vertical pathway) -----
-  s.addShape("roundRect", { x: L, y: 7.48, w: W, h: 3.76, rectRadius: 0.08,
+  s.addShape("roundRect", { x: L, y: 6.70, w: W, h: 4.54, rectRadius: 0.08,
     fill: { color: MOAWHANGO, transparency: 72 } });
-  pill(7.36, 3.7, "4)  FRAMEWORK DEVELOPMENT PROGRAMME", SWAMP);
+  pill(6.58, 3.7, "4)  FRAMEWORK DEVELOPMENT PROGRAMME", SWAMP);
 
   const phases = [
     ["1", "DEFINE",
@@ -165,7 +151,7 @@ const emblemFW = (ink, accent) => `
       "Deliver the framework for approval and implementation."],
   ];
   const LN = L + 0.58;      // vertical line x
-  const CY0 = 8.1, PITCH = 0.71, CD = 0.42;
+  const CY0 = 7.40, PITCH = 0.81, CD = 0.42;
   s.addShape("line", { x: LN, y: CY0, w: 0, h: PITCH * 4,
     line: { color: SWAMP, width: 1.5 } });
   phases.forEach(([n, title, desc], i) => {
