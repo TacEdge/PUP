@@ -99,7 +99,7 @@ const LOGO = "/tmp/claude-0/-home-user-PUP/2d4cec0e-a52e-5368-bb54-803c6f37698d/
     ["RECOVER", WAIOURU,
      ["Give and receive structured face-to-face feedback.",
       "Reflect on critical moments during the activity.",
-      "Build a Leadership Development Plan and keep, stop, start Game Plan."]],
+      "Build a Leadership Development Plan and Keep, Stop, Start Game Plan."]],
   ];
   const cGap = 0.14, cW = (W - 2 * cGap) / 3;
   cycle.forEach(([title, colour, items], i) => {
@@ -122,13 +122,13 @@ const LOGO = "/tmp/claude-0/-home-user-PUP/2d4cec0e-a52e-5368-bb54-803c6f37698d/
     ["Leadership fundamentals",
      "Command, management and leadership; trust; identity and reputation; and the four competency domains."],
     ["Leadership Personality Report",
-     "A validated Five Factor profile of everyday behaviour, behaviour under pressure, and underlying needs and drivers."],
+     "A validated Five-Factor profile of everyday behaviour, behaviour under pressure, and underlying needs and drivers."],
     ["Self and peer feedback",
      "One strength to sustain and one behaviour to adapt, supported by evidence observed during the activity."],
     ["Performance under pressure",
      "Red head and blue head, performance as potential less interference, and practical mental skills including tactical breathing, self-talk, visualisation, chunking and recovery."],
     ["Leadership Development Plan",
-     "Three behaviours to sustain and three to adapt, converted into observable keep, stop and start actions."],
+     "Three behaviours to sustain and three to adapt, converted into observable Keep, Stop, Start actions."],
   ];
   let my = 6.56;
   modules.forEach(([t, d]) => {
