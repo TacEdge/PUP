@@ -44,9 +44,16 @@ A product, method or activity is combat-specific where it develops or applies Pe
 
 > In summary, Performance Under Pressure is the trainable capability; Combat Mindset is its combat-specific expression.
 
+**Advantages**
+
 * Gives each term one clear purpose: Combat Mindset is the combat-specific expression; Performance Under Pressure is the enabling capability; the Combat Mindset Framework is the organising system.
 * Keeps Performance Under Pressure applicable wherever significant pressure exists without an enemy; command, crisis response, training, garrison leadership and high-risk technical activity.
 * Guards against Combat Mindset being misread as aggression, motivation or resilience alone.
+
+**Limitations**
+
+* Requires Army to hold two related terms rather than one, so the distinction must be explained and sustained in doctrine, instruction and everyday use.
+* Runs against common soldier usage, in which Combat Mindset already serves as the umbrella term, so the hierarchy will need reinforcement to hold.
 
 ### Option 2: Combat Mindset as the complete umbrella capability
 
