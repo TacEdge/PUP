@@ -140,9 +140,9 @@ Refine the framework with key stakeholders: convene ACS, NZALC, HPC, APS, ILD, s
 
 ### Phase 5: Implement (late November 2026)
 
-Deliver the framework for approval and implementation: present to COMDT ACS the endorsed definitions and confirmed relationship; Framework v1.0 and its validated product architecture; the proposed governance and assurance model; and a prioritised implementation plan.
+Deliver the Combat Mindset Framework for approval and implementation: the validated product architecture; the proposed governance and assurance model; and an implementation plan.
 
-Framework v1.0 establishes the initial approved architecture and priority implementation activity. Further evidence development, product alignment and assurance maturity will continue through implementation.
+Further evidence development, product alignment and assurance maturity will continue through implementation.
 
 **Key output.** Framework v1.0 submitted for approval, with an implementation plan and back brief to COMDT ACS.
 
