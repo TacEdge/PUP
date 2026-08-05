@@ -8,15 +8,13 @@ The programme of work is phased: Phase 1 defines terminology, governance, roles 
 
 The decisions sought establish the drafting baseline and the authority to commence the programme. Final doctrine, governance and implementation arrangements remain subject to the appropriate Army approval processes.
 
-Final recommendations and an implementation back brief will return to COMDT ACS in November 2026.
-
 ---
 
 ## 1. The problem
 
 Considerable relevant capability, expertise and activity already exist across Army. What Army does not yet have is a coherent doctrine, governance and assurance model for Combat Mindset. The COMDT ACS guidance reaches the same diagnosis:
 
-> Substantial relevant capability already exists across ACS, NZALC, the Human Performance Cell, NZDF Psychology, ILD, training establishments and units. The challenge is not primarily a lack of content. It is a lack of visibility, integration, common terminology, strategic ownership and assurance across that existing capability.
+> Substantial relevant capability already exists across ACS, NZALC, the Human Performance Cell, Army Psychology Services (APS), ILD, training establishments and units. The challenge is not primarily a lack of content. It is a lack of visibility, integration, common terminology, strategic ownership and assurance across that existing capability.
 
 The underlying operational problem remains:
 
