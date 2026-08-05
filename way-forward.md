@@ -111,7 +111,7 @@ Assess existing doctrine, products and delivery across ACS, NZALC, HPC, APS, ILD
 
 * doctrinal and policy holdings;
 * capability outcomes, training products and methods;
-* delivery organisations and their technical and professional authorities;
+* delivery organisations;
 * evidence maturity, scalability and resource requirements; and
 * gaps, duplication and integration opportunities.
 
