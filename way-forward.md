@@ -24,7 +24,7 @@ The doctrinal requirement is therefore to define the human-performance capabilit
 
 ---
 
-## 2. Terminology and definitions: decision sought
+## 2. Terminology and definitions
 
 One structural decision must be made before the framework can be drafted: the relationship between Combat Mindset and Performance Under Pressure. Two options are offered.
 
@@ -46,7 +46,7 @@ The following formal definitions are proposed as the drafting baseline.
 
 A product, method or activity is combat-specific where it develops or applies Performance Under Pressure under conditions characteristic of combat: an opposed or threat-bearing context, consequence for mission and life, and ethical load. Products lacking these conditions contribute to the enabling capability rather than its combat-specific expression.
 
->! Performance Under Pressure describes the trainable human-performance capability. Combat Mindset describes the specifically combat-oriented expression of that capability.
+> Performance Under Pressure describes the trainable human-performance capability. Combat Mindset describes the specifically combat-oriented expression of that capability.
 
 * Gives each term one clear purpose: Combat Mindset is the combat-specific expression; Performance Under Pressure is the enabling capability; the Combat Mindset Framework is the organising system.
 * Keeps Performance Under Pressure applicable wherever significant pressure exists without an enemy; command, crisis response, training, garrison leadership and high-risk technical activity.
