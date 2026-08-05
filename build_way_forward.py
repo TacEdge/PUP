@@ -505,7 +505,7 @@ logo_para.paragraph_format.space_after = Pt(220)
 
 title_p = doc.add_paragraph()
 title_p.paragraph_format.space_after = Pt(2)
-t = title_p.add_run("Combat Mindset")
+t = title_p.add_run("NZ Army Combat Mindset")
 force_font(t, FONT_HEAD)
 t.font.size = Pt(36)
 t.bold = True
