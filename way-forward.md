@@ -128,13 +128,13 @@ Apply the combat-specificity test in section 2 to distinguish products that cont
 
 Develop the Combat Mindset Framework, delivery system and outcomes. The framework will establish how Army governs, develops, delivers and assures Performance Under Pressure and its combat-specific expression. The design will set developmental outcomes from Lead Self through Lead Systems, the architecture through which existing and future products contribute, common assurance principles, and the criteria by which products are recognised as part of the framework.
 
-Existing products, including the NZALC Leadership Development System and COGCON, will be mapped against the endorsed outcomes and framework requirements rather than treated as the framework itself. The design will also identify how progression, transfer to operationally relevant performance, product quality and institutional adoption will be assessed.
+Existing products, including the NZALC Leadership Development System and COGCON, will be mapped against the endorsed outcomes and framework requirements rather than treated as the framework itself. The design will also identify how progression, transfer to performance, product quality and organisational adoption will be assessed.
 
 **Key output.** Draft Framework v1.0, comprising developmental outcomes, product architecture, governance arrangements and assurance criteria.
 
 ### Phase 4: Validate (November 2026)
 
-Refine the framework with key stakeholders: convene ACS, NZALC, HPC, APS, ILD, selected training providers and units to test the framework, product architecture, governance model, implementation priorities, definition clarity and doctrinal coherence. Where time and unit availability permit, bounded validation activities or pilots will be conducted within this phase or earlier alongside Phase 2 or Phase 3.
+Refine the framework with key stakeholders: convene ACS, NZALC, HPC, APS, ILD, selected training providers and units to test whether the framework is clear, coherent and workable. Where time and unit availability permit, bounded validation activities or pilots will be conducted within this phase or earlier alongside Phase 2 or Phase 3.
 
 **Key output.** A validated framework and product architecture, with stakeholder positions recorded.
 
