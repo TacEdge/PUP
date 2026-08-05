@@ -92,7 +92,7 @@ COGCON is a developmental cognitive-conditioning product targeting selected aspe
 
 These organisations hold additional professional expertise, learning products, delivery capability and assurance functions that will be confirmed during the Phase 2 assessment.
 
-Initial review indicates considerable conceptual alignment across existing products. The Combat Mindset Framework will establish a common doctrinal language beneath which individual products and methods can be nested. It will not require identical internal methodologies, provided products align to the endorsed framework, outcomes and assurance requirements.
+Initial review indicates considerable conceptual alignment across existing products. The Combat Mindset Framework will establish a common doctrinal language beneath which individual products and methods can be nested.
 
 A full assessment of existing capability and products will be completed during Phase 2. The products described above contribute to Performance Under Pressure and, where applied in a warfighting context, to Combat Mindset; none constitutes the framework in isolation.
 
@@ -102,7 +102,7 @@ A full assessment of existing capability and products will be completed during P
 
 August 2026 is set aside for this paper to be socialised through the chain of command, and the programme is therefore proposed to commence in September 2026. The timeframes below are aspirational and depend to varying extents on external stakeholder availability and input. As such, activity extending into early 2027 is anticipated rather than unforeseen.
 
-Phases may overlap where practical, however subsequent design decisions remain dependent upon the endorsed outputs of preceding phases.
+Phases may overlap, but each phase depends on the endorsed outputs of the one before it.
 
 ### Phase 1: Define (September 2026)
 
