@@ -25,7 +25,7 @@ PROTECTIVE_MARKING = "UNCLASSIFIED"
 DOCUMENT_REFERENCE = "ACS 2026"
 DATE               = "August 2026"
 ORIGINATOR         = "Army Command School"
-VERSION            = "Draft v1.0"
+VERSION            = "V1.0"
 DISTRIBUTION       = "COMDT ACS"
 LIST_STYLE         = "bullets"
 
@@ -546,10 +546,6 @@ for i, (label, value) in enumerate(meta_rows):
     p = doc.add_paragraph()
     p.paragraph_format.space_after = Pt(3)
     p.paragraph_format.tab_stops.add_tab_stop(Cm(3.2))
-    if i == 0:
-        set_border(p, "top", WAIOURU_HILLS, 6, space=6)
-    if i == len(meta_rows) - 1:
-        set_border(p, "bottom", WAIOURU_HILLS, 6, space=6)
     lab = p.add_run(f"{label}\t")
     force_font(lab, FONT_HEAD)
     lab.font.size = Pt(10)
