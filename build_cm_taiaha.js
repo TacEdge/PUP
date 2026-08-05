@@ -37,53 +37,61 @@ const disc = (r, cx = 128, cy = 128) =>
   `A${r},${r} 0 1,0 ${(cx - r).toFixed(1)},${cy} Z`;
 
 // ---- taiaha ---------------------------------------------------------------
-// Right-hand profile, mirrored: arero (tongue), upoko (head), ate (shaft),
-// rau (blade). Silhouette only, with no carving detail.
-const TAIAHA_RIGHT = [
-  [128, 22], [134, 46], [129, 58],
-  [144, 72], [142, 92], [132, 104],
-  [130.5, 112], [130.5, 150],
-  [136, 176], [143, 204], [145, 222],
-  [137, 238], [128, 246],
+// Traced from reference. Half-widths down the weapon: arero (tongue), upoko
+// (carved head), the collar binding, ate (shaft), rau (blade).
+const HEAD = [
+  [14, 0], [34, 5], [62, 10], [92, 12.5], [108, 12], [118, 11],
+  [136, 17], [162, 18.5], [182, 18], [200, 15], [210, 11.5],
 ];
-function taiaha(scale = 1, cy = 128) {
-  const left = TAIAHA_RIGHT.slice(0, -1).reverse().map(([x, y]) => [256 - x, y]);
-  const pts = [...TAIAHA_RIGHT, ...left].map(([x, y]) =>
-    `${(128 + (x - 128) * scale).toFixed(1)},${(cy + (y - 134) * scale).toFixed(1)}`);
-  return "M" + pts.join("L") + "Z";
+const COLLAR = [212, 232];
+const SHAFT_HW = 8;
+
+// True proportions of the whole weapon: head 18 per cent, shaft 59, blade 23.
+const FULL = [
+  [10, 0], [24, 4.5], [40, 7], [54, 8], [64, 7],
+  [74, 10.5], [88, 11], [100, 10], [106, 8],
+  [118, 3], [150, 3], [176, 3],
+  [192, 4.5], [208, 6.5], [222, 7.5], [234, 7], [243, 4], [248, 0],
+];
+
+function profile(prof, scale = 1, cy = 128, cyRef = 123) {
+  const S = (x, y) => `${(128 + (x - 128) * scale).toFixed(1)},${(cy + (y - cyRef) * scale).toFixed(1)}`;
+  const right = prof.map(([y, hw]) => S(128 + hw, y));
+  const left = prof.slice().reverse().map(([y, hw]) => S(128 - hw, y));
+  return "M" + [...right, ...left].join("L") + "Z";
 }
-// Just the head: arero and upoko, for the smallest applications.
-function taiahaHead(scale = 1, cy = 128) {
-  const head = TAIAHA_RIGHT.slice(0, 7).concat([[130.5, 112]]);
-  const left = head.slice(0, -1).reverse().map(([x, y]) => [256 - x, y]);
-  const pts = [...head, ...left].map(([x, y]) =>
-    `${(128 + (x - 128) * scale).toFixed(1)},${(cy + (y - 66) * scale).toFixed(1)}`);
-  return "M" + pts.join("L") + "Z";
-}
+
+const headPath = (scale = 1, cy = 128) =>
+  profile([...HEAD, [COLLAR[0], SHAFT_HW]], scale, cy);
+const collarPath = (scale = 1, cy = 128) => {
+  const S = (x, y) => `${(128 + (x - 128) * scale).toFixed(1)},${(cy + (y - 123) * scale).toFixed(1)}`;
+  const hw = SHAFT_HW + 1.5;
+  return `M${S(128 - hw, COLLAR[0])} L${S(128 + hw, COLLAR[0])} ` +
+         `L${S(128 + hw, COLLAR[1])} L${S(128 - hw, COLLAR[1])} Z`;
+};
+const fullPath = (scale = 1, cy = 128) => profile(FULL, scale, cy, 129);
 
 const patchSolid =
   "M62,26 H194 A36,36 0 0 1 230,62 V194 A36,36 0 0 1 194,230 H62 " +
   "A36,36 0 0 1 26,194 V62 A36,36 0 0 1 62,26 Z";
 
-const TS = 0.72, TCY = 122;
+const TS = 0.69, TCY = 128;
 
 const heroMark = (ink, accent = true) => `
   <path d="${arcs()}" fill="#${ink}"/>
-  <path d="${disc(66)} ${taiaha(TS, TCY)}" fill="#${ink}" fill-rule="evenodd"/>
-  ${accent ? `<path d="${taiaha(TS, TCY)}" fill="#${RED}"/>` : ""}`;
+  <path d="${disc(66)} ${headPath(TS, TCY)} ${collarPath(TS, TCY)}" fill="#${ink}" fill-rule="evenodd"/>
+  ${accent ? `<path d="${collarPath(TS, TCY)}" fill="#${RED}"/>` : ""}`;
 
-const headMark = (ink, accent = true) => `
-  <path d="${arcs()}" fill="#${ink}"/>
-  <path d="${disc(66)} ${taiahaHead(1.34, 128)}" fill="#${ink}" fill-rule="evenodd"/>
-  ${accent ? `<path d="${taiahaHead(1.34, 128)}" fill="#${RED}"/>` : ""}`;
+// the whole weapon, to show why the head is the workable device
+const fullMark = (ink) => `<path d="${fullPath(0.94, 128)}" fill="#${ink}"/>`;
 
 (async () => {
   const I = {
     heroW: await svgPng(heroMark(WHITE)),
     heroS: await svgPng(heroMark(SWAMP)),
     heroMono: await svgPng(heroMark(WHITE, false)),
-    headW: await svgPng(headMark(WHITE)),
-    headS: await svgPng(headMark(SWAMP)),
+    fullW: await svgPng(fullMark(WHITE)),
+    fullS: await svgPng(fullMark(SWAMP)),
     patch: await svgPng(
       `<path d="${patchSolid}" fill="#${WHITE}"/>
        <g transform="translate(128,128) scale(0.6) translate(-128,-128)">${heroMark(SWAMP)}</g>`),
@@ -180,18 +188,18 @@ const headMark = (ink, accent = true) => `
   });
 
   // ---- head variant -------------------------------------------------------
-  s.addText("VARIANT: THE HEAD ALONE", { x: L, y: 8.6, w: W, h: 0.2, fontFace: F,
+  s.addText("WHY THE HEAD, NOT THE WHOLE WEAPON", { x: L, y: 8.6, w: W, h: 0.2, fontFace: F,
     fontSize: 7.6, bold: true, color: SWAMP, charSpacing: 1.4, align: "left",
     valign: "middle", margin: 0 });
   s.addShape("rect", { x: L, y: 8.82, w: 1.9, h: 1.28, fill: { color: BLACK } });
-  s.addImage({ data: I.headW, x: L + 0.29, y: 8.98, w: 0.96, h: 0.96 });
+  s.addImage({ data: I.fullW, x: L + 0.29, y: 8.98, w: 0.96, h: 0.96 });
   s.addShape("rect", { x: L + 2.04, y: 8.82, w: 1.9, h: 1.28, fill: { color: WHITE },
     line: { color: MOAWHANGO, width: 1 } });
-  s.addImage({ data: I.headS, x: L + 2.62, y: 9.18, w: 0.74, h: 0.74 });
+  s.addImage({ data: I.fullS, x: L + 2.62, y: 9.18, w: 0.74, h: 0.74 });
   s.addText(
-    "The full taiaha carries more meaning, but its shaft is slim and the first thing to disappear when the mark is " +
-    "reduced. Cutting the arero and upoko alone keeps the reference and gains weight. Worth holding as the small-size " +
-    "variant if the full weapon proves too fine below about 12 mm.",
+    "Drawn to true proportions the taiaha is very slender: the ate is roughly one fiftieth of its length. At badge " +
+    "size that shaft becomes a hairline and the weapon reads as a stick. The mark therefore carries the arero and " +
+    "upoko, the part that is unmistakably a taiaha, with the collar binding struck in red.",
     { x: L + 4.1, y: 8.86, w: R - L - 4.1, h: 1.1, fontFace: F, fontSize: 8.4,
       color: BLACK, align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.15 });
 
