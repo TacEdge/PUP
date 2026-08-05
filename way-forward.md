@@ -92,50 +92,43 @@ A full assessment of existing capability and products will be completed during P
 
 ## 4. Programme of work
 
-The programme will be conducted within existing ACS, NZALC and HPC baselines; no new resource is sought before the November 2026 report. Proposed phase leads are shown against each phase and are subject to confirmation.
+August 2026 is set aside for this paper to be socialised through the chain of command, and the programme is therefore proposed to commence in September 2026. The timeframes below are aspirational and depend to varying extents on external stakeholder availability and input. As such, activity extending into early 2027 is anticipated rather than unforeseen.
 
-August 2026 is set aside for this paper to be socialised through the chain of command, and the programme is therefore proposed to commence in September 2026. The timeframes below are aspirational. They depend on stakeholder availability and on unit and training establishment programmes, and activity extending into early 2027 is anticipated rather than unforeseen.
-
-### Phase 1: Define (September 2026) (ACS) [proposed – confirm]
+### Phase 1: Define (September 2026)
 
 Confirm terminology, governance, roles and responsibilities.
 
 Endorse the problem statement, select the terminology option at paragraph 2, and confirm interim sponsorship, capability-integration arrangements and phase leads. Draft for staffing the endorsed definitions of Combat Mindset, Performance Under Pressure and the Combat Mindset Framework, together with the relationship between the three.
 
-**Key output.** Endorsed problem statement and definitions, and confirmed interim governance.
+**Key output.** Endorsed definitions and confirmed interim governance.
 
-### Phase 2: Understand (September 2026) (NZALC lead, HPC support) [proposed – confirm]
+### Phase 2: Understand (September 2026)
 
 Assess existing doctrine, products, delivery and governance.
 
 Assess holdings across ACS, NZALC, HPC, APS, ILD, training establishments and selected units against:
 
 * doctrinal and policy holdings;
-* capability outcomes;
-* training products and methods;
-* delivery organisations;
-* technical and professional authorities;
-* evidence maturity;
-* scalability and resource requirements; and
+* capability outcomes, training products and methods;
+* delivery organisations and their technical and professional authorities;
+* evidence maturity, scalability and resource requirements; and
 * gaps, duplication and integration opportunities.
 
 Apply the combat-specificity test at paragraph 2 to distinguish products that contribute to the broader Performance Under Pressure capability from those that support its combat-specific expression. Assess COGCON as one developmental product within this assessment, with particular attention to its product boundary, evidence base (including its completed feasibility trials in live military training), ownership, workforce requirements and scalability.
 
 **Key output.** A capability and product baseline identifying holdings, gaps, duplication and integration opportunities.
 
-### Phase 3: Design (October 2026) (NZALC/HPC joint) [proposed – confirm]
+### Phase 3: Design (October 2026)
 
 Develop the Combat Mindset Framework, delivery system and outcomes.
 
-Draft the organising system through which Army will govern, develop, deliver and assure Performance Under Pressure and its combat-specific expression. The framework will set out the endorsed definitions and desired operational effect; the capability pillars, refined through the Phase 2 assessment; developmental outcomes from Lead Self through Lead Systems; the relationship between doctrine, framework, products and delivery; common assurance principles; and the criteria by which existing and future products may be recognised as contributing to the framework.
+Draft the organising system through which Army will govern, develop, deliver and assure Performance Under Pressure and its combat-specific expression, covering the capability pillars, developmental outcomes from Lead Self through Lead Systems, common assurance principles, and the criteria by which products are recognised as contributing to the framework.
 
-The provisional working pillars are: leadership under pressure; self-regulation and mental skills; performance cognition; resilience, adaptation and recovery; physical readiness and performance; professional identity, values and will to act; and team and collective performance. Each describes an enduring capability Army seeks to build, and each is subject to validation through the Phase 2 assessment and Phase 4 validation. Training products and methods, including progressive exposure to pressure, scenario and experiential training, field and mission-relevant rehearsal, and physical and cognitive conditioning, are how Army builds them.
-
-Existing products, including the NZALC Leadership Development System and COGCON, will be mapped beneath the relevant pillars rather than treated as the framework itself.
+The provisional working pillars are: leadership under pressure; self-regulation and mental skills; performance cognition; resilience, adaptation and recovery; physical readiness and performance; professional identity, values and will to act; and team and collective performance. Existing products, including the NZALC Leadership Development System and COGCON, will be mapped beneath the relevant pillars rather than treated as the framework itself.
 
 **Key output.** Draft Framework v1.0, comprising the capability pillars, developmental outcomes, product architecture and assurance criteria.
 
-### Phase 4: Validate (November 2026) (ACS convenes) [proposed – confirm]
+### Phase 4: Validate (November 2026)
 
 Refine the framework with key stakeholders.
 
@@ -143,27 +136,13 @@ Convene ACS, NZALC, HPC, APS, ILD, selected training providers and units to test
 
 **Key output.** A validated framework and product architecture, with stakeholder positions recorded.
 
-### Phase 5: Implement (late November 2026) (ACS) [proposed – confirm]
+### Phase 5: Implement (late November 2026)
 
 Deliver the framework for approval and implementation.
 
 Present to COMDT ACS the endorsed definitions and the confirmed relationship between Combat Mindset and Performance Under Pressure; Framework v1.0 and its agreed architecture; the validated capability and product architecture; the proposed governance and assurance model; an assessment of existing product maturity, evidence and scalability; and a prioritised implementation plan.
 
 **Key output.** Framework v1.0 submitted for approval, with an implementation plan and back brief to COMDT ACS.
-
-### Framework development principles
-
-Framework development will be guided by the following principles:
-
-* Consolidate and align existing capability before creating new content.
-* Use clear, common and Army-relevant language.
-* Distinguish capability outcomes from training products and methods.
-* Remain evidence-informed and proportionate to the maturity of each product.
-* Avoid capture by any single organisation, discipline or product.
-* Use existing training and leadership systems wherever practicable.
-* Develop from Lead Self through Lead Systems.
-* Validate operational relevance with training establishments and units.
-* Design governance and assurance into the framework from the outset.
 
 ---
 
