@@ -146,28 +146,14 @@ Present to COMDT ACS the endorsed definitions and the confirmed relationship bet
 
 ---
 
-## 5. Governance
-
-The following arrangements are proposed for confirmation at Phase 1. Technical and professional authority is distributed by domain; no single organisation owns the evidence base for the entire capability.
-
-* Army Sponsor: strategic sponsor for Combat Mindset, the enabling Performance Under Pressure capability and the Combat Mindset Framework; to be confirmed at Phase 1, with candidate options identified by ACS.
-* Interim capability integrator: COMDT ACS, coordinating definition, framework development, stakeholder engagement and recommendations to the Army Sponsor.
-* Framework development and capability-integration lead: ACS, coordinating framework architecture, developmental progression, stakeholder integration, product recognition criteria and implementation planning, leveraging NZALC and wider ACS expertise, intellectual property and programmes.
-* COGCON product steward and performance-cognition adviser: Human Performance Cell, responsible for the integrity and further development of the COGCON method and for specialist advice on cognitive conditioning and proportionate measurement, within available capacity.
-* Domain advisers and authorities: APS, ILD, physical-performance specialists, doctrine staff and other relevant organisations, providing technical or professional advice within their respective domains.
-* Delivery agencies: training establishments, units and existing instructor workforces approved to deliver recognised products.
-* Assurance: a layered assurance model covering doctrine, evidence, professional content, learning design, delivery quality and operational relevance, with sufficient independence from individual product owners and delivery organisations.
-
----
-
-## 6. Recommendations
+## 5. Recommendations
 
 It is recommended that COMDT ACS:
 
-1. **Endorse** the problem statement at paragraph 1 and the recommended relationship between Combat Mindset and Performance Under Pressure at paragraph 2.
-2. **Endorse** the proposed definitions of Combat Mindset, Performance Under Pressure and the Combat Mindset Framework as the baseline for wider staffing and refinement.
-3. **Approve** development of the Combat Mindset Framework through the proposed capability and product assessment, framework design and validation activity, noting that the provisional capability pillars and the contribution, maturity, evidence, ownership and appropriate nesting of existing products (including the NZALC Leadership Development System, COGCON and APS products) will be validated through this process.
-4. **Confirm** the interim governance arrangements at paragraph 5, including COMDT ACS as interim capability integrator pending confirmation of the Army Sponsor, ACS as framework development and capability-integration lead, and technical and professional authority distributed by domain.
+1. **Endorse** the problem statement.
+2. **Approve** the recommended relationship between Combat Mindset and Performance Under Pressure.
+3. **Endorse** the initial working definitions of Combat Mindset, Performance Under Pressure and the Combat Mindset Framework.
+4. **Approve** commencement of the proposed programme of work.
 5. **Seek** confirmation of the Army Sponsor by 30 September 2026, with candidate options identified by ACS.
 6. **Decide** the status of Harder to Kill within the proposed Combat Mindset tagline (Remain effective. Act decisively. Harder to kill.), endorsing, deferring or rejecting its inclusion.
 7. **Direct** a report back in November 2026 containing the endorsed definitions; Framework v1.0; the validated capability and product architecture; proposed governance and assurance arrangements; an assessment of existing product maturity, evidence and scalability; and a prioritised implementation plan.
