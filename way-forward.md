@@ -4,7 +4,7 @@
 
 This paper responds to COMDT ACS direction of 16 July 2026 for NZ Army Leadership Centre (NZALC), in conjunction with the Human Performance Cell (HPC), to develop a strategy to close the Combat Mindset policy and doctrine gap. It proposes a problem statement, initial working definitions and their relationship, the Combat Mindset Framework as the organising system, and a programme of work, for decision.
 
-The programme of work is phased: Phase 1 defines terminology, governance, roles and responsibilities; Phase 2 assesses existing doctrine, products, delivery and governance; Phase 3 designs the framework, its delivery system and outcomes; Phase 4 validates the framework with key stakeholders and conducts bounded pilots; and Phase 5 delivers the framework for approval and implementation.
+The programme of work is phased: Phase 1 defines terminology, governance, roles and responsibilities; Phase 2 assesses existing doctrine, products, delivery and governance; Phase 3 designs the framework, its delivery system and outcomes; Phase 4 validates the framework with key stakeholders; and Phase 5 delivers the framework for approval and implementation.
 
 Final recommendations and an implementation back brief will return to COMDT ACS in November 2026.
 
@@ -90,15 +90,17 @@ A full assessment of existing capability and products will be completed during P
 
 ---
 
-## 4. Proposed programme of work
+## 4. Programme of work
 
 The programme will be conducted within existing ACS, NZALC and HPC baselines; no new resource is sought before the November 2026 report. Proposed phase leads are shown against each phase and are subject to confirmation.
 
-### Phase 1: Define and govern (on endorsement of this paper; target mid-August 2026) (ACS) [proposed – confirm]
+August 2026 is set aside for this paper to be socialised through the chain of command, and the programme is therefore proposed to commence in September 2026. The timeframes below are aspirational. They depend on stakeholder availability and on unit and training establishment programmes, and activity extending into early 2027 is anticipated rather than unforeseen.
+
+### Phase 1: Define and govern (on endorsement of this paper; September 2026) (ACS) [proposed – confirm]
 
 Confirm terminology, governance, roles and responsibilities: endorse the problem statement, select the terminology option at paragraph 2, confirm interim sponsorship and capability-integration arrangements, and draft for staffing the endorsed definitions of Combat Mindset, Performance Under Pressure and the Combat Mindset Framework, together with the agreed relationship between the three.
 
-### Phase 2: Understand (August–September 2026) (NZALC lead, HPC support) [proposed – confirm]
+### Phase 2: Understand (September 2026) (NZALC lead, HPC support) [proposed – confirm]
 
 Assess existing doctrine, content, products, courses, instructor capability, delivery activity, evidence, ownership and assurance arrangements across ACS, NZALC, HPC, APS, ILD, training establishments and selected units. The assessment will distinguish:
 
@@ -113,7 +115,7 @@ Assess existing doctrine, content, products, courses, instructor capability, del
 
 The assessment will identify which products contribute to the broader Performance Under Pressure capability and which support its combat-specific expression, using the combat-specificity test at paragraph 2. COGCON will be assessed as one developmental product within this assessment, with particular attention to its product boundary, evidence base (including its completed feasibility trials in live military training), ownership, workforce requirements and scalability.
 
-### Phase 3: Design (September–October 2026) (NZALC/HPC joint) [proposed – confirm]
+### Phase 3: Design (October 2026) (NZALC/HPC joint) [proposed – confirm]
 
 Develop the Combat Mindset Framework, delivery system and outcomes: the organising system through which Army will govern, develop, deliver and assure Performance Under Pressure and its combat-specific expression. The framework will include the endorsed definitions and desired operational effect; the provisional capability pillars, refined through the assessment; developmental outcomes from Lead Self through Lead Systems; the relationship between doctrine, framework, products and delivery; common assurance principles; and the criteria by which existing and future products may be recognised as contributing to the framework.
 
@@ -121,11 +123,11 @@ The provisional working pillars are: leadership under pressure; self-regulation 
 
 Existing products, including the NZALC Leadership Development System and COGCON, will be mapped beneath the relevant provisional capability pillars rather than treated as the framework itself.
 
-### Phase 4: Validate (October 2026) (ACS convenes) [proposed – confirm]
+### Phase 4: Validate (November 2026) (ACS convenes) [proposed – confirm]
 
-Refine the framework with key stakeholders and conduct bounded pilots: convene ACS, NZALC, HPC, APS, ILD, selected training providers and units to refine the framework, product architecture, governance model, implementation priorities, definition clarity and doctrinal coherence.
+Refine the framework with key stakeholders: convene ACS, NZALC, HPC, APS, ILD, selected training providers and units to refine the framework, product architecture, governance model, implementation priorities, definition clarity and doctrinal coherence. Where time and unit availability permit, bounded pilots will be conducted within this phase or earlier alongside Phase 2 or Phase 3.
 
-### Phase 5: Implement (November 2026) (ACS) [proposed – confirm]
+### Phase 5: Implement (late November 2026) (ACS) [proposed – confirm]
 
 Deliver the framework for approval and implementation: present the endorsed definitions and the confirmed relationship between Combat Mindset and Performance Under Pressure; Framework v1.0 and its agreed architecture; the validated capability and product architecture; the proposed governance and assurance model; an assessment of existing product maturity, evidence and scalability; and a prioritised implementation plan.
 
@@ -167,7 +169,7 @@ It is recommended that COMDT ACS:
 2. **Endorse** the proposed definitions of Combat Mindset, Performance Under Pressure and the Combat Mindset Framework as the baseline for wider staffing and refinement.
 3. **Approve** development of the Combat Mindset Framework through the proposed capability and product assessment, framework design and validation activity, noting that the provisional capability pillars and the contribution, maturity, evidence, ownership and appropriate nesting of existing products (including the NZALC Leadership Development System, COGCON and APS products) will be validated through this process.
 4. **Confirm** the interim governance arrangements at paragraph 5, including COMDT ACS as interim capability integrator pending confirmation of the Army Sponsor, ACS as framework development and capability-integration lead, and technical and professional authority distributed by domain.
-5. **Seek** confirmation of the Army Sponsor by 31 August 2026, with candidate options identified by ACS.
+5. **Seek** confirmation of the Army Sponsor by 30 September 2026, with candidate options identified by ACS.
 6. **Decide** the status of Harder to Kill within the proposed Combat Mindset tagline (Remain effective. Act decisively. Harder to kill.), endorsing, deferring or rejecting its inclusion.
 7. **Direct** a report back in November 2026 containing the endorsed definitions; Framework v1.0; the validated capability and product architecture; proposed governance and assurance arrangements; an assessment of existing product maturity, evidence and scalability; and a prioritised implementation plan.
 
