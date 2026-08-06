@@ -139,7 +139,7 @@ function patchGhost() {
   function page(n, title, strap) {
     const s = pres.addSlide();
     s.background = { color: WHITE };
-    s.addImage({ path: LOGO, x: L, y: 0.38, w: 1.62, h: 0.392 });
+    s.addImage({ path: LOGO, x: L, y: 0.38, w: 1.62, h: 0.370 });
     s.addText(title, { x: L, y: 0.9, w: W - 0.8, h: 0.3, fontFace: F_HEAVY, fontSize: 15,
       bold: true, color: BLACK, align: "left", valign: "middle", margin: 0, charSpacing: 0.4 });
     s.addText(strap, { x: L, y: 1.2, w: W - 0.8, h: 0.2, fontFace: F, fontSize: 8.5,
@@ -276,7 +276,7 @@ function patchGhost() {
     s.addShape("rect", { x: L, y: 4.34, w: W, h: 1.66, fill: { color: "F4F4F2" } });
 
     // horizontal
-    s.addImage({ path: LOGO, x: L + 0.3, y: 4.66, w: 1.62, h: 0.392 });
+    s.addImage({ path: LOGO, x: L + 0.3, y: 4.66, w: 1.62, h: 0.370 });
     s.addShape("rect", { x: L + 2.12, y: 4.6, w: 0.014, h: 0.52, fill: { color: "C8C8C8" } });
     s.addText("Combat Mindset", { x: L + 2.34, y: 4.6, w: 3.2, h: 0.26, fontFace: F_HEAVY,
       fontSize: 13, bold: true, color: BLACK, align: "left", valign: "middle", margin: 0 });
@@ -286,7 +286,7 @@ function patchGhost() {
       italic: true, color: GREY, align: "left", valign: "middle", margin: 0 });
 
     // stacked
-    s.addImage({ path: LOGO, x: L + 4.7, y: 4.56, w: 1.34, h: 0.324 });
+    s.addImage({ path: LOGO, x: L + 4.7, y: 4.56, w: 1.34, h: 0.306 });
     s.addShape("rect", { x: L + 4.7, y: 4.96, w: 0.5, h: 0.022, fill: { color: RED } });
     s.addText("Combat Mindset", { x: L + 4.7, y: 5.04, w: 2.3, h: 0.24, fontFace: F_HEAVY,
       fontSize: 12, bold: true, color: BLACK, align: "left", valign: "middle", margin: 0 });
@@ -368,7 +368,7 @@ function patchGhost() {
     // --- cover mock, following the Army report template (p64) ---
     const cx = L, cy = 2.06, cw = 2.5, ch = 3.54;
     s.addShape("rect", { x: cx, y: cy, w: cw, h: ch, fill: { color: WHITE }, line: { color: "D8D8D8", width: 1 } });
-    s.addImage({ path: LOGO, x: cx + 0.2, y: cy + 0.22, w: 0.94, h: 0.227 });
+    s.addImage({ path: LOGO, x: cx + 0.2, y: cy + 0.22, w: 0.94, h: 0.215 });
     s.addText("COMBAT\nMINDSET", { x: cx + 0.2, y: cy + 1.2, w: cw - 0.4, h: 0.62, fontFace: F_HEAVY,
       fontSize: 15, bold: true, color: BLACK, align: "left", valign: "top", margin: 0, lineSpacingMultiple: 0.95 });
     s.addShape("rect", { x: cx + 0.2, y: cy + 1.86, w: 0.5, h: 0.024, fill: { color: RED } });
@@ -383,7 +383,7 @@ function patchGhost() {
     const sx = L + 2.66, sw2 = W - 2.66, sy = 2.06, sh = 2.0;
     s.addShape("rect", { x: sx, y: sy, w: sw2, h: sh, fill: { color: RED } });
     s.addImage({ data: I.tintOnRed, x: sx, y: sy, w: sw2, h: sh, transparency: 40 });
-    s.addImage({ path: LOGO, x: sx + 0.24, y: sy + 0.2, w: 1.06, h: 0.256 });
+    s.addImage({ path: LOGO, x: sx + 0.24, y: sy + 0.2, w: 1.06, h: 0.242 });
     s.addText("COMBAT MINDSET", { x: sx + 0.24, y: sy + 0.74, w: sw2 - 0.48, h: 0.36, fontFace: F_HEAVY,
       fontSize: 20, bold: true, color: WHITE, charSpacing: 0.6, align: "left", valign: "middle", margin: 0 });
     s.addText("Remain effective. Act decisively. Harder to kill.", { x: sx + 0.24, y: sy + 1.12, w: sw2 - 0.48,
@@ -412,7 +412,7 @@ function patchGhost() {
       ["An altered Army logo", "The logo’s colours, proportions and background are fixed.",
         (x, y) => {
           s.addShape("rect", { x: x + BW / 2 - 0.56, y: y + 0.2, w: 1.12, h: 0.38, fill: { color: G_MID } });
-          s.addImage({ path: LOGO, x: x + BW / 2 - 0.44, y: y + 0.27, w: 0.88, h: 0.213 });
+          s.addImage({ path: LOGO, x: x + BW / 2 - 0.44, y: y + 0.27, w: 0.88, h: 0.201 });
         }],
       ["A coloured wordmark", "The wordmark is black, white or reversed. Red is the rule, not the type.",
         (x, y) => {

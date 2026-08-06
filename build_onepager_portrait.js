@@ -78,7 +78,7 @@ const emblemFW = (ink, accent) => `
   const L = 0.5, W = 7.27, R = L + W, MID = L + W / 2;
 
   // ---- header ------------------------------------------------------------
-  s.addImage({ path: LOGO, x: L, y: 0.36, w: 1.72, h: 0.416 });
+  s.addImage({ path: LOGO, x: L, y: 0.36, w: 1.72, h: 0.393 });
   s.addText("NZ ARMY COMBAT MINDSET FRAMEWORK PROPOSAL", {
     x: L, y: 0.9, w: W, h: 0.34, fontFace: F, fontSize: 16, bold: true,
     color: BLACK, align: "left", valign: "middle", margin: 0 });
