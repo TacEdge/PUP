@@ -56,10 +56,10 @@ function datumFigure() {
     body: `<rect width="${w}" height="${h}" fill="#${WHITE}"/>
       ${ticks}
       <line x1="40" y1="${y}" x2="860" y2="${y}" stroke="#${INK}" stroke-width="2.5"/>
-      <rect x="300" y="34" width="400" height="${y - 34}" fill="#${RED}" opacity="0.05"/>
-      <line x1="300" y1="34" x2="300" y2="${y}" stroke="#${RED}" stroke-width="1.6" stroke-dasharray="5 5"/>
-      <line x1="700" y1="34" x2="700" y2="${y}" stroke="#${RED}" stroke-width="1.6" stroke-dasharray="5 5"/>
-      <path d="${d}" fill="none" stroke="#${RED}" stroke-width="3"/>`,
+      <rect x="300" y="34" width="400" height="${y - 34}" fill="#${INK}" opacity="0.04"/>
+      <line x1="300" y1="34" x2="300" y2="${y}" stroke="#${GREY}" stroke-width="1.6" stroke-dasharray="5 5"/>
+      <line x1="700" y1="34" x2="700" y2="${y}" stroke="#${GREY}" stroke-width="1.6" stroke-dasharray="5 5"/>
+      <path d="${d}" fill="none" stroke="#${INK}" stroke-width="3"/>`,
     w, h,
   };
 }
@@ -154,7 +154,7 @@ const MARKS = {
 const TYPES = [
   ["FRAMEWORK", "framework", BLACK, "Structure", "The governing architecture. Used once, at the top of a hierarchy."],
   ["DOCTRINE", "doctrine", BLACK, "Structure", "Endorsed and enduring. The bar is solid because doctrine does not qualify itself."],
-  ["POLICY", "policy", BLACK, "Structure", "Bounded above and below. Policy is doctrine with limits attached."],
+  ["POLICY", "policy", BLACK, "Structure", "Bounded above and below: the convention for rules that carry limits."],
   ["GOVERNANCE", "governance", BLACK, "Structure", "Brackets on both sides. Something is being held, not merely described."],
   ["EVIDENCE", "evidence", G_DARK, "Analysis", "Rising measures. Evidence accumulates and is read against the datum."],
   ["RESEARCH", "research", G_DARK, "Analysis", "An open bracket and a dashed continuation. The question is not yet closed."],
@@ -163,7 +163,7 @@ const TYPES = [
   ["PRODUCT", "product", G_OLIVE, "Delivery", "A discrete block on the datum. Products are countable and can be held."],
   ["REFERENCE", "reference", G_OLIVE, "Delivery", "A single tick and a marker. Points elsewhere; carries no authority itself."],
   ["DECISION", "decision", RED, "Action", "A node and a departure. The only mark that leaves the datum."],
-  ["RISK", "risk", RED, "Action", "The datum broken. Risk is a discontinuity in the line, not a warning triangle."],
+  ["RISK", "risk", RED, "Action", "A break in the datum identifies risk. A reading convention, not a definition."],
 ];
 
 const markSvg = (key, colour, px = 96) =>
@@ -288,8 +288,8 @@ function horizons() {
         color: GREY, align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.2 });
     }
     s.addText("NZ ARMY   COMBAT MINDSET   VISUAL IDENTITY SYSTEM", { x: L, y: 11.16, w: 5, h: 0.16,
-      fontFace: F, fontSize: 6, color: GREY, charSpacing: 0.9, align: "left", valign: "middle", margin: 0 });
-    s.addText("DRAFT FOR REVIEW   |   V0.1   |   AUGUST 2026", { x: R - 3, y: 11.16, w: 3, h: 0.16,
+      fontFace: F, fontSize: 6, color: GREY, charSpacing: 0.6, align: "left", valign: "middle", margin: 0 });
+    s.addText("DRAFT FOR REVIEW   |   V0.2   |   AUGUST 2026", { x: R - 3, y: 11.16, w: 3, h: 0.16,
       fontFace: F, fontSize: 6, color: GREY, charSpacing: 0.9, align: "right", valign: "middle", margin: 0 });
     return s;
   }
@@ -299,7 +299,7 @@ function horizons() {
 
   function head(s, y, text) {
     s.addText(text, { x: L, y, w: W, h: 0.2, fontFace: F, fontSize: 7.4, bold: true,
-      color: INK, charSpacing: 1.6, align: "left", valign: "middle", margin: 0 });
+      color: INK, charSpacing: 1.2, align: "left", valign: "middle", margin: 0 });
     rule(s, y + 0.2);
     return y + 0.32;
   }
@@ -330,7 +330,7 @@ function horizons() {
       color: INK, charSpacing: 1.4, align: "left", valign: "middle", margin: 0 });
     s.addText("MINDSET", { x: L, y: 6.2, w: W, h: 0.72, fontFace: F, fontSize: 50, bold: true,
       color: INK, charSpacing: 1.4, align: "left", valign: "middle", margin: 0 });
-    s.addShape("rect", { x: L, y: 7.0, w: 1.9, h: 0.05, fill: { color: RED } });
+    s.addShape("rect", { x: L, y: 7.0, w: 1.9, h: 0.05, fill: { color: INK } });
     s.addText("Visual identity system", { x: L, y: 7.14, w: W, h: 0.3, fontFace: F, fontSize: 15,
       color: INK, align: "left", valign: "middle", margin: 0 });
     s.addText("A subordinate identity for an Army capability framework, developed against the\nNZDF and NZ Army Visual Identity Guidelines v1.0.", {
@@ -339,16 +339,16 @@ function horizons() {
 
     rule(s, 9.5, INK, 0.012);
     const meta = [
-      ["Prepared for", "Commander Army; Army Command School; NZ Army Leadership Centre;\nDefence Public Affairs"],
-      ["Prepared by", "Army Command School and NZ Army Leadership Centre"],
+      ["Developed by", "Army Command School and NZ Army Leadership Centre,\nfor internal consideration"],
+      ["Proposed reviewers", "COMDT ACS; HPC; Head of Visual Identity and Design, Defence Public Affairs"],
       ["Status", "Draft for review. Not an approved standard."],
-      ["Version", "V0.1, August 2026"],
+      ["Version", "V0.2, August 2026"],
     ];
     let my = 9.68;
     meta.forEach(([k, v]) => {
-      s.addText(k, { x: L, y: my, w: 1.5, h: 0.34, fontFace: F, fontSize: 8, bold: true,
+      s.addText(k, { x: L, y: my, w: 1.62, h: 0.34, fontFace: F, fontSize: 8, bold: true,
         color: INK, align: "left", valign: "top", margin: 0 });
-      s.addText(v, { x: L + 1.6, y: my, w: W - 1.6, h: 0.34, fontFace: F, fontSize: 8,
+      s.addText(v, { x: L + 1.74, y: my, w: W - 1.74, h: 0.34, fontFace: F, fontSize: 8,
         color: GREY, align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.15 });
       my += v.includes("\n") ? 0.36 : 0.24;
     });
@@ -387,7 +387,7 @@ function horizons() {
       ["05", "Brand attributes"], ["06", "Visual principles"],
       ["07", "Concept A: Datum"], ["08", "Concept B: Threshold"],
       ["09", "Concept C: Trace"], ["10", "Evaluation and recommendation"],
-      ["11", "Wordmark explorations"], ["12", "Wordmark specification"],
+      ["11", "Title treatment explorations"], ["12", "Title treatment specification"],
       ["13", "Graphic language"], ["14", "Notation family"],
       ["15", "Colour system"], ["16", "Information architecture"],
       ["17", "Photography direction"], ["18", "Motion language"],
@@ -415,8 +415,8 @@ function horizons() {
         "Compliant but inert. Produces no system, and no reason for anyone to trust one product over another.", G_MID],
       ["AS AN ORGANISATION", "Guidelines p9, p54", "A badge or unit patch. Explicitly ruled out for communication use.",
         "Non-compliant, and wrong in substance. Combat Mindset commands nothing and has no establishment.", RED],
-      ["AS DOCTRINE", "The recommended reading", "A publication system: format, hierarchy, notation, numbering, classification.",
-        "Compliant, and it is what the framework actually is. Doctrine is how Army already encodes enduring authority.", G_DARK],
+      ["DOCTRINE AS PRECEDENT", "The recommended position", "A publication system: format, hierarchy, notation, numbering, classification.",
+        "Compliant, and it borrows doctrine's enduring qualities without claiming doctrinal status. What the framework becomes is decided through the programme, not by its identity.", G_DARK],
     ];
     readings.forEach(([t, ref, what, cons, c]) => {
       s.addShape("rect", { x: L, y, w: 0.04, h: 0.96, fill: { color: c } });
@@ -429,7 +429,7 @@ function horizons() {
       y += 1.06;
     });
 
-    y = head(s, y + 0.1, "WHAT FOLLOWS FROM READING IT AS DOCTRINE");
+    y = head(s, y + 0.1, "WHAT FOLLOWS FROM TAKING DOCTRINE AS THE PRECEDENT");
     bullets(s, L, y, W, [
       "No mark, no badge, no patch, no symbol. The identity is carried by typography and structure.",
       "The Army logo appears unaltered on every artefact. Combat Mindset never competes with it.",
@@ -760,8 +760,8 @@ function horizons() {
   // 11  WORDMARK EXPLORATIONS
   // =======================================================================
   {
-    const s = page("Wordmark", "Wordmark explorations",
-      "Six typographic approaches. No symbol is drawn in any of them. Set here in Arial; production artwork is Neue Haas Grotesk.");
+    const s = page("Title treatment", "Title treatment explorations",
+      "Six typographic approaches for how Combat Mindset names itself. None is a logo and none is a freestanding asset: these are repeatable heading constructions. Set in Arial; production is Neue Haas Grotesk.");
 
     const EX = [
       ["01", "STACKED MASS", "Bold, tight leading, datum rule beneath.",
@@ -786,9 +786,9 @@ function horizons() {
       ["04", "WITH REFERENCE NUMBER", "Doctrine publication convention.",
         "Borrows the authority of the doctrine series directly. Recommended as the formal variant on covers and title pages.",
         (s, x, y, w) => {
-          s.addText("CM", { x, y: y + 0.16, w: 0.6, h: 0.34, fontFace: F, fontSize: 20, bold: true, color: RED, align: "left", valign: "middle", margin: 0 });
+          s.addText("CM", { x, y: y + 0.16, w: 0.6, h: 0.34, fontFace: F, fontSize: 20, bold: true, color: INK, align: "left", valign: "middle", margin: 0 });
           s.addText("COMBAT MINDSET", { x: x + 0.62, y: y + 0.18, w: w - 0.62, h: 0.24, fontFace: F, fontSize: 13, bold: true, color: INK, charSpacing: 0.5, align: "left", valign: "middle", margin: 0 });
-          s.addText("CM 0.1  |  FRAMEWORK", { x: x + 0.62, y: y + 0.44, w: w - 0.62, h: 0.2, fontFace: F, fontSize: 7, color: GREY, charSpacing: 1, align: "left", valign: "middle", margin: 0 });
+          s.addText("CM-FWK-001  |  FRAMEWORK", { x: x + 0.62, y: y + 0.44, w: w - 0.62, h: 0.2, fontFace: F, fontSize: 7, color: GREY, charSpacing: 1, align: "left", valign: "middle", margin: 0 });
         }],
       ["05", "TWO WEIGHT RELATIONSHIP", "Combat bold, Mindset light.",
         "Attempts to show the capability relationship typographically. Rejected: it implies Mindset is subordinate to Combat, which inverts the actual hierarchy.",
@@ -827,7 +827,7 @@ function horizons() {
 
     y = head(s, y + 0.06, "SELECTION");
     body(s, L, y, W,
-      "Carry 03 as the primary wordmark and 04 as the formal variant on covers, title pages and doctrine-equivalent products. Retain 02 for running headers and spines. Options 05 and 06 are recorded so that the reasons for rejecting them survive the people who rejected them.",
+      "Carry 03 as the primary title treatment and 04 as the formal variant on covers, title pages and doctrine-equivalent products. Retain 02 for running headers and spines. Options 05 and 06 are recorded so that the reasons for rejecting them survive the people who rejected them.",
       9, INK, 0.6);
   }
 
@@ -835,10 +835,10 @@ function horizons() {
   // 12  WORDMARK SPECIFICATION
   // =======================================================================
   {
-    const s = page("Wordmark", "Wordmark specification",
-      "Written so it can be applied without a designer, and audited without a debate.");
+    const s = page("Title treatment", "Title treatment specification",
+      "Written so it can be applied without a designer, and audited without a debate. Deliberately not called a wordmark: this is a heading construction inside Army collateral, not a brand asset.");
 
-    let y = head(s, 1.86, "PRIMARY WORDMARK");
+    let y = head(s, 1.86, "PRIMARY TITLE TREATMENT");
     s.addShape("rect", { x: L, y, w: W, h: 1.9, fill: { color: PAPER } });
     s.addShape("rect", { x: L + 0.5, y: y + 0.62, w: 3.4, h: 0.035, fill: { color: INK } });
     s.addText("COMBAT MINDSET", { x: L + 0.5, y: y + 0.72, w: 5, h: 0.4, fontFace: F, fontSize: 24,
@@ -849,12 +849,12 @@ function horizons() {
 
     y = head(s, y, "CONSTRUCTION RULES");
     const rules = [
-      ["Datum rule", "Width equals the wordmark measure. Weight equals one tenth of the cap height. Colour black, or white when reversed. Never red."],
+      ["Datum rule", "Width equals the treatment measure. Weight equals one tenth of the cap height. Colour black, or white when reversed. Never red."],
       ["Clear space", "One cap height on all four sides. Nothing enters it, including the Army logo."],
       ["Minimum size", "28 mm measure in print. 180 px in digital. Below this, use the single line variant without the descriptor."],
-      ["Descriptor", "Set at one third of the wordmark size, letterspaced 1.6. It may be omitted where context already establishes it. It may not be reworded."],
-      ["Colour", "Black on light grounds, white on dark. One colour only. The wordmark is never red, never tinted, never outlined and never set on a photograph without a solid panel behind it."],
-      ["Relationship to the Army logo", "The Army logo is always present and always larger in visual weight. The wordmark never sits closer than the logo's own clear space, and never on the same baseline."],
+      ["Descriptor", "Set at one third of the title size, letterspaced 1.6. It may be omitted where context already establishes it. It may not be reworded."],
+      ["Colour", "Black on light grounds, white on dark. One colour only. The treatment is never red, never tinted, never outlined and never set on a photograph without a solid panel behind it."],
+      ["Relationship to the Army logo", "The Army logo is always present and always larger in visual weight. The treatment never sits closer than the logo's own clear space, and never on the same baseline."],
     ];
     rules.forEach(([k, v]) => {
       s.addText(k, { x: L, y, w: 1.5, h: 0.4, fontFace: F, fontSize: 8.6, bold: true,
@@ -902,17 +902,19 @@ function horizons() {
         "Represents a decision taken and its consequence. Only one departure per node. Multiple departures would represent optionality, which is a different and rarer claim."],
       ["THE FIELD", "Halftone density drawn from the Army chevron pattern.",
         "Represents accumulated pressure. Permitted on covers and dividers, never behind text, never as a page background, and never at more than 18 per cent opacity."],
+      ["THE DISPLACEMENT TRACE", "A curved deviation from the datum, black, at the datum's weight.",
+        "Represents load, interference and recovery. The only curve in the system, defined so the Datum concept can be drawn without breaking its own rules. It always returns to the datum, is never red, and is never decorative."],
     ];
     let y = 1.86;
     y = head(s, y, "THE PERMITTED ELEMENTS");
     ELEMENTS.forEach(([t, spec, why], i) => {
-      s.addShape("rect", { x: L, y, w: 0.03, h: 0.86, fill: { color: i === 2 || i === 3 ? RED : INK } });
+      s.addShape("rect", { x: L, y, w: 0.03, h: 0.74, fill: { color: i === 2 || i === 3 ? RED : INK } });
       s.addText(t, { x: L + 0.18, y, w: 2.1, h: 0.22, fontFace: F, fontSize: 9.2, bold: true,
         color: INK, charSpacing: 0.8, align: "left", valign: "middle", margin: 0 });
       s.addText(spec, { x: L + 0.18, y: y + 0.22, w: 2.1, h: 0.4, fontFace: F, fontSize: 7.4,
         italic: true, color: GREY, align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.1 });
-      body(s, L + 2.5, y, W - 2.5, why, 8.8, "3E3E3E", 0.8);
-      y += 0.96;
+      body(s, L + 2.5, y, W - 2.5, why, 8.6, "3E3E3E", 0.72);
+      y += 0.82;
     });
 
     y = head(s, y + 0.04, "THE GRAMMAR");
@@ -924,6 +926,9 @@ function horizons() {
       ["Return to the datum", "recovery"],
       ["Density above the datum", "pressure"],
     ];
+    s.addText("Visual conventions for reading Combat Mindset surfaces, not definitions of the concepts they mark.", {
+      x: L + 0.22, y: y + 0.9, w: W - 0.44, h: 0.2, fontFace: F, fontSize: 7.4, italic: true,
+      color: GREY, align: "left", valign: "middle", margin: 0 });
     grammar.forEach(([a, b], i) => {
       const gx = L + 0.22 + i * ((W - 0.44) / 5);
       s.addText(a, { x: gx, y: y + 0.24, w: (W - 0.44) / 5 - 0.1, h: 0.36, fontFace: F,
@@ -935,7 +940,7 @@ function horizons() {
     y += 1.3;
     y = head(s, y, "WHAT IS FORBIDDEN, AND WHY");
     bullets(s, L, y, W, [
-      "Curves, arcs and organic forms. The system's authority comes from measure, and measure is straight.",
+      "Curves outside the displacement trace. The datum itself is always straight, and no other element bends.",
       "Gradients other than the sanctioned halftone field. Gradients carry a date.",
       "Drop shadows, glows, bevels and any depth effect. Depth implies a physical object; this is a notation, not an artefact.",
       "Red used as a surface, a heading colour or a fill. Red marks decision and risk. Spending it elsewhere destroys the only signal in the system that carries urgency.",
@@ -952,9 +957,9 @@ function horizons() {
 
     let y = head(s, 2.0, "THE CONSTRUCTION");
     body(s, L, y, W,
-      "Every mark is drawn on a 24 unit grid at 2 unit stroke, and every mark contains the datum at y=17. What differs is what happens to that datum, and what sits on it. A reader who learns the grammar once can interpret a mark they have never seen, which is the property a pictogram set can never have.",
-      9, INK, 0.6);
-    y += 0.66;
+      "Every mark is drawn on a 24 unit grid at 2 unit stroke, and every mark contains the datum at y=17. What differs is what happens to that datum, and what sits on it. A reader who learns the grammar once can interpret a mark they have never seen, which is the property a pictogram set can never have. Six marks form the pilot set; the remainder are drafted to prove the grammar extends, and are introduced only when repository content shows the distinction is needed.",
+      9, INK, 0.78);
+    y += 0.9;
 
     const FAMS = [
       ["STRUCTURE", BLACK, "Content that carries authority. The datum is complete and unbroken."],
@@ -983,6 +988,10 @@ function horizons() {
       s.addImage({ data: MARK_IMG[key], x: x + 0.14, y: yy + 0.14, w: 0.44, h: 0.44 });
       s.addText(name, { x: x + 0.66, y: yy + 0.16, w: MW - 0.76, h: 0.2, fontFace: F, fontSize: 8,
         bold: true, color: INK, charSpacing: 0.6, align: "left", valign: "middle", margin: 0 });
+      if (["framework", "doctrine", "evidence", "assessment", "product", "decision"].includes(key)) {
+        s.addText("PILOT", { x: x + MW - 0.6, y: yy + 0.08, w: 0.52, h: 0.14, fontFace: F,
+          fontSize: 5.6, bold: true, color: GREY, charSpacing: 1, align: "right", valign: "middle", margin: 0 });
+      }
       s.addText(fam.toUpperCase(), { x: x + 0.66, y: yy + 0.35, w: MW - 0.76, h: 0.16, fontFace: F,
         fontSize: 6, color: colour, charSpacing: 1, align: "left", valign: "middle", margin: 0 });
       body(s, x + 0.14, yy + 0.66, MW - 0.28, why, 6.9, "3E3E3E", 0.6);
@@ -1071,9 +1080,9 @@ function horizons() {
     bullets(s, L, y, W, [
       "Every artefact must survive a mono print with no loss of meaning. Classification is therefore carried by the notation mark as well as by colour, never by colour alone.",
       "Body text is black on white or white on black. The greens are never used for running text.",
-      "Army Red on white returns a contrast ratio of approximately 5.9 to 1, which passes AA for body text. Army Red on black fails and is not permitted for type.",
+      "Army Red on white calculates at roughly 5.3 to 1, which passes AA for body text; Army Red on black fails and is not permitted for type. Every claim here is re-verified with accredited tooling at step 03, and the repository tests contrast, minimum sizes, mono output and reduced motion automatically.",
       "Colour blindness affects roughly one in twelve men. Red against the four greens is the least safe pairing in the palette, which is a further reason red is reserved for a marker shape rather than a fill.",
-    ], 8.6, 1.5);
+    ], 8.6, 1.8);
   }
 
   // =======================================================================
@@ -1085,9 +1094,9 @@ function horizons() {
 
     let y = head(s, 1.94, "THE COMPONENT");
     body(s, L, y, W,
-      "Every piece of Combat Mindset content is presented in the same component: a notation mark, a type label, a reference number, a title, and a status line. The component is identical in print, in a slide, in a repository and on a phone. Only its scale changes.",
-      9, INK, 0.5);
-    y += 0.6;
+      "Every piece of Combat Mindset content is presented in the same component: a notation mark, a type label, an identifier, a title, and a status line. The component is identical in print, in a slide, in a repository and on a phone; only its scale changes. Identifiers separate content type, item and version, because a number that means two things eventually means nothing. The scheme shown is illustrative: allocation authority, and its relationship to existing Army and NZDF reference series, is resolved at step 03 before any identifier is issued.",
+      9, INK, 0.82);
+    y += 0.94;
 
     // the anatomy diagram
     s.addShape("rect", { x: L, y, w: W, h: 1.0, fill: { color: WHITE }, line: { color: RULE, width: 1 } });
@@ -1095,7 +1104,7 @@ function horizons() {
     s.addImage({ data: MARK_IMG["evidence"], x: L + 0.24, y: y + 0.22, w: 0.5, h: 0.5 });
     s.addText("EVIDENCE", { x: L + 0.88, y: y + 0.2, w: 2, h: 0.2, fontFace: F, fontSize: 7.4,
       bold: true, color: G_DARK, charSpacing: 1.4, align: "left", valign: "middle", margin: 0 });
-    s.addText("CM 3.2.1", { x: L + 0.88, y: y + 0.38, w: 2, h: 0.2, fontFace: F, fontSize: 7,
+    s.addText("CM-EVD-004  v0.3", { x: L + 0.88, y: y + 0.38, w: 2, h: 0.2, fontFace: F, fontSize: 7,
       color: GREY, charSpacing: 0.8, align: "left", valign: "middle", margin: 0 });
     s.addText("Cognitive load and decision quality under physical stress", {
       x: L + 3.0, y: y + 0.2, w: W - 3.4, h: 0.26, fontFace: F, fontSize: 10.4, bold: true,
@@ -1121,7 +1130,9 @@ function horizons() {
         color: INK, charSpacing: 0.6, align: "left", valign: "middle", margin: 0 });
       s.addText(fam.toUpperCase(), { x: L + 2.06, y: yy, w: 1.0, h: RH, fontFace: F, fontSize: 6.4,
         color: colour, charSpacing: 1, align: "left", valign: "middle", margin: 0 });
-      s.addText(`CM ${i + 1}.0`, { x: L + 3.0, y: yy, w: 0.9, h: RH, fontFace: F, fontSize: 7.4,
+      s.addText(["CM-FWK-001", "CM-DOC-001", "CM-POL-001", "CM-GOV-001", "CM-EVD-001", "CM-RES-001",
+        "CM-ASM-001", "CM-REV-001", "CM-PRD-001", "CM-REF-001", "CM-DEC-001", "CM-RSK-001"][i],
+        { x: L + 3.0, y: yy, w: 1.06, h: RH, fontFace: F, fontSize: 7,
         color: GREY, align: "left", valign: "middle", margin: 0 });
       s.addText([
         "Governing architecture", "Endorsed and enduring statements", "Rules with limits",
@@ -1129,7 +1140,7 @@ function horizons() {
         "Measurement against a standard", "Deliberate return to a prior position",
         "Material issued for use", "Pointers to work held elsewhere",
         "A point at which commitment is required", "A discontinuity to be managed",
-      ][i], { x: L + 3.95, y: yy, w: W - 4.05, h: RH, fontFace: F, fontSize: 7.8,
+      ][i], { x: L + 4.14, y: yy, w: W - 4.24, h: RH, fontFace: F, fontSize: 7.8,
         color: "3E3E3E", align: "left", valign: "middle", margin: 0 });
     });
   }
@@ -1224,7 +1235,7 @@ function horizons() {
       "Parallax, particles, glow, blur transitions, and anything that draws attention to the transition itself.",
       "Looping animation of any kind. A loop is a demand for attention, and these products are read by people who have somewhere to be.",
       "Motion that conveys information not otherwise available. If a reader with reduced motion enabled loses meaning, the design has failed.",
-      "Animated logos or wordmarks. The wordmark is a fixed thing; animating it makes it a performance.",
+      "Animated logos or title treatments. The title treatment is a fixed thing; animating it makes it a performance.",
     ], 8.8, 1.5);
   }
 
@@ -1395,7 +1406,7 @@ function horizons() {
     y = head(s, y, "SEQUENCE");
     const STEPS = [
       ["01", "Internal agreement on position", "ACS, NZALC, HPC",
-        "Agree that Combat Mindset is treated as doctrine rather than as a programme. Everything else follows from this and nothing should be built before it is settled."],
+        "Agree that doctrine and controlled information systems are the visual precedent, without claiming doctrinal status for the framework itself. Everything else follows from this position and nothing should be built before it is settled."],
       ["02", "Review by Defence Public Affairs", "Head of Visual Identity and Design",
         "Put the position and the specification to DPA. Expect challenge on the wordmark and on the notation family. Obtain the vector Army logo at the same time."],
       ["03", "Specification written", "ACS with a design agency",
@@ -1403,7 +1414,7 @@ function horizons() {
       ["04", "Pilot on real products", "The framework proposal and ELDA material",
         "Apply it to two live products before issuing it. A system that has never been used is a system that has never been tested."],
       ["05", "Issue and version", "NZALC as custodian",
-        "Publish as CM 0.1 with a version number and a named owner. Review annually, extend by amendment, and resist redesign."],
+        "Publish under a validated identifier with a version number and a named owner. Review annually, extend by amendment, and resist redesign."],
     ];
     STEPS.forEach(([n, t, who, d]) => {
       s.addShape("ellipse", { x: L, y: y + 0.02, w: 0.3, h: 0.3, fill: { color: RED } });
