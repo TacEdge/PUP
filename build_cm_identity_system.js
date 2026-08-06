@@ -289,7 +289,7 @@ function horizons() {
     }
     s.addText("COMBAT MINDSET   VISUAL IDENTITY", { x: L, y: 11.16, w: 5, h: 0.16,
       fontFace: F, fontSize: 6, color: GREY, charSpacing: 0.6, align: "left", valign: "middle", margin: 0 });
-    s.addText("DRAFT V0.5   |   AUGUST 2026", { x: R - 3, y: 11.16, w: 3, h: 0.16,
+    s.addText("DRAFT V0.6   |   AUGUST 2026", { x: R - 3, y: 11.16, w: 3, h: 0.16,
       fontFace: F, fontSize: 6, color: GREY, charSpacing: 0.9, align: "right", valign: "middle", margin: 0 });
     return s;
   }
@@ -341,8 +341,8 @@ function horizons() {
     const meta = [
       ["Developed by", "Army Command School and NZ Army Leadership Centre,\nfor internal consideration"],
       ["Proposed reviewers", "COMDT ACS; HPC; Head of Visual Identity and Design, Defence Public Affairs"],
-      ["Status", "Draft for review. Not an approved standard."],
-      ["Version", "V0.5, August 2026"],
+      ["Status", "Governing concept selected. Draft for review; not an approved standard."],
+      ["Version", "V0.6, August 2026"],
     ];
     let my = 9.68;
     meta.forEach(([k, v]) => {
@@ -385,8 +385,8 @@ function horizons() {
     const toc = [
       ["03", "Position and compliance"], ["04", "Identity philosophy"],
       ["05", "Brand attributes"], ["06", "Visual principles"],
-      ["07", "Concept A: Datum"], ["08", "Concept B: Threshold"],
-      ["09", "Concept C: Trace"], ["10", "Evaluation and recommendation"],
+      ["07", "Selected concept: Datum"], ["08", "Considered: Threshold"],
+      ["09", "Considered: Trace"], ["10", "Evaluation and decision"],
       ["11", "Title treatment explorations"], ["12", "Title treatment specification"],
       ["13", "Graphic language"], ["14", "Notation family"],
       ["15", "Colour system"], ["16", "Information architecture"],
@@ -614,7 +614,8 @@ function horizons() {
         "Quiet to the point of invisibility if applied timidly. Requires real weight contrast to carry a cover.",
         "Adjacent to financial and engineering identities. Distinctiveness must come from typography and colour discipline, not from the line itself.",
       ],
-      colour: G_DARK,
+      colour: G_DARK, selected: true,
+      status: "SELECTED.  Datum is the governing system for Combat Mindset.",
     },
     {
       key: "B", name: "THRESHOLD", img: () => I.threshold,
@@ -631,7 +632,8 @@ function horizons() {
         "Hard to apply consistently at small size or in mono. The field either disappears or blocks up.",
         "Tends toward the decorative. Once a texture exists, it gets used everywhere, and the discipline is lost within two years.",
       ],
-      colour: G_OLIVE,
+      colour: G_OLIVE, selected: false,
+      status: "NOT ADOPTED.  The density field is retained as rationed texture only.",
     },
     {
       key: "C", name: "TRACE", img: () => I.trace,
@@ -648,16 +650,27 @@ function horizons() {
         "The noise field is easily overdone and becomes ornament.",
         "Weakest at very small size, where the field collapses into grey.",
       ],
-      colour: G_MID,
+      colour: G_MID, selected: false,
+      status: "NOT ADOPTED.  The node and departure are retained to mark decision.",
     },
   ];
 
   CONCEPTS.forEach((c) => {
-    const s = page(`Concept ${c.key}`, `Concept ${c.key}: ${c.name}`, c.line);
+    const s = page(c.selected ? "Selected concept" : "Considered",
+      `Concept ${c.key}: ${c.name}`, c.line);
     s.addImage({ data: c.img(), x: L, y: 1.72, w: W, h: W * 220 / 900 });
-    s.addShape("rect", { x: L, y: 1.72 + W * 220 / 900, w: W, h: 0.014, fill: { color: c.colour } });
 
-    let y = 1.72 + W * 220 / 900 + 0.32;
+    // Status band. Selection is a decision, so the selected concept carries
+    // the red marker; the others do not.
+    const barY = 1.72 + W * 220 / 900;
+    s.addShape("rect", { x: L, y: barY, w: W, h: 0.26,
+      fill: { color: c.selected ? INK : PAPER } });
+    if (c.selected) s.addShape("rect", { x: L, y: barY, w: 0.05, h: 0.26, fill: { color: RED } });
+    s.addText(c.status, { x: L + 0.2, y: barY, w: W - 0.4, h: 0.26, fontFace: F,
+      fontSize: 8.2, bold: true, color: c.selected ? WHITE : GREY, charSpacing: 0.6,
+      align: "left", valign: "middle", margin: 0 });
+
+    let y = barY + 0.35;
     y = head(s, y, "THE IDEA");
     body(s, L, y, W, c.idea, 9.4, INK, 0.72);
     y += 0.82;
@@ -702,8 +715,8 @@ function horizons() {
   // 10  EVALUATION AND RECOMMENDATION
   // =======================================================================
   {
-    const s = page("Recommendation", "Evaluation and recommendation",
-      "Scored against the criteria that matter for a system intended to last twenty years, not against which concept looks best on a cover.");
+    const s = page("Decision", "Evaluation and decision",
+      "Scored against the criteria that matter for a system intended to last twenty years, not against which concept looks best on a cover. The decision below is taken; it is the constraint the specification is built on, not an option left open for review.");
 
     let y = head(s, 1.86, "EVALUATION");
     const CRIT = ["Longevity", "Scalability", "Mono and small size", "Applied by non-designers", "Distinctiveness", "Says what the framework is"];
@@ -732,26 +745,27 @@ function horizons() {
     });
 
     y += 0.12;
-    y = head(s, y, "RECOMMENDATION");
+    y = head(s, y, "DECISION");
     s.addShape("rect", { x: L, y, w: W, h: 1.34, fill: { color: INK } });
-    s.addText("Adopt Concept A, Datum, as the governing system.", {
+    s.addShape("rect", { x: L, y, w: 0.06, h: 1.34, fill: { color: RED } });
+    s.addText("Datum is adopted as the governing system.", {
       x: L + 0.3, y: y + 0.18, w: W - 0.6, h: 0.32, fontFace: F, fontSize: 15, bold: true,
       color: WHITE, align: "left", valign: "middle", margin: 0 });
-    s.addText("Take the node and departure device from Concept C as its only dynamic element, used solely to mark decision. Retain the density field from Concept B as texture, rationed to divider surfaces and never behind text.", {
+    s.addText("The node and departure from Concept C are retained as its only dynamic element, used solely to mark decision. The density field from Concept B is retained as texture, rationed to divider surfaces and never behind text. Threshold and Trace are not adopted, and are recorded so the reasons survive the people who rejected them.", {
       x: L + 0.3, y: y + 0.54, w: W - 0.6, h: 0.66, fontFace: F, fontSize: 9.4, color: "D8D8D8",
       align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.22 });
 
     y += 1.5;
-    y = head(s, y, "WHY, AND WHAT IS BEING GIVEN UP");
+    y = head(s, y, "WHY, AND WHAT WAS GIVEN UP");
     body(s, L, y, W,
       "Datum wins on the criteria that decide whether a system survives. It is the only one of the three that a staff officer can reproduce correctly in PowerPoint at 2200 hours without a designer present, and that is the real durability test inside a training establishment.",
       9.2, INK, 0.6);
     body(s, L, y + 0.62, W,
-      "What is given up is immediate emotional impact. Threshold is the stronger first impression and it is being deliberately declined, because the objective stated in the brief is trust rather than recognition, and trust is built by the twentieth artefact rather than the first. Trace is the sharpest expression of decision, which is why its node is retained rather than the whole concept: adopted wholesale it would pull the system toward a data-visualisation aesthetic that will age badly.",
+      "What was given up is immediate emotional impact. Threshold is the stronger first impression and it was deliberately declined, because the objective stated in the brief is trust rather than recognition, and trust is built by the twentieth artefact rather than the first. Trace is the sharpest expression of decision, which is why its node was retained rather than the whole concept: adopted wholesale it would have pulled the system toward a data-visualisation aesthetic that will age badly.",
       9.2, "3E3E3E", 1.0);
 
     s.addImage({ data: I.system, x: L, y: y + 1.78, w: W, h: W * 260 / 900 });
-    s.addText("The recommended system: datum as spine, nodes for decision, density rationed to texture. Shown here carrying the five phase framework development programme.", {
+    s.addText("The adopted system: datum as spine, nodes for decision, density rationed to texture. Shown here carrying the five phase framework development programme.", {
       x: L, y: y + 1.78 + W * 260 / 900 + 0.06, w: W, h: 0.3, fontFace: F, fontSize: 7.8,
       italic: true, color: GREY, align: "left", valign: "top", margin: 0 });
   }
@@ -1369,6 +1383,7 @@ function horizons() {
         "Photography, continuously. Imagery should always look like this year's Army.",
       ]],
       ["Must not change", RED, [
+        "The datum itself. It is the governing device, selected against five criteria, and the system has no second spine.",
         "The meaning of the grammar. Away from the datum is decision, permanently.",
         "The reservation of red for decision, action and defined threshold states, with risk otherwise identified structurally by the broken datum. This is the single constraint that keeps the system readable.",
         "The primacy of the Army logo, and the absence of a Combat Mindset logo.",
@@ -1411,9 +1426,9 @@ function horizons() {
     y = head(s, y, "SEQUENCE");
     const STEPS = [
       ["01", "Internal agreement on position", "ACS, NZALC, HPC",
-        "Agree that doctrine and controlled information systems are the visual precedent, without claiming doctrinal status for the framework itself. Everything else follows from this position, and no production assets or enduring templates should be issued before it is settled."],
+        "Agree that doctrine and controlled information systems are the visual precedent, without claiming doctrinal status for the framework itself. The governing concept is settled: Datum is adopted, and the review is not asked to reopen it. No production assets or enduring templates should be issued before the position is agreed."],
       ["02", "Review by Defence Public Affairs", "Head of Visual Identity and Design",
-        "Put the position and the specification to DPA. Expect challenge on the title treatment, the notation family, and the derivation of the field from the Army chevron pattern. Obtain the vector Army logo at the same time."],
+        "Put the position, the adopted concept and the specification to DPA. Expect challenge on the title treatment, the notation family, and the derivation of the field from the Army chevron pattern. Obtain the vector Army logo at the same time."],
       ["03", "Specification written", "ACS with a design agency",
         "Convert this document into a written standard with measurable rules, plus the asset set: notation SVGs, colour tokens, component markup, templates."],
       ["04", "Pilot on real products", "The framework proposal and ELDA material",
