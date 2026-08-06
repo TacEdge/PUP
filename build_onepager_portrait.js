@@ -60,9 +60,11 @@ const emblemFW = (ink, accent) => `
 
 (async () => {
   const I = {
-    cm: await svgPng(emblemCM(WHITE, RED)),
-    pup: await svgPng(emblemPUP(WHITE, RED)),
-    fw: await svgPng(emblemFW(WHITE, RED)),
+    // No red accent: red is reserved for decision, action notation and
+    // defined threshold states. None of the four cards is a decision.
+    cm: await svgPng(emblemCM(WHITE, WHITE)),
+    pup: await svgPng(emblemPUP(WHITE, WHITE)),
+    fw: await svgPng(emblemFW(WHITE, WHITE)),
   };
 
   const pres = new pptxgen();
@@ -100,7 +102,7 @@ const emblemFW = (ink, accent) => `
 
   // ---- section 1: Combat Mindset -----------------------------------------
   s.addShape("roundRect", { x: L, y: 1.62, w: W, h: 1.5, rectRadius: 0.08, fill: { color: BLACK } });
-  pill(1.5, 2.4, "1)  WARFIGHTING IMPERATIVE", RED);
+  pill(1.5, 2.4, "1)  WARFIGHTING IMPERATIVE", BLACK);
   s.addImage({ data: I.cm, x: L + 0.24, y: 1.94, w: 0.82, h: 0.82 });
   s.addText("COMBAT MINDSET", {
     x: L, y: 1.92, w: W, h: 0.58, fontFace: F, fontSize: 36, bold: true,
@@ -110,7 +112,7 @@ const emblemFW = (ink, accent) => `
     color: WHITE, align: "center", valign: "middle", margin: 0 });
   s.addText("Harder to kill.", {
     x: L, y: 2.76, w: W, h: 0.28, fontFace: F, fontSize: 13.5, bold: true,
-    color: RED, align: "center", valign: "middle", margin: 0 });
+    color: WHITE, align: "center", valign: "middle", margin: 0 });
 
   // ---- section 2: Performance Under Pressure -----------------------------
   s.addShape("roundRect", { x: L, y: 3.54, w: W, h: 1.2, rectRadius: 0.08, fill: { color: SWAMP } });

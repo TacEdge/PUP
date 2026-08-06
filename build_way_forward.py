@@ -105,6 +105,14 @@ def force_font(style_or_run, name):
     rFonts.set(qn("w:cs"), name)
 
 
+def set_char_spacing(run, twentieths):
+    """Letterspacing, in twentieths of a point. Used on the classification
+    label so it reads as a system label rather than as running text."""
+    rPr = run.font.element.get_or_add_rPr()
+    el = rPr.makeelement(qn("w:spacing"), {qn("w:val"): str(twentieths)})
+    rPr.append(el)
+
+
 def force_color(style_or_run, hexval):
     style_or_run.font.color.rgb = RGBColor.from_string(hexval)
     rPr = style_or_run.font.element.get_or_add_rPr()
@@ -250,7 +258,7 @@ force_font(h1, FONT_DISPLAY)
 h1.font.bold = False
 h1.font.size = Pt(14)
 force_color(h1, DARKEST_HOUR)
-h1.paragraph_format.space_before = Pt(18)
+h1.paragraph_format.space_before = Pt(13)
 h1.paragraph_format.space_after = Pt(8)
 h1.paragraph_format.keep_with_next = True
 
@@ -266,9 +274,15 @@ h2.paragraph_format.space_after = Pt(4)
 h2.paragraph_format.keep_with_next = True
 
 
+IN_DECISION_SECTION = False
+
+
 def add_section_heading(text):
+    """Sections hang from the datum: a black rule above, heading beneath."""
+    global IN_DECISION_SECTION
+    IN_DECISION_SECTION = "recommendation" in text.lower()
     p = doc.add_paragraph(style="Heading 1")
-    set_border(p, "left", ARMY_RED, 24, space=8)  # Army Red section tab
+    set_border(p, "top", DARKEST_HOUR, 12, space=7)   # the datum, 1.5pt
     add_text_runs(p, text, base_font=FONT_DISPLAY, size=Pt(14), bold=False,
                   color=DARKEST_HOUR)
     return p
@@ -285,7 +299,7 @@ def add_minor_heading(text):
     """Fourth-level heading: names a product beneath a grouping sub-heading."""
     p = doc.add_paragraph(style="Heading 3")
     add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(10), bold=True,
-                  color=ARMY_RED)
+                  color=KAWAKAWA_LEAF)
     return p
 
 
@@ -310,10 +324,10 @@ def add_display(text_lines):
 
 
 def add_callout(text_lines):
-    """Key summation callout: Moawhango fill, Army Red left border, bold."""
+    """Key summation callout: 5855 C ground, black rule, bold."""
     p = doc.add_paragraph()
     set_shading(p, MOAWHANGO)
-    set_border(p, "left", ARMY_RED, 28, space=8)
+    set_border(p, "left", DARKEST_HOUR, 24, space=8)
     p.paragraph_format.left_indent = Cm(0.6)
     p.paragraph_format.right_indent = Cm(0.6)
     p.paragraph_format.space_before = Pt(10)
@@ -332,38 +346,46 @@ def add_bullet(text):
     p.paragraph_format.first_line_indent = Cm(-0.45)
     p.paragraph_format.space_after = Pt(3)
     p.paragraph_format.tab_stops.add_tab_stop(Cm(0.75))
-    bullet = p.add_run("•\t")
+    bullet = p.add_run("\u2013\t")
     force_font(bullet, FONT_HEAD)
-    force_color(bullet, ARMY_RED)
-    bullet.bold = True
+    force_color(bullet, DARKEST_HOUR)
+    bullet.bold = False
     add_text_runs(p, text)
     return p
 
 
 def add_numbered(num, lead, continuation):
+    """Numbered items. Inside the recommendations these are the decisions
+    sought, and take the red action notation: the only red in the body."""
+    decision = IN_DECISION_SECTION
     p = doc.add_paragraph()
-    p.paragraph_format.left_indent = Cm(0.75)
+    p.paragraph_format.left_indent = Cm(1.0 if decision else 0.75)
     p.paragraph_format.first_line_indent = Cm(-0.75)
-    p.paragraph_format.space_before = Pt(4)
-    p.paragraph_format.space_after = Pt(2)
-    p.paragraph_format.tab_stops.add_tab_stop(Cm(0.75))
+    p.paragraph_format.space_before = Pt(6 if decision else 4)
+    p.paragraph_format.space_after = Pt(4 if decision else 2)
+    p.paragraph_format.tab_stops.add_tab_stop(Cm(1.0 if decision else 0.75))
+    if decision:
+        set_border(p, "left", ARMY_RED, 16, space=10)
     n = p.add_run(f"{num}.\t")
     force_font(n, FONT_HEAD)
     n.bold = False
     add_text_runs(p, lead)
     if continuation:
         c = doc.add_paragraph()
-        c.paragraph_format.left_indent = Cm(0.75)
+        c.paragraph_format.left_indent = Cm(1.0 if decision else 0.75)
         c.paragraph_format.space_after = Pt(6)
+        if decision:
+            set_border(c, "left", ARMY_RED, 16, space=10)
         add_text_runs(c, continuation)
     return p
 
 
 def add_divider():
+    """Space only. Section separation is carried by the datum above the
+    heading, so a second rule here would double the device."""
     p = doc.add_paragraph()
-    p.paragraph_format.space_before = Pt(10)
-    p.paragraph_format.space_after = Pt(10)
-    set_border(p, "bottom", WAIOURU_HILLS, 6, space=1)
+    p.paragraph_format.space_before = Pt(3)
+    p.paragraph_format.space_after = Pt(3)
     return p
 
 
@@ -384,7 +406,7 @@ def add_table(rows):
         el.set(qn("w:val"), "single")
         el.set(qn("w:sz"), "4")
         el.set(qn("w:space"), "0")
-        el.set(qn("w:color"), WAIOURU_HILLS)
+        el.set(qn("w:color"), "9C9C9C")
         borders.append(el)
     tblPr.append(borders)
     for ri, tr in enumerate(t.rows):
@@ -506,10 +528,13 @@ _buf.seek(0)
 doc.add_picture(_buf, width=Mm(60))
 logo_para = doc.paragraphs[-1]
 logo_para.paragraph_format.space_before = Pt(0)
-logo_para.paragraph_format.space_after = Pt(231)
+logo_para.paragraph_format.space_after = Pt(219)
 
 title_p = doc.add_paragraph()
 title_p.paragraph_format.space_after = Pt(2)
+# Primary title treatment: the datum sits above the title, weight one tenth
+# of the cap height. Black, never red.
+set_border(title_p, "top", DARKEST_HOUR, 18, space=10)
 t = title_p.add_run("NZ Army Combat Mindset")
 force_font(t, FONT_DISPLAY)
 t.font.size = Pt(30)
@@ -518,7 +543,6 @@ force_color(t, DARKEST_HOUR)
 
 sub_title_p = doc.add_paragraph()
 sub_title_p.paragraph_format.space_after = Pt(10)
-set_border(sub_title_p, "bottom", ARMY_RED, 20, space=10)
 st = sub_title_p.add_run("Framework Proposal")
 force_font(st, FONT_HEAD)
 st.font.size = Pt(17)
@@ -534,12 +558,28 @@ pr.font.size = Pt(13)
 force_color(pr, DARKEST_HOUR)
 
 promise2_p = doc.add_paragraph()
-promise2_p.paragraph_format.space_after = Pt(229)
+promise2_p.paragraph_format.space_after = Pt(206)
 pr2 = promise2_p.add_run("Harder to kill.")
 force_font(pr2, FONT_HEAD)
 pr2.font.size = Pt(13)
 pr2.bold = True
-force_color(pr2, ARMY_RED)
+force_color(pr2, DARKEST_HOUR)
+
+# Classification component, per the information architecture. The notation
+# marks what kind of thing this is. No identifier is shown: allocation
+# authority is resolved before any identifier is issued.
+class_p = doc.add_paragraph()
+class_p.paragraph_format.space_after = Pt(10)
+class_p.paragraph_format.tab_stops.add_tab_stop(Cm(1.0))
+_mark = class_p.add_run()
+_mark.add_picture("./assets/marks/framework-mono.png", width=Mm(4.6))
+class_p.add_run("\t")
+_cl = class_p.add_run("FRAMEWORK")
+force_font(_cl, FONT_HEAD)
+_cl.font.size = Pt(8)
+_cl.bold = True
+force_color(_cl, DARKEST_HOUR)
+set_char_spacing(_cl, 60)
 
 meta_rows = [
     ("Reference", DOCUMENT_REFERENCE),
@@ -567,7 +607,7 @@ add_page_break()
 
 toc_head = doc.add_paragraph()
 toc_head.paragraph_format.space_after = Pt(12)
-set_border(toc_head, "left", ARMY_RED, 24, space=8)
+set_border(toc_head, "top", DARKEST_HOUR, 12, space=9)
 _r = toc_head.add_run("Contents")
 force_font(_r, FONT_DISPLAY)
 _r.font.size = Pt(14)
