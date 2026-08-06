@@ -153,14 +153,14 @@ const MARKS = {
 // Four families. The colour is the classification, not decoration.
 const TYPES = [
   ["FRAMEWORK", "framework", BLACK, "Structure", "The governing architecture. Used once, at the top of a hierarchy."],
-  ["DOCTRINE", "doctrine", BLACK, "Structure", "Endorsed and enduring. The bar is solid because doctrine does not qualify itself."],
+  ["DOCTRINE", "doctrine", BLACK, "Structure", "The solid bar: endorsed institutional guidance rather than open inquiry."],
   ["POLICY", "policy", BLACK, "Structure", "Bounded above and below: the convention for rules that carry limits."],
   ["GOVERNANCE", "governance", BLACK, "Structure", "Brackets on both sides. Something is being held, not merely described."],
   ["EVIDENCE", "evidence", G_DARK, "Analysis", "Rising measures. Evidence accumulates and is read against the datum."],
   ["RESEARCH", "research", G_DARK, "Analysis", "An open bracket and a dashed continuation. The question is not yet closed."],
   ["ASSESSMENT", "assessment", G_DARK, "Analysis", "A measured gap. Assessment is the act of reading the interval."],
   ["REVIEW", "review", G_DARK, "Analysis", "A return to a prior point. Review is deliberate, not repetition."],
-  ["PRODUCT", "product", G_OLIVE, "Delivery", "A discrete block on the datum. Products are countable and can be held."],
+  ["PRODUCT", "product", G_OLIVE, "Delivery", "A block on the datum. Products are discrete, identifiable and issued for use."],
   ["REFERENCE", "reference", G_OLIVE, "Delivery", "A single tick and a marker. Points elsewhere; carries no authority itself."],
   ["DECISION", "decision", RED, "Action", "A node and a departure. The only mark that leaves the datum."],
   ["RISK", "risk", RED, "Action", "A break in the datum identifies risk. A reading convention, not a definition."],
@@ -289,7 +289,7 @@ function horizons() {
     }
     s.addText("COMBAT MINDSET   VISUAL IDENTITY", { x: L, y: 11.16, w: 5, h: 0.16,
       fontFace: F, fontSize: 6, color: GREY, charSpacing: 0.6, align: "left", valign: "middle", margin: 0 });
-    s.addText("DRAFT V0.3   |   AUGUST 2026", { x: R - 3, y: 11.16, w: 3, h: 0.16,
+    s.addText("DRAFT V0.4   |   AUGUST 2026", { x: R - 3, y: 11.16, w: 3, h: 0.16,
       fontFace: F, fontSize: 6, color: GREY, charSpacing: 0.9, align: "right", valign: "middle", margin: 0 });
     return s;
   }
@@ -342,7 +342,7 @@ function horizons() {
       ["Developed by", "Army Command School and NZ Army Leadership Centre,\nfor internal consideration"],
       ["Proposed reviewers", "COMDT ACS; HPC; Head of Visual Identity and Design, Defence Public Affairs"],
       ["Status", "Draft for review. Not an approved standard."],
-      ["Version", "V0.3, August 2026"],
+      ["Version", "V0.4, August 2026"],
     ];
     let my = 9.68;
     meta.forEach(([k, v]) => {
@@ -364,7 +364,7 @@ function horizons() {
     let y = head(s, 1.78, "THE ARGUMENT IN FOUR STEPS");
     const steps = [
       ["01", "Combat Mindset is not a programme, so programme branding is the wrong precedent.",
-        "The guidelines forbid programmes creating logos. Correct, but the more useful observation is that a capability framework is closer to doctrine than to a project. Doctrine has a visual system: format, hierarchy, notation, numbering. That is the precedent to follow."],
+        "The guidelines forbid programmes creating logos. Correct, but the more useful observation is that a capability framework is closer to doctrine and controlled military information systems than to a branded project. Doctrine has a visual system: format, hierarchy, notation, numbering. That is the precedent to follow."],
       ["02", "The identity must therefore be a grammar, not a mark.",
         "A mark is recognised. A grammar is trusted. Personnel should know a Combat Mindset product by how it is built, not by a badge in the corner."],
       ["03", "The organising idea is signal held under load.",
@@ -432,8 +432,8 @@ function horizons() {
     y = head(s, y + 0.1, "WHAT FOLLOWS FROM TAKING DOCTRINE AS THE PRECEDENT");
     bullets(s, L, y, W, [
       "No mark, no badge, no patch, no symbol. The identity is carried by typography and structure.",
-      "The Army logo appears unaltered on every artefact. Combat Mindset never competes with it.",
-      "Authority is signalled the way doctrine signals it: consistent format, visible hierarchy, explicit classification of content, and a reference number on everything.",
+      "The Army logo appears unaltered on every complete formal artefact. Combat Mindset never competes with it.",
+      "Authority is signalled the way doctrine signals it: consistent format, visible hierarchy, explicit classification of content, and a controlled identifier on every governed content item.",
       "Every element is specifiable in a written standard, so it can be applied by people who are not designers. This is the practical test the system must pass inside a training establishment.",
     ], 9, 1.5);
 
@@ -603,7 +603,7 @@ function horizons() {
       key: "A", name: "DATUM", img: () => I.datum,
       line: "A standard is held. Load displaces it. It returns to true.",
       idea: "The page is governed by a single measured reference line. Content aligns to it. Where pressure is represented, the line deviates and then recovers. Ticks, registers and intervals come from the language of instruments, maps and range cards.",
-      says: "This is what the framework is for. Capability is not lost under pressure; access to it is temporarily displaced, and the system exists to shorten the return.",
+      says: "This is what the framework is for. Under pressure, access to trained capability can be displaced or degraded, and the system exists to preserve effectiveness and shorten the return to true.",
       strengths: [
         "Structural rather than illustrative, so it dates slowly. A ruled line with tick marks is as legible in 2046 as in 1946.",
         "Scales without loss from a favicon to a wall, because it is composed of rules rather than detail.",
@@ -889,7 +889,7 @@ function horizons() {
   // =======================================================================
   {
     const s = page("Graphic language", "Graphic language",
-      "Five elements. Nothing else is permitted, and each carries a fixed meaning so the language cannot drift into decoration.");
+      "Six elements. Nothing else is permitted, and each carries a fixed meaning so the language cannot drift into decoration.");
 
     const ELEMENTS = [
       ["THE DATUM", "A single black rule, weight 1.5 pt at A4.",
@@ -1181,7 +1181,7 @@ function horizons() {
     });
 
     y = head(s, y + 0.04, "AUTOMATIC REJECTIONS");
-    const rej = ["Silhouettes against a sunset", "Gym and physical training as a stand-in for performance",
+    const rej = ["Silhouettes against a sunset", "Generic gym imagery as shorthand for performance",
       "Weapon-forward hero framing", "Shouted faces", "Staged planning shots around a map",
       "Stock imagery of any kind", "Anything shot for recruitment", "Composites and montage"];
     const RW = (W - 3 * 0.1) / 4;
@@ -1250,9 +1250,9 @@ function horizons() {
       ["REPOSITORY AND GITHUB DOCUMENTATION",
         "Markdown is the constraint. The notation family is issued as inline SVG so a mark can precede a heading in a README without an image pipeline. The datum becomes a horizontal rule. The reference number goes in the front matter and the file name, so a document remains identifiable when detached from its interface."],
       ["FRAMEWORK BROWSER",
-        "The twelve content types become the primary filter, not a search box. A user arrives asking what kind of thing they need before they know its title. Left rail carries the notation; content pane carries the component."],
-      ["INTERACTIVE DOCTRINE",
-        "Doctrine text at full measure, with evidence and assessment content collapsed beneath it and marked with their own notation. The reader can see that evidence exists without being made to read it, which is the behaviour the framework wants to encourage."],
+        "The pilot content types form the initial primary filter, not a search box. A user arrives asking what kind of thing they need before they know its title. Left rail carries the notation; content pane carries the component."],
+      ["CONTROLLED CONTENT READER",
+        "Endorsed text at full measure, with evidence and assessment collapsed beneath it and marked with their own notation. Doctrine is one content class this reader eventually carries. The reader can see that evidence exists without being made to read it, which is the behaviour the framework wants to encourage."],
       ["DECISION SUPPORT",
         "The only place the departure element is used interactively. A node expands to show what commitment at that point entails. No wizard, no scoring, no recommendation engine; the tool documents the decision, it does not make it."],
       ["DASHBOARDS",
