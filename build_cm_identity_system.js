@@ -287,9 +287,9 @@ function horizons() {
       s.addText(strap, { x: L, y: 1.16, w: W - 0.4, h: 0.42, fontFace: F, fontSize: 9.6,
         color: GREY, align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.2 });
     }
-    s.addText("NZ ARMY   COMBAT MINDSET   VISUAL IDENTITY SYSTEM", { x: L, y: 11.16, w: 5, h: 0.16,
+    s.addText("COMBAT MINDSET   VISUAL IDENTITY", { x: L, y: 11.16, w: 5, h: 0.16,
       fontFace: F, fontSize: 6, color: GREY, charSpacing: 0.6, align: "left", valign: "middle", margin: 0 });
-    s.addText("DRAFT FOR REVIEW   |   V0.2   |   AUGUST 2026", { x: R - 3, y: 11.16, w: 3, h: 0.16,
+    s.addText("DRAFT V0.3   |   AUGUST 2026", { x: R - 3, y: 11.16, w: 3, h: 0.16,
       fontFace: F, fontSize: 6, color: GREY, charSpacing: 0.9, align: "right", valign: "middle", margin: 0 });
     return s;
   }
@@ -342,7 +342,7 @@ function horizons() {
       ["Developed by", "Army Command School and NZ Army Leadership Centre,\nfor internal consideration"],
       ["Proposed reviewers", "COMDT ACS; HPC; Head of Visual Identity and Design, Defence Public Affairs"],
       ["Status", "Draft for review. Not an approved standard."],
-      ["Version", "V0.2, August 2026"],
+      ["Version", "V0.3, August 2026"],
     ];
     let my = 9.68;
     meta.forEach(([k, v]) => {
@@ -478,7 +478,7 @@ function horizons() {
     let y = head(s, 1.86, "THE FEELING TO ACHIEVE");
     const feels = [
       ["It should feel like something that was already there.",
-        "Not launched. Not campaigned. A soldier meeting a Combat Mindset product for the first time should assume it has existed for years and that they simply had not needed it until now. Newness is a liability in an enduring capability framework."],
+        "Not launched. Not campaigned. A soldier meeting a Combat Mindset product for the first time should assume it has existed for years and that they simply had not needed it until now. Visible novelty is a liability in an enduring capability framework."],
       ["It should feel like it has been checked.",
         "The strongest emotional response the system can produce is the quiet assumption that someone competent has been over this. That is what evidence-based means in practice: not citations on display, but the felt absence of guesswork."],
       ["It should feel calm at the moment the reader is not.",
@@ -497,7 +497,7 @@ function horizons() {
 
     y = head(s, y + 0.06, "WHAT IT MUST NOT FEEL LIKE");
     const nots = [
-      ["Inspiring", "Motivation decays. Doctrine does not."],
+      ["Inspiring", "Motivation fades. Institutional systems endure."],
       ["Elite", "The framework is for the whole Army, not a selected minority."],
       ["Commercial", "Nothing is being sold. Nothing is being competed for."],
       ["Clever", "Wit in an institutional system reads as unseriousness on the second reading."],
@@ -761,7 +761,7 @@ function horizons() {
   // =======================================================================
   {
     const s = page("Title treatment", "Title treatment explorations",
-      "Six typographic approaches for how Combat Mindset names itself. None is a logo and none is a freestanding asset: these are repeatable heading constructions. Set in Arial; production is Neue Haas Grotesk.");
+      "Six typographic approaches to presenting the Combat Mindset title. None is a logo and none is a freestanding asset: these are repeatable heading constructions. Set in Arial; production is Neue Haas Grotesk.");
 
     const EX = [
       ["01", "STACKED MASS", "Bold, tight leading, datum rule beneath.",
@@ -781,7 +781,7 @@ function horizons() {
         (s, x, y, w) => {
           s.addShape("rect", { x, y: y + 0.2, w: w - 0.2, h: 0.03, fill: { color: INK } });
           s.addText("COMBAT MINDSET", { x, y: y + 0.32, w, h: 0.3, fontFace: F, fontSize: 15, bold: true, color: INK, charSpacing: 0.6, align: "left", valign: "middle", margin: 0 });
-          s.addText("NZ ARMY CAPABILITY FRAMEWORK", { x, y: y + 0.6, w, h: 0.2, fontFace: F, fontSize: 6.6, color: GREY, charSpacing: 1.2, align: "left", valign: "middle", margin: 0 });
+          s.addText("NZ ARMY COMBAT MINDSET FRAMEWORK", { x, y: y + 0.6, w, h: 0.2, fontFace: F, fontSize: 6.6, color: GREY, charSpacing: 1.2, align: "left", valign: "middle", margin: 0 });
         }],
       ["04", "WITH REFERENCE NUMBER", "Doctrine publication convention.",
         "Borrows the authority of the doctrine series directly. Recommended as the formal variant on covers and title pages.",
@@ -827,7 +827,7 @@ function horizons() {
 
     y = head(s, y + 0.06, "SELECTION");
     body(s, L, y, W,
-      "Carry 03 as the primary title treatment and 04 as the formal variant on covers, title pages and doctrine-equivalent products. Retain 02 for running headers and spines. Options 05 and 06 are recorded so that the reasons for rejecting them survive the people who rejected them.",
+      "Carry 03 as the primary title treatment and 04 as the formal variant on covers, title pages and formal framework publications. Retain 02 for running headers and spines. Options 05 and 06 are recorded so that the reasons for rejecting them survive the people who rejected them.",
       9, INK, 0.6);
   }
 
@@ -843,7 +843,7 @@ function horizons() {
     s.addShape("rect", { x: L + 0.5, y: y + 0.62, w: 3.4, h: 0.035, fill: { color: INK } });
     s.addText("COMBAT MINDSET", { x: L + 0.5, y: y + 0.72, w: 5, h: 0.4, fontFace: F, fontSize: 24,
       bold: true, color: INK, charSpacing: 0.8, align: "left", valign: "middle", margin: 0 });
-    s.addText("NZ ARMY CAPABILITY FRAMEWORK", { x: L + 0.5, y: y + 1.14, w: 5, h: 0.22, fontFace: F,
+    s.addText("NZ ARMY COMBAT MINDSET FRAMEWORK", { x: L + 0.5, y: y + 1.14, w: 5, h: 0.22, fontFace: F,
       fontSize: 8, color: GREY, charSpacing: 1.6, align: "left", valign: "middle", margin: 0 });
     y += 2.04;
 
@@ -852,9 +852,9 @@ function horizons() {
       ["Datum rule", "Width equals the treatment measure. Weight equals one tenth of the cap height. Colour black, or white when reversed. Never red."],
       ["Clear space", "One cap height on all four sides. Nothing enters it, including the Army logo."],
       ["Minimum size", "28 mm measure in print. 180 px in digital. Below this, use the single line variant without the descriptor."],
-      ["Descriptor", "Set at one third of the title size, letterspaced 1.6. It may be omitted where context already establishes it. It may not be reworded."],
+      ["Descriptor", "One third of the title size, letterspaced 1.6. Wording settled at endorsement; until then, NZ Army Combat Mindset Framework. Omit where context establishes it; never reword locally."],
       ["Colour", "Black on light grounds, white on dark. One colour only. The treatment is never red, never tinted, never outlined and never set on a photograph without a solid panel behind it."],
-      ["Relationship to the Army logo", "The Army logo is always present and always larger in visual weight. The treatment never sits closer than the logo's own clear space, and never on the same baseline."],
+      ["Relationship to the Army logo", "Appears on every complete formal artefact, at greater visual weight. It need not repeat inside every internal component or screen. The treatment stays outside the logo's clear space and off its baseline."],
     ];
     rules.forEach(([k, v]) => {
       s.addText(k, { x: L, y, w: 1.5, h: 0.4, fontFace: F, fontSize: 8.6, bold: true,
@@ -943,7 +943,7 @@ function horizons() {
       "Curves outside the displacement trace. The datum itself is always straight, and no other element bends.",
       "Gradients other than the sanctioned halftone field. Gradients carry a date.",
       "Drop shadows, glows, bevels and any depth effect. Depth implies a physical object; this is a notation, not an artefact.",
-      "Red used as a surface, a heading colour or a fill. Red marks decision and risk. Spending it elsewhere destroys the only signal in the system that carries urgency.",
+      "Red used as a surface, a heading colour or a fill. Red marks decision nodes and defined threshold states; risk is otherwise carried structurally by the broken datum. Spending it elsewhere destroys the only signal in the system that carries urgency.",
       "Any new element added without an accompanying sentence in the specification stating what it means.",
     ], 8.8, 1.8);
   }
@@ -957,9 +957,9 @@ function horizons() {
 
     let y = head(s, 2.0, "THE CONSTRUCTION");
     body(s, L, y, W,
-      "Every mark is drawn on a 24 unit grid at 2 unit stroke, and every mark contains the datum at y=17. What differs is what happens to that datum, and what sits on it. A reader who learns the grammar once can interpret a mark they have never seen, which is the property a pictogram set can never have. Six marks form the pilot set; the remainder are drafted to prove the grammar extends, and are introduced only when repository content shows the distinction is needed.",
-      9, INK, 0.78);
-    y += 0.9;
+      "Every mark is drawn on a 24 unit grid at 2 unit stroke, and every mark contains the datum at y=17. What differs is what happens to that datum, and what sits on it. A reader who learns the grammar once can interpret a mark they have never seen, which is the property a pictogram set can never have. Six marks form the pilot set: Framework, Governance, Evidence, Assessment, Product and Decision, the minimum spread across the four families. Doctrine and the other marks are drafted to prove the grammar extends, and join when authority arrangements and repository content warrant them.",
+      9, INK, 0.98);
+    y += 1.1;
 
     const FAMS = [
       ["STRUCTURE", BLACK, "Content that carries authority. The datum is complete and unbroken."],
@@ -988,7 +988,7 @@ function horizons() {
       s.addImage({ data: MARK_IMG[key], x: x + 0.14, y: yy + 0.14, w: 0.44, h: 0.44 });
       s.addText(name, { x: x + 0.66, y: yy + 0.16, w: MW - 0.76, h: 0.2, fontFace: F, fontSize: 8,
         bold: true, color: INK, charSpacing: 0.6, align: "left", valign: "middle", margin: 0 });
-      if (["framework", "doctrine", "evidence", "assessment", "product", "decision"].includes(key)) {
+      if (["framework", "governance", "evidence", "assessment", "product", "decision"].includes(key)) {
         s.addText("PILOT", { x: x + MW - 0.6, y: yy + 0.08, w: 0.52, h: 0.14, fontFace: F,
           fontSize: 5.6, bold: true, color: GREY, charSpacing: 1, align: "right", valign: "middle", margin: 0 });
       }
@@ -1034,7 +1034,7 @@ function horizons() {
     const prim = [
       ["Black", BLACK, "Process Black C", "0 0 0", "Structure, type and the datum. The default. Carries all hierarchy.", WHITE],
       ["White", WHITE, "White", "255 255 255", "Space, and the reversed state. Space is a material and is budgeted, not filled.", INK],
-      ["Army Red", RED, "Pantone 200 C", "211 17 69", "Decision and risk only. Never a surface, never a heading, never a fill.", WHITE],
+      ["Army Red", RED, "Pantone 200 C", "211 17 69", "Decision nodes, the action notation, and defined threshold states. Otherwise risk is carried by the broken datum.", WHITE],
     ];
     const PW = (W - 2 * 0.14) / 3;
     prim.forEach(([n, hex, pan, rgb, use, ink], i) => {
@@ -1094,9 +1094,9 @@ function horizons() {
 
     let y = head(s, 1.94, "THE COMPONENT");
     body(s, L, y, W,
-      "Every piece of Combat Mindset content is presented in the same component: a notation mark, a type label, an identifier, a title, and a status line. The component is identical in print, in a slide, in a repository and on a phone; only its scale changes. Identifiers separate content type, item and version, because a number that means two things eventually means nothing. The scheme shown is illustrative: allocation authority, and its relationship to existing Army and NZDF reference series, is resolved at step 03 before any identifier is issued.",
-      9, INK, 0.82);
-    y += 0.94;
+      "Every piece of Combat Mindset content is presented in the same component: a notation mark, a type label, an identifier, a title, and a status line. The component is identical in print, in a slide, in a repository and on a phone; only its scale changes. Identifiers separate content type, item and version, because a number that means two things eventually means nothing. The scheme shown is illustrative: allocation authority, and its relationship to existing Army and NZDF reference series, is resolved at step 03 before any identifier is issued. The pilot also tests whether some types are better held as status or relationship metadata than as primary types.",
+      9, INK, 1.0);
+    y += 1.1;
 
     // the anatomy diagram
     s.addShape("rect", { x: L, y, w: W, h: 1.0, fill: { color: WHITE }, line: { color: RULE, width: 1 } });
@@ -1115,9 +1115,9 @@ function horizons() {
       [L + 0.24, "notation"], [L + 0.88, "type and reference"], [L + 3.0, "title and status"],
     ];
     anno.forEach(([x, t]) =>
-      s.addText(t, { x, y: y + 1.02, w: 2, h: 0.18, fontFace: F, fontSize: 6.4, italic: true,
+      s.addText(t, { x, y: y + 1.02, w: 2, h: 0.16, fontFace: F, fontSize: 6.4, italic: true,
         color: RED, align: "left", valign: "middle", margin: 0 }));
-    y += 1.4;
+    y += 1.26;
 
     y = head(s, y, "THE TWELVE TREATMENTS");
     const RH = 0.46;
@@ -1408,7 +1408,7 @@ function horizons() {
       ["01", "Internal agreement on position", "ACS, NZALC, HPC",
         "Agree that doctrine and controlled information systems are the visual precedent, without claiming doctrinal status for the framework itself. Everything else follows from this position and nothing should be built before it is settled."],
       ["02", "Review by Defence Public Affairs", "Head of Visual Identity and Design",
-        "Put the position and the specification to DPA. Expect challenge on the wordmark and on the notation family. Obtain the vector Army logo at the same time."],
+        "Put the position and the specification to DPA. Expect challenge on the title treatment, the notation family, and the derivation of the field from the Army chevron pattern. Obtain the vector Army logo at the same time."],
       ["03", "Specification written", "ACS with a design agency",
         "Convert this document into a written standard with measurable rules, plus the asset set: notation SVGs, colour tokens, component markup, templates."],
       ["04", "Pilot on real products", "The framework proposal and ELDA material",
