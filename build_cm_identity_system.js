@@ -220,7 +220,7 @@ function proportionBar() {
 function horizons() {
   const w = 900, h = 250;
   const bands = [
-    ["NOW  2026 to 2028", "Specification issued. Wordmark, grammar, notation, colour, templates.", 300, BLACK],
+    ["NOW  2026 to 2028", "Specification issued. Title treatment, grammar, notation, colour and templates.", 300, BLACK],
     ["NEXT  2029 to 2032", "Notation extended as new content types appear. No redesign.", 600, G_DARK],
     ["ENDURING  2033 to 2046", "Typeface and medium may change. The grammar does not.", 900, G_OLIVE],
   ];
@@ -1370,7 +1370,7 @@ function horizons() {
       ]],
       ["Must not change", RED, [
         "The meaning of the grammar. Away from the datum is decision, permanently.",
-        "The reservation of red for decision and risk. This is the single constraint that keeps the system readable.",
+        "The reservation of red for decision, action and defined threshold states, with risk otherwise identified structurally by the broken datum. This is the single constraint that keeps the system readable.",
         "The primacy of the Army logo, and the absence of a Combat Mindset logo.",
         "The requirement that every artefact survives a mono print.",
       ]],
