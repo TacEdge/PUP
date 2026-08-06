@@ -289,7 +289,7 @@ function horizons() {
     }
     s.addText("COMBAT MINDSET   VISUAL IDENTITY", { x: L, y: 11.16, w: 5, h: 0.16,
       fontFace: F, fontSize: 6, color: GREY, charSpacing: 0.6, align: "left", valign: "middle", margin: 0 });
-    s.addText("DRAFT V0.4   |   AUGUST 2026", { x: R - 3, y: 11.16, w: 3, h: 0.16,
+    s.addText("DRAFT V0.5   |   AUGUST 2026", { x: R - 3, y: 11.16, w: 3, h: 0.16,
       fontFace: F, fontSize: 6, color: GREY, charSpacing: 0.9, align: "right", valign: "middle", margin: 0 });
     return s;
   }
@@ -342,7 +342,7 @@ function horizons() {
       ["Developed by", "Army Command School and NZ Army Leadership Centre,\nfor internal consideration"],
       ["Proposed reviewers", "COMDT ACS; HPC; Head of Visual Identity and Design, Defence Public Affairs"],
       ["Status", "Draft for review. Not an approved standard."],
-      ["Version", "V0.4, August 2026"],
+      ["Version", "V0.5, August 2026"],
     ];
     let my = 9.68;
     meta.forEach(([k, v]) => {
@@ -431,7 +431,7 @@ function horizons() {
 
     y = head(s, y + 0.1, "WHAT FOLLOWS FROM TAKING DOCTRINE AS THE PRECEDENT");
     bullets(s, L, y, W, [
-      "No mark, no badge, no patch, no symbol. The identity is carried by typography and structure.",
+      "No freestanding brand mark, badge, patch or symbol. The identity is carried by typography, structure and functional notation.",
       "The Army logo appears unaltered on every complete formal artefact. Combat Mindset never competes with it.",
       "Authority is signalled the way doctrine signals it: consistent format, visible hierarchy, explicit classification of content, and a controlled identifier on every governed content item.",
       "Every element is specifiable in a written standard, so it can be applied by people who are not designers. This is the practical test the system must pass inside a training establishment.",
@@ -784,7 +784,7 @@ function horizons() {
           s.addText("NZ ARMY COMBAT MINDSET FRAMEWORK", { x, y: y + 0.6, w, h: 0.2, fontFace: F, fontSize: 6.6, color: GREY, charSpacing: 1.2, align: "left", valign: "middle", margin: 0 });
         }],
       ["04", "WITH REFERENCE NUMBER", "Doctrine publication convention.",
-        "Borrows the authority of the doctrine series directly. Recommended as the formal variant on covers and title pages.",
+        "Draws on doctrine-publication conventions of numbering and hierarchy. Recommended as the formal variant on covers and title pages.",
         (s, x, y, w) => {
           s.addText("CM", { x, y: y + 0.16, w: 0.6, h: 0.34, fontFace: F, fontSize: 20, bold: true, color: INK, align: "left", valign: "middle", margin: 0 });
           s.addText("COMBAT MINDSET", { x: x + 0.62, y: y + 0.18, w: w - 0.62, h: 0.24, fontFace: F, fontSize: 13, bold: true, color: INK, charSpacing: 0.5, align: "left", valign: "middle", margin: 0 });
@@ -1120,14 +1120,16 @@ function horizons() {
     y += 1.26;
 
     y = head(s, y, "THE TWELVE TREATMENTS");
-    const RH = 0.46;
+    const RH = 0.44;
+    const PILOT = ["framework", "governance", "evidence", "assessment", "product", "decision"];
     TYPES.forEach(([name, key, colour, fam], i) => {
+      const pilot = PILOT.includes(key);
       const yy = y + i * (RH + 0.04);
       s.addShape("rect", { x: L, y: yy, w: W, h: RH, fill: { color: i % 2 ? "FBFBFA" : WHITE } });
       s.addShape("rect", { x: L, y: yy, w: 0.04, h: RH, fill: { color: colour } });
       s.addImage({ data: MARK_IMG[key], x: L + 0.18, y: yy + 0.11, w: 0.28, h: 0.28 });
       s.addText(name, { x: L + 0.58, y: yy, w: 1.5, h: RH, fontFace: F, fontSize: 8.2, bold: true,
-        color: INK, charSpacing: 0.6, align: "left", valign: "middle", margin: 0 });
+        color: pilot ? INK : GREY, charSpacing: 0.6, align: "left", valign: "middle", margin: 0 });
       s.addText(fam.toUpperCase(), { x: L + 2.06, y: yy, w: 1.0, h: RH, fontFace: F, fontSize: 6.4,
         color: colour, charSpacing: 1, align: "left", valign: "middle", margin: 0 });
       s.addText(["CM-FWK-001", "CM-DOC-001", "CM-POL-001", "CM-GOV-001", "CM-EVD-001", "CM-RES-001",
@@ -1141,8 +1143,11 @@ function horizons() {
         "Material issued for use", "Pointers to work held elsewhere",
         "A point at which commitment is required", "A discontinuity to be managed",
       ][i], { x: L + 4.14, y: yy, w: W - 4.24, h: RH, fontFace: F, fontSize: 7.8,
-        color: "3E3E3E", align: "left", valign: "middle", margin: 0 });
+        color: pilot ? "3E3E3E" : "9C9C9C", align: "left", valign: "middle", margin: 0 });
     });
+    s.addText("Greyed rows are candidate extensions: drafted to prove the grammar extends, and introduced only when the pilot shows the distinction is needed.", {
+      x: L, y: y + 12 * (RH + 0.04) + 0.08, w: W, h: 0.18, fontFace: F, fontSize: 7.4, italic: true,
+      color: GREY, align: "left", valign: "middle", margin: 0 });
   }
 
   // =======================================================================
@@ -1406,7 +1411,7 @@ function horizons() {
     y = head(s, y, "SEQUENCE");
     const STEPS = [
       ["01", "Internal agreement on position", "ACS, NZALC, HPC",
-        "Agree that doctrine and controlled information systems are the visual precedent, without claiming doctrinal status for the framework itself. Everything else follows from this position and nothing should be built before it is settled."],
+        "Agree that doctrine and controlled information systems are the visual precedent, without claiming doctrinal status for the framework itself. Everything else follows from this position, and no production assets or enduring templates should be issued before it is settled."],
       ["02", "Review by Defence Public Affairs", "Head of Visual Identity and Design",
         "Put the position and the specification to DPA. Expect challenge on the title treatment, the notation family, and the derivation of the field from the Army chevron pattern. Obtain the vector Army logo at the same time."],
       ["03", "Specification written", "ACS with a design agency",
