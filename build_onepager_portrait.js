@@ -9,9 +9,10 @@ const { renderToStaticMarkup } = require("react-dom/server");
 const sharp = require("sharp");
 const lu = require("react-icons/lu");
 
-const RED = "C62026", BLACK = "000000", WHITE = "FFFFFF";
-const SWAMP = "002516", KAWAKAWA = "3A4B00", WAIOURU = "A89662", MOAWHANGO = "CDD2B7";
-const F = "Arial";
+// NZ Army palette, as published in the Visual Identity Guidelines p58.
+const RED = "D31145", BLACK = "000000", WHITE = "FFFFFF";   // 200 C, Process Black C
+const SWAMP = "00261B", KAWAKAWA = "444D06", WAIOURU = "B3A650", MOAWHANGO = "DFD8AD";
+const F = "Arial";          // Neue Haas Grotesk in production
 const LOGO = "/tmp/claude-0/-home-user-PUP/2d4cec0e-a52e-5368-bb54-803c6f37698d/scratchpad/logo-trimmed.png";
 
 async function svgPng(body, px = 600) {

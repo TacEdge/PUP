@@ -33,17 +33,22 @@ TITLE    = "Combat Mindset Framework Proposal"
 SUBTITLE = "Defining, developing and assuring the human-performance capability Army requires to remain effective in combat."
 FOOTER_LEFT = "Combat Mindset Framework Proposal"
 
-# Brand palette (NZDF Visual Identity Standards — NZ Army)
-ARMY_RED       = "C62026"
-DARKEST_HOUR   = "000000"
+# NZ Army palette, as published in the Visual Identity Guidelines v1.0, p58.
+ARMY_RED       = "D31145"   # Pantone 200 C
+DARKEST_HOUR   = "000000"   # Process Black C
 RUAPEHU_WHITE  = "FFFFFF"
-SWAMP_GREEN    = "002516"
-KAWAKAWA_LEAF  = "3A4B00"
-WAIOURU_HILLS  = "A89662"
-MOAWHANGO      = "CDD2B7"
+SWAMP_GREEN    = "00261B"   # Pantone 5605 C
+KAWAKAWA_LEAF  = "444D06"   # Pantone 5747 C
+WAIOURU_HILLS  = "B3A650"   # Pantone 5853 C
+MOAWHANGO      = "DFD8AD"   # Pantone 5855 C
 
-FONT_HEAD = "Arial"         # brand face: Haas Grotesk
-FONT_BODY = "Arial"         # brand face: Haas Grotesk
+# Typography per the guidelines p59. The brand face is Neue Haas Grotesk; the
+# published PC substitutes are Arial Black for display headings and Calibri for
+# body copy. Sub-headings stay in Calibri Bold: Arial Black at 10 to 11pt inside
+# running text is not what the guideline is reaching for.
+FONT_DISPLAY = "Arial Black"
+FONT_HEAD = "Calibri"
+FONT_BODY = "Calibri"
 FONT_MONO = "Consolas"
 
 # Known source-document filenames to convert to reference markers.
@@ -230,10 +235,10 @@ TEXT_WIDTH_CM = 16.0  # 21 - 2.5 - 2.5
 normal = doc.styles["Normal"]
 strip_style_rpr(normal)
 force_font(normal, FONT_BODY)
-normal.font.size = Pt(10.5)
+normal.font.size = Pt(11)
 force_color(normal, DARKEST_HOUR)
 nf = normal.paragraph_format
-nf.line_spacing = 1.2
+nf.line_spacing = 1.12
 nf.space_after = Pt(6)
 nf.space_before = Pt(0)
 nf.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -241,10 +246,10 @@ nf.alignment = WD_ALIGN_PARAGRAPH.LEFT
 # Section headings (Heading 1 keeps outline level -> TOC)
 h1 = doc.styles["Heading 1"]
 strip_style_rpr(h1)
-force_font(h1, FONT_HEAD)
-h1.font.bold = True
+force_font(h1, FONT_DISPLAY)
+h1.font.bold = False
 h1.font.size = Pt(14)
-force_color(h1, SWAMP_GREEN)
+force_color(h1, DARKEST_HOUR)
 h1.paragraph_format.space_before = Pt(18)
 h1.paragraph_format.space_after = Pt(8)
 h1.paragraph_format.keep_with_next = True
@@ -264,8 +269,8 @@ h2.paragraph_format.keep_with_next = True
 def add_section_heading(text):
     p = doc.add_paragraph(style="Heading 1")
     set_border(p, "left", ARMY_RED, 24, space=8)  # Army Red section tab
-    add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(14), bold=True,
-                  color=SWAMP_GREEN)
+    add_text_runs(p, text, base_font=FONT_DISPLAY, size=Pt(14), bold=False,
+                  color=DARKEST_HOUR)
     return p
 
 
@@ -280,7 +285,7 @@ def add_minor_heading(text):
     """Fourth-level heading: names a product beneath a grouping sub-heading."""
     p = doc.add_paragraph(style="Heading 3")
     add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(10), bold=True,
-                  color=SWAMP_GREEN)
+                  color=ARMY_RED)
     return p
 
 
@@ -506,9 +511,9 @@ logo_para.paragraph_format.space_after = Pt(220)
 title_p = doc.add_paragraph()
 title_p.paragraph_format.space_after = Pt(2)
 t = title_p.add_run("NZ Army Combat Mindset")
-force_font(t, FONT_HEAD)
-t.font.size = Pt(36)
-t.bold = True
+force_font(t, FONT_DISPLAY)
+t.font.size = Pt(30)
+t.bold = False
 force_color(t, DARKEST_HOUR)
 
 sub_title_p = doc.add_paragraph()
@@ -518,7 +523,7 @@ st = sub_title_p.add_run("Framework Proposal")
 force_font(st, FONT_HEAD)
 st.font.size = Pt(17)
 st.bold = True
-force_color(st, SWAMP_GREEN)
+force_color(st, DARKEST_HOUR)
 
 promise_p = doc.add_paragraph()
 promise_p.paragraph_format.space_before = Pt(8)
@@ -550,7 +555,7 @@ for i, (label, value) in enumerate(meta_rows):
     force_font(lab, FONT_HEAD)
     lab.font.size = Pt(10)
     lab.bold = True
-    force_color(lab, SWAMP_GREEN)
+    force_color(lab, DARKEST_HOUR)
     val = p.add_run(value)
     force_font(val, FONT_HEAD)
     val.font.size = Pt(10)
@@ -564,10 +569,10 @@ toc_head = doc.add_paragraph()
 toc_head.paragraph_format.space_after = Pt(12)
 set_border(toc_head, "left", ARMY_RED, 24, space=8)
 _r = toc_head.add_run("Contents")
-force_font(_r, FONT_HEAD)
+force_font(_r, FONT_DISPLAY)
 _r.font.size = Pt(14)
-_r.bold = True
-force_color(_r, SWAMP_GREEN)
+_r.bold = False
+force_color(_r, DARKEST_HOUR)
 
 toc_p = doc.add_paragraph()
 add_field(toc_p, r'TOC \o "1-1" \h \z \u',
