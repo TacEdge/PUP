@@ -103,10 +103,10 @@ const AR = 4.380;
 
   // ---- command assessment -------------------------------------------------
   y = head(7.94, "MONTH 1 COMMAND ASSESSMENT");
-  s.addShape("rect", { x: L, y, w: W, h: 1.72, fill: { color: INK } });
-  s.addShape("rect", { x: L, y, w: 0.06, h: 1.72, fill: { color: AMBER } });
-  s.addText("FY26/27 remains on track. July's $17.5k adverse variance is assessed predominantly as front-loaded expenditure supporting the August course programme, rather than an emerging budget pressure. No corrective action is required at this stage beyond monitoring the combined July and August position.", {
-    x: L + 0.38, y: y + 0.3, w: W - 0.76, h: 1.14, fontFace: F, fontSize: 11.4, color: WHITE,
+  s.addShape("rect", { x: L, y, w: W, h: 1.42, fill: { color: INK } });
+  s.addShape("rect", { x: L, y, w: 0.06, h: 1.42, fill: { color: AMBER } });
+  s.addText("FY26/27 remains on track. July's $17.5k overspend is attributed to front-loaded expenditure in support of August course delivery, including the Adventure Race, Pacific Response Group training, and ELDA Lead Systems (Alpine Tour).", {
+    x: L + 0.38, y: y + 0.3, w: W - 0.76, h: 0.9, fontFace: F, fontSize: 11.4, color: WHITE,
     align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.28 });
 
   // ---- footer -------------------------------------------------------------
