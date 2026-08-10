@@ -56,7 +56,7 @@ const AR = 4.380;
   s.addShape("rect", { x: L, y: 1.58, w: W, h: 0.018, fill: { color: INK } });
 
   // ---- headline figures ---------------------------------------------------
-  const TY = 2.0, TH = 1.24;
+  const TY = 2.12, TH = 1.4;
   const TILES = [
     ["FY BUDGET", "$811.6k", "SAP full-year plan, includes $50k Winsborough"],
     ["JULY ACTUAL", "$40.5k", "against $23.0k profile"],
@@ -68,16 +68,16 @@ const AR = 4.380;
     const x = L + i * (TW + 0.14);
     s.addShape("rect", { x, y: TY, w: TW, h: TH, fill: { color: PAPER } });
     s.addShape("rect", { x, y: TY, w: TW, h: 0.03, fill: { color: i === 3 ? AMBER : INK } });
-    s.addText(k, { x: x + 0.15, y: TY + 0.14, w: TW - 0.3, h: 0.16, fontFace: F, fontSize: 6.4,
+    s.addText(k, { x: x + 0.16, y: TY + 0.16, w: TW - 0.3, h: 0.16, fontFace: F, fontSize: 6.4,
       bold: true, color: GREY, charSpacing: 0.8, align: "left", valign: "middle", margin: 0 });
-    s.addText(v, { x: x + 0.15, y: TY + 0.38, w: TW - 0.3, h: 0.38, fontFace: F, fontSize: 20,
+    s.addText(v, { x: x + 0.16, y: TY + 0.42, w: TW - 0.32, h: 0.42, fontFace: F, fontSize: 22,
       bold: true, color: INK, align: "left", valign: "middle", margin: 0 });
-    s.addText(note, { x: x + 0.15, y: TY + 0.82, w: TW - 0.3, h: 0.36, fontFace: F,
+    s.addText(note, { x: x + 0.16, y: TY + 0.94, w: TW - 0.32, h: 0.36, fontFace: F,
       fontSize: 7, color: GREY, align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.1 });
   });
 
   // ---- position -----------------------------------------------------------
-  let y = head(3.76, "POSITION AT 31 JULY 2026");
+  let y = head(4.3, "POSITION AT 31 JULY 2026");
   const COLS = [3.0, 1.35, 1.35, 1.33];
   const ROWS = [
     ["", "July Budget", "July Actual", "Variance", true],
@@ -86,12 +86,12 @@ const AR = 4.380;
     ["TOTAL", "$23,015", "$40,535", "($17,520)", false],
   ];
   ROWS.forEach(([a, b, c, d, isHead], i) => {
-    const isTotal = i === ROWS.length - 1, rh = 0.44;
+    const isTotal = i === ROWS.length - 1, rh = 0.56;
     if (isTotal) s.addShape("rect", { x: L, y, w: W, h: rh, fill: { color: PAPER } });
     let x = L;
     [a, b, c, d].forEach((t, j) => {
       s.addText(t, { x: x + (j ? 0 : 0.1), y, w: COLS[j] - (j ? 0.1 : 0), h: rh, fontFace: F,
-        fontSize: isHead ? 7.6 : 9.8, bold: isHead || isTotal,
+        fontSize: isHead ? 7.8 : 10.6, bold: isHead || isTotal,
         color: isHead ? GREY : (j === 3 ? RED : INK), charSpacing: isHead ? 0.8 : 0,
         align: j ? "right" : "left", valign: "middle", margin: 0 });
       x += COLS[j];
@@ -101,30 +101,12 @@ const AR = 4.380;
     y += rh + 0.04;
   });
 
-  // ---- under watch --------------------------------------------------------
-  y = head(6.34, "UNDER WATCH");
-  const WATCH = [
-    ["Nil-budget cost lines", "$6.1k", 0.6,
-     "Civilian overtime and sundry expenses require coding and budget-line confirmation with the Financial Adviser."],
-    ["Civilian allowances", "53% consumed", 0.48,
-     "Run rate to be confirmed before Month 2."],
-  ];
-  WATCH.forEach(([t, v, rh, d]) => {
-    s.addShape("rect", { x: L, y, w: 0.04, h: rh, fill: { color: AMBER } });
-    s.addText(t, { x: L + 0.18, y, w: W - 1.6, h: 0.22, fontFace: F, fontSize: 9.6, bold: true,
-      color: INK, align: "left", valign: "middle", margin: 0 });
-    s.addText(v, { x: R - 1.5, y, w: 1.5, h: 0.22, fontFace: F, fontSize: 9.8, bold: true,
-      color: INK, align: "right", valign: "middle", margin: 0 });
-    para(y + 0.24, d, 0.3, L + 0.18, W - 0.36, 9);
-    y += rh + 0.22;
-  });
-
   // ---- command assessment -------------------------------------------------
-  y = head(8.66, "MONTH 1 COMMAND ASSESSMENT");
-  s.addShape("rect", { x: L, y, w: W, h: 1.34, fill: { color: INK } });
-  s.addShape("rect", { x: L, y, w: 0.055, h: 1.34, fill: { color: AMBER } });
+  y = head(7.94, "MONTH 1 COMMAND ASSESSMENT");
+  s.addShape("rect", { x: L, y, w: W, h: 1.72, fill: { color: INK } });
+  s.addShape("rect", { x: L, y, w: 0.06, h: 1.72, fill: { color: AMBER } });
   s.addText("FY26/27 remains on track. July's $17.5k adverse variance is assessed predominantly as front-loaded expenditure supporting the August course programme, rather than an emerging budget pressure. No corrective action is required at this stage beyond monitoring the combined July and August position.", {
-    x: L + 0.34, y: y + 0.24, w: W - 0.68, h: 0.9, fontFace: F, fontSize: 10.4, color: WHITE,
+    x: L + 0.38, y: y + 0.3, w: W - 0.76, h: 1.14, fontFace: F, fontSize: 11.4, color: WHITE,
     align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.28 });
 
   // ---- footer -------------------------------------------------------------
