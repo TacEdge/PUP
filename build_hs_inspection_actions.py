@@ -34,8 +34,12 @@ SWAMP_GREEN   = "002516"
 WAIOURU_HILLS = "A89662"
 MOAWHANGO     = "CDD2B7"
 
-FONT_HEAD = "Arial"
-FONT_BODY = "Book Antiqua"
+FONT_HEAD    = "Aptos"
+FONT_BODY    = "Aptos"
+FONT_DISPLAY = "Aptos Display"      # title only
+FONT_SYMBOL  = "Segoe UI Symbol"    # carries the U+2610 tick box glyph
+
+TICK_BOX = "☐"                 # ☐ BALLOT BOX
 
 # ------------------------------------------------------------ XML helpers ---
 
@@ -191,44 +195,55 @@ def add_body(text):
     return p
 
 
-def add_action(num, text):
-    """A numbered, closeable action. The number is the close-out reference."""
+def add_action(text):
+    """A closeable action, led by a tick box to mark off on the walk-round."""
     p = doc.add_paragraph()
-    p.paragraph_format.left_indent = Cm(0.95)
-    p.paragraph_format.first_line_indent = Cm(-0.95)
-    p.paragraph_format.space_before = Pt(4)
-    p.paragraph_format.space_after = Pt(4)
-    p.paragraph_format.tab_stops.add_tab_stop(Cm(0.95))
-    n = p.add_run(f"{num}.\t")
-    force_font(n, FONT_HEAD)
-    n.font.size = Pt(10)
-    n.bold = True
-    force_color(n, ARMY_RED)
+    p.paragraph_format.left_indent = Cm(0.85)
+    p.paragraph_format.first_line_indent = Cm(-0.85)
+    p.paragraph_format.space_before = Pt(5)
+    p.paragraph_format.space_after = Pt(5)
+    p.paragraph_format.tab_stops.add_tab_stop(Cm(0.85))
+    box = p.add_run(TICK_BOX)
+    force_font(box, FONT_SYMBOL)
+    box.font.size = Pt(14)
+    force_color(box, SWAMP_GREEN)
+    tab = p.add_run("\t")
+    force_font(tab, FONT_BODY)
     add_text_runs(p, text)
     return p
 
 
-def add_form_line(label):
-    """Label above an open rule, left for the recipient to complete by hand.
+def add_signoff_strip(labels):
+    """Sign-off fields side by side: label above an open rule, one per column.
 
-    The label and the rule are separate paragraphs: Word merges adjacent
-    paragraphs carrying identical borders into one block, which would collapse
-    consecutive form lines into a single rule.
+    Laid out across a single strip rather than stacked so the close-out block
+    stays on the same page as the actions it closes.
     """
-    lab = doc.add_paragraph()
-    lab.paragraph_format.space_before = Pt(14)
-    lab.paragraph_format.space_after = Pt(0)
-    run = lab.add_run(label)
-    force_font(run, FONT_HEAD)
-    run.font.size = Pt(9)
-    run.bold = True
-    force_color(run, SWAMP_GREEN)
+    table = doc.add_table(rows=2, cols=len(labels))
+    table.autofit = False
+    col_w = Cm(TEXT_WIDTH_CM / len(labels))
 
-    rule = doc.add_paragraph()
-    rule.paragraph_format.space_before = Pt(16)   # writing room above the rule
-    rule.paragraph_format.space_after = Pt(0)
-    set_border(rule, "bottom", WAIOURU_HILLS, 6, space=2)
-    return lab
+    for i, label in enumerate(labels):
+        lab_cell = table.cell(0, i)
+        lab_cell.width = col_w
+        p = lab_cell.paragraphs[0]
+        p.paragraph_format.space_before = Pt(12)
+        p.paragraph_format.space_after = Pt(0)
+        run = p.add_run(label)
+        force_font(run, FONT_HEAD)
+        run.font.size = Pt(9)
+        run.bold = True
+        force_color(run, SWAMP_GREEN)
+
+        rule_cell = table.cell(1, i)
+        rule_cell.width = col_w
+        rp = rule_cell.paragraphs[0]
+        rp.paragraph_format.space_before = Pt(18)   # writing room above the rule
+        rp.paragraph_format.space_after = Pt(0)
+        rp.paragraph_format.right_indent = Cm(0.6)  # gap between adjacent rules
+        set_border(rp, "bottom", WAIOURU_HILLS, 6, space=2)
+
+    return table
 
 
 # ------------------------------------------------------- headers & footers --
@@ -294,7 +309,7 @@ logo_para.paragraph_format.space_after = Pt(14)
 title_p = doc.add_paragraph()
 title_p.paragraph_format.space_after = Pt(1)
 t = title_p.add_run(TITLE)
-force_font(t, FONT_HEAD)
+force_font(t, FONT_DISPLAY)
 t.font.size = Pt(20)
 t.bold = True
 force_color(t, DARKEST_HOUR)
@@ -334,10 +349,25 @@ force_color(val, DARKEST_HOUR)
 with open(SOURCE_FILE, encoding="utf-8") as fh:
     lines = fh.read().splitlines()
 
-action_no = 0  # runs continuously across sections so each action is citable
+action_no = 0     # counted only to report the total on build
+form_labels = []  # consecutive '_' lines become one side-by-side sign-off strip
+
+
+def flush_form_labels():
+    global form_labels
+    if form_labels:
+        add_signoff_strip(form_labels)
+        form_labels = []
+
 
 for line in lines:
     line = line.strip()
+
+    if line.startswith("_ "):
+        form_labels.append(line[2:].strip())
+        continue
+
+    flush_form_labels()
 
     if not line or line.startswith("# "):
         continue          # document title already carried by the letterhead
@@ -348,14 +378,12 @@ for line in lines:
 
     if line.startswith("* "):
         action_no += 1
-        add_action(action_no, line[2:].strip())
-        continue
-
-    if line.startswith("_ "):
-        add_form_line(line[2:].strip())
+        add_action(line[2:].strip())
         continue
 
     add_body(line)
+
+flush_form_labels()
 
 # ----------------------------------------------------------------- finish ---
 
@@ -385,6 +413,11 @@ def _is_spacer(p):
 while doc.paragraphs and _is_spacer(doc.paragraphs[-1]):
     _el = doc.paragraphs[-1]._element
     _el.getparent().remove(_el)
+
+# Word expects a paragraph after a trailing table; add one once stripping is done.
+if doc.element.body.findall(qn("w:tbl")) and \
+        doc.element.body[-2].tag == qn("w:tbl"):
+    doc.add_paragraph().paragraph_format.space_after = Pt(0)
 
 mark_update_fields(doc)
 
