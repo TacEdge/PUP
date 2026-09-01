@@ -22,7 +22,7 @@ OUTPUT_DOCX        = "./output/individual-training-key-takeaways.docx"
 PROTECTIVE_MARKING = "UNCLASSIFIED"
 DATE               = "September 2026"
 ORIGINATOR         = "Individual Training Review"
-VERSION            = "Working draft v0.3"
+VERSION            = "Working draft v0.4"
 
 TITLE         = "Individual Training – Key Takeaways"
 SUBTITLE_LINE = "Adult Learning Principles in Defence Training — Sessions 1–3"
@@ -161,8 +161,8 @@ doc = Document()
 section = doc.sections[0]
 section.page_width = Mm(210)
 section.page_height = Mm(297)
-section.top_margin = Cm(1.5)
-section.bottom_margin = Cm(1.2)
+section.top_margin = Cm(1.8)
+section.bottom_margin = Cm(1.6)
 section.left_margin = Cm(2.2)
 section.right_margin = Cm(2.2)
 section.header_distance = Cm(0.9)
@@ -171,14 +171,18 @@ section.footer_distance = Cm(0.9)
 TEXT_WIDTH_CM = 16.6
 COLUMN_WIDTH_CM = 8.3
 
+# Six takeaways sit comfortably in one column at a readable size. Set to 2
+# when the list grows enough to spill a second page.
+TAKEAWAY_COLUMNS = 1
+
 normal = doc.styles["Normal"]
 strip_style_rpr(normal)
 force_font(normal, FONT_BODY)
-normal.font.size = Pt(8.8)
+normal.font.size = Pt(9.6)
 force_color(normal, DARKEST_HOUR)
 nf = normal.paragraph_format
-nf.line_spacing = 1.0
-nf.space_after = Pt(3)
+nf.line_spacing = 1.06
+nf.space_after = Pt(4)
 nf.space_before = Pt(0)
 nf.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
@@ -188,8 +192,8 @@ force_font(h1, FONT_DISPLAY)
 h1.font.bold = False
 h1.font.size = Pt(12)
 force_color(h1, DARKEST_HOUR)
-h1.paragraph_format.space_before = Pt(6)
-h1.paragraph_format.space_after = Pt(3)
+h1.paragraph_format.space_before = Pt(10)
+h1.paragraph_format.space_after = Pt(5)
 h1.paragraph_format.keep_with_next = True
 
 
@@ -208,7 +212,11 @@ def add_body(text, size=None):
     return p
 
 
-def add_callout(text, bold=True, italic=False):
+def add_callout(lines, bold=True, italic=False):
+    """Shaded callout. Several lines share one block so the proposition and
+    its closing distinction read as a single statement."""
+    if isinstance(lines, str):
+        lines = [lines]
     p = doc.add_paragraph()
     set_shading(p, MOAWHANGO)
     set_border(p, "left", ARMY_RED, 28, space=8)
@@ -216,8 +224,14 @@ def add_callout(text, bold=True, italic=False):
     p.paragraph_format.right_indent = Cm(0.5)
     p.paragraph_format.space_before = Pt(3)
     p.paragraph_format.space_after = Pt(4)
-    add_text_runs(p, text, size=Pt(9.4), bold=bold, italic=italic,
-                  color=SWAMP_GREEN)
+    for i, line in enumerate(lines):
+        if i:
+            br = p.add_run()
+            force_font(br, FONT_BODY)
+            br.font.size = Pt(9.4)
+            br.add_break()
+        add_text_runs(p, line, size=Pt(9.4), bold=bold, italic=italic,
+                      color=SWAMP_GREEN)
     return p
 
 
@@ -227,13 +241,13 @@ def add_band(text):
     p = doc.add_paragraph()
     set_shading(p, SWAMP_GREEN)
     p.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p.paragraph_format.space_before = Pt(3)
-    p.paragraph_format.space_after = Pt(4)
+    p.paragraph_format.space_before = Pt(4)
+    p.paragraph_format.space_after = Pt(5)
     p.paragraph_format.left_indent = Cm(0.1)
     p.paragraph_format.right_indent = Cm(0.1)
     # Sized to keep the full continuum on one line: a single orphaned
     # word centred beneath the band reads as a mistake.
-    add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(8.6), bold=True,
+    add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(9.0), bold=True,
                   color=RUAPEHU_WHITE)
     return p
 
@@ -243,11 +257,11 @@ def add_takeaway(num, text, container=None):
     p.paragraph_format.left_indent = Cm(0.75)
     p.paragraph_format.first_line_indent = Cm(-0.75)
     p.paragraph_format.space_before = Pt(0)
-    p.paragraph_format.space_after = Pt(3)
+    p.paragraph_format.space_after = Pt(5)
     p.paragraph_format.tab_stops.add_tab_stop(Cm(0.75))
     n = p.add_run(f"{num}\t")
     force_font(n, FONT_DISPLAY)
-    n.font.size = Pt(8.8)
+    n.font.size = Pt(9.6)
     force_color(n, ARMY_RED)
     add_text_runs(p, text)
     return p
@@ -264,14 +278,18 @@ def _clear_borders(table):
     tblPr.append(borders)
 
 
-def add_takeaway_columns(items):
-    """Set the takeaways in two columns.
+def add_takeaway_block(items):
+    """Set the takeaways, in one or two columns per TAKEAWAY_COLUMNS.
 
-    Nine takeaways run to roughly a page and a half in a single column, which
-    spills a near-empty second page. Two columns keeps the whole synthesis on
-    one page without cutting substance; the bands and proposition stay full
-    width so the argument still reads straight down the middle.
+    A long list spills a near-empty second page in a single column; two
+    columns hold it on one page without cutting substance, with the bands and
+    proposition left full width so the argument still reads down the middle.
     """
+    if TAKEAWAY_COLUMNS == 1:
+        for num, text in items:
+            add_takeaway(num, text)
+        return None
+
     # Split where the two columns come out closest to equal in depth. Length
     # is a good enough proxy for depth at a fixed measure.
     lengths = [len(t) for _, t in items]
@@ -363,16 +381,16 @@ _logo = _logo.crop(_logo.getchannel("A").getbbox())
 _buf = io.BytesIO()
 _logo.save(_buf, "PNG")
 _buf.seek(0)
-doc.add_picture(_buf, width=Mm(32))
+doc.add_picture(_buf, width=Mm(36))
 logo_para = doc.paragraphs[-1]
 logo_para.paragraph_format.space_before = Pt(0)
-logo_para.paragraph_format.space_after = Pt(6)
+logo_para.paragraph_format.space_after = Pt(9)
 
 title_p = doc.add_paragraph()
 title_p.paragraph_format.space_after = Pt(1)
 t = title_p.add_run(TITLE)
 force_font(t, FONT_DISPLAY)
-t.font.size = Pt(15)
+t.font.size = Pt(16.5)
 t.bold = False
 force_color(t, DARKEST_HOUR)
 
@@ -433,8 +451,11 @@ while i < len(lines):
         continue
 
     if line.startswith("> "):
-        add_callout(line[2:].strip())
-        i += 1
+        block = []
+        while i < len(lines) and lines[i].startswith("> "):
+            block.append(lines[i][2:].strip())
+            i += 1
+        add_callout(block)
         continue
 
     m = re.match(r"^(\d+)\. (.*)$", line)
@@ -449,7 +470,7 @@ while i < len(lines):
                 break
             run.append((m2.group(1), m2.group(2).strip()))
             i += 1
-        add_takeaway_columns(run)
+        add_takeaway_block(run)
         continue
 
     # The Commander's question itself gets callout treatment.
