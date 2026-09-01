@@ -22,10 +22,10 @@ OUTPUT_DOCX        = "./output/individual-training-key-takeaways.docx"
 PROTECTIVE_MARKING = "UNCLASSIFIED"
 DATE               = "September 2026"
 ORIGINATOR         = "Individual Training Review"
-VERSION            = "Working draft v0.7"
+VERSION            = "Working draft v0.8"
 
 TITLE         = "Individual Training – Key Takeaways"
-SUBTITLE_LINE = "Adult Learning Principles in Defence Training, Sessions 1–4"
+SUBTITLE_LINE = "Adult Learning Principles in Defence Training, Sessions 1–5"
 FOOTER_LEFT   = "Individual Training – Key Takeaways"
 FOOTER_REF    = "Working synthesis"
 

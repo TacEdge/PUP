@@ -34,7 +34,7 @@ POSTER_TITLE    = "Individual Training"
 POSTER_STRAP    = "The Army Approach: an emerging synthesis"
 ORIGINATOR      = "Individual Training Review"
 DATE            = "September 2026"
-VERSION         = "Working draft v0.7"
+VERSION         = "Working draft v0.8"
 
 # NZ Army palette, Visual Identity Guidelines v1.0 p58.
 PALETTE = {
