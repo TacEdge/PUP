@@ -255,10 +255,13 @@ TEMPLATE = """<!doctype html>
           color: var(--muted); }}
 
   /* masthead */
-  .masthead {{ display: flex; align-items: flex-end;
+  /* the mark sits with the hero heading, not with the strapline below it */
+  .masthead {{ display: flex; align-items: flex-start;
                justify-content: space-between; gap: 12mm; padding-bottom: 4mm;
                border-bottom: 1.2mm solid var(--red); }}
-  .masthead img {{ height: 15mm; }}
+  /* the 0.95 line-height on the heading sets its glyphs ~1mm below the top
+     of their line box, so the mark is nudged to match the cap line */
+  .masthead img {{ height: 15mm; margin-top: 1mm; }}
   .titles h1 {{ font-size: 42pt; line-height: 0.95; color: var(--black); }}
   .titles p {{ font-size: 14pt; font-weight: 700; color: var(--swamp);
                margin-top: 2.4mm; }}
