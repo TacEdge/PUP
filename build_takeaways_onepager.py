@@ -20,14 +20,14 @@ SOURCE_FILE        = "./individual-training-key-takeaways.md"
 LOGO_FILE          = "./assets/nz-army-logo.png"
 OUTPUT_DOCX        = "./output/individual-training-key-takeaways.docx"
 PROTECTIVE_MARKING = "UNCLASSIFIED"
-DATE               = "1 September 2026"
+DATE               = "September 2026"
 ORIGINATOR         = "Individual Training Review"
-VERSION            = "Working draft v0.1"
+VERSION            = "Working draft v0.2"
 
 TITLE         = "Individual Training – Key Takeaways"
-SUBTITLE_LINE = "Adult Learning Principles in Defence Training — Day 1"
+SUBTITLE_LINE = "Adult Learning Principles in Defence Training — Days 1–2"
 FOOTER_LEFT   = "Individual Training – Key Takeaways"
-FOOTER_REF    = "Day 1 of 2"
+FOOTER_REF    = "Working synthesis"
 
 # NZ Army palette, as published in the Visual Identity Guidelines v1.0, p58.
 ARMY_RED      = "D31145"   # Pantone 200 C
@@ -161,8 +161,8 @@ doc = Document()
 section = doc.sections[0]
 section.page_width = Mm(210)
 section.page_height = Mm(297)
-section.top_margin = Cm(1.9)
-section.bottom_margin = Cm(1.9)
+section.top_margin = Cm(1.7)
+section.bottom_margin = Cm(1.5)
 section.left_margin = Cm(2.2)
 section.right_margin = Cm(2.2)
 section.header_distance = Cm(0.9)
@@ -173,11 +173,11 @@ TEXT_WIDTH_CM = 16.6
 normal = doc.styles["Normal"]
 strip_style_rpr(normal)
 force_font(normal, FONT_BODY)
-normal.font.size = Pt(10)
+normal.font.size = Pt(9.3)
 force_color(normal, DARKEST_HOUR)
 nf = normal.paragraph_format
-nf.line_spacing = 1.08
-nf.space_after = Pt(4)
+nf.line_spacing = 1.05
+nf.space_after = Pt(3)
 nf.space_before = Pt(0)
 nf.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
@@ -187,8 +187,8 @@ force_font(h1, FONT_DISPLAY)
 h1.font.bold = False
 h1.font.size = Pt(12)
 force_color(h1, DARKEST_HOUR)
-h1.paragraph_format.space_before = Pt(10)
-h1.paragraph_format.space_after = Pt(5)
+h1.paragraph_format.space_before = Pt(8)
+h1.paragraph_format.space_after = Pt(4)
 h1.paragraph_format.keep_with_next = True
 
 
@@ -215,8 +215,25 @@ def add_callout(text, bold=True, italic=False):
     p.paragraph_format.right_indent = Cm(0.5)
     p.paragraph_format.space_before = Pt(4)
     p.paragraph_format.space_after = Pt(6)
-    add_text_runs(p, text, size=Pt(10.5), bold=bold, italic=italic,
+    add_text_runs(p, text, size=Pt(9.8), bold=bold, italic=italic,
                   color=SWAMP_GREEN)
+    return p
+
+
+def add_band(text):
+    """Display band: the continuum and its calibration, set apart from the
+    running text so they read as the spine of the argument."""
+    p = doc.add_paragraph()
+    set_shading(p, SWAMP_GREEN)
+    p.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Pt(5)
+    p.paragraph_format.space_after = Pt(6)
+    p.paragraph_format.left_indent = Cm(0.1)
+    p.paragraph_format.right_indent = Cm(0.1)
+    # Sized to keep the full continuum on one line: a single orphaned
+    # word centred beneath the band reads as a mistake.
+    add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(8.6), bold=True,
+                  color=RUAPEHU_WHITE)
     return p
 
 
@@ -225,11 +242,11 @@ def add_takeaway(num, text):
     p.paragraph_format.left_indent = Cm(0.75)
     p.paragraph_format.first_line_indent = Cm(-0.75)
     p.paragraph_format.space_before = Pt(0)
-    p.paragraph_format.space_after = Pt(5)
+    p.paragraph_format.space_after = Pt(4)
     p.paragraph_format.tab_stops.add_tab_stop(Cm(0.75))
     n = p.add_run(f"{num}\t")
     force_font(n, FONT_DISPLAY)
-    n.font.size = Pt(10)
+    n.font.size = Pt(9.3)
     force_color(n, ARMY_RED)
     add_text_runs(p, text)
     return p
@@ -290,16 +307,16 @@ _logo = _logo.crop(_logo.getchannel("A").getbbox())
 _buf = io.BytesIO()
 _logo.save(_buf, "PNG")
 _buf.seek(0)
-doc.add_picture(_buf, width=Mm(38))
+doc.add_picture(_buf, width=Mm(35))
 logo_para = doc.paragraphs[-1]
 logo_para.paragraph_format.space_before = Pt(0)
-logo_para.paragraph_format.space_after = Pt(10)
+logo_para.paragraph_format.space_after = Pt(8)
 
 title_p = doc.add_paragraph()
 title_p.paragraph_format.space_after = Pt(1)
 t = title_p.add_run(TITLE)
 force_font(t, FONT_DISPLAY)
-t.font.size = Pt(17)
+t.font.size = Pt(16)
 t.bold = False
 force_color(t, DARKEST_HOUR)
 
@@ -308,7 +325,7 @@ sub_title_p.paragraph_format.space_after = Pt(4)
 set_border(sub_title_p, "bottom", ARMY_RED, 18, space=8)
 st = sub_title_p.add_run(SUBTITLE_LINE)
 force_font(st, FONT_HEAD)
-st.font.size = Pt(11.5)
+st.font.size = Pt(11)
 st.bold = True
 force_color(st, SWAMP_GREEN)
 
@@ -344,17 +361,18 @@ while i < len(lines):
         i += 1
         continue
 
-    # Title and Day-1 strapline already carried by the letterhead.
-    if line.startswith("# ") or line.strip() == f"**{SUBTITLE_LINE}**".replace(
-            "—", "—"):
-        i += 1
-        continue
-    if line.startswith("**Adult Learning Principles"):
+    # Title and strapline are already carried by the letterhead.
+    if line.startswith("# ") or line.startswith("**Adult Learning Principles"):
         i += 1
         continue
 
     if line.startswith("## "):
         add_section_heading(line[3:].strip())
+        i += 1
+        continue
+
+    if line.startswith(">> "):
+        add_band(line[3:].strip())
         i += 1
         continue
 
