@@ -25,7 +25,7 @@ ORIGINATOR         = "Individual Training Review"
 VERSION            = "Working draft v0.5"
 
 TITLE         = "Individual Training – Key Takeaways"
-SUBTITLE_LINE = "Adult Learning Principles in Defence Training — Sessions 1–4"
+SUBTITLE_LINE = "Adult Learning Principles in Defence Training, Sessions 1–4"
 FOOTER_LEFT   = "Individual Training – Key Takeaways"
 FOOTER_REF    = "Working synthesis"
 
