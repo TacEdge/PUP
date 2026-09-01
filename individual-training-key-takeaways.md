@@ -1,6 +1,6 @@
 # Individual Training – Key Takeaways
 
-**Adult Learning Principles in Defence Training — Sessions 1–3**
+**Adult Learning Principles in Defence Training — Sessions 1–4**
 
 ## Commander's Question
 
@@ -21,6 +21,8 @@ A working synthesis of the evidence so far, to be tested and refined as the acti
 5. **Individual training extends beyond the course.** Formal instruction, digital and distributed learning, simulation, coaching, workplace experience, feedback and reinforcement are complementary parts of one continuous system. Learning should be accessible before, during and after formal training.
 
 6. **The method is selected to achieve the outcome.** Instructors, technology, learning frameworks, simulation, data and AI are enablers — not the Army approach itself. Their value is in improving practice, feedback, adaptation and evidence of performance while maintaining the required standard.
+
+7. **Competent use of these tools is itself a training requirement.** Investment in technology does not by itself produce capability; the gain comes from people who are practised in using it. Army should develop this like any other skill, through deliberate practice, time to experiment and tolerance for early failure.
 
 ## Emerging Model
 
@@ -43,4 +45,4 @@ Individual training continues across a career through a recurring cycle:
 > Army develops individuals progressively and continuously toward operational competence, combining direction, practice, experience, coaching and learner agency according to risk, complexity, learner competence and the required operational outcome.
 > The standard is common; the journey to it need not be identical.
 
-An emerging proposition based on the evidence from the first three sessions, to be tested against those still to come.
+An emerging proposition based on the evidence from the first four sessions, to be tested against those still to come.
