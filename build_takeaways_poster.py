@@ -237,6 +237,7 @@ TEMPLATE = """<!doctype html>
     --red: {red}; --black: {black}; --swamp: {swamp}; --kawa: {kawa};
     --hills: {hills}; --moa: {moa}; --white: {white};
     --ink: #14100C; --muted: #5A5449; --card: #FBF9F1;
+    --r: 1.6mm;                 /* corner softening, applied to every panel */
   }}
   @page {{ size: A3 portrait; margin: 0; }}
   * {{ box-sizing: border-box; margin: 0; padding: 0;
@@ -262,13 +263,14 @@ TEMPLATE = """<!doctype html>
   /* question */
   .question {{ background: var(--swamp); color: var(--white);
                padding: 6mm 7.5mm; display: flex; align-items: baseline;
-               gap: 6mm; margin-top: 5mm; }}
+               gap: 6mm; margin-top: 5mm; border-radius: var(--r); }}
   .question .lab {{ color: var(--hills); white-space: nowrap; }}
   .question .q {{ font-size: 21pt; }}
 
   /* the answer, given prominence: a poster is read answer first */
   .answer {{ margin-top: 5mm; border-left: 3.4mm solid var(--red);
-             background: var(--moa); padding: 7mm 8mm 7.5mm; }}
+             background: var(--moa); padding: 7mm 8mm 7.5mm;
+             border-radius: var(--r); }}
   .answer .lab {{ color: var(--kawa); margin-bottom: 3.4mm; }}
   .answer p {{ font-size: 17.5pt; line-height: 1.29; color: var(--swamp);
                font-weight: 700; }}
@@ -319,7 +321,8 @@ TEMPLATE = """<!doctype html>
 
   /* decision rule: full width so the expression sits on one line */
   .rule-box {{ margin-top: 6mm; background: var(--swamp); color: var(--white);
-               padding: 5mm 6mm 5.6mm; text-align: center; }}
+               padding: 5mm 6mm 5.6mm; text-align: center;
+               border-radius: var(--r); }}
   .rule-box .lab {{ color: var(--hills); }}
   .rule-box .expr {{ font-size: 15.6pt; margin-top: 3mm; line-height: 1.2; }}
   .rule-box .expr span {{ color: var(--hills); padding: 0 2.5mm; }}
@@ -329,7 +332,7 @@ TEMPLATE = """<!doctype html>
   .cycle {{ margin-top: 3mm; display: flex; align-items: stretch; }}
   .step {{ flex: 1; text-align: center; font-size: 12pt; font-weight: 700;
            color: var(--swamp); border: 0.5mm solid var(--hills);
-           background: var(--card); padding: 5mm 1mm;
+           background: var(--card); padding: 5mm 1mm; border-radius: var(--r);
            display: flex; align-items: center; justify-content: center; }}
   .arrow {{ width: 5mm; flex: none; display: flex; align-items: center;
             justify-content: center; color: var(--hills); font-size: 12pt; }}
@@ -342,7 +345,7 @@ TEMPLATE = """<!doctype html>
   .grid {{ display: grid; grid-template-columns: repeat(3, 1fr);
            gap: 4.5mm 5mm; }}
   .card {{ border: 0.25mm solid #EAE4D4; border-top: 0.8mm solid var(--red);
-           border-radius: 1.6mm; padding: 2.4mm 3mm 2.8mm; }}
+           border-radius: var(--r); padding: 2.4mm 3mm 2.8mm; }}
   .card .n {{ font-family: "Archivo Black", "Arial Black", sans-serif;
               font-size: 13pt; color: var(--red); line-height: 1; }}
   .card h3 {{ font-size: 10.6pt; color: var(--swamp); margin: 1.6mm 0;
