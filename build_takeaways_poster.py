@@ -34,7 +34,7 @@ POSTER_TITLE    = "Individual Training"
 POSTER_STRAP    = "The Army Approach: an emerging synthesis"
 ORIGINATOR      = "Individual Training Review"
 DATE            = "September 2026"
-VERSION         = "Working draft v0.6"
+VERSION         = "Working draft v0.7"
 
 # NZ Army palette, Visual Identity Guidelines v1.0 p58.
 PALETTE = {
@@ -126,6 +126,52 @@ def cycle(band):
     return "\n".join(out)
 
 
+# Chain geometry, in mm across the 267mm text measure: 7 steps separated by
+# 5mm arrows. Used to land the return path under the right boxes.
+CYCLE_W, ARROW_W = 267.0, 5.0
+
+
+def loop(band):
+    """Return path from the end of the cycle back into 'Learn'.
+
+    A straight rule under the chain reads as an end-to-end process; the poster
+    has to show feedback re-entering the cycle, which is the whole point of
+    calling it one.
+    """
+    steps = [s.strip() for s in band.split("→")]
+    step_w = (CYCLE_W - ARROW_W * (len(steps) - 1)) / len(steps)
+
+    def centre(i):
+        return i * (step_w + ARROW_W) + step_w / 2
+
+    try:
+        target = centre(steps.index("Learn"))
+    except ValueError:
+        target = centre(1)
+    start = centre(len(steps) - 1)
+    caption = "Feedback and reinforcement re-enter the cycle"
+    mid = (start + target) / 2
+    box_w = len(caption) * 2.06 + 6
+
+    return f'''<svg viewBox="0 0 {CYCLE_W:.0f} 17" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="6" refY="5"
+                markerWidth="4" markerHeight="4" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--red)"/>
+        </marker>
+      </defs>
+      <path d="M {start:.1f} 0 V 8 Q {start:.1f} 12 {start - 5:.1f} 12
+               H {target + 5:.1f} Q {target:.1f} 12 {target:.1f} 8 V 1"
+            fill="none" stroke="var(--red)" stroke-width="0.7"
+            marker-end="url(#ah)"/>
+      <rect x="{mid - box_w / 2:.1f}" y="9.2" width="{box_w:.1f}" height="5.6"
+            fill="var(--white)"/>
+      <text x="{mid:.1f}" y="13.1" text-anchor="middle" fill="var(--muted)"
+            font-family="Carlito, Calibri, sans-serif" font-size="3.1"
+            letter-spacing="0.25">{caption.upper()}</text>
+    </svg>'''
+
+
 def cards(takeaways):
     out = []
     for num, head, body in takeaways:
@@ -156,6 +202,7 @@ def main():
         chevrons=chevrons(doc["bands"][0]),
         rule=decision_rule(doc["bands"][1]),
         cycle=cycle(doc["bands"][2]),
+        loop=loop(doc["bands"][2]),
         cards=cards(doc["takeaways"]),
         marking=PROTECTIVE_MARKING,
         stamp=f"{esc(ORIGINATOR)} &nbsp;&middot;&nbsp; {esc(VERSION)}"
@@ -233,11 +280,16 @@ TEMPLATE = """<!doctype html>
                  margin: 9mm 0 5mm; }}
   .band-title h2 {{ font-size: 20pt; color: var(--black); white-space: nowrap; }}
   .band-title .line {{ flex: 1; height: 0.7mm; background: var(--black); }}
+  /* the evidence band is deliberately quieter than the approach above it */
+  .band-title.sub {{ margin: 7mm 0 1.4mm; }}
+  .band-title.sub h2 {{ font-size: 14pt; color: var(--swamp); }}
+  .band-title.sub .line {{ height: 0.4mm; background: var(--hills); }}
+  .sub-cap {{ font-size: 9.6pt; color: var(--muted); margin-bottom: 3.4mm; }}
 
   /* progression */
   .chevrons {{ display: flex; gap: 1.4mm; }}
-  .chev {{ flex: 1; padding: 5mm 4mm 5mm 9mm; font-size: 12.2pt;
-           font-weight: 700; min-height: 19mm; display: flex;
+  .chev {{ flex: 1; padding: 5mm 4mm 5mm 9mm; font-size: 13pt;
+           font-weight: 700; min-height: 21mm; display: flex;
            align-items: center; line-height: 1.18;
            clip-path: polygon(0 0, calc(100% - 5.5mm) 0, 100% 50%,
                               calc(100% - 5.5mm) 100%, 0 100%, 5.5mm 50%); }}
@@ -257,7 +309,7 @@ TEMPLATE = """<!doctype html>
   .wedge-row {{ display: flex; align-items: center; gap: 5mm; }}
   .wedge-lab {{ font-size: 10.8pt; width: 80mm; line-height: 1.24; }}
   .wedge-lab b {{ color: var(--swamp); }}
-  .wedge {{ flex: 1; height: 10mm; }}
+  .wedge {{ flex: 1; height: 11.5mm; }}
   .w-down {{ background: var(--swamp);
              clip-path: polygon(0 0, 100% 42%, 100% 58%, 0 100%); }}
   .w-up {{ background: var(--red);
@@ -269,32 +321,32 @@ TEMPLATE = """<!doctype html>
   .rule-box {{ margin-top: 6mm; background: var(--swamp); color: var(--white);
                padding: 5mm 6mm 5.6mm; text-align: center; }}
   .rule-box .lab {{ color: var(--hills); }}
-  .rule-box .expr {{ font-size: 16pt; margin-top: 3mm; line-height: 1.2; }}
+  .rule-box .expr {{ font-size: 15.6pt; margin-top: 3mm; line-height: 1.2; }}
   .rule-box .expr span {{ color: var(--hills); padding: 0 2.5mm; }}
 
   /* career cycle */
   .cycle-lab {{ margin-top: 7mm; font-size: 10.8pt; color: var(--muted); }}
   .cycle {{ margin-top: 3mm; display: flex; align-items: stretch; }}
-  .step {{ flex: 1; text-align: center; font-size: 11.4pt; font-weight: 700;
+  .step {{ flex: 1; text-align: center; font-size: 12pt; font-weight: 700;
            color: var(--swamp); border: 0.5mm solid var(--hills);
-           background: var(--card); padding: 4.2mm 1mm;
+           background: var(--card); padding: 5mm 1mm;
            display: flex; align-items: center; justify-content: center; }}
   .arrow {{ width: 5mm; flex: none; display: flex; align-items: center;
             justify-content: center; color: var(--hills); font-size: 12pt; }}
-  .loopback {{ display: flex; align-items: center; gap: 4mm; margin-top: 2.4mm; }}
-  .loopback .track {{ flex: 1; height: 0.5mm; background: var(--hills); }}
-  .loopback .txt {{ font-size: 9.2pt; letter-spacing: 0.12em;
-                    text-transform: uppercase; color: var(--muted); }}
+  /* The return path is drawn rather than implied: feedback and reinforcement
+     re-enter the cycle at Learn, which a straight rule cannot say. */
+  .loopback {{ margin-top: 0; line-height: 0; }}
+  .loopback svg {{ width: 100%; height: 17mm; display: block; }}
 
   /* supporting takeaways */
-  .grid {{ margin-top: 5mm; display: grid; grid-template-columns: repeat(3, 1fr);
-           gap: 5mm; }}
-  .card {{ border-top: 1.2mm solid var(--red); padding-top: 3.4mm; }}
+  .grid {{ display: grid; grid-template-columns: repeat(3, 1fr);
+           gap: 4.5mm 5mm; }}
+  .card {{ border-top: 0.7mm solid var(--red); padding-top: 2.6mm; }}
   .card .n {{ font-family: "Archivo Black", "Arial Black", sans-serif;
-              font-size: 17pt; color: var(--red); line-height: 1; }}
-  .card h3 {{ font-size: 12.2pt; color: var(--swamp); margin: 2mm 0;
+              font-size: 13pt; color: var(--red); line-height: 1; }}
+  .card h3 {{ font-size: 10.6pt; color: var(--swamp); margin: 1.6mm 0;
               line-height: 1.22; }}
-  .card p {{ font-size: 10.8pt; line-height: 1.3; }}
+  .card p {{ font-size: 9.6pt; line-height: 1.3; color: var(--muted); }}
 
   /* footer */
   .foot {{ margin-top: auto; padding-top: 6mm; display: flex;
@@ -357,13 +409,11 @@ TEMPLATE = """<!doctype html>
   <div class="cycle">
 {cycle}
   </div>
-  <div class="loopback">
-    <div class="txt">Repeats</div><div class="track"></div>
-    <div class="txt">Across a career</div>
-  </div>
+  <div class="loopback">{loop}</div>
 
-  <div class="band-title"><h2 class="display">Emerging Takeaways</h2>
+  <div class="band-title sub"><h2 class="display">Emerging Takeaways</h2>
     <div class="line"></div></div>
+  <div class="sub-cap">The evidence underpinning the approach above.</div>
 
   <div class="grid">
 {cards}

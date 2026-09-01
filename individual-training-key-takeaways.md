@@ -12,7 +12,7 @@ A working synthesis of the evidence so far, to be tested and refined as the acti
 
 1. **Individual training exists to produce operational competence.** Course completion is a means, not the end. Success is whether an individual can perform to the required standard, in role and under operational conditions.
 
-2. **The standard is common; the learning journey need not be identical.** Individuals arrive with different experience, competence and learning needs. Army should provide appropriate routes to the same required standard while maintaining operational assurance.
+2. **The standard is common; the learning journey need not be identical.** Individuals arrive with different experience, competence and learning needs. Army adapts the pathway without diluting the standard, and retains operational assurance in doing so.
 
 3. **Competence develops progressively through practice, experience and feedback.** Training should move deliberately from foundation knowledge and guided practice toward independent application, judgement and performance under pressure.
 
