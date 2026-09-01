@@ -22,10 +22,10 @@ OUTPUT_DOCX        = "./output/individual-training-key-takeaways.docx"
 PROTECTIVE_MARKING = "UNCLASSIFIED"
 DATE               = "September 2026"
 ORIGINATOR         = "Individual Training Review"
-VERSION            = "Working draft v0.2"
+VERSION            = "Working draft v0.3"
 
 TITLE         = "Individual Training – Key Takeaways"
-SUBTITLE_LINE = "Adult Learning Principles in Defence Training — Days 1–2"
+SUBTITLE_LINE = "Adult Learning Principles in Defence Training — Sessions 1–3"
 FOOTER_LEFT   = "Individual Training – Key Takeaways"
 FOOTER_REF    = "Working synthesis"
 
@@ -161,22 +161,23 @@ doc = Document()
 section = doc.sections[0]
 section.page_width = Mm(210)
 section.page_height = Mm(297)
-section.top_margin = Cm(1.7)
-section.bottom_margin = Cm(1.5)
+section.top_margin = Cm(1.5)
+section.bottom_margin = Cm(1.2)
 section.left_margin = Cm(2.2)
 section.right_margin = Cm(2.2)
 section.header_distance = Cm(0.9)
 section.footer_distance = Cm(0.9)
 
 TEXT_WIDTH_CM = 16.6
+COLUMN_WIDTH_CM = 8.3
 
 normal = doc.styles["Normal"]
 strip_style_rpr(normal)
 force_font(normal, FONT_BODY)
-normal.font.size = Pt(9.3)
+normal.font.size = Pt(8.8)
 force_color(normal, DARKEST_HOUR)
 nf = normal.paragraph_format
-nf.line_spacing = 1.05
+nf.line_spacing = 1.0
 nf.space_after = Pt(3)
 nf.space_before = Pt(0)
 nf.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -187,8 +188,8 @@ force_font(h1, FONT_DISPLAY)
 h1.font.bold = False
 h1.font.size = Pt(12)
 force_color(h1, DARKEST_HOUR)
-h1.paragraph_format.space_before = Pt(8)
-h1.paragraph_format.space_after = Pt(4)
+h1.paragraph_format.space_before = Pt(6)
+h1.paragraph_format.space_after = Pt(3)
 h1.paragraph_format.keep_with_next = True
 
 
@@ -213,9 +214,9 @@ def add_callout(text, bold=True, italic=False):
     set_border(p, "left", ARMY_RED, 28, space=8)
     p.paragraph_format.left_indent = Cm(0.5)
     p.paragraph_format.right_indent = Cm(0.5)
-    p.paragraph_format.space_before = Pt(4)
-    p.paragraph_format.space_after = Pt(6)
-    add_text_runs(p, text, size=Pt(9.8), bold=bold, italic=italic,
+    p.paragraph_format.space_before = Pt(3)
+    p.paragraph_format.space_after = Pt(4)
+    add_text_runs(p, text, size=Pt(9.4), bold=bold, italic=italic,
                   color=SWAMP_GREEN)
     return p
 
@@ -226,8 +227,8 @@ def add_band(text):
     p = doc.add_paragraph()
     set_shading(p, SWAMP_GREEN)
     p.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p.paragraph_format.space_before = Pt(5)
-    p.paragraph_format.space_after = Pt(6)
+    p.paragraph_format.space_before = Pt(3)
+    p.paragraph_format.space_after = Pt(4)
     p.paragraph_format.left_indent = Cm(0.1)
     p.paragraph_format.right_indent = Cm(0.1)
     # Sized to keep the full continuum on one line: a single orphaned
@@ -237,19 +238,74 @@ def add_band(text):
     return p
 
 
-def add_takeaway(num, text):
-    p = doc.add_paragraph()
+def add_takeaway(num, text, container=None):
+    p = (container or doc).add_paragraph()
     p.paragraph_format.left_indent = Cm(0.75)
     p.paragraph_format.first_line_indent = Cm(-0.75)
     p.paragraph_format.space_before = Pt(0)
-    p.paragraph_format.space_after = Pt(4)
+    p.paragraph_format.space_after = Pt(3)
     p.paragraph_format.tab_stops.add_tab_stop(Cm(0.75))
     n = p.add_run(f"{num}\t")
     force_font(n, FONT_DISPLAY)
-    n.font.size = Pt(9.3)
+    n.font.size = Pt(8.8)
     force_color(n, ARMY_RED)
     add_text_runs(p, text)
     return p
+
+
+def _clear_borders(table):
+    tblPr = table._tbl.tblPr
+    borders = OxmlElement("w:tblBorders")
+    for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
+        el = OxmlElement(f"w:{edge}")
+        el.set(qn("w:val"), "none")
+        el.set(qn("w:sz"), "0")
+        borders.append(el)
+    tblPr.append(borders)
+
+
+def add_takeaway_columns(items):
+    """Set the takeaways in two columns.
+
+    Nine takeaways run to roughly a page and a half in a single column, which
+    spills a near-empty second page. Two columns keeps the whole synthesis on
+    one page without cutting substance; the bands and proposition stay full
+    width so the argument still reads straight down the middle.
+    """
+    # Split where the two columns come out closest to equal in depth. Length
+    # is a good enough proxy for depth at a fixed measure.
+    lengths = [len(t) for _, t in items]
+    total = sum(lengths)
+    best, running = 1, 0
+    for i in range(1, len(items)):
+        running += lengths[i - 1]
+        if abs(2 * running - total) < abs(2 * sum(lengths[:best]) - total):
+            best = i
+
+    table = doc.add_table(rows=1, cols=2)
+    _clear_borders(table)
+    table.autofit = False
+    for cell, group in zip(table.rows[0].cells,
+                           (items[:best], items[best:])):
+        cell.width = Cm(COLUMN_WIDTH_CM)
+        cell.vertical_alignment = None
+        for num, text in group:
+            add_takeaway(num, text, container=cell)
+        # drop the empty paragraph the cell is created with
+        first = cell.paragraphs[0]
+        if not first.text.strip():
+            first._element.getparent().remove(first._element)
+    # gutter between the columns
+    for cell in table.rows[0].cells:
+        tcPr = cell._tc.get_or_add_tcPr()
+        mar = OxmlElement("w:tcMar")
+        for side, w in (("left", 0), ("right", 170)):
+            el = OxmlElement(f"w:{side}")
+            el.set(qn("w:w"), str(w))
+            el.set(qn("w:type"), "dxa")
+            mar.append(el)
+        tcPr.append(mar)
+    return table
 
 
 # ------------------------------------------------------- headers & footers --
@@ -307,16 +363,16 @@ _logo = _logo.crop(_logo.getchannel("A").getbbox())
 _buf = io.BytesIO()
 _logo.save(_buf, "PNG")
 _buf.seek(0)
-doc.add_picture(_buf, width=Mm(35))
+doc.add_picture(_buf, width=Mm(32))
 logo_para = doc.paragraphs[-1]
 logo_para.paragraph_format.space_before = Pt(0)
-logo_para.paragraph_format.space_after = Pt(8)
+logo_para.paragraph_format.space_after = Pt(6)
 
 title_p = doc.add_paragraph()
 title_p.paragraph_format.space_after = Pt(1)
 t = title_p.add_run(TITLE)
 force_font(t, FONT_DISPLAY)
-t.font.size = Pt(16)
+t.font.size = Pt(15)
 t.bold = False
 force_color(t, DARKEST_HOUR)
 
@@ -330,8 +386,8 @@ st.bold = True
 force_color(st, SWAMP_GREEN)
 
 meta_p = doc.add_paragraph()
-meta_p.paragraph_format.space_before = Pt(5)
-meta_p.paragraph_format.space_after = Pt(6)
+meta_p.paragraph_format.space_before = Pt(4)
+meta_p.paragraph_format.space_after = Pt(4)
 set_border(meta_p, "bottom", WAIOURU_HILLS, 6, space=6)
 for i, (label, value) in enumerate([
         ("Originator", ORIGINATOR), ("Date", DATE), ("Version", VERSION)]):
@@ -383,8 +439,17 @@ while i < len(lines):
 
     m = re.match(r"^(\d+)\. (.*)$", line)
     if m:
-        add_takeaway(m.group(1), m.group(2).strip())
-        i += 1
+        run = []
+        while i < len(lines):
+            if not lines[i].strip():
+                i += 1
+                continue
+            m2 = re.match(r"^(\d+)\. (.*)$", lines[i])
+            if not m2:
+                break
+            run.append((m2.group(1), m2.group(2).strip()))
+            i += 1
+        add_takeaway_columns(run)
         continue
 
     # The Commander's question itself gets callout treatment.
