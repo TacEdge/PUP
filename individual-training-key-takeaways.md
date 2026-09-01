@@ -44,3 +44,19 @@ Individual training continues across a career through a recurring cycle:
 > The standard is common; the journey to it need not be identical.
 
 An emerging proposition based on the evidence from the first four sessions, to be tested against those still to come.
+
+## Poster Principles
+
+Condensed forms of the six takeaways for the A3 poster, where the fuller evidence above will not be read at distance. The one-pager does not print this section.
+
+1. **Operational competence** Performance to standard, not course completion.
+
+2. **Common standard, adaptive pathway** Adapt the journey without diluting the standard.
+
+3. **Progressive development** Competence grows through practice, experience and feedback.
+
+4. **Increasing learner agency** Direction reduces as competence grows.
+
+5. **Continuous development** Learning extends beyond the course and across a career.
+
+6. **Outcome-led methods** Methods and technology enable the approach; they do not define it.

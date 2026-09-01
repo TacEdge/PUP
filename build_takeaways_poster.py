@@ -53,11 +53,15 @@ def parse(path):
     lines = open(path, encoding="utf-8").read().splitlines()
     doc = {"subtitle": "", "question": "", "takeaways": [], "bands": [],
            "proposition": []}
+    items = {}          # numbered items, keyed by the section they sit in
+    section = None
     for line in lines:
         s = line.strip()
         if not s:
             continue
-        if s.startswith("**Adult Learning Principles"):
+        if s.startswith("## "):
+            section = s[3:].strip()
+        elif s.startswith("**Adult Learning Principles"):
             doc["subtitle"] = s.strip("*")
         elif s == "**What is the Army approach to individual training?**":
             doc["question"] = s.strip("*")
@@ -70,11 +74,15 @@ def parse(path):
             if m:
                 body = m.group(2)
                 head = BOLD_RE.search(body)
-                doc["takeaways"].append((
+                items.setdefault(section, []).append((
                     m.group(1),
                     head.group(1) if head else "",
                     BOLD_RE.sub("", body).strip(),
                 ))
+    # The poster carries the condensed principles; the full takeaways stay in
+    # the paper, where they will actually be read.
+    doc["takeaways"] = (items.get("Poster Principles")
+                        or items.get("Emerging Takeaways") or [])
     missing = [k for k, v in doc.items() if not v]
     if missing:
         sys.exit(f"source is missing: {', '.join(missing)}")
@@ -124,52 +132,6 @@ def cycle(band):
     return "\n".join(out)
 
 
-# Chain geometry, in mm across the 267mm text measure: 7 steps separated by
-# 5mm arrows. Used to land the return path under the right boxes.
-CYCLE_W, ARROW_W = 263.0, 5.0
-
-
-def loop(band):
-    """Return path from the end of the cycle back into 'Learn'.
-
-    A straight rule under the chain reads as an end-to-end process; the poster
-    has to show feedback re-entering the cycle, which is the whole point of
-    calling it one.
-    """
-    steps = [s.strip() for s in band.split("→")]
-    step_w = (CYCLE_W - ARROW_W * (len(steps) - 1)) / len(steps)
-
-    def centre(i):
-        return i * (step_w + ARROW_W) + step_w / 2
-
-    try:
-        target = centre(steps.index("Learn"))
-    except ValueError:
-        target = centre(1)
-    start = centre(len(steps) - 1)
-    caption = "Feedback and reinforcement re-enter the cycle"
-    mid = (start + target) / 2
-    box_w = len(caption) * 2.06 + 6
-
-    return f'''<svg viewBox="0 0 {CYCLE_W:.0f} 15" preserveAspectRatio="xMidYMid meet">
-      <defs>
-        <marker id="ah" viewBox="0 0 10 10" refX="6" refY="5"
-                markerWidth="4" markerHeight="4" orient="auto">
-          <path d="M0,0 L10,5 L0,10 z" fill="var(--hills)"/>
-        </marker>
-      </defs>
-      <path d="M {start:.1f} 0 V 8 Q {start:.1f} 12 {start - 5:.1f} 12
-               H {target + 5:.1f} Q {target:.1f} 12 {target:.1f} 8 V 1"
-            fill="none" stroke="var(--hills)" stroke-width="0.6"
-            marker-end="url(#ah)"/>
-      <rect x="{mid - box_w / 2:.1f}" y="9.2" width="{box_w:.1f}" height="5.6"
-            fill="var(--white)"/>
-      <text x="{mid:.1f}" y="13.1" text-anchor="middle" fill="var(--muted)"
-            font-family="Carlito, Calibri, sans-serif" font-size="3.1"
-            letter-spacing="0.25">{caption.upper()}</text>
-    </svg>'''
-
-
 def cards(takeaways):
     out = []
     for num, head, body in takeaways:
@@ -200,7 +162,6 @@ def main():
         chevrons=chevrons(doc["bands"][0]),
         rule=decision_rule(doc["bands"][1]),
         cycle=cycle(doc["bands"][2]),
-        loop=loop(doc["bands"][2]),
         cards=cards(doc["takeaways"]),
         marking=PROTECTIVE_MARKING,
         stamp=f"{esc(ORIGINATOR)} &nbsp;&middot;&nbsp; {esc(VERSION)}"
@@ -232,9 +193,9 @@ TEMPLATE = """<!doctype html>
      Archivo Black stands in for the Arial Black display face, Carlito for
      Calibri body copy.
 
-     Deliberately restrained: one filled panel (the proposition), Army Red
-     only for the punchline, the final stage and the numbering, and plain
-     type everywhere else. The content carries the hierarchy. */
+     Deliberately restrained: one filled panel (the answer), Army Red only
+     for the punchline, the final stage and the numbering, and plain type
+     everywhere else. Three levels: the answer, the model, the principles. */
   :root {{
     --red: {red}; --black: {black}; --swamp: {swamp}; --kawa: {kawa};
     --hills: {hills}; --moa: {moa}; --white: {white};
@@ -282,9 +243,8 @@ TEMPLATE = """<!doctype html>
                     color: var(--red); }}
 
   /* section headings: type alone, no rules */
-  h2.display {{ font-size: 18pt; color: var(--black); margin: 10mm 0 5mm; }}
-  h2.display.sub {{ font-size: 15pt; color: var(--swamp); margin-bottom: 1.6mm; }}
-  .sub-cap {{ font-size: 10.4pt; color: var(--muted); margin-bottom: 4.5mm; }}
+  h2.display {{ font-size: 19pt; color: var(--black); margin: 12mm 0 1.6mm; }}
+  .cap {{ font-size: 11pt; color: var(--muted); margin-bottom: 6mm; }}
 
   /* progression: one colour, the end stage in red */
   .chevrons {{ display: flex; gap: 1.4mm; }}
@@ -300,45 +260,39 @@ TEMPLATE = """<!doctype html>
   .chev:last-child {{ background: var(--red);
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 5.5mm 50%); }}
 
-  /* what changes across it: two thin wedges in the quiet colours */
-  .wedges {{ margin-top: 4mm; display: flex; flex-direction: column; gap: 2.5mm; }}
-  .wedge-row {{ display: flex; align-items: center; gap: 5mm; }}
-  .wedge-lab {{ font-size: 10.8pt; width: 80mm; line-height: 1.24; }}
-  .wedge-lab b {{ color: var(--swamp); }}
-  .wedge {{ flex: 1; height: 7mm; }}
-  .w-down {{ background: var(--swamp);
-             clip-path: polygon(0 0, 100% 44%, 100% 56%, 0 100%); }}
-  .w-up {{ background: var(--hills);
-           clip-path: polygon(0 44%, 100% 0, 100% 100%, 0 56%); }}
-  .wedge-end {{ font-size: 9pt; letter-spacing: 0.12em; text-transform: uppercase;
-                color: var(--muted); width: 22mm; text-align: right; }}
+  /* what changes across it: said once, in type */
+  .axis {{ margin-top: 5mm; display: flex; justify-content: center; gap: 16mm;
+           font-size: 13pt; font-weight: 700; color: var(--swamp); }}
+  .axis .dot {{ color: var(--hills); padding: 0 1.4mm; }}
+  .axis .arr {{ color: var(--red); padding-left: 1.4mm; }}
 
   /* decision rule: large type between two hairlines */
-  .rule-box {{ margin-top: 7mm; padding: 4.5mm 0 5mm; text-align: center;
+  .rule-box {{ margin-top: 11mm; padding: 7mm 0 7.5mm; text-align: center;
                border-top: 0.4mm solid var(--hair);
                border-bottom: 0.4mm solid var(--hair); }}
-  .rule-box .expr {{ font-size: 16pt; margin-top: 3mm; line-height: 1.2;
+  .rule-box .expr {{ font-size: 16.5pt; margin-top: 3.6mm; line-height: 1.2;
                      color: var(--swamp); }}
   .rule-box .expr span {{ color: var(--red); padding: 0 2.5mm; }}
 
   /* career cycle: words and arrows, no boxes */
-  .cycle-lab {{ margin-top: 7mm; font-size: 10.8pt; color: var(--muted); }}
-  .cycle {{ margin-top: 3.4mm; display: flex; align-items: center; }}
-  .step {{ flex: 1; text-align: center; font-size: 12pt; font-weight: 700;
-           color: var(--swamp); padding: 2mm 1mm; }}
+  .cycle-lab {{ margin-top: 11mm; font-size: 11pt; color: var(--muted); }}
+  .cycle {{ margin-top: 4mm; display: flex; align-items: center; }}
+  .step {{ flex: 1 1 auto; white-space: nowrap; text-align: center;
+           font-size: 12.6pt; font-weight: 700; color: var(--swamp);
+           padding: 2mm 1mm; }}
   .arrow {{ width: 5mm; flex: none; text-align: center; color: var(--hills);
             font-size: 12pt; }}
-  .loopback {{ line-height: 0; }}
-  .loopback svg {{ width: 100%; height: 15mm; display: block; }}
+  .repeat {{ width: 9mm; flex: none; text-align: right; color: var(--hills);
+             font-size: 17pt; line-height: 1; }}
 
-  /* supporting takeaways: number, heading, text */
+  /* the principles: number, short title, one line */
   .grid {{ display: grid; grid-template-columns: repeat(3, 1fr);
-           gap: 5.5mm 9mm; }}
+           gap: 10mm 10mm; }}
   .card .n {{ font-family: "Archivo Black", "Arial Black", sans-serif;
-              font-size: 15pt; color: var(--red); line-height: 1; }}
-  .card h3 {{ font-size: 11.2pt; color: var(--swamp); margin: 2mm 0 1.8mm;
-              line-height: 1.22; }}
-  .card p {{ font-size: 10pt; line-height: 1.32; color: var(--muted); }}
+              font-size: 19pt; color: var(--red); line-height: 1; }}
+  .card h3 {{ font-size: 15pt; color: var(--swamp); margin: 2.6mm 0 2mm;
+              line-height: 1.18; }}
+  .card p {{ font-size: 12.4pt; line-height: 1.3; color: var(--muted); }}
 
   /* footer */
   .foot {{ margin-top: auto; padding-top: 5mm; display: flex;
@@ -364,28 +318,20 @@ TEMPLATE = """<!doctype html>
   </section>
 
   <section class="answer">
-    <div class="lab">Emerging Proposition</div>
+    <div class="lab">The Answer &middot; Emerging Proposition</div>
     {proposition}
   </section>
 
-  <h2 class="display">The Emerging Model</h2>
+  <h2 class="display">The Model</h2>
+  <div class="cap">How Army develops the individual.</div>
 
   <div class="chevrons">
 {chevrons}
   </div>
 
-  <div class="wedges">
-    <div class="wedge-row">
-      <div class="wedge-lab"><b>Instructor direction</b> decreases</div>
-      <div class="wedge w-down"></div>
-      <div class="wedge-end">Less</div>
-    </div>
-    <div class="wedge-row">
-      <div class="wedge-lab"><b>Learner autonomy, complexity and pressure</b>
-        increase</div>
-      <div class="wedge w-up"></div>
-      <div class="wedge-end">More</div>
-    </div>
+  <div class="axis">
+    <span>Instructor direction<span class="arr">&darr;</span></span>
+    <span>Learner autonomy<span class="dot">&bull;</span>complexity<span class="dot">&bull;</span>pressure<span class="arr">&uarr;</span></span>
   </div>
 
   <div class="rule-box">
@@ -398,11 +344,11 @@ TEMPLATE = """<!doctype html>
     a recurring cycle:</div>
   <div class="cycle">
 {cycle}
+    <div class="repeat">&#8635;</div>
   </div>
-  <div class="loopback">{loop}</div>
 
-  <h2 class="display sub">Emerging Takeaways</h2>
-  <div class="sub-cap">The evidence underpinning the approach above.</div>
+  <h2 class="display">The Principles</h2>
+  <div class="cap">What the approach means in practice.</div>
 
   <div class="grid">
 {cards}

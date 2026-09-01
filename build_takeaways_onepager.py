@@ -441,7 +441,10 @@ while i < len(lines):
         continue
 
     if line.startswith("## "):
-        add_section_heading(line[3:].strip())
+        heading = line[3:].strip()
+        if heading == "Poster Principles":
+            break   # poster-only content; the paper carries the full takeaways
+        add_section_heading(heading)
         i += 1
         continue
 
