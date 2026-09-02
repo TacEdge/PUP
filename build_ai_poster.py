@@ -28,8 +28,8 @@ CHROME        = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
 PROTECTIVE_MARKING = "UNCLASSIFIED"
 POSTER_TITLE    = "AI and Operational Effectiveness"
 POSTER_STRAP    = "How Army uses AI to increase operational effectiveness"
-CONTROL_LINE    = "A first-principles analysis for senior Army leadership &nbsp;&middot;&nbsp; Draft v0.1"
-REFERENCE_LINE  = "AI and Army Operational Effectiveness &nbsp;&middot;&nbsp; Draft v0.1"
+# No draft or version furniture on the wall product: that belongs to the paper.
+REFERENCE_LINE  = "AI and Army Operational Effectiveness"
 
 # Poster copy that compresses the paper rather than quoting it.
 PUNCHLINE = ("A small army that cannot fight when the tools are denied has not "
@@ -216,7 +216,6 @@ def main():
     html = TEMPLATE.format(
         title=esc(POSTER_TITLE), strap=esc(POSTER_STRAP),
         logo=logo_data_uri(LOGO_FILE),
-        control=mark(CONTROL_LINE),
         question=esc(question[0]),
         answer=esc(answer[0]),
         punch=esc(PUNCHLINE),
@@ -280,12 +279,8 @@ TEMPLATE = """<!doctype html>
                white-space: nowrap; }}
   .titles p {{ font-size: 12.5pt; font-weight: 700; color: var(--swamp);
                margin-top: 2mm; }}
-  .control {{ margin-top: 4mm; padding-bottom: 3.4mm;
-              border-bottom: 0.4mm solid var(--hair);
-              font-size: 10pt; letter-spacing: 0.06em;
-              text-transform: uppercase; color: var(--muted); }}
 
-  .question {{ margin-top: 5mm; }}
+  .question {{ margin-top: 7mm; }}
   .question .q {{ font-size: 18pt; color: var(--black); margin-top: 2mm;
                   line-height: 1.12; }}
 
@@ -373,7 +368,6 @@ TEMPLATE = """<!doctype html>
     </div>
     <img src="{logo}" alt="NZ Army">
   </header>
-  <div class="control">{control}</div>
 
   <section class="question">
     <div class="lab">The Question</div>
