@@ -17,9 +17,9 @@
 
 4. The working judgement of this paper is that for a small army the constraint limiting all three is skilled human capacity. There are not enough experienced people; much of their time goes on staff work that consumes judgement without exercising it; depth is thin; and adaptation is slow because those who must adapt are already fully committed. If that judgement is wrong, the priorities below change.
 
-5. It follows that AI increases operational effectiveness where it relieves that constraint in ways that convert into capability, and not otherwise.
+5. It follows that AI increases operational effectiveness where it relieves a material constraint on military output in ways that convert into capability, and not otherwise. For a small army, skilled human capacity is likely the most important such constraint now.
 
-> Army should use AI where it relieves the constraint on skilled human capacity in ways that convert into capability.
+> Army should use AI where it relieves a material constraint on military output in ways that convert into capability.
 
 6. Three distinctions govern everything that follows. **Genuine military advantage** changes what Army can do on operations, or how fast it can generate capability. **Administrative efficiency** frees time, and becomes advantage only when leaders redirect the time. **Technological novelty** is neither, and is the category most AI proposals fall into.
 
@@ -77,7 +77,7 @@ h. **Effect.** Measure the effect on the output, not the use of the tool. Scale,
 
 | Area | Mechanism | Mode | Consequence of error | Human role |
 | --- | --- | --- | --- | --- |
-| Planning and staff work | Speed, breadth of options, staff time returned to judgement | Augment | Medium to high | Decides, accepts risk, verifies the product |
+| Planning and staff work | Faster planning; broader options; staff time returned to judgement | Augment | Medium to high | Decides, accepts risk, verifies |
 | Intelligence and readiness | Scale; understanding sooner, from more | Augment; enable for readiness | High for intelligence; medium for readiness | Assesses sources, judges, decides |
 | Generating trained people | Adaptive competence at scale; readiness | Augment and enable | Low to medium | Coaches, assesses, assures the standard |
 | Learning and adaptation | Speed of institutional learning | Enable | Low to medium | Validates, decides what changes |
@@ -175,7 +175,7 @@ b. **Prove effect in three places.** Bounded, measured trials: planning and orde
 
 c. **Train it through the approach.** AI competence built into individual training against real tasks, with verification and tool-denied assurance of core skills. Instructors first.
 
-d. **Fix the data.** Readiness and training data are the constraint on the highest-value application Army fully controls.
+d. **Improve the data.** Readiness and training data are likely to constrain some of the highest-value applications Army can control directly.
 
 e. **Compress the lessons cycle.** Move from observation to updated training and tactics at a pace the force can act on.
 

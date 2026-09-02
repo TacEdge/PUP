@@ -39,6 +39,39 @@ FRAMEWORK_TEST = ("An application that cannot answer Constraint and Mechanism is
 NOT_PRIORITISED = ("Deliberately not prioritised: autonomous targeting, and "
                    "personnel analytics ahead of the data to support them.")
 
+# Below the people line the poster has to be read from a wall, not at arm's
+# length. These compress the paper's principles and actions; the paper keeps
+# its full wording. Keyed by heading; anything unlisted uses the paper's text.
+POSTER_COPY = {
+    "Effect first":
+        "Adopted where it improves an Army output, and measured against it.",
+    "Task before tool":
+        "From the output and its constraint to the application, never the reverse.",
+    "The commander owns it":
+        "AI advises; it does not decide where consequence is high. "
+        "Verify what you use. You own what you sign.",
+    "Assurance by consequence":
+        "More control where error costs more, lasts longer or is harder to check.",
+    "Competence before dependence":
+        "No one relies on a tool for a skill they must perform without it. "
+        "Competence comes from practice against real tasks.",
+    "Own it":
+        "Assign accountability for AI in Army; set risk appetite by consequence, "
+        "so low-consequence use is enabled by default.",
+    "Prove effect in three places":
+        "Bounded, measured trials: planning and orders in a headquarters; training "
+        "design in Army Training Group; readiness data. Stop what does not work.",
+    "Train it through the approach":
+        "AI competence built into individual training against real tasks, with "
+        "tool-denied assurance of core skills. Instructors first.",
+    "Improve the data":
+        "Readiness and training data are likely to constrain the highest-value "
+        "applications Army controls directly.",
+    "Compress the lessons cycle":
+        "From observation to updated training and tactics at a pace the force "
+        "can act on.",
+}
+
 PALETTE = {
     "red": "#D31145", "black": "#000000", "swamp": "#00261B",
     "kawa": "#444D06", "hills": "#B3A650", "moa": "#DFD8AD",
@@ -142,6 +175,7 @@ def area_cards(rows):
 def numbered(items):
     out = []
     for i, (head, body) in enumerate(items, 1):
+        body = POSTER_COPY.get(head, body)
         out.append(
             f'    <div class="item"><div class="n">{i}</div>'
             f'<div><h4>{esc(head)}</h4><p>{esc(body)}</p></div></div>')
