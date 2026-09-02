@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Build the 'Individual Training' A3 poster from the same source markdown as the
-staff-paper one-pager, so the two never drift apart.
+Build the 'Individual Training' A3 poster from the authoritative approach
+document, so the wall product and the authority cannot say different things.
 
 The poster is not the paper enlarged: it leads with the answer, gives the
 emerging model a real diagram (progression chevrons, the opposing wedges that
@@ -23,7 +23,7 @@ import sys
 from PIL import Image
 
 # ----------------------------------------------------------------- CONFIG ---
-SOURCE_FILE   = "./individual-training-key-takeaways.md"
+SOURCE_FILE   = "./individual-training-approach.md"
 LOGO_FILE     = "./assets/nz-army-logo.png"
 OUTPUT_HTML   = "./individual-training-poster.html"
 OUTPUT_PDF    = "./output/individual-training-poster.pdf"
@@ -31,10 +31,12 @@ CHROME        = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
 
 PROTECTIVE_MARKING = "UNCLASSIFIED"
 POSTER_TITLE    = "Individual Training"
-POSTER_STRAP    = "The Army Approach: an emerging synthesis"
-ORIGINATOR      = "Individual Training Review"
-DATE            = "September 2026"
-VERSION         = "Working draft v0.8"
+POSTER_STRAP    = "The Army Approach, issued by Commander, Army Training Group"
+# Document control, as on any issued product. Bracketed values are for the
+# issuing staff to complete and render in Army Red.
+CONTROL_LINE    = ("Applies to all Army individual training &nbsp;&middot;&nbsp; "
+                   "Version 1.0 &nbsp;&middot;&nbsp; Effective [date]")
+REFERENCE_LINE  = "The Army Approach to Individual Training &nbsp;&middot;&nbsp; [ATG reference]"
 
 # NZ Army palette, Visual Identity Guidelines v1.0 p58.
 PALETTE = {
@@ -51,8 +53,7 @@ BOLD_RE = re.compile(r"\*\*(.+?)\*\*")
 def parse(path):
     """Pull the poster's content out of the shared markdown."""
     lines = open(path, encoding="utf-8").read().splitlines()
-    doc = {"subtitle": "", "question": "", "takeaways": [], "bands": [],
-           "proposition": []}
+    doc = {"takeaways": [], "bands": [], "proposition": []}
     items = {}          # numbered items, keyed by the section they sit in
     section = None
     for line in lines:
@@ -61,10 +62,6 @@ def parse(path):
             continue
         if s.startswith("## "):
             section = s[3:].strip()
-        elif s.startswith("**Adult Learning Principles"):
-            doc["subtitle"] = s.strip("*")
-        elif s == "**What is the Army approach to individual training?**":
-            doc["question"] = s.strip("*")
         elif s.startswith(">> "):
             doc["bands"].append(s[3:].strip())
         elif s.startswith("> "):
@@ -79,10 +76,10 @@ def parse(path):
                     head.group(1) if head else "",
                     BOLD_RE.sub("", body).strip(),
                 ))
-    # The poster carries the condensed principles; the full takeaways stay in
-    # the paper, where they will actually be read.
+    # The poster carries the condensed principles; the full wording stays in
+    # the document, where it will actually be read.
     doc["takeaways"] = (items.get("Poster Principles")
-                        or items.get("Emerging Takeaways") or [])
+                        or items.get("The Principles") or [])
     missing = [k for k, v in doc.items() if not v]
     if missing:
         sys.exit(f"source is missing: {', '.join(missing)}")
@@ -94,6 +91,15 @@ def parse(path):
 def esc(text):
     return (text.replace("&", "&amp;").replace("<", "&lt;")
                 .replace(">", "&gt;"))
+
+
+PLACEHOLDER_RE = re.compile(r"\[[^\]]+\]")
+
+
+def mark(text):
+    """Flag [gaps for the issuing staff] so they cannot be missed."""
+    return PLACEHOLDER_RE.sub(
+        lambda m: f'<span class="todo">{m.group(0)}</span>', text)
 
 
 def logo_data_uri(path):
@@ -157,16 +163,15 @@ def main():
         title=esc(POSTER_TITLE),
         strap=esc(POSTER_STRAP),
         logo=logo_data_uri(LOGO_FILE),
-        question=esc(doc["question"]),
+        control=mark(CONTROL_LINE),
         proposition=proposition(doc["proposition"]),
         chevrons=chevrons(doc["bands"][0]),
         rule=decision_rule(doc["bands"][1]),
         cycle=cycle(doc["bands"][2]),
         cards=cards(doc["takeaways"]),
         marking=PROTECTIVE_MARKING,
-        stamp=f"{esc(ORIGINATOR)} &nbsp;&middot;&nbsp; {esc(VERSION)}"
-              f" &nbsp;&middot;&nbsp; {esc(DATE)}",
-        subtitle=esc(doc["subtitle"]),
+        stamp=mark(CONTROL_LINE),
+        subtitle=mark(REFERENCE_LINE),
         **PALETTE,
     )
     with open(OUTPUT_HTML, "w", encoding="utf-8") as fh:
@@ -227,13 +232,15 @@ TEMPLATE = """<!doctype html>
   .titles p {{ font-size: 14pt; font-weight: 700; color: var(--swamp);
                margin-top: 2.4mm; }}
 
-  /* question: plain type, no band */
-  .question {{ margin-top: 8mm; }}
-  .question .q {{ font-size: 22pt; color: var(--black); margin-top: 2.2mm;
-                  line-height: 1.12; }}
+  /* document control, where an emerging product asked a question */
+  .control {{ margin-top: 7mm; padding-bottom: 5mm;
+              border-bottom: 0.4mm solid var(--hair);
+              font-size: 10.4pt; letter-spacing: 0.06em;
+              text-transform: uppercase; color: var(--muted); }}
+  .todo {{ color: var(--red); }}
 
   /* the answer: the single filled panel on the sheet */
-  .answer {{ margin-top: 6mm; border-left: 3.4mm solid var(--red);
+  .answer {{ margin-top: 7mm; border-left: 3.4mm solid var(--red);
              background: var(--moa); padding: 6.5mm 8mm 7mm;
              border-radius: var(--r); }}
   .answer .lab {{ color: var(--kawa); margin-bottom: 3.4mm; }}
@@ -312,13 +319,10 @@ TEMPLATE = """<!doctype html>
     <img src="{logo}" alt="NZ Army">
   </header>
 
-  <section class="question">
-    <div class="lab">Commander's Question</div>
-    <div class="q display">{question}</div>
-  </section>
+  <div class="control">{control}</div>
 
   <section class="answer">
-    <div class="lab">The Answer &middot; Emerging Proposition</div>
+    <div class="lab">The Approach</div>
     {proposition}
   </section>
 

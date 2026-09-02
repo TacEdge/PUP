@@ -10,11 +10,28 @@
 
 ## The Approach
 
-<<<STATEMENT>>>
+> Army develops individuals progressively and continuously toward operational competence, balancing direction, practice, experience and learner agency according to risk, complexity, competence and operational need.
+> The standard is common; the journey to it need not be identical.
 
 ## The Model
 
-<<<MODEL>>>
+### The progression.
+
+Courses are described against these five stages. Instructor direction decreases across them while learner autonomy, complexity and pressure increase.
+
+>> Foundation → Guided Practice → Independent Practice → Applied / Experiential Learning → Performance Under Pressure
+
+### The decision rule.
+
+How far and how fast an individual progresses. It is applied to every course. Schools applying it to different courses reach different answers; those answers are coherent because the reasoning is common.
+
+>> Risk × Complexity × Learner Competence × Required Operational Outcome
+
+### The continuous cycle.
+
+Individual training does not end with a course. Learning is accessible before, during and after formal training, and recurs across a career.
+
+>> Prepare → Learn → Practise → Apply → Perform → Feedback → Reinforce / Adapt
 
 ## The Principles
 
@@ -59,3 +76,19 @@
 19. Amendment is by [ATG appointment] on the authority of Commander, Army Training Group. The evidence base for this approach is at [reference], and continues to develop; amendment is deliberate, and this document does not change with it automatically.
 
 <<<SIGNATURE>>>
+
+## Poster Principles
+
+Condensed forms of the principles above, for the A3 poster where the fuller wording will not be read at distance. The document itself does not print this section.
+
+1. **Operational competence** Performance to standard, not course completion.
+
+2. **Common standard, adaptive pathway** Adapt the pathway without diluting the standard.
+
+3. **Progressive development** Competence grows through practice, experience and feedback.
+
+4. **Increasing learner agency** Direction reduces as competence grows.
+
+5. **Continuous development** Learning extends beyond the course and across a career.
+
+6. **Outcome-led methods** Methods and technology enable the approach; they do not define it.

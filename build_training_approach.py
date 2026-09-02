@@ -31,7 +31,6 @@ from PIL import Image
 
 # ----------------------------------------------------------------- CONFIG ---
 SOURCE_FILE        = "./individual-training-approach.md"
-APPROACH_FILE      = "./individual-training-key-takeaways.md"
 LOGO_FILE          = "./assets/nz-army-logo.png"
 OUTPUT_DOCX        = "./output/individual-training-approach.docx"
 PROTECTIVE_MARKING = "UNCLASSIFIED"
@@ -54,22 +53,6 @@ SIGNATURE = [
     ("[Name]", None),
     ("[Rank]", None),
     ("Commander, Army Training Group", None),
-]
-
-# Glosses for the three model elements, in the register of a standing document
-# rather than a synthesis.
-MODEL_LEAD = [
-    ("The progression.",
-     "Courses are described against these five stages. Instructor direction "
-     "decreases across them while learner autonomy, complexity and pressure "
-     "increase."),
-    ("The decision rule.",
-     "How far and how fast an individual progresses. It is applied to every "
-     "course. Schools applying it to different courses reach different "
-     "answers; those answers are coherent because the reasoning is common."),
-    ("The continuous cycle.",
-     "Individual training does not end with a course. Learning is accessible "
-     "before, during and after formal training, and recurs across a career."),
 ]
 
 # NZ Army palette, as published in the Visual Identity Guidelines v1.0, p58.
@@ -488,36 +471,6 @@ rule_p.paragraph_format.space_before = Pt(4)
 rule_p.paragraph_format.space_after = Pt(0)
 set_border(rule_p, "bottom", WAIOURU_HILLS, 6, space=4)
 
-# ------------------------------------------------------------ approach pull --
-
-
-def load_approach(path):
-    """Proposition and the three model elements, from the shared source."""
-    bands, proposition = [], []
-    for line in open(path, encoding="utf-8"):
-        s = line.strip()
-        if s.startswith(">> "):
-            bands.append(s[3:].strip())
-        elif s.startswith("> "):
-            proposition.append(s[2:].strip())
-    if len(bands) != 3:
-        raise SystemExit(f"expected 3 model elements, found {len(bands)}")
-    return proposition, bands
-
-
-def render_statement():
-    proposition, _ = load_approach(APPROACH_FILE)
-    add_intent(proposition)
-
-
-def render_model():
-    _, bands = load_approach(APPROACH_FILE)
-    for (lead, gloss), band in zip(MODEL_LEAD, bands):
-        add_sub_heading(lead)
-        add_body(gloss)
-        add_band(band)
-
-
 # ------------------------------------------------------------------- body ---
 
 with open(SOURCE_FILE, encoding="utf-8") as fh:
@@ -546,13 +499,8 @@ while i < len(lines):
         i += 1
         continue
 
-    if s == "<<<STATEMENT>>>":
-        render_statement()
-        i += 1
-        continue
-
-    if s == "<<<MODEL>>>":
-        render_model()
+    if s.startswith(">> "):
+        add_band(s[3:].strip())
         i += 1
         continue
 
@@ -562,7 +510,10 @@ while i < len(lines):
         continue
 
     if s.startswith("## "):
-        add_section_heading(s[3:].strip())
+        heading = s[3:].strip()
+        if heading == "Poster Principles":
+            break   # poster-only content; this document carries the full form
+        add_section_heading(heading)
         i += 1
         continue
 

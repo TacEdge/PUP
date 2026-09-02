@@ -30,7 +30,7 @@ from PIL import Image
 
 # ----------------------------------------------------------------- CONFIG ---
 SOURCE_FILE        = "./individual-training-directive.md"
-APPROACH_FILE      = "./individual-training-key-takeaways.md"
+APPROACH_FILE      = "./individual-training-approach.md"
 LOGO_FILE          = "./assets/nz-army-logo.png"
 OUTPUT_DOCX        = "./output/individual-training-directive.docx"
 PROTECTIVE_MARKING = "UNCLASSIFIED"
@@ -501,8 +501,8 @@ APPROACH_LEAD = [
 
 def render_approach():
     proposition, bands = load_approach(APPROACH_FILE)
-    add_body("The approach issued by this directive, in full. It is stated at "
-             "Reference B with the evidence supporting it.")
+    add_body("The approach issued by this directive, in full, as stated in "
+             "The Army Approach to Individual Training.")
     add_intent(proposition)
     for (lead, gloss), band in zip(APPROACH_LEAD, bands):
         add_sub_heading(lead)
