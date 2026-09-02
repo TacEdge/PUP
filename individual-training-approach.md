@@ -23,9 +23,9 @@ Courses are described against these five stages. Instructor direction decreases 
 
 ### The decision rule.
 
-How far and how fast an individual progresses. It is applied to every course. Schools applying it to different courses reach different answers; those answers are coherent because the reasoning is common.
+Applied to every course. Schools applying it to different courses reach different answers; those answers are coherent because the reasoning is common.
 
->> Risk × Complexity × Learner Competence × Required Operational Outcome
+>> Progression is shaped by risk, complexity, learner competence and the required operational outcome
 
 ### The continuous cycle.
 

@@ -492,8 +492,8 @@ APPROACH_LEAD = [
     ("The progression.", "Courses are described against these five stages. "
      "Instructor direction decreases across them while learner autonomy, "
      "complexity and pressure increase."),
-    ("The decision rule.", "How far and how fast an individual progresses. "
-     "Applied to every course; the common reasoning, not a common answer."),
+    ("The decision rule.", "Applied to every course; the common reasoning, "
+     "not a common answer."),
     ("The career cycle.", "Individual training does not end with a course. "
      "Learning is accessible before, during and after formal training."),
 ]

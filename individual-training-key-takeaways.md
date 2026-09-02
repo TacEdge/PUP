@@ -32,7 +32,7 @@ Instructor direction decreases while learner autonomy, complexity and pressure i
 
 How far and how fast an individual progresses is determined by:
 
->> Risk × Complexity × Learner Competence × Required Operational Outcome
+>> Progression is shaped by risk, complexity, learner competence and the required operational outcome
 
 Individual training continues across a career through a recurring cycle:
 

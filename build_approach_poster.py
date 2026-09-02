@@ -123,9 +123,9 @@ def chevrons(band):
 
 
 def decision_rule(band):
-    factors = [f.strip() for f in band.split("×")]
-    joined = ' <span>&times;</span> '.join(esc(f) for f in factors)
-    return f'<div class="expr display">{joined}</div>'
+    """The rule is a set of considerations, not a calculation: set as a
+    sentence rather than a product, which implied a precision it never had."""
+    return f'<div class="expr display">{esc(band)}</div>'
 
 
 def cycle(band):
@@ -338,8 +338,7 @@ TEMPLATE = """<!doctype html>
   </div>
 
   <div class="rule-box">
-    <div class="lab">How far and how fast an individual progresses is
-      determined by</div>
+    <div class="lab">The decision rule</div>
     {rule}
   </div>
 
