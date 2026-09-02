@@ -27,15 +27,16 @@ CHROME        = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
 
 PROTECTIVE_MARKING = "UNCLASSIFIED"
 POSTER_TITLE    = "AI and Operational Effectiveness"
-POSTER_STRAP    = "How Army uses AI to increase operational effectiveness"
 # No draft or version furniture on the wall product: that belongs to the paper.
 REFERENCE_LINE  = "AI and Army Operational Effectiveness"
 
 # Poster copy that compresses the paper rather than quoting it.
 PUNCHLINE = ("A small army that cannot fight when the tools are denied has not "
              "gained effectiveness. It has moved its dependence.")
-FRAMEWORK_TEST = ("An application that cannot answer Constraint and Mechanism is "
-                  "novelty. Measure the effect on the output, not the use of the tool.")
+FRAMEWORK_TEST = ("If you cannot say what is limiting the task, and how AI would "
+                  "help, stop.")
+# the three tests behind the assurance rule, in the order a person asks them
+ASSURANCE_TESTS = "How bad if it is wrong? &nbsp;&middot;&nbsp; Can we undo it? &nbsp;&middot;&nbsp; Can a person check it?"
 
 # The poster trusts the thinking: headlines and one line each, no prose.
 # Everything here compresses the paper; the paper keeps its full wording.
@@ -43,23 +44,40 @@ STAGES = {   # source stage -> (chevron label, the question beneath it)
     "Output":                    ("Output",       "What must we achieve?"),
     "Task":                      ("Task",         "What limits it?"),
     "Constraint":                ("Constraint",   "Why?"),
-    "AI Mechanism":              ("AI Mechanism", "How would AI help?"),
+    "AI":                        ("AI",           "How would AI help?"),
     "Human Role":                ("Human Role",   "What stays human?"),
-    "Consequence and Assurance": ("Assurance",    "What control is needed?"),
-    "Competence and Practice":   ("Competence",   "Who must be able to do what?"),
+    "Assurance":                 ("Assurance",    "What control is needed?"),
+    "Competence":                ("Competence",   "Who must be able to do what?"),
     "Effect":                    ("Effect",       "Did it improve the output?"),
+}
+# What each area actually delivers, and who stays responsible. Scannable in
+# seconds; the paper's table keeps the analytical wording.
+POSTER_AREAS = {
+    "Planning and staff work":
+        ("Faster plans, more options properly considered",
+         "Commander decides and accepts risk"),
+    "Intelligence and readiness":
+        ("See more, sooner, from more sources", "People judge what it means"),
+    "Generating trained people":
+        ("Train more people, more ways, to one standard",
+         "Instructors coach and assure the standard"),
+    "Learning and adaptation":
+        ("Turn experience into changed training faster",
+         "Commanders decide what changes"),
+    "Administrative load":
+        ("Less time on paperwork", "You own what you sign"),
 }
 POSTER_COPY = {
     "Effect first":                 "Measure Army output, not AI use.",
     "Task before tool":             "Start with the constraint, not the technology.",
     "The commander owns it":        "AI advises. The commander decides and signs.",
-    "Assurance by consequence":     "More control where error costs more.",
-    "Competence before dependence": "Practise the skill. Never rely on the tool for it.",
-    "Own it":                       "Assign accountability. Set risk appetite by consequence.",
-    "Prove effect in three places": "Planning, training design, readiness data. Stop what fails.",
-    "Train it through the approach":"Real tasks, tool-denied assurance, instructors first.",
-    "Improve the data":             "Readiness and training data likely limit the highest-value uses.",
-    "Compress the lessons cycle":   "Observation to updated training, at a pace the force can act on.",
+    "Assurance by consequence":     "More human control where getting it wrong matters more.",
+    "Competence before dependence": "Practise the skill. Never depend on AI for what Army must do without it.",
+    "Own it":                       "Put someone in charge. Say what needs approval and what does not.",
+    "Prove effect in three places": "Planning, training design, readiness data. Stop what does not work.",
+    "Train it through the approach":"Train on real tasks. Test core skills without the tool. Instructors first.",
+    "Improve the data":             "Readiness and training data are probably the limit. Fix that first.",
+    "Compress the lessons cycle":   "Get lessons into training faster than the threat changes.",
 }
 PEOPLE = [   # the competence model as four blocks, not a divider
     ("Everyone", "understands it"), ("Many", "employ it"),
@@ -170,11 +188,12 @@ def pill(mode):
 def area_tiles(rows):
     out = []
     for area, mechanism, mode, _consequence, human in rows[1:]:
+        gain, role = POSTER_AREAS.get(area, (mechanism, human))
         out.append(
             f'    <div class="tile"><h4>{esc(area)}</h4>'
-            f'<p>{esc(mechanism)}</p>'
+            f'<p>{esc(gain)}</p>'
             f'<div class="pill">{pill(mode)}</div>'
-            f'<p class="human">{esc(human)}</p></div>')
+            f'<p class="human">{esc(role)}</p></div>')
     return "\n".join(out)
 
 
@@ -215,7 +234,7 @@ def main():
         sys.exit("assurance test band missing from section 4")
 
     html = TEMPLATE.format(
-        title=esc(POSTER_TITLE), strap=esc(POSTER_STRAP),
+        title=esc(POSTER_TITLE),
         logo=logo_data_uri(LOGO_FILE),
         question=esc(question[0]),
         answer=esc(answer[0]),
@@ -223,7 +242,7 @@ def main():
         chevrons=chevrons(framework["bands"][0]),
         questions=step_questions(framework["bands"][0]),
         test=esc(FRAMEWORK_TEST),
-        assurance=esc(human["bands"][0]),
+        assurance=esc(human["bands"][0]), tests=ASSURANCE_TESTS,
         tiles=area_tiles(advantage["rows"]),
         people=people_blocks(),
         principles=numbered(principles),
@@ -275,14 +294,12 @@ TEMPLATE = """<!doctype html>
   .todo {{ color: var(--red); }}
 
   /* ---- level 1: the answer ---------------------------------------------- */
-  .masthead {{ display: flex; align-items: flex-start;
-               justify-content: space-between; gap: 12mm; padding-bottom: 3mm;
+  .masthead {{ display: flex; align-items: center;
+               justify-content: space-between; gap: 12mm; padding-bottom: 3.5mm;
                border-bottom: 1mm solid var(--red); }}
-  .masthead img {{ height: 12mm; margin-top: 0.8mm; }}
+  .masthead img {{ height: 12mm; }}
   .titles h1 {{ font-size: 26pt; line-height: 0.95; color: var(--black);
                 white-space: nowrap; }}
-  .titles p {{ font-size: 11pt; font-weight: 700; color: var(--swamp);
-               margin-top: 1.6mm; }}
 
   .question {{ margin-top: 5mm; display: flex; align-items: baseline; gap: 5mm; }}
   .question .q {{ font-size: 12.5pt; color: var(--muted); }}
@@ -296,7 +313,7 @@ TEMPLATE = """<!doctype html>
                     line-height: 1.28; color: var(--red); }}
 
   /* ---- level 2: the model ----------------------------------------------- */
-  h2.display {{ font-size: 17pt; color: var(--black); margin: 8mm 0 4.5mm; }}
+  h2.display {{ font-size: 17pt; color: var(--black); margin: 7mm 0 4mm; }}
   h2.display .lab {{ display: block; margin-bottom: 1.4mm; }}
 
   .chevrons {{ display: flex; gap: 1.4mm; }}
@@ -318,15 +335,17 @@ TEMPLATE = """<!doctype html>
   .test {{ margin-top: 5mm; text-align: center; font-size: 11.6pt;
            color: var(--muted); }}
 
-  .band {{ margin-top: 7mm; background: var(--swamp); color: var(--white);
+  .band {{ margin-top: 6mm; background: var(--swamp); color: var(--white);
            padding: 4.5mm 8mm 5mm; text-align: center; border-radius: var(--r); }}
   .band .lab {{ color: var(--hills); }}
   .band .expr {{ font-size: 15.5pt; margin-top: 2.4mm; line-height: 1.2; }}
+  .band .tests {{ font-size: 10.6pt; color: var(--hills); margin-top: 3mm; }}
 
-  .tiles {{ margin-top: 7mm; display: grid; grid-template-columns: repeat(5, 1fr);
+  .tiles-lab {{ margin-top: 6mm; }}
+  .tiles {{ margin-top: 3mm; display: grid; grid-template-columns: repeat(5, 1fr);
             gap: 4mm; }}
   .tile {{ background: var(--card); border-radius: var(--r);
-           padding: 4.5mm 5mm 5mm; display: flex; flex-direction: column; }}
+           padding: 4mm 4.5mm 4.5mm; display: flex; flex-direction: column; }}
   .tile h4 {{ font-size: 12.5pt; color: var(--swamp); line-height: 1.15;
               margin-bottom: 2.6mm; }}
   .tile p {{ font-size: 10.4pt; line-height: 1.26; color: var(--ink); }}
@@ -343,11 +362,11 @@ TEMPLATE = """<!doctype html>
   .block .what {{ font-size: 11.5pt; color: var(--muted); margin-top: 2.4mm; }}
 
   .two {{ display: grid; grid-template-columns: 1fr 1fr; gap: 14mm;
-          margin-top: 6mm; }}
+          margin-top: 5mm; }}
   .two h3 {{ font-size: 13pt; color: var(--black); margin-bottom: 4mm;
              font-family: "Archivo Black", "Arial Black", sans-serif;
              font-weight: 400; }}
-  .item {{ display: flex; gap: 4mm; margin-bottom: 3.6mm; align-items: baseline; }}
+  .item {{ display: flex; gap: 4mm; margin-bottom: 3.2mm; align-items: baseline; }}
   .item .n {{ font-size: 15pt; color: var(--swamp); width: 8mm; flex: none;
               line-height: 1; }}
   .item h4 {{ font-size: 12.5pt; color: var(--swamp); line-height: 1.15; }}
@@ -366,7 +385,6 @@ TEMPLATE = """<!doctype html>
   <header class="masthead">
     <div class="titles">
       <h1 class="display">{title}</h1>
-      <p>{strap}</p>
     </div>
     <img src="{logo}" alt="NZ Army">
   </header>
@@ -380,7 +398,7 @@ TEMPLATE = """<!doctype html>
     <p>{answer}<span class="punch display">{punch}</span></p>
   </section>
 
-  <h2 class="display"><span class="lab">The Model</span>The Framework</h2>
+  <h2 class="display"><span class="lab">The Model</span>How to decide where to use AI</h2>
   <div class="chevrons">
 {chevrons}
   </div>
@@ -390,10 +408,12 @@ TEMPLATE = """<!doctype html>
   <div class="test">{test}</div>
 
   <div class="band">
-    <div class="lab">The assurance test</div>
+    <div class="lab">How much human control</div>
     <div class="expr display">{assurance}</div>
+    <div class="tests">{tests}</div>
   </div>
 
+  <div class="tiles-lab lab">Where AI helps most</div>
   <div class="tiles">
 {tiles}
   </div>

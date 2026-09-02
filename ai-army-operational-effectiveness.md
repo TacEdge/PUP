@@ -17,9 +17,9 @@
 
 4. The working judgement of this paper is that for a small army the constraint limiting all three is skilled human capacity. There are not enough experienced people; much of their time goes on staff work that consumes judgement without exercising it; depth is thin; and adaptation is slow because those who must adapt are already fully committed. If that judgement is wrong, the priorities below change.
 
-5. It follows that AI increases operational effectiveness where it relieves a material constraint on military output in ways that convert into capability, and not otherwise. For a small army, skilled human capacity is likely the most important such constraint now.
+5. It follows that AI increases operational effectiveness only where it relieves something genuinely limiting an Army output. For a small army, skilled human capacity is likely the most important such limit now.
 
-> Army should use AI where it relieves a material constraint on military output in ways that convert into capability.
+> Use AI where it removes a real limit on what Army can do, and where that makes Army more capable.
 
 6. Three distinctions govern everything that follows. **Genuine military advantage** changes what Army can do on operations, or how fast it can generate capability. **Administrative efficiency** frees time, and becomes advantage only when leaders redirect the time. **Technological novelty** is neither, and is the category most AI proposals fall into.
 
@@ -27,7 +27,7 @@
 
 7. One framework organises this paper and tests any proposed application. It reasons from the output to the tool, and closes on measured effect.
 
->> Output → Task → Constraint → AI Mechanism → Human Role → Consequence and Assurance → Competence and Practice → Effect
+>> Output → Task → Constraint → AI → Human Role → Assurance → Competence → Effect
 
 8. In use:
 
@@ -37,17 +37,17 @@ b. **Task.** Which task limits that output?
 
 c. **Constraint.** What limits the task: time, quality, scale, understanding or people?
 
-d. **AI mechanism.** Would AI relieve that constraint, and how? If the mechanism cannot be stated plainly, stop.
+d. **AI.** Would AI relieve that constraint, and how? If you cannot say how, stop.
 
 e. **Human role.** Augment, automate or enable, and what stays with the person.
 
-f. **Consequence and assurance.** What does the consequence of error require by way of control and verification?
+f. **Assurance.** What does the consequence of error require by way of control and checking?
 
-g. **Competence and practice.** Who must be able to do what, and how will they practise it?
+g. **Competence.** Who must be able to do what, and how will they practise it?
 
 h. **Effect.** Measure the effect on the output, not the use of the tool. Scale, adjust or stop.
 
-9. A commander, staff officer or training lead should run this on a single page. An application that cannot answer steps c and d is novelty. The sections that follow apply it.
+9. A commander, staff officer or training lead should run this on a single page. If you cannot say what is limiting the task, and how AI would help, stop. The sections that follow apply it.
 
 ## 3. Where AI Creates Military Advantage
 
@@ -99,7 +99,7 @@ e. The foundational soldier and staff skills Army must retain as a capability in
 
 18. Step f of the framework is settled by a single test:
 
->> Assurance increases with consequence, irreversibility and difficulty of verification
+>> The more it matters if AI gets it wrong, the more human control and checking is required
 
 19. Where error is cheap, reversible and easy to check, greater autonomy is acceptable. Where consequence is high, effects are irreversible, or output cannot readily be verified, greater control and assurance are required. This asks the same question as the decision rule in the training approach: match control to what is at stake.
 
@@ -161,9 +161,9 @@ b. **Task before tool.** Reason from the output and its constraint to the applic
 
 c. **The commander owns it.** AI advises, drafts and analyses; where consequence is high it does not decide. Verify what you use. You own what you sign.
 
-d. **Assurance by consequence.** Control and verification increase with consequence, irreversibility and difficulty of verification.
+d. **Assurance by consequence.** More human control where getting it wrong matters more.
 
-e. **Competence before dependence.** No one relies on a tool for a skill they must perform without it when it matters. Competence comes from practice against real tasks, and is measured like any other.
+e. **Competence before dependence.** Never depend on AI for a skill Army must be able to perform without it. Competence comes from practice against real tasks, and is measured like any other.
 
 ## 9. Priority Actions
 
