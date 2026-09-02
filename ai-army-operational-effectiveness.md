@@ -9,7 +9,7 @@
 
 1. This paper reasons from Army's outputs backwards to the technology. It does not assume Army must adopt AI, and it does not catalogue uses. It asks where AI could materially improve Army's ability to generate and employ land capability, what must remain human, and what that means for Army's people.
 
-2. AI is new within the NZDF. Access is limited to basic tools on constrained networks, and the evidence for military effect is thin and drawn largely from larger armies with different problems. Several of the propositions below are working judgements reasoned from Army's situation rather than findings, and are marked as such. They are offered to be tested, not accepted.
+2. AI is new within the NZDF, but it is not ungoverned. Defence holds a closed enterprise instance of Copilot approved for restricted and protected material, and DFY 6020 directs the use of approved tools only, with responsibilities for labelling and review. The evidence for military effect nonetheless remains thin, and is drawn largely from larger armies with different problems. Several propositions below are working judgements reasoned from Army's situation rather than findings, and are marked as such. They are offered to be tested, not accepted.
 
 ## 1. The First-Principles Answer
 
@@ -59,21 +59,21 @@ h. **Effect.** Measure the effect on the output, not the use of the tool. Scale,
 
 ### Understanding: intelligence, information and the state of the force
 
-12. A small intelligence cell cannot process the open-source, coalition and sensor information available to it. AI can fuse, summarise, translate and flag change across volumes a person cannot read. Much of that opportunity is enabled by allies; Army's advantage lies in competent consumption and contribution, not in building the system. Separately, Army's readiness data on people, training, equipment and health sits in disconnected systems, and commanders see it late and in part. Army cannot currently see itself whole at all, and the constraint on doing so is data quality rather than technology.
+12. A small intelligence cell cannot process the open-source, coalition and sensor information available to it. AI can fuse, summarise, translate and flag change across volumes a person cannot read. Much of that opportunity is enabled by allies; Army's advantage lies in competent consumption, not in building the system. Separately, readiness data on people, training, equipment and health sits in disconnected systems, seen late and in part. Army cannot currently see itself whole, and the constraint is data quality rather than technology.
 
 ### Generating trained people
 
-13. Training design, content maintenance, scenario and simulation generation, individual practice, feedback and assessment support are the heart of force generation, and the point where the training approach and AI meet. AI can make adaptive pathways practical at scale, keep content current as tactics and equipment change, and shift instructor effort from transmission to coaching. The gain is readiness, through faster and more adaptive generation of competence. Section 6 develops this.
+13. Training design, content maintenance, scenario generation, individual practice, feedback and assessment support are the heart of force generation, and where the training approach and AI meet. AI can make adaptive pathways practical at scale, keep content current as tactics and equipment change, and shift instructor effort from transmission to coaching. The gain is readiness, through faster and more adaptive generation of competence. Section 6 develops this.
 
 ### Learning and adaptation
 
-14. Army's lessons cycle runs on documents and committees. The working judgement here is that it is slower than the tempo at which threats, tactics and equipment now change; Army should test this against its actual cycle times before acting on it. If it holds, AI can compress the path from observation and after-action review to updated training content and doctrine. Institutional learning speed matters for a small army because it cannot afford to relearn. The uncertainty is whether the organisation will act at the speed the tool allows.
+14. Army's lessons cycle runs on documents and committees. The working judgement here is that it is slower than the tempo at which threats, tactics and equipment now change; Army should test that against its actual cycle times. If it holds, AI can compress the path from observation and after-action review to updated training and doctrine. Institutional learning speed matters for a small army because it cannot afford to relearn. The uncertainty is whether the organisation will act at the speed the tool allows.
 
 ### Administrative and organisational load
 
-15. Correspondence, reporting, returns, minutes, records and routine staff process will yield the largest and earliest gains in hours, and are the safest to automate. Per paragraph 6, this is efficiency, and becomes military advantage only where commanders deliberately convert the hours into training, planning and readiness.
+15. Correspondence, reporting, returns, minutes and routine staff process will yield the largest and earliest gains in hours, and are the safest to automate. Per paragraph 6, this is efficiency, and becomes advantage only where commanders convert the hours into training, planning and readiness.
 
-16. Two areas are deliberately not prioritised. Autonomous targeting and weapons are not Army's to develop, are policy and coalition dependent, and carry unresolved legal and ethical questions. Predictive logistics and personnel analytics are real opportunities constrained by data maturity and, for personnel, by bias and trust; they follow the data foundations rather than lead them.
+16. Two areas are deliberately not prioritised. Autonomous targeting and weapons are not Army's to develop, and carry unresolved legal and ethical questions. Predictive logistics and personnel analytics are constrained by data maturity and, for personnel, by bias and trust; they follow the data foundations rather than lead them.
 
 | Area | Mechanism | Mode | Consequence of error | Human role |
 | --- | --- | --- | --- | --- |
@@ -93,7 +93,7 @@ b. Assessment of a soldier's readiness, character and leadership, and the coachi
 
 c. Legal and ethical judgement, including the law of armed conflict and rules of engagement.
 
-d. Accountability. A commander who signs a product owns it. The tool that drafted it does not.
+d. Accountability. A commander who signs a product owns it; the tool that drafted it does not. AI-assisted output is official information, and is labelled and reviewed as DFY 6020 requires.
 
 e. The foundational soldier and staff skills Army must retain as a capability in their own right, because on operations the tools will be degraded, denied or deceived.
 
@@ -101,7 +101,7 @@ e. The foundational soldier and staff skills Army must retain as a capability in
 
 >> Assurance increases with consequence, irreversibility and difficulty of verification
 
-19. Where error is cheap, reversible and easy to check, greater autonomy is acceptable. Where consequence is high, effects are irreversible, or output cannot readily be verified, greater control and assurance are required. This asks the same kind of question as the decision rule in the training approach: match the level of control to what is at stake.
+19. Where error is cheap, reversible and easy to check, greater autonomy is acceptable. Where consequence is high, effects are irreversible, or output cannot readily be verified, greater control and assurance are required. This asks the same question as the decision rule in the training approach: match control to what is at stake.
 
 ## 5. What This Means for Army People
 
@@ -125,7 +125,7 @@ d. **Specialists.** Data, security and model assurance, and integration of appro
 
 a. **Operational competence.** For many roles the standard now includes the competent, judged use of approved tools. For foundational and safety-critical skills it is unchanged, and assured without the tool.
 
-b. **Common standard, adaptive pathway.** AI makes adaptive pathways practical at scale, through learning data, individual practice and feedback, and assessment support. On this analysis it may be the most significant contribution AI can make to the training system, and it is the one Army most fully controls.
+b. **Common standard, adaptive pathway.** AI makes adaptive pathways practical at scale, through learning data, individual practice and feedback. On this analysis it may be the most significant contribution AI can make to the training system, and the one Army most fully controls.
 
 c. **Progression.** Tools are introduced where they will be used, not at the foundation. Core skills are built without them; tools enter at guided and independent practice for the tasks that will employ them. Instructors must be competent with a tool before their students are, which makes instructor development the first investment.
 
@@ -139,7 +139,7 @@ e. **What remains human, and preventing dependency.** Judgement under pressure, 
 
 a. **Plausible error.** Fabricated facts, references and figures in products that read as authoritative. Mitigated by verification as a duty, never optional where consequence is high.
 
-b. **Security and classification.** Sensitive information entering tools not approved for it; sovereignty over where models run; allied caveats. The constraint that most limits early use, and rightly.
+b. **Security and classification.** Sensitive information entering tools not approved for it; sovereignty over where models run; allied caveats. DFY 6020 addresses the first by directing approved tools only. The others remain open, and rightly limit early use.
 
 c. **Loss of competence.** Staff and soldiers who cannot perform unaided when the tool is denied. Mitigated through training, not policy.
 
@@ -149,7 +149,7 @@ e. **Bias and trust,** especially in decisions about people. Requires a human de
 
 f. **Accountability drift.** Decisions made because the system said so.
 
-25. The constraints appear institutional rather than technical: basic tools on restricted networks, external resources blocked, slow security approval, data in legacy systems, no clear ownership of AI, procurement measured in years against a capability that changes in weeks, no spare capacity to experiment, and a risk appetite that defaults to no. If that reading is right, Army's ability to exploit what is already available matters more than what becomes available next.
+25. The constraints appear institutional rather than technical: external resources blocked, slow security approval, data in legacy systems, no single owner accountable for converting AI into military advantage, procurement measured in years against a capability that changes in weeks, no spare capacity to experiment, and a risk appetite that defaults to no. An approved enterprise tool is already in place; if this reading is right, Army's ability to exploit what it has matters more than what becomes available next.
 
 ## 8. Principles
 
@@ -173,7 +173,7 @@ a. **Own it.** Assign accountability for AI in Army and set a risk appetite by c
 
 b. **Prove effect in three places.** Bounded, measured trials: planning and orders production in a headquarters; training design and feedback in Army Training Group; and readiness data integration. Measure effect on the output. Stop what does not work.
 
-c. **Train it through the approach.** AI competence built into individual training against real tasks, with verification and tool-denied assurance of core skills. Instructors first.
+c. **Train it through the approach.** A Defence AI course is running; the step now is to build that competence into individual training against real Army tasks, with verification and tool-denied assurance of core skills. Instructors first.
 
 d. **Improve the data.** Readiness and training data are likely to constrain some of the highest-value applications Army can control directly.
 
@@ -195,7 +195,7 @@ e. How loss of underlying competence will be detected before it matters.
 
 f. Who does this work in an army of Army's size, and what it displaces.
 
-g. What the AI competence standard is, by rank and trade, and who sets it.
+g. What the AI competence standard is, by rank and trade, and who sets it. A Defence course is running; a course is not a standard.
 
 ## What Should Army Be Able to Do Better Because AI Exists?
 

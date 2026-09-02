@@ -32,13 +32,13 @@ PROTECTIVE_MARKING = "UNCLASSIFIED"
 TITLE       = "AI and Army Operational Effectiveness"
 SUBTITLE    = "A first-principles analysis for senior Army leadership"
 FOOTER_LEFT = "AI and Army Operational Effectiveness"
-FOOTER_REF  = "Draft v0.1"
+FOOTER_REF  = "Draft v0.2"
 
 # Letterhead block. Bracketed values are for the issuing staff to complete.
 HEADER_FIELDS = [
     ("Reference", "[reference]"),
     ("Date", "September 2026"),
-    ("Version", "Draft v0.1"),
+    ("Version", "Draft v0.2"),
     ("Originator", "[originator]"),
     ("Question", "How can Army use AI to increase operational effectiveness?"),
 ]
@@ -207,11 +207,11 @@ TEXT_WIDTH_CM = 16.4
 normal = doc.styles["Normal"]
 strip_style_rpr(normal)
 force_font(normal, FONT_BODY)
-normal.font.size = Pt(10.2)
+normal.font.size = Pt(9.9)
 force_color(normal, DARKEST_HOUR)
 nf = normal.paragraph_format
 nf.line_spacing = 1.08
-nf.space_after = Pt(5)
+nf.space_after = Pt(4.5)
 nf.space_before = Pt(0)
 nf.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
@@ -221,7 +221,7 @@ force_font(h1, FONT_DISPLAY)
 h1.font.bold = False
 h1.font.size = Pt(11.5)
 force_color(h1, DARKEST_HOUR)
-h1.paragraph_format.space_before = Pt(11)
+h1.paragraph_format.space_before = Pt(9)
 h1.paragraph_format.space_after = Pt(5)
 h1.paragraph_format.keep_with_next = True
 
@@ -231,7 +231,7 @@ force_font(h2, FONT_HEAD)
 h2.font.bold = True
 h2.font.size = Pt(10.5)
 force_color(h2, SWAMP_GREEN)
-h2.paragraph_format.space_before = Pt(8)
+h2.paragraph_format.space_before = Pt(7)
 h2.paragraph_format.space_after = Pt(3)
 h2.paragraph_format.keep_with_next = True
 
@@ -275,7 +275,7 @@ def add_numbered(label, text, indent=Cm(0.9), hang=None):
     return p
 
 
-def add_intent(lines):
+def add_intent(lines, keep_together=False):
     """Intent, set apart. It is the part a Commandant must not miss."""
     p = doc.add_paragraph()
     set_shading(p, MOAWHANGO)
@@ -284,6 +284,8 @@ def add_intent(lines):
     p.paragraph_format.right_indent = Cm(0.4)
     p.paragraph_format.space_before = Pt(4)
     p.paragraph_format.space_after = Pt(6)
+    if keep_together:
+        p.paragraph_format.keep_together = True
     for i, line in enumerate(lines):
         if i:
             br = p.add_run()
@@ -512,7 +514,8 @@ while i < len(lines):
         while i < len(lines) and lines[i].strip().startswith("> "):
             block.append(lines[i].strip()[2:].strip())
             i += 1
-        add_intent(block)
+        # the closing statement is the last callout in the paper
+        add_intent(block, keep_together=(i >= len(lines) - 2))
         continue
 
     if s.startswith("|"):
