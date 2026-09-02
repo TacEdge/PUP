@@ -31,12 +31,12 @@ CHROME        = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
 
 PROTECTIVE_MARKING = "UNCLASSIFIED"
 POSTER_TITLE    = "Individual Training"
-POSTER_STRAP    = "The Army Approach, issued by Commander, Army Training Group"
-# Document control, as on any issued product. Bracketed values are for the
-# issuing staff to complete and render in Army Red.
-CONTROL_LINE    = ("Applies to all Army individual training &nbsp;&middot;&nbsp; "
-                   "Version 1.0 &nbsp;&middot;&nbsp; Effective [date]")
-REFERENCE_LINE  = "The Army Approach to Individual Training &nbsp;&middot;&nbsp; [ATG reference]"
+POSTER_STRAP    = "The Army Approach"
+# Scope only. Version, effective date, issuing authority and reference belong
+# to the controlled document; on a wall product they read as unfinished draft
+# furniture, so the poster states who it applies to and nothing more.
+CONTROL_LINE    = "Applies to all Army individual training"
+REFERENCE_LINE  = "The Army Approach to Individual Training"
 
 # NZ Army palette, Visual Identity Guidelines v1.0 p58.
 PALETTE = {
@@ -170,7 +170,6 @@ def main():
         cycle=cycle(doc["bands"][2]),
         cards=cards(doc["takeaways"]),
         marking=PROTECTIVE_MARKING,
-        stamp=mark(CONTROL_LINE),
         subtitle=mark(REFERENCE_LINE),
         **PALETTE,
     )
@@ -360,7 +359,6 @@ TEMPLATE = """<!doctype html>
 
   <footer class="foot">
     <div class="mark">{marking}</div>
-    <div>{stamp}</div>
     <div>{subtitle}</div>
   </footer>
 
