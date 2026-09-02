@@ -51,7 +51,7 @@ h. **Effect.** Measure the effect on the output, not the use of the tool. Scale,
 
 ## 3. Where AI Creates Military Advantage
 
-10. Five areas survive the test, ordered by the strength of the mechanism and by how much of the opportunity Army itself controls.
+10. Five areas survive the test, ordered by the strength of the mechanism and by how much of the opportunity Army itself controls. None has been measured inside Army: these are the areas to trial first, not demonstrated findings.
 
 ### Planning and staff work
 
@@ -175,7 +175,7 @@ b. **Prove effect in three places.** Bounded, measured trials: planning and orde
 
 c. **Train it through the approach.** A Defence AI course is running; the step now is to build that competence into individual training against real Army tasks, with verification and tool-denied assurance of core skills. Instructors first.
 
-d. **Improve the data.** Readiness and training data are likely to constrain some of the highest-value applications Army can control directly.
+d. **Improve the data.** Readiness and training data may constrain some of the highest-value applications Army can control directly. Test that before investing in it.
 
 e. **Compress the lessons cycle.** Move from observation to updated training and tactics at a pace the force can act on.
 

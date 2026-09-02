@@ -37,6 +37,11 @@ FRAMEWORK_TEST = ("If you cannot say what is limiting the task, and how AI would
                   "help, stop.")
 # the three tests behind the assurance rule, in the order a person asks them
 ASSURANCE_TESTS = "How bad if it is wrong? &nbsp;&middot;&nbsp; Can we undo it? &nbsp;&middot;&nbsp; Can a person check it?"
+# The framework above would suit any new technology. This is what makes AI
+# need it: the four properties that generate the risk.
+AI_IS_DIFFERENT = ("AI is different: it can be confidently wrong, it depends on "
+                   "the data behind it, it changes fast, and anyone can use it "
+                   "without asking.")
 
 # The poster trusts the thinking: headlines and one line each, no prose.
 # Everything here compresses the paper; the paper keeps its full wording.
@@ -76,7 +81,7 @@ POSTER_COPY = {
     "Own it":                       "Put someone in charge. Say what needs approval and what does not.",
     "Prove effect in three places": "Planning, training design, readiness data. Stop what does not work.",
     "Train it through the approach":"Train on real tasks. Test core skills without the tool. Instructors first.",
-    "Improve the data":             "Readiness and training data are probably the limit. Fix that first.",
+    "Improve the data":             "Readiness and training data may be the limit. Test that first.",
     "Compress the lessons cycle":   "Get lessons into training faster than the threat changes.",
 }
 PEOPLE = [   # the competence model as four blocks, not a divider
@@ -243,6 +248,7 @@ def main():
         questions=step_questions(framework["bands"][0]),
         test=esc(FRAMEWORK_TEST),
         assurance=esc(human["bands"][0]), tests=ASSURANCE_TESTS,
+        different=esc(AI_IS_DIFFERENT),
         tiles=area_tiles(advantage["rows"]),
         people=people_blocks(),
         principles=numbered(principles),
@@ -313,7 +319,7 @@ TEMPLATE = """<!doctype html>
                     line-height: 1.28; color: var(--red); }}
 
   /* ---- level 2: the model ----------------------------------------------- */
-  h2.display {{ font-size: 17pt; color: var(--black); margin: 7mm 0 4mm; }}
+  h2.display {{ font-size: 17pt; color: var(--black); margin: 6mm 0 3.5mm; }}
   h2.display .lab {{ display: block; margin-bottom: 1.4mm; }}
 
   .chevrons {{ display: flex; gap: 1.4mm; }}
@@ -335,17 +341,19 @@ TEMPLATE = """<!doctype html>
   .test {{ margin-top: 5mm; text-align: center; font-size: 11.6pt;
            color: var(--muted); }}
 
-  .band {{ margin-top: 6mm; background: var(--swamp); color: var(--white);
+  .band {{ margin-top: 5mm; background: var(--swamp); color: var(--white);
            padding: 4.5mm 8mm 5mm; text-align: center; border-radius: var(--r); }}
   .band .lab {{ color: var(--hills); }}
   .band .expr {{ font-size: 15.5pt; margin-top: 2.4mm; line-height: 1.2; }}
   .band .tests {{ font-size: 10.6pt; color: var(--hills); margin-top: 3mm; }}
+  .different {{ margin-top: 3mm; text-align: center; font-size: 10.6pt;
+                color: var(--muted); }}
 
-  .tiles-lab {{ margin-top: 6mm; }}
+  .tiles-lab {{ margin-top: 4.5mm; }}
   .tiles {{ margin-top: 3mm; display: grid; grid-template-columns: repeat(5, 1fr);
             gap: 4mm; }}
   .tile {{ background: var(--card); border-radius: var(--r);
-           padding: 4mm 4.5mm 4.5mm; display: flex; flex-direction: column; }}
+           padding: 3.6mm 4.5mm 4mm; display: flex; flex-direction: column; }}
   .tile h4 {{ font-size: 12.5pt; color: var(--swamp); line-height: 1.15;
               margin-bottom: 2.6mm; }}
   .tile p {{ font-size: 10.4pt; line-height: 1.26; color: var(--ink); }}
@@ -357,7 +365,7 @@ TEMPLATE = """<!doctype html>
   /* ---- level 3: the implications ---------------------------------------- */
   .people {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; }}
   .block {{ border: 0.5mm solid var(--hills); border-radius: var(--r);
-            padding: 4.5mm 4mm 5mm; text-align: center; }}
+            padding: 4mm 4mm 4.4mm; text-align: center; }}
   .block .who {{ font-size: 18pt; color: var(--swamp); line-height: 1; }}
   .block .what {{ font-size: 11.5pt; color: var(--muted); margin-top: 2.4mm; }}
 
@@ -366,7 +374,7 @@ TEMPLATE = """<!doctype html>
   .two h3 {{ font-size: 13pt; color: var(--black); margin-bottom: 4mm;
              font-family: "Archivo Black", "Arial Black", sans-serif;
              font-weight: 400; }}
-  .item {{ display: flex; gap: 4mm; margin-bottom: 3.2mm; align-items: baseline; }}
+  .item {{ display: flex; gap: 4mm; margin-bottom: 2.9mm; align-items: baseline; }}
   .item .n {{ font-size: 15pt; color: var(--swamp); width: 8mm; flex: none;
               line-height: 1; }}
   .item h4 {{ font-size: 12.5pt; color: var(--swamp); line-height: 1.15; }}
@@ -412,8 +420,9 @@ TEMPLATE = """<!doctype html>
     <div class="expr display">{assurance}</div>
     <div class="tests">{tests}</div>
   </div>
+  <div class="different">{different}</div>
 
-  <div class="tiles-lab lab">Where AI helps most</div>
+  <div class="tiles-lab lab">Priority areas to test</div>
   <div class="tiles">
 {tiles}
   </div>
