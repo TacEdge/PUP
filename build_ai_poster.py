@@ -36,41 +36,35 @@ PUNCHLINE = ("A small army that cannot fight when the tools are denied has not "
              "gained effectiveness. It has moved its dependence.")
 FRAMEWORK_TEST = ("An application that cannot answer Constraint and Mechanism is "
                   "novelty. Measure the effect on the output, not the use of the tool.")
-NOT_PRIORITISED = ("Deliberately not prioritised: autonomous targeting, and "
-                   "personnel analytics ahead of the data to support them.")
 
-# Below the people line the poster has to be read from a wall, not at arm's
-# length. These compress the paper's principles and actions; the paper keeps
-# its full wording. Keyed by heading; anything unlisted uses the paper's text.
-POSTER_COPY = {
-    "Effect first":
-        "Adopted where it improves an Army output, and measured against it.",
-    "Task before tool":
-        "From the output and its constraint to the application, never the reverse.",
-    "The commander owns it":
-        "AI advises; it does not decide where consequence is high. "
-        "Verify what you use. You own what you sign.",
-    "Assurance by consequence":
-        "More control where error costs more, lasts longer or is harder to check.",
-    "Competence before dependence":
-        "No one relies on a tool for a skill they must perform without it. "
-        "Competence comes from practice against real tasks.",
-    "Own it":
-        "Assign accountability for AI in Army; set risk appetite by consequence, "
-        "so low-consequence use is enabled by default.",
-    "Prove effect in three places":
-        "Bounded, measured trials: planning and orders in a headquarters; training "
-        "design in Army Training Group; readiness data. Stop what does not work.",
-    "Train it through the approach":
-        "AI competence built into individual training against real tasks, with "
-        "tool-denied assurance of core skills. Instructors first.",
-    "Improve the data":
-        "Readiness and training data are likely to constrain the highest-value "
-        "applications Army controls directly.",
-    "Compress the lessons cycle":
-        "From observation to updated training and tactics at a pace the force "
-        "can act on.",
+# The poster trusts the thinking: headlines and one line each, no prose.
+# Everything here compresses the paper; the paper keeps its full wording.
+STAGES = {   # source stage -> (chevron label, the question beneath it)
+    "Output":                    ("Output",       "What must we achieve?"),
+    "Task":                      ("Task",         "What limits it?"),
+    "Constraint":                ("Constraint",   "Why?"),
+    "AI Mechanism":              ("AI Mechanism", "How would AI help?"),
+    "Human Role":                ("Human Role",   "What stays human?"),
+    "Consequence and Assurance": ("Assurance",    "What control is needed?"),
+    "Competence and Practice":   ("Competence",   "Who must be able to do what?"),
+    "Effect":                    ("Effect",       "Did it improve the output?"),
 }
+POSTER_COPY = {
+    "Effect first":                 "Measure Army output, not AI use.",
+    "Task before tool":             "Start with the constraint, not the technology.",
+    "The commander owns it":        "AI advises. The commander decides and signs.",
+    "Assurance by consequence":     "More control where error costs more.",
+    "Competence before dependence": "Practise the skill. Never rely on the tool for it.",
+    "Own it":                       "Assign accountability. Set risk appetite by consequence.",
+    "Prove effect in three places": "Planning, training design, readiness data. Stop what fails.",
+    "Train it through the approach":"Real tasks, tool-denied assurance, instructors first.",
+    "Improve the data":             "Readiness and training data likely limit the highest-value uses.",
+    "Compress the lessons cycle":   "Observation to updated training, at a pace the force can act on.",
+}
+PEOPLE = [   # the competence model as four blocks, not a divider
+    ("Everyone", "understands it"), ("Many", "employ it"),
+    ("Leaders", "govern it"),       ("A few", "specialise in it"),
+]
 
 PALETTE = {
     "red": "#D31145", "black": "#000000", "swamp": "#00261B",
@@ -153,23 +147,42 @@ def logo_data_uri(path):
 # ------------------------------------------------------------- components ---
 
 def chevrons(band):
-    stages = [s.strip() for s in band.split("→")]
-    return "\n".join(f'    <div class="chev">{esc(s)}</div>' for s in stages)
+    out = []
+    for stage in (x.strip() for x in band.split("→")):
+        label, _ = STAGES.get(stage, (stage, ""))
+        out.append(f'    <div class="chev">{esc(label)}</div>')
+    return "\n".join(out)
 
 
-def step_questions(items):
-    return "\n".join(f'    <div class="q">{esc(body)}</div>' for _, body in items)
+def step_questions(band):
+    out = []
+    for stage in (x.strip() for x in band.split("→")):
+        _, q = STAGES.get(stage, (stage, ""))
+        out.append(f'    <div class="q">{esc(q)}</div>')
+    return "\n".join(out)
 
 
-def area_cards(rows):
+def pill(mode):
+    mode = mode.replace("; enable for readiness", " / Enable").replace(" and ", " / ")
+    return esc(mode)
+
+
+def area_tiles(rows):
     out = []
     for area, mechanism, mode, _consequence, human in rows[1:]:
         out.append(
-            f'    <div class="area"><h4>{esc(area)}</h4>'
+            f'    <div class="tile"><h4>{esc(area)}</h4>'
             f'<p>{esc(mechanism)}</p>'
-            f'<div class="mode">{esc(mode)}</div>'
+            f'<div class="pill">{pill(mode)}</div>'
             f'<p class="human">{esc(human)}</p></div>')
     return "\n".join(out)
+
+
+def people_blocks():
+    return "\n".join(
+        f'    <div class="block"><div class="who display">{esc(who)}</div>'
+        f'<div class="what">{esc(what)}</div></div>'
+        for who, what in PEOPLE)
 
 
 def numbered(items):
@@ -177,21 +190,9 @@ def numbered(items):
     for i, (head, body) in enumerate(items, 1):
         body = POSTER_COPY.get(head, body)
         out.append(
-            f'    <div class="item"><div class="n">{i}</div>'
+            f'    <div class="item"><div class="n display">{i}</div>'
             f'<div><h4>{esc(head)}</h4><p>{esc(body)}</p></div></div>')
     return "\n".join(out)
-
-
-def people_line(sections):
-    sec = find(sections, "5.")
-    for p in sec["paras"]:
-        if "Everyone understands it" in p:
-            sentence = p.split("Everyone understands it", 1)[1]
-            parts = ["Everyone understands it" + sentence.split(";")[0]]
-            parts += [s.strip().rstrip(".") for s in sentence.split(";")[1:]]
-            return ' <span class="dot">&bull;</span> '.join(
-                esc(x[0].upper() + x[1:]) for x in parts)
-    sys.exit("people line not found in section 5")
 
 
 # ------------------------------------------------------------------ build ---
@@ -206,8 +207,8 @@ def main():
     principles = find(sections, "8.")["items"]
     actions = find(sections, "9.")["items"]
 
-    if len(framework["items"]) != 8 or not framework["bands"]:
-        sys.exit("framework needs one band and eight steps")
+    if not framework["bands"]:
+        sys.exit("framework band missing from section 2")
     if len(advantage["rows"]) != 6:
         sys.exit("expected a header row and five areas")
     if not human["bands"]:
@@ -220,12 +221,11 @@ def main():
         answer=esc(answer[0]),
         punch=esc(PUNCHLINE),
         chevrons=chevrons(framework["bands"][0]),
-        questions=step_questions(framework["items"]),
+        questions=step_questions(framework["bands"][0]),
         test=esc(FRAMEWORK_TEST),
         assurance=esc(human["bands"][0]),
-        areas=area_cards(advantage["rows"]),
-        not_prioritised=esc(NOT_PRIORITISED),
-        people=people_line(sections),
+        tiles=area_tiles(advantage["rows"]),
+        people=people_blocks(),
         principles=numbered(principles),
         actions=numbered(actions),
         marking=PROTECTIVE_MARKING,
@@ -252,10 +252,13 @@ TEMPLATE = """<!doctype html>
 <meta charset="utf-8">
 <title>AI and Operational Effectiveness</title>
 <style>
+  /* Three levels: the answer, the model, the implications. Red carries one
+     meaning only: effect, decision, command accountability. */
   :root {{
     --red: {red}; --black: {black}; --swamp: {swamp}; --kawa: {kawa};
     --hills: {hills}; --moa: {moa}; --white: {white};
-    --ink: #14100C; --muted: #5A5449; --hair: #D9D2BC; --r: 1.6mm;
+    --ink: #14100C; --muted: #5A5449; --hair: #D9D2BC; --card: #F7F4E8;
+    --r: 1.6mm;
   }}
   @page {{ size: A3 portrait; margin: 0; }}
   * {{ box-sizing: border-box; margin: 0; padding: 0;
@@ -263,7 +266,7 @@ TEMPLATE = """<!doctype html>
   html, body {{ width: 297mm; }}
   body {{ font-family: Carlito, Calibri, sans-serif; background: var(--white);
           color: var(--ink); font-size: 11pt; line-height: 1.28; }}
-  .sheet {{ width: 297mm; height: 420mm; padding: 13mm 17mm 10mm;
+  .sheet {{ width: 297mm; height: 420mm; padding: 12mm 16mm 9mm;
             display: flex; flex-direction: column; }}
   .display {{ font-family: "Archivo Black", "Arial Black", sans-serif;
               font-weight: 400; letter-spacing: -0.01em; }}
@@ -271,86 +274,85 @@ TEMPLATE = """<!doctype html>
           color: var(--muted); }}
   .todo {{ color: var(--red); }}
 
+  /* ---- level 1: the answer ---------------------------------------------- */
   .masthead {{ display: flex; align-items: flex-start;
-               justify-content: space-between; gap: 12mm; padding-bottom: 4mm;
-               border-bottom: 1.2mm solid var(--red); }}
-  .masthead img {{ height: 15mm; margin-top: 1mm; }}
-  .titles h1 {{ font-size: 28pt; line-height: 0.95; color: var(--black);
-               white-space: nowrap; }}
-  .titles p {{ font-size: 12.5pt; font-weight: 700; color: var(--swamp);
-               margin-top: 2mm; }}
+               justify-content: space-between; gap: 12mm; padding-bottom: 3mm;
+               border-bottom: 1mm solid var(--red); }}
+  .masthead img {{ height: 12mm; margin-top: 0.8mm; }}
+  .titles h1 {{ font-size: 26pt; line-height: 0.95; color: var(--black);
+                white-space: nowrap; }}
+  .titles p {{ font-size: 11pt; font-weight: 700; color: var(--swamp);
+               margin-top: 1.6mm; }}
 
-  .question {{ margin-top: 7mm; }}
-  .question .q {{ font-size: 18pt; color: var(--black); margin-top: 2mm;
-                  line-height: 1.12; }}
+  .question {{ margin-top: 5mm; display: flex; align-items: baseline; gap: 5mm; }}
+  .question .q {{ font-size: 12.5pt; color: var(--muted); }}
 
-  .answer {{ margin-top: 4.5mm; border-left: 3.4mm solid var(--red);
-             background: var(--moa); padding: 5mm 8mm 5.5mm;
+  .answer {{ margin-top: 4mm; border-left: 3.4mm solid var(--red);
+             background: var(--moa); padding: 8mm 10mm 8.5mm;
              border-radius: var(--r); }}
-  .answer .lab {{ color: var(--kawa); margin-bottom: 2.6mm; }}
-  .answer p {{ font-size: 15pt; line-height: 1.3; color: var(--swamp);
+  .answer p {{ font-size: 19pt; line-height: 1.3; color: var(--swamp);
                font-weight: 700; }}
-  .answer .punch {{ display: block; margin-top: 3mm; font-size: 14.5pt;
-                    color: var(--red); }}
+  .answer .punch {{ display: block; margin-top: 6mm; font-size: 16.5pt;
+                    line-height: 1.28; color: var(--red); }}
 
-  h2.display {{ font-size: 16pt; color: var(--black); margin: 7mm 0 1.2mm; }}
-  .cap {{ font-size: 10pt; color: var(--muted); margin-bottom: 3.6mm; }}
+  /* ---- level 2: the model ----------------------------------------------- */
+  h2.display {{ font-size: 17pt; color: var(--black); margin: 8mm 0 4.5mm; }}
+  h2.display .lab {{ display: block; margin-bottom: 1.4mm; }}
 
-  /* the framework: eight stages, each with its question beneath */
-  .chevrons {{ display: flex; gap: 1.2mm; }}
-  .chev {{ flex: 1; padding: 3.5mm 2.5mm 3.5mm 6.5mm; font-size: 10.8pt;
-           font-weight: 700; min-height: 17mm; display: flex;
-           align-items: center; line-height: 1.14;
+  .chevrons {{ display: flex; gap: 1.4mm; }}
+  .chev {{ flex: 1; padding: 4mm 3mm 4mm 7.5mm; font-size: 13.5pt;
+           font-weight: 700; min-height: 23mm; display: flex;
+           align-items: center; line-height: 1.12;
            background: var(--swamp); color: var(--white);
-           clip-path: polygon(0 0, calc(100% - 4.5mm) 0, 100% 50%,
-                              calc(100% - 4.5mm) 100%, 0 100%, 4.5mm 50%); }}
-  .chev:first-child {{ padding-left: 4mm;
-    clip-path: polygon(0 0, calc(100% - 4.5mm) 0, 100% 50%,
-                       calc(100% - 4.5mm) 100%, 0 100%); }}
+           clip-path: polygon(0 0, calc(100% - 5mm) 0, 100% 50%,
+                              calc(100% - 5mm) 100%, 0 100%, 5mm 50%); }}
+  .chev:first-child {{ padding-left: 4.5mm;
+    clip-path: polygon(0 0, calc(100% - 5mm) 0, 100% 50%,
+                       calc(100% - 5mm) 100%, 0 100%); }}
   .chev:last-child {{ background: var(--red);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 4.5mm 50%); }}
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 5mm 50%); }}
   .questions {{ display: grid; grid-template-columns: repeat(8, 1fr);
-                gap: 1.2mm; margin-top: 2.6mm; }}
-  .questions .q {{ font-size: 8.6pt; line-height: 1.22; color: var(--muted);
-                   padding: 0 2mm 0 1mm; }}
-  .test {{ margin-top: 3.6mm; text-align: center; font-size: 11.6pt;
-           font-weight: 700; color: var(--swamp); }}
+                gap: 1.4mm; margin-top: 3mm; }}
+  .questions .q {{ font-size: 11pt; font-weight: 700; line-height: 1.2;
+                   color: var(--swamp); padding: 0 2mm 0 1.5mm; }}
+  .test {{ margin-top: 5mm; text-align: center; font-size: 11.6pt;
+           color: var(--muted); }}
 
-  .rule-box {{ margin-top: 6mm; padding: 4mm 0 4.5mm; text-align: center;
-               border-top: 0.4mm solid var(--hair);
-               border-bottom: 0.4mm solid var(--hair); }}
-  .rule-box .expr {{ font-size: 14pt; margin-top: 2.2mm; line-height: 1.2;
-                     color: var(--swamp); }}
+  .band {{ margin-top: 7mm; background: var(--swamp); color: var(--white);
+           padding: 4.5mm 8mm 5mm; text-align: center; border-radius: var(--r); }}
+  .band .lab {{ color: var(--hills); }}
+  .band .expr {{ font-size: 15.5pt; margin-top: 2.4mm; line-height: 1.2; }}
 
-  /* five areas of advantage */
-  .areas {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 6mm; }}
-  .area h4 {{ font-size: 11.4pt; color: var(--swamp); line-height: 1.18;
-              margin-bottom: 1.6mm; }}
-  .area p {{ font-size: 9.6pt; line-height: 1.28; color: var(--muted); }}
-  .area .mode {{ display: inline-block; margin: 2mm 0 1.6mm; padding: 0.6mm 2mm;
-                 border: 0.35mm solid var(--hills); border-radius: 1mm;
-                 font-size: 8.6pt; letter-spacing: 0.08em;
-                 text-transform: uppercase; color: var(--kawa); }}
-  .area .human {{ color: var(--ink); }}
-  .note {{ margin-top: 3mm; font-size: 9.6pt; color: var(--muted); }}
+  .tiles {{ margin-top: 7mm; display: grid; grid-template-columns: repeat(5, 1fr);
+            gap: 4mm; }}
+  .tile {{ background: var(--card); border-radius: var(--r);
+           padding: 4.5mm 5mm 5mm; display: flex; flex-direction: column; }}
+  .tile h4 {{ font-size: 12.5pt; color: var(--swamp); line-height: 1.15;
+              margin-bottom: 2.6mm; }}
+  .tile p {{ font-size: 10.4pt; line-height: 1.26; color: var(--ink); }}
+  .tile .pill {{ align-self: flex-start; margin: 3mm 0 3mm; padding: 0.9mm 2.4mm;
+                 background: var(--swamp); color: var(--white); border-radius: 1mm;
+                 font-size: 8.6pt; letter-spacing: 0.1em; text-transform: uppercase; }}
+  .tile .human {{ color: var(--muted); margin-top: auto; }}
 
-  .people {{ margin-top: 6mm; padding: 3.4mm 0; text-align: center;
-             border-top: 0.4mm solid var(--hair);
-             border-bottom: 0.4mm solid var(--hair); }}
-  .people .line {{ font-size: 12.5pt; font-weight: 700; color: var(--swamp);
-                   margin-top: 2mm; }}
-  .people .dot {{ color: var(--hills); padding: 0 1.6mm; }}
+  /* ---- level 3: the implications ---------------------------------------- */
+  .people {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; }}
+  .block {{ border: 0.5mm solid var(--hills); border-radius: var(--r);
+            padding: 4.5mm 4mm 5mm; text-align: center; }}
+  .block .who {{ font-size: 18pt; color: var(--swamp); line-height: 1; }}
+  .block .what {{ font-size: 11.5pt; color: var(--muted); margin-top: 2.4mm; }}
 
-  /* principles and actions side by side */
-  .two {{ display: grid; grid-template-columns: 1fr 1fr; gap: 12mm; }}
-  .two h2.display {{ margin-top: 6mm; }}
-  .item {{ display: flex; gap: 3.5mm; margin-bottom: 2.6mm; }}
-  .item .n {{ font-family: "Archivo Black", "Arial Black", sans-serif;
-              font-size: 12.5pt; color: var(--red); line-height: 1.1;
-              width: 7mm; flex: none; }}
-  .item h4 {{ font-size: 11pt; color: var(--swamp); line-height: 1.2;
-              margin-bottom: 0.8mm; }}
-  .item p {{ font-size: 9.6pt; line-height: 1.26; color: var(--muted); }}
+  .two {{ display: grid; grid-template-columns: 1fr 1fr; gap: 14mm;
+          margin-top: 6mm; }}
+  .two h3 {{ font-size: 13pt; color: var(--black); margin-bottom: 4mm;
+             font-family: "Archivo Black", "Arial Black", sans-serif;
+             font-weight: 400; }}
+  .item {{ display: flex; gap: 4mm; margin-bottom: 3.6mm; align-items: baseline; }}
+  .item .n {{ font-size: 15pt; color: var(--swamp); width: 8mm; flex: none;
+              line-height: 1; }}
+  .item h4 {{ font-size: 12.5pt; color: var(--swamp); line-height: 1.15; }}
+  .item p {{ font-size: 10.6pt; line-height: 1.26; color: var(--muted);
+             margin-top: 0.8mm; }}
 
   .foot {{ margin-top: auto; padding-top: 4mm; display: flex;
            justify-content: space-between; align-items: flex-end; gap: 8mm;
@@ -369,18 +371,16 @@ TEMPLATE = """<!doctype html>
     <img src="{logo}" alt="NZ Army">
   </header>
 
-  <section class="question">
+  <div class="question">
     <div class="lab">The Question</div>
-    <div class="q display">{question}</div>
-  </section>
+    <div class="q">{question}</div>
+  </div>
 
   <section class="answer">
-    <div class="lab">The Answer</div>
     <p>{answer}<span class="punch display">{punch}</span></p>
   </section>
 
-  <h2 class="display">The Framework</h2>
-  <div class="cap">Reason from the output to the tool. Close on measured effect.</div>
+  <h2 class="display"><span class="lab">The Model</span>The Framework</h2>
   <div class="chevrons">
 {chevrons}
   </div>
@@ -389,30 +389,27 @@ TEMPLATE = """<!doctype html>
   </div>
   <div class="test">{test}</div>
 
-  <div class="rule-box">
-    <div class="lab">Consequence and assurance are settled by a single test</div>
+  <div class="band">
+    <div class="lab">The assurance test</div>
     <div class="expr display">{assurance}</div>
   </div>
 
-  <h2 class="display">Where AI Creates Advantage</h2>
-  <div class="cap">Five areas survive the test, ordered by the strength of the mechanism and how much of it Army controls.</div>
-  <div class="areas">
-{areas}
+  <div class="tiles">
+{tiles}
   </div>
-  <div class="note">{not_prioritised}</div>
 
+  <h2 class="display"><span class="lab">The Implications</span>Army People</h2>
   <div class="people">
-    <div class="lab">Army people</div>
-    <div class="line">{people}</div>
+{people}
   </div>
 
   <div class="two">
     <div>
-      <h2 class="display">The Principles</h2>
+      <h3>The Principles</h3>
 {principles}
     </div>
     <div>
-      <h2 class="display">Priority Actions</h2>
+      <h3>Priority Actions</h3>
 {actions}
     </div>
   </div>
