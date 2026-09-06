@@ -28,8 +28,6 @@ Learners must be medically fit to participate in prolonged field-based physical 
 
 The course may involve periods of continuous physical activity of approximately 12–18 hours per day over four consecutive days without return to hard standing.
 
->! Review note: This requirement should be checked against the current NZALC Safety Management Plan, activity SOPs and applicable NZDF medical policy before publication.
-
 | Field | Entry |
 | --- | --- |
 | Entry Testing | N/A |
@@ -54,8 +52,6 @@ The course may involve periods of continuous physical activity of approximately 
 1. **Course Manager.** 1 × NZALC Instructor.
 2. **Instructional Staff.** Up to 5 × NZALC Instructors, appropriately qualified in accordance with the NZALC Activity SOP Part 3 Sect 3 (Wilderness), reflecting applicable industry standards for outdoor instruction and subject to external audit.
 3. **Instructor Ratio.** A minimum instructor-to-learner ratio of 1:8 is to be maintained for field-based activities.
-
->! Review note: Confirm the exact qualification/SOP reference remains current before publication.
 
 ## Nominations and Enrolments
 
