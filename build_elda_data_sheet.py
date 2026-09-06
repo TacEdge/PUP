@@ -33,8 +33,8 @@ DATE               = "September 2026"
 ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
 VERSION            = "Revised draft v0.1"
 
-TITLE       = "A18011 — ELDA Lead Teams"
-SUBTITLE_LINE = "Course Data Sheet — Revised Entries for AL 3.0"
+TITLE       = "A18011 ELDA Lead Teams"
+SUBTITLE_LINE = "Course Data Sheet: Revised Entries for AL 3.0"
 FOOTER_LEFT = "A18011 ELDA Lead Teams Course Data Sheet"
 
 ARMY_RED      = "C62026"

@@ -1,4 +1,4 @@
-# A18011 — ELDA Lead Teams Course Data Sheet
+# A18011 ELDA Lead Teams Course Data Sheet
 
 ## Course Information
 
@@ -22,7 +22,7 @@ All of the following:
 
 Retain the existing formal A1530 entry requirements and prerequisite codes currently recorded in SOLO, subject to administrative verification.
 
-### Manual Checks — Learning Provider Checks
+### Manual Checks: Learning Provider Checks
 
 Learners must be medically fit to participate in prolonged field-based physical activity while carrying FSMO.
 
@@ -82,34 +82,34 @@ Retain current SOLO administrative configuration as applicable.
 
 ## Course Structure
 
-### COG 1 — Experiential Leadership Development
+### COG 1: Experiential Leadership Development
 
-#### LO 1.1 — Apply strategies to maintain effective performance under pressure
+#### LO 1.1: Apply strategies to maintain effective performance under pressure
 
 Learners apply appropriate self-management strategies to maintain effective individual performance when exposed to physical, cognitive and interpersonal pressure.
 
 This encompasses the practical application of relevant performance-under-pressure tools and techniques rather than simply knowledge of those techniques.
 
-#### LO 1.2 — Apply effective leadership behaviours within a small team under challenging conditions
+#### LO 1.2: Apply effective leadership behaviours within a small team under challenging conditions
 
 Learners apply appropriate leadership behaviours while leading and contributing to a small team operating under physically, cognitively and interpersonally challenging conditions.
 
 The experiential activity provides repeated opportunities for learners to lead, follow, influence others, make decisions and adapt their leadership behaviour under pressure.
 
-#### LO 1.3 — Evaluate personal leadership performance and develop an individual leadership development plan
+#### LO 1.3: Evaluate personal leadership performance and develop an individual leadership development plan
 
 Learners critically reflect on their performance and leadership behaviours demonstrated throughout ELDA Lead Teams, identify strengths and areas for development, and develop an individual leadership development plan to support continued development throughout the A1530 JNCO Course and beyond.
 
 The three LO titles are assessable as written. Enabling objectives, learning content, activities and the evidence required against each LO are defined in the syllabus, not in this data sheet.
 
-## Annex — Learning Architecture
+## Annex: Learning Architecture
 
 The data sheet now has a single line of intent running from the course aim, through the three learning outcomes, to the next step.
 
 >> COURSE AIM | Develop leadership effectiveness
->> LO 1.1 — SELF | Maintain personal effectiveness under pressure
->> LO 1.2 — TEAM | Apply leadership behaviours with others under pressure
->> LO 1.3 — DEVELOPMENT | Evaluate how I led and what I need to develop
+>> LO 1.1: SELF | Maintain personal effectiveness under pressure
+>> LO 1.2: TEAM | Apply leadership behaviours with others under pressure
+>> LO 1.3: DEVELOPMENT | Evaluate how I led and what I need to develop
 >> NEXT STEP | Apply, reflect and deliberately develop throughout JNCO and the workplace
 
 ELDA Lead Teams creates an intense experiential baseline and an initial development plan. The Leadership Journal then provides the mechanism for learners to keep testing and reflecting on that leadership throughout the broader A1530 JNCO Course.
