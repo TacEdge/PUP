@@ -4,9 +4,13 @@
 Reads assets/lines-of-effort-tracker.xlsx and writes
 output/lines-of-effort-tracker.xlsm.  The output is the same workbook with:
 
-* the tblLoE rows pre-sorted Critical -> Important -> Routine, and
-* a VBA project whose Worksheet_Change handler re-sorts the table every
-  time a Priority cell changes, so rows always stay grouped by priority.
+* the tblLoE rows pre-sorted Critical -> Important -> Routine,
+* a "Complete" tick-box column on the right of the table,
+* an Archive tab (table tblArchive) that completed lines move to, and
+* a VBA project that keeps the table grouped by priority whenever a
+  Priority cell changes, moves a line to the Archive tab when its tick
+  box is clicked (and back again when the tick is clicked on the Archive
+  tab), and stamps today's date when a Last Updated cell is double-clicked.
 
 Excel stores VBA as an OLE compound file (xl/vbaProject.bin) laid out per
 [MS-OVBA].  No library on the build box writes that format, so this script
@@ -54,9 +58,10 @@ Attribute VB_TemplateDerived = False
 Attribute VB_Customizable = True
 Option Explicit
 
-' Tidy the table on open, in case it was edited somewhere macros do not
+' Tidy the tracker on open, in case it was edited somewhere macros do not
 ' run (for example Excel on iPad or iPhone).
 Private Sub Workbook_Open()
+    FillTickBoxes
     EnsureGroupedByPriority
 End Sub
 '''
@@ -72,20 +77,79 @@ Attribute VB_TemplateDerived = False
 Attribute VB_Customizable = True
 Option Explicit
 
-' Fires after any cell on this sheet changes.  When the change touches the
-' Priority column of tblLoE the table is re-grouped by priority.
+' The active Lines of Effort table on this sheet.
+Private Function Tracker() As ListObject
+    On Error Resume Next
+    Set Tracker = Me.ListObjects("tblLoE")
+    On Error GoTo 0
+End Function
+
+' Fires after any cell on this sheet changes.  Keeps every active line
+' showing a tick box and, when a Priority cell changed, re-groups the
+' table by priority.
 Private Sub Worksheet_Change(ByVal Target As Range)
     Dim lo As ListObject
 
-    On Error Resume Next
-    Set lo = Me.ListObjects("tblLoE")
-    On Error GoTo 0
+    Set lo = Tracker()
     If lo Is Nothing Then Exit Sub
     If lo.DataBodyRange Is Nothing Then Exit Sub
+    If Intersect(Target, lo.DataBodyRange) Is Nothing Then Exit Sub
 
-    If Intersect(Target, lo.ListColumns("Priority").DataBodyRange) Is Nothing Then Exit Sub
+    FillTickBoxes
+    If Not Intersect(Target, lo.ListColumns("Priority").DataBodyRange) Is Nothing Then
+        EnsureGroupedByPriority
+    End If
+End Sub
 
-    EnsureGroupedByPriority
+' A single click on a line's tick box marks it complete and moves it to
+' the Archive tab.
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    Dim lo As ListObject
+
+    Set lo = Tracker()
+    If Not IsInColumn(lo, "Complete", Target) Then Exit Sub
+
+    ArchiveLine ListRowIndex(lo, Target)
+    SelectLineCell Me, Target.Row
+End Sub
+
+' Double-clicking a Last Updated cell stamps today's date into it.
+Private Sub Worksheet_BeforeDoubleClick(ByVal Target As Range, Cancel As Boolean)
+    If IsInColumn(Tracker(), "Last Updated", Target) Then
+        StampToday Target
+        Cancel = True
+    End If
+End Sub
+'''
+
+VBA_SHEET2 = '''\
+Attribute VB_Name = "Sheet2"
+Attribute VB_Base = "0{00020820-0000-0000-C000-000000000046}"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = True
+Attribute VB_TemplateDerived = False
+Attribute VB_Customizable = True
+Option Explicit
+
+' The archive table on this sheet.
+Private Function Archive() As ListObject
+    On Error Resume Next
+    Set Archive = Me.ListObjects("tblArchive")
+    On Error GoTo 0
+End Function
+
+' A single click on an archived line's tick box sends it back to the
+' active tracker, where it is slotted into its priority group.
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    Dim lo As ListObject
+
+    Set lo = Archive()
+    If Not IsInColumn(lo, "Complete", Target) Then Exit Sub
+
+    RestoreLine ListRowIndex(lo, Target)
+    SelectLineCell Me, Target.Row
 End Sub
 '''
 
@@ -96,27 +160,106 @@ Option Explicit
 ' Order in which priorities are grouped, top to bottom.
 Private Const PRIORITY_ORDER As String = "Critical,Important,Routine"
 
-' Rows are never shrunk below this height after a sort (the table's
-' standard row height).
+' Rows are never shrunk below this height after a sort or move (the
+' tables' standard row height).
 Private Const MIN_ROW_HEIGHT As Double = 30
 
-Private mSorting As Boolean
+' Column headers the code relies on.
+Private Const COL_PRIORITY As String = "Priority"
+Private Const COL_LINE As String = "Line of Effort"
+Private Const COL_COMPLETE As String = "Complete"
+Private Const COL_COMPLETED_ON As String = "Completed"
 
-' Returns the Lines of Effort table, or Nothing if it cannot be found.
+Private mBusy As Boolean
+
+' ---------------------------------------------------------------------
+' Tables and tick-box glyphs
+' ---------------------------------------------------------------------
+
+' Returns the active Lines of Effort table, or Nothing if it cannot be found.
 Private Function LoETable() As ListObject
     On Error Resume Next
     Set LoETable = Sheet1.ListObjects("tblLoE")
     On Error GoTo 0
 End Function
 
-' Re-groups the table only when a row is out of priority order.
+' Returns the archive table, or Nothing if it cannot be found.
+Private Function ArchiveTable() As ListObject
+    On Error Resume Next
+    Set ArchiveTable = Sheet2.ListObjects("tblArchive")
+    On Error GoTo 0
+End Function
+
+' Empty tick box (Unicode ballot box).
+Public Function TickEmpty() As String
+    TickEmpty = ChrW(&H2610)
+End Function
+
+' Ticked box (Unicode ballot box with check).
+Public Function TickDone() As String
+    TickDone = ChrW(&H2611)
+End Function
+
+' ---------------------------------------------------------------------
+' Helpers shared by the sheet event handlers
+' ---------------------------------------------------------------------
+
+' True when cell is one cell inside the named column of the table's body.
+Public Function IsInColumn(ByVal lo As ListObject, ByVal colName As String, _
+                           ByVal cell As Range) As Boolean
+    IsInColumn = False
+    If lo Is Nothing Then Exit Function
+    If lo.DataBodyRange Is Nothing Then Exit Function
+    If cell.Cells.CountLarge <> 1 Then Exit Function
+    IsInColumn = Not Intersect(cell, lo.ListColumns(colName).DataBodyRange) Is Nothing
+End Function
+
+' 1-based index of the table row that cell sits in (0 if outside the body).
+Public Function ListRowIndex(ByVal lo As ListObject, ByVal cell As Range) As Long
+    ListRowIndex = 0
+    If lo Is Nothing Then Exit Function
+    If lo.DataBodyRange Is Nothing Then Exit Function
+    If Intersect(cell, lo.DataBodyRange) Is Nothing Then Exit Function
+    ListRowIndex = cell.Row - lo.DataBodyRange.Row + 1
+End Function
+
+' Moves the selection to the Line of Effort cell of the given sheet row,
+' so keyboard navigation does not land on a tick box and fire it again.
+Public Sub SelectLineCell(ByVal ws As Worksheet, ByVal sheetRow As Long)
+    Dim lo As ListObject
+    Dim eventsWereOn As Boolean
+
+    Set lo = ws.ListObjects(1)
+    eventsWereOn = Application.EnableEvents
+    Application.EnableEvents = False
+    On Error Resume Next
+    ws.Cells(sheetRow, lo.ListColumns(COL_LINE).Range.Column).Select
+    On Error GoTo 0
+    Application.EnableEvents = eventsWereOn
+End Sub
+
+' Writes today's date into a cell without triggering other handlers.
+Public Sub StampToday(ByVal cell As Range)
+    Dim eventsWereOn As Boolean
+
+    eventsWereOn = Application.EnableEvents
+    Application.EnableEvents = False
+    cell.Value = Date
+    Application.EnableEvents = eventsWereOn
+End Sub
+
+' ---------------------------------------------------------------------
+' Priority grouping
+' ---------------------------------------------------------------------
+
+' Re-groups the active table only when a row is out of priority order.
 Public Sub EnsureGroupedByPriority()
     If Not IsGroupedByPriority() Then SortLinesOfEffort
 End Sub
 
-' Sorts the table Critical, Important, Routine.  Rows with the same
-' priority keep their existing relative order.  Can also be run by hand
-' from Alt+F8.
+' Sorts the active table Critical, Important, Routine.  Rows with the
+' same priority keep their existing relative order.  Can also be run by
+' hand from Alt+F8.
 Public Sub SortLinesOfEffort()
     Dim lo As ListObject
     Dim eventsWereOn As Boolean
@@ -124,9 +267,9 @@ Public Sub SortLinesOfEffort()
     Set lo = LoETable()
     If lo Is Nothing Then Exit Sub
     If lo.DataBodyRange Is Nothing Then Exit Sub
-    If mSorting Then Exit Sub
+    If mBusy Then Exit Sub
 
-    mSorting = True
+    mBusy = True
     eventsWereOn = Application.EnableEvents
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -134,7 +277,7 @@ Public Sub SortLinesOfEffort()
 
     With lo.Sort
         .SortFields.Clear
-        .SortFields.Add Key:=lo.ListColumns("Priority").DataBodyRange, _
+        .SortFields.Add Key:=lo.ListColumns(COL_PRIORITY).DataBodyRange, _
             SortOn:=xlSortOnValues, Order:=xlAscending, _
             CustomOrder:=PRIORITY_ORDER, DataOption:=xlSortNormal
         .Header = xlYes
@@ -148,7 +291,7 @@ Public Sub SortLinesOfEffort()
 CleanUp:
     Application.ScreenUpdating = True
     Application.EnableEvents = eventsWereOn
-    mSorting = False
+    mBusy = False
 End Sub
 
 ' True when the Priority column is already in Critical / Important /
@@ -165,7 +308,7 @@ Public Function IsGroupedByPriority() As Boolean
     If lo.DataBodyRange Is Nothing Then Exit Function
 
     lastRank = 0
-    For Each cell In lo.ListColumns("Priority").DataBodyRange.Cells
+    For Each cell In lo.ListColumns(COL_PRIORITY).DataBodyRange.Cells
         thisRank = PriorityRank(cell.Value)
         If thisRank < lastRank Then
             IsGroupedByPriority = False
@@ -192,11 +335,167 @@ Private Function PriorityRank(ByVal priority As Variant) As Long
     Next i
 End Function
 
+' ---------------------------------------------------------------------
+' Tick boxes, archiving and restoring
+' ---------------------------------------------------------------------
+
+' Puts an empty tick box in the Complete column of every active line
+' that has a Line of Effort but no box yet.
+Public Sub FillTickBoxes()
+    Dim lo As ListObject
+    Dim r As ListRow
+    Dim box As Range
+    Dim eventsWereOn As Boolean
+
+    Set lo = LoETable()
+    If lo Is Nothing Then Exit Sub
+    If lo.DataBodyRange Is Nothing Then Exit Sub
+
+    eventsWereOn = Application.EnableEvents
+    Application.EnableEvents = False
+    On Error GoTo CleanUp
+
+    For Each r In lo.ListRows
+        Set box = r.Range.Cells(1, lo.ListColumns(COL_COMPLETE).Index)
+        If LineIsBlank(lo, r) Then
+            If box.Value = TickEmpty() Then box.ClearContents
+        ElseIf Len(CStr(box.Value)) = 0 Then
+            box.Value = TickEmpty()
+        End If
+    Next r
+
+CleanUp:
+    Application.EnableEvents = eventsWereOn
+End Sub
+
+' Marks the given active line complete and moves it to the Archive tab.
+Public Sub ArchiveLine(ByVal rowIndex As Long)
+    Dim src As ListObject
+    Dim dst As ListObject
+    Dim srcRow As ListRow
+    Dim dstRow As ListRow
+    Dim eventsWereOn As Boolean
+
+    Set src = LoETable()
+    Set dst = ArchiveTable()
+    If src Is Nothing Or dst Is Nothing Then Exit Sub
+    If rowIndex < 1 Or rowIndex > src.ListRows.Count Then Exit Sub
+    If mBusy Then Exit Sub
+
+    Set srcRow = src.ListRows(rowIndex)
+    If LineIsBlank(src, srcRow) Then Exit Sub
+
+    mBusy = True
+    eventsWereOn = Application.EnableEvents
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+    On Error GoTo CleanUp
+
+    Set dstRow = NextFreeRow(dst)
+    CopyLine src, srcRow, dst, dstRow
+    dstRow.Range.Cells(1, dst.ListColumns(COL_COMPLETE).Index).Value = TickDone()
+    dstRow.Range.Cells(1, dst.ListColumns(COL_COMPLETED_ON).Index).Value = Date
+    DeleteLine src, srcRow
+    FixRowHeights dst
+
+CleanUp:
+    Application.ScreenUpdating = True
+    Application.EnableEvents = eventsWereOn
+    mBusy = False
+End Sub
+
+' Sends an archived line back to the active tracker and re-groups it.
+Public Sub RestoreLine(ByVal rowIndex As Long)
+    Dim src As ListObject
+    Dim dst As ListObject
+    Dim srcRow As ListRow
+    Dim dstRow As ListRow
+    Dim eventsWereOn As Boolean
+
+    Set src = ArchiveTable()
+    Set dst = LoETable()
+    If src Is Nothing Or dst Is Nothing Then Exit Sub
+    If rowIndex < 1 Or rowIndex > src.ListRows.Count Then Exit Sub
+    If mBusy Then Exit Sub
+
+    Set srcRow = src.ListRows(rowIndex)
+    If LineIsBlank(src, srcRow) Then Exit Sub
+
+    mBusy = True
+    eventsWereOn = Application.EnableEvents
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+    On Error GoTo CleanUp
+
+    Set dstRow = NextFreeRow(dst)
+    CopyLine src, srcRow, dst, dstRow
+    dstRow.Range.Cells(1, dst.ListColumns(COL_COMPLETE).Index).Value = TickEmpty()
+    DeleteLine src, srcRow
+    mBusy = False
+    SortLinesOfEffort
+
+CleanUp:
+    Application.ScreenUpdating = True
+    Application.EnableEvents = eventsWereOn
+    mBusy = False
+End Sub
+
+' Copies every column the two tables share, matched by header name.
+Private Sub CopyLine(ByVal src As ListObject, ByVal srcRow As ListRow, _
+                     ByVal dst As ListObject, ByVal dstRow As ListRow)
+    Dim col As ListColumn
+    Dim dstCol As ListColumn
+
+    For Each col In src.ListColumns
+        Set dstCol = Nothing
+        On Error Resume Next
+        Set dstCol = dst.ListColumns(col.Name)
+        On Error GoTo 0
+        If Not dstCol Is Nothing Then
+            If col.Name <> COL_COMPLETE And col.Name <> COL_COMPLETED_ON Then
+                dstRow.Range.Cells(1, dstCol.Index).Value = srcRow.Range.Cells(1, col.Index).Value
+            End If
+        End If
+    Next col
+End Sub
+
+' The table's last row if it is blank, otherwise a newly added row.
+Private Function NextFreeRow(ByVal lo As ListObject) As ListRow
+    If lo.ListRows.Count > 0 Then
+        If LineIsBlank(lo, lo.ListRows(lo.ListRows.Count)) Then
+            Set NextFreeRow = lo.ListRows(lo.ListRows.Count)
+            Exit Function
+        End If
+    End If
+    Set NextFreeRow = lo.ListRows.Add
+End Function
+
+' Deletes a row, or clears it when it is the only row (a table keeps one).
+Private Sub DeleteLine(ByVal lo As ListObject, ByVal r As ListRow)
+    If lo.ListRows.Count > 1 Then
+        r.Delete
+    Else
+        r.Range.ClearContents
+    End If
+End Sub
+
+' True when the row has nothing in its Line of Effort cell.
+Private Function LineIsBlank(ByVal lo As ListObject, ByVal r As ListRow) As Boolean
+    Dim v As Variant
+    v = r.Range.Cells(1, lo.ListColumns(COL_LINE).Index).Value
+    If IsError(v) Then
+        LineIsBlank = False
+    Else
+        LineIsBlank = (Len(Trim$(CStr(v))) = 0)
+    End If
+End Function
+
 ' Excel's sort moves cell contents but not row heights, so re-fit the rows
-' and keep them at least the table's standard height.
+' and keep them at least the standard height.
 Private Sub FixRowHeights(ByVal lo As ListObject)
     Dim r As Range
 
+    If lo.DataBodyRange Is Nothing Then Exit Sub
     lo.DataBodyRange.Rows.AutoFit
     For Each r In lo.DataBodyRange.Rows
         If r.RowHeight < MIN_ROW_HEIGHT Then r.RowHeight = MIN_ROW_HEIGHT
@@ -211,6 +510,7 @@ MODULE_TYPE_DOCUMENT = 0x22
 MODULES = [
     ("ThisWorkbook", VBA_THISWORKBOOK, MODULE_TYPE_DOCUMENT),
     ("Sheet1", VBA_SHEET1, MODULE_TYPE_DOCUMENT),
+    ("Sheet2", VBA_SHEET2, MODULE_TYPE_DOCUMENT),
     ("modLoE", VBA_MODULE, MODULE_TYPE_STANDARD),
 ]
 
@@ -652,6 +952,203 @@ def sort_table_rows(sheet_xml: str, strings: list[str], first_row: int, last_row
     return sheet_xml[:start] + "".join(new_rows) + sheet_xml[end:]
 
 
+SHEET_NS = ('xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" '
+            'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"')
+X14_NS = 'xmlns:x14="http://schemas.microsoft.com/office/spreadsheetml/2009/9/main"'
+ARCHIVE_HEADER_ROW = 6
+ARCHIVE_DATABAR_ID = "{5B2E7D31-8C4A-4F0E-9A17-3D6C2B1E8F42}"
+
+# Column header -> (header style, data style) as used by the source sheet.
+HEADER_LEFT, HEADER_CENTRE = 3, 4
+STYLE_PRIORITY, STYLE_TEXT, STYLE_PERCENT, STYLE_DATE = 5, 6, 7, 8
+STYLE_TITLE, STYLE_BAND, STYLE_BAND_VALUE = 13, 14, 15
+STYLE_TICK = 16   # appended to styles.xml by add_tick_style()
+
+
+def add_tick_style(styles_xml: str) -> str:
+    """Append a centred 14pt cell style for the tick boxes (cellXfs index 16)."""
+    fonts = re.search(r'<fonts count="(\d+)"', styles_xml)
+    n_fonts = int(fonts.group(1))
+    styles_xml = styles_xml.replace(fonts.group(0), f'<fonts count="{n_fonts + 1}"', 1)
+    styles_xml = styles_xml.replace(
+        "</fonts>",
+        '<font><sz val="14"/><color rgb="FF222222"/><name val="Arial"/><family val="2"/></font></fonts>', 1)
+
+    xfs = re.search(r'<cellXfs count="(\d+)"', styles_xml)
+    assert int(xfs.group(1)) == STYLE_TICK, "unexpected cellXfs count"
+    styles_xml = styles_xml.replace(xfs.group(0), f'<cellXfs count="{STYLE_TICK + 1}"', 1)
+    styles_xml = styles_xml.replace(
+        "</cellXfs>",
+        f'<xf numFmtId="0" fontId="{n_fonts}" fillId="0" borderId="1" xfId="0" '
+        'applyFont="1" applyBorder="1" applyAlignment="1">'
+        '<alignment horizontal="center" vertical="center"/></xf></cellXfs>', 1)
+    return styles_xml
+
+
+def add_shared_strings(sst_xml: str, texts: list[str]) -> tuple[str, dict[str, int]]:
+    """Append texts to the shared string table; return their indexes."""
+    existing = shared_strings(sst_xml)
+    indexes = {}
+    new = []
+    for text in texts:
+        if text in existing:
+            indexes[text] = existing.index(text)
+        else:
+            indexes[text] = len(existing) + len(new)
+            new.append(text)
+    m = re.search(r'<sst [^>]*count="(\d+)" uniqueCount="(\d+)"', sst_xml)
+    count, unique = int(m.group(1)), int(m.group(2))
+    sst_xml = sst_xml.replace(m.group(0), m.group(0)
+                              .replace(f'count="{count}"', f'count="{count + len(new)}"')
+                              .replace(f'uniqueCount="{unique}"', f'uniqueCount="{unique + len(new)}"'), 1)
+    sst_xml = sst_xml.replace("</sst>", "".join(f"<si><t>{t}</t></si>" for t in new) + "</sst>")
+    return sst_xml, indexes
+
+
+def cell(ref: str, style: int, shared: int | None = None) -> str:
+    if shared is None:
+        return f'<c r="{ref}" s="{style}"/>'
+    return f'<c r="{ref}" s="{style}" t="s"><v>{shared}</v></c>'
+
+
+def add_complete_column(sheet_xml: str, ss: dict[str, int], last_row: int) -> str:
+    """Add column H (Complete) to the main sheet: header, tick boxes, widths."""
+    sheet_xml = sheet_xml.replace('<dimension ref="A1:G31"/>', f'<dimension ref="A1:H{last_row}"/>', 1)
+    sheet_xml = sheet_xml.replace(
+        "</cols>", '<col min="8" max="8" width="11.5" customWidth="1"/></cols>', 1)
+    sheet_xml = sheet_xml.replace('spans="1:7"', 'spans="1:8"')
+    sheet_xml = sheet_xml.replace('<mergeCell ref="A2:G2"/>', '<mergeCell ref="A2:H2"/>', 1)
+
+    extras = {2: cell("H2", STYLE_TITLE), 4: cell("H4", STYLE_BAND), 5: cell("H5", STYLE_BAND_VALUE),
+              7: cell("H7", HEADER_CENTRE, ss["Complete"])}
+    for r in range(FIRST_DATA_ROW, last_row + 1):
+        extras[r] = cell(f"H{r}", STYLE_TICK, ss[TICK_EMPTY])
+
+    def append_cell(m: re.Match) -> str:
+        row_number = int(m.group(1))
+        if row_number not in extras or not m.group(0).endswith("</row>"):
+            return m.group(0)
+        return m.group(0)[:-len("</row>")] + extras[row_number] + "</row>"
+
+    sheet_xml, n = re.subn(r'<row r="(\d+)"[^>]*?(?:/>|>.*?</row>)', append_cell, sheet_xml, flags=re.S)
+    assert n >= last_row, "rows not found"
+
+    # Prompt on Last Updated cells so the double-click shortcut is discoverable.
+    sheet_xml = sheet_xml.replace('<dataValidations count="2">', '<dataValidations count="3">', 1)
+    sheet_xml = sheet_xml.replace(
+        "</dataValidations>",
+        '<dataValidation type="none" allowBlank="1" showInputMessage="1" '
+        'promptTitle="Last Updated" prompt="Double-click to stamp today\'s date." '
+        'sqref="G8:G38"/></dataValidations>', 1)
+    return sheet_xml
+
+
+def widen_table(table_xml: str, last_row: int) -> str:
+    """Extend tblLoE from A:G to A:H with a Complete column."""
+    table_xml = table_xml.replace(f'ref="A7:G{last_row}"', f'ref="A7:H{last_row}"')
+    table_xml = table_xml.replace('<tableColumns count="7">', '<tableColumns count="8">', 1)
+    table_xml = table_xml.replace(
+        "</tableColumns>", '<tableColumn id="8" name="Complete"/></tableColumns>', 1)
+    return table_xml
+
+
+def build_archive_sheet(ss: dict[str, int], source_sheet_xml: str) -> str:
+    """The Archive tab: title, hint band, and an empty tblArchive."""
+    cols = "".join(re.findall(r'<col [^>]*/>', source_sheet_xml))
+    cols += '<col min="8" max="8" width="11.5" customWidth="1"/>'
+    cols += '<col min="9" max="9" width="13.98828125" customWidth="1"/>'
+    header = ARCHIVE_HEADER_ROW
+    data = header + 1
+    columns = "ABCDEFGHI"
+
+    headers = [("Priority", HEADER_LEFT), ("Line of Effort", HEADER_LEFT),
+               ("End State / Output", HEADER_LEFT), ("Progress %", HEADER_CENTRE),
+               ("Next Action", HEADER_LEFT), ("Notes", HEADER_LEFT),
+               ("Last Updated", HEADER_CENTRE), ("Complete", HEADER_CENTRE),
+               ("Completed", HEADER_CENTRE)]
+    data_styles = [STYLE_PRIORITY, STYLE_TEXT, STYLE_TEXT, STYLE_PERCENT, STYLE_TEXT,
+                   STYLE_TEXT, STYLE_DATE, STYLE_TICK, STYLE_DATE]
+
+    rows = [
+        '<row r="1" spans="1:9" ht="6" customHeight="1"/>',
+        '<row r="2" spans="1:9" ht="31.5" customHeight="1">'
+        + cell("A2", STYLE_TITLE, ss[ARCHIVE_TITLE])
+        + "".join(cell(f"{c}2", STYLE_TITLE) for c in columns[1:]) + "</row>",
+        '<row r="3" spans="1:9" ht="6" customHeight="1"/>',
+        '<row r="4" spans="1:9" ht="15" customHeight="1">'
+        + cell("A4", STYLE_BAND, ss[ARCHIVE_HINT])
+        + "".join(cell(f"{c}4", STYLE_BAND) for c in columns[1:]) + "</row>",
+        '<row r="5" spans="1:9" ht="6" customHeight="1"/>',
+        f'<row r="{header}" spans="1:9" ht="24" customHeight="1">'
+        + "".join(cell(f"{c}{header}", style, ss[name]) for c, (name, style) in zip(columns, headers))
+        + "</row>",
+        f'<row r="{data}" spans="1:9" ht="30" customHeight="1">'
+        + "".join(cell(f"{c}{data}", style) for c, style in zip(columns, data_styles)) + "</row>",
+    ]
+
+    page = re.search(r"<pageMargins .*?</headerFooter>", source_sheet_xml, re.S).group(0)
+    page = re.sub(r' r:id="[^"]*"', "", page)
+
+    return (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        f'<worksheet {SHEET_NS}>'
+        '<sheetPr codeName="Sheet2"><pageSetUpPr fitToPage="1"/></sheetPr>'
+        f'<dimension ref="A1:I{data}"/>'
+        '<sheetViews><sheetView showGridLines="0" zoomScaleNormal="100" workbookViewId="0">'
+        f'<pane ySplit="{header}" topLeftCell="A{data}" activePane="bottomLeft" state="frozen"/>'
+        f'<selection pane="bottomLeft" activeCell="B{data}" sqref="B{data}"/>'
+        '</sheetView></sheetViews>'
+        '<sheetFormatPr defaultColWidth="8.609375" defaultRowHeight="15"/>'
+        f'<cols>{cols}</cols>'
+        f'<sheetData>{"".join(rows)}</sheetData>'
+        '<mergeCells count="2"><mergeCell ref="A2:I2"/><mergeCell ref="A4:I4"/></mergeCells>'
+        f'<conditionalFormatting sqref="A{data}:A200">'
+        '<cfRule type="expression" dxfId="4" priority="1"><formula>$A7="Critical"</formula></cfRule>'
+        '<cfRule type="expression" dxfId="3" priority="2"><formula>$A7="Important"</formula></cfRule>'
+        '<cfRule type="expression" dxfId="2" priority="3"><formula>$A7="Routine"</formula></cfRule>'
+        '</conditionalFormatting>'
+        f'<conditionalFormatting sqref="D{data}:D200"><cfRule type="dataBar" priority="4">'
+        '<dataBar><cfvo type="num" val="0"/><cfvo type="num" val="1"/><color rgb="FF9DBE85"/></dataBar>'
+        f'<extLst><ext uri="{{B025F937-C7B1-47D3-B67F-A62EFF666E3E}}" {X14_NS}>'
+        f'<x14:id>{ARCHIVE_DATABAR_ID}</x14:id></ext></extLst></cfRule></conditionalFormatting>'
+        + page +
+        '<tableParts count="1"><tablePart r:id="rId1"/></tableParts>'
+        f'<extLst><ext uri="{{78C0D931-6437-407d-A8EE-F0AAD7539E65}}" {X14_NS}>'
+        '<x14:conditionalFormattings>'
+        '<x14:conditionalFormatting xmlns:xm="http://schemas.microsoft.com/office/excel/2006/main">'
+        f'<x14:cfRule type="dataBar" id="{ARCHIVE_DATABAR_ID}">'
+        '<x14:dataBar minLength="0" maxLength="100" gradient="0" axisPosition="none">'
+        '<x14:cfvo type="num"><xm:f>0</xm:f></x14:cfvo><x14:cfvo type="num"><xm:f>1</xm:f></x14:cfvo>'
+        '<x14:negativeFillColor rgb="FF9DBE85"/></x14:dataBar></x14:cfRule>'
+        f'<xm:sqref>D{data}:D200</xm:sqref></x14:conditionalFormatting>'
+        '</x14:conditionalFormattings></ext></extLst>'
+        '</worksheet>'
+    )
+
+
+def build_archive_table() -> str:
+    names = ["Priority", "Line of Effort", "End State / Output", "Progress %", "Next Action",
+             "Notes", "Last Updated", "Complete", "Completed"]
+    ref = f"A{ARCHIVE_HEADER_ROW}:I{ARCHIVE_HEADER_ROW + 1}"
+    return (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<table xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" '
+        f'id="2" name="tblArchive" displayName="tblArchive" ref="{ref}" totalsRowShown="0">'
+        f'<autoFilter ref="{ref}"/>'
+        f'<tableColumns count="{len(names)}">'
+        + "".join(f'<tableColumn id="{i + 1}" name="{n}"/>' for i, n in enumerate(names))
+        + '</tableColumns>'
+        '<tableStyleInfo showFirstColumn="0" showLastColumn="0" showRowStripes="1" showColumnStripes="0"/>'
+        '</table>'
+    )
+
+
+TICK_EMPTY = "☐"
+ARCHIVE_TITLE = "NZALC HQ - ARCHIVED LINES OF EFFORT"
+ARCHIVE_HINT = ("COMPLETED LINES LAND HERE AUTOMATICALLY - CLICK A LINE'S TICK BOX "
+                "TO SEND IT BACK TO THE ACTIVE TRACKER")
+
+
 def build(src: str, dst: str) -> None:
     vba_bin = build_vba_project_bin()
 
@@ -663,24 +1160,47 @@ def build(src: str, dst: str) -> None:
     ref = re.search(r'<table [^>]*\bref="([A-Z]+)(\d+):([A-Z]+)(\d+)"', table_xml)
     header_row, last_row = int(ref.group(2)), int(ref.group(4))
     assert header_row + 1 == FIRST_DATA_ROW, "table header row moved"
-    assert f'name="{TABLE_NAME}"' in table_xml
+    assert f'name="{TABLE_NAME}"' in table_xml and ref.group(3) == "G"
+    parts["xl/tables/table1.xml"] = widen_table(table_xml, last_row).encode("utf-8")
 
-    strings = shared_strings(parts["xl/sharedStrings.xml"].decode("utf-8"))
+    sst_xml, ss = add_shared_strings(
+        parts["xl/sharedStrings.xml"].decode("utf-8"),
+        ["Complete", "Completed", TICK_EMPTY, ARCHIVE_TITLE, ARCHIVE_HINT, "Priority",
+         "Line of Effort", "End State / Output", "Progress %", "Next Action", "Notes",
+         "Last Updated"])
+    parts["xl/sharedStrings.xml"] = sst_xml.encode("utf-8")
+    strings = shared_strings(sst_xml)
+
+    parts["xl/styles.xml"] = add_tick_style(parts["xl/styles.xml"].decode("utf-8")).encode("utf-8")
 
     sheet = parts["xl/worksheets/sheet1.xml"].decode("utf-8")
     sheet = sort_table_rows(sheet, strings, FIRST_DATA_ROW, last_row)
     sheet, n = re.subn(r"<sheetPr>", '<sheetPr codeName="Sheet1">', sheet, count=1)
     assert n == 1, "sheetPr not found"
+    sheet = add_complete_column(sheet, ss, last_row)
     parts["xl/worksheets/sheet1.xml"] = sheet.encode("utf-8")
+
+    parts["xl/worksheets/sheet2.xml"] = build_archive_sheet(ss, sheet).encode("utf-8")
+    parts["xl/worksheets/_rels/sheet2.xml.rels"] = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/table" '
+        'Target="../tables/table2.xml"/></Relationships>').encode("utf-8")
+    parts["xl/tables/table2.xml"] = build_archive_table().encode("utf-8")
 
     workbook = parts["xl/workbook.xml"].decode("utf-8")
     workbook, n = re.subn(r"<workbookPr/>", '<workbookPr codeName="ThisWorkbook"/>', workbook, count=1)
     assert n == 1, "workbookPr not found"
+    workbook = workbook.replace("</sheets>", '<sheet name="Archive" sheetId="2" r:id="rIdArchive"/></sheets>', 1)
+    workbook = workbook.replace("'Lines of Effort Tracker'!$A$1:$G$38", "'Lines of Effort Tracker'!$A$1:$H$38", 1)
     parts["xl/workbook.xml"] = workbook.encode("utf-8")
 
     rels = parts["xl/_rels/workbook.xml.rels"].decode("utf-8")
     rels = rels.replace(
         "</Relationships>",
+        '<Relationship Id="rIdArchive" '
+        'Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" '
+        'Target="worksheets/sheet2.xml"/>'
         '<Relationship Id="rIdVBA" '
         'Type="http://schemas.microsoft.com/office/2006/relationships/vbaProject" '
         'Target="vbaProject.bin"/></Relationships>')
@@ -693,12 +1213,20 @@ def build(src: str, dst: str) -> None:
     assert n == 1, "workbook content type not found"
     types = types.replace(
         "</Types>",
+        '<Override PartName="/xl/worksheets/sheet2.xml" '
+        'ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>'
+        '<Override PartName="/xl/tables/table2.xml" '
+        'ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"/>'
         '<Override PartName="/xl/vbaProject.bin" '
         'ContentType="application/vnd.ms-office.vbaProject"/></Types>')
     parts["[Content_Types].xml"] = types.encode("utf-8")
 
     parts["xl/vbaProject.bin"] = vba_bin
     order.insert(order.index("xl/workbook.xml") + 1, "xl/vbaProject.bin")
+    at = order.index("xl/worksheets/sheet1.xml") + 1
+    order[at:at] = ["xl/worksheets/sheet2.xml"]
+    order.insert(order.index("xl/worksheets/_rels/sheet1.xml.rels") + 1, "xl/worksheets/_rels/sheet2.xml.rels")
+    order.insert(order.index("xl/tables/table1.xml") + 1, "xl/tables/table2.xml")
 
     with zipfile.ZipFile(dst, "w", zipfile.ZIP_DEFLATED) as zout:
         for name in order:
