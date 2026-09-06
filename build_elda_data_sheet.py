@@ -44,7 +44,7 @@ WAIOURU_HILLS = "A89662"
 MOAWHANGO     = "CDD2B7"
 
 FONT_HEAD = "Arial"
-FONT_BODY = "Book Antiqua"
+FONT_BODY = "Arial"
 
 # ------------------------------------------------------------ XML helpers ---
 
