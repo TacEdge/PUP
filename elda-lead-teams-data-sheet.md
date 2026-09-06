@@ -97,15 +97,3 @@ The experiential activity provides repeated opportunities for learners to lead, 
 Learners critically reflect on their performance and leadership behaviours demonstrated throughout ELDA Lead Teams, identify strengths and areas for development, and develop an individual leadership development plan to support continued development throughout the A1530 JNCO Course and beyond.
 
 The three LO titles are assessable as written. Enabling objectives, learning content, activities and the evidence required against each LO are defined in the syllabus, not in this data sheet.
-
-## Annex: Learning Architecture
-
-The data sheet now has a single line of intent running from the course aim, through the three learning outcomes, to the next step.
-
->> COURSE AIM | Develop leadership effectiveness
->> LO 1.1: SELF | Maintain personal effectiveness under pressure
->> LO 1.2: TEAM | Apply leadership behaviours with others under pressure
->> LO 1.3: DEVELOPMENT | Evaluate how I led and what I need to develop
->> NEXT STEP | Apply, reflect and deliberately develop throughout JNCO and the workplace
-
-ELDA Lead Teams creates an intense experiential baseline and an initial development plan. The Leadership Journal then provides the mechanism for learners to keep testing and reflecting on that leadership throughout the broader A1530 JNCO Course.

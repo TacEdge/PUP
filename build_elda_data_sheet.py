@@ -31,10 +31,9 @@ DOCUMENT_REFERENCE = "SOLO Course Data Sheet A18011, AL 3.0"
 FOOTER_REFERENCE   = "ACS 2026"
 DATE               = "September 2026"
 ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
-VERSION            = "Revised draft v0.1"
 
 TITLE       = "A18011 ELDA Lead Teams"
-SUBTITLE_LINE = "Course Data Sheet: Revised Entries for AL 3.0"
+SUBTITLE_LINE = "Course Data Sheet"
 FOOTER_LEFT = "A18011 ELDA Lead Teams Course Data Sheet"
 
 ARMY_RED      = "C62026"
@@ -197,7 +196,6 @@ h1.paragraph_format.keep_with_next = True
 
 def add_section_heading(text):
     p = doc.add_paragraph(style="Heading 1")
-    set_border(p, "left", ARMY_RED, 24, space=8)
     add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(12), bold=True,
                   color=SWAMP_GREEN)
     return p
@@ -460,8 +458,7 @@ meta_p = doc.add_paragraph()
 meta_p.paragraph_format.space_after = Pt(10)
 set_border(meta_p, "bottom", WAIOURU_HILLS, 6, space=6)
 for i, (label, value) in enumerate([
-        ("Reference", DOCUMENT_REFERENCE), ("Date", DATE),
-        ("Version", VERSION)]):
+        ("Reference", DOCUMENT_REFERENCE), ("Date", DATE)]):
     if i:
         gap = meta_p.add_run("      ")
         force_font(gap, FONT_HEAD)
