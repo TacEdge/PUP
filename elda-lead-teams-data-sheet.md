@@ -2,7 +2,7 @@
 
 ## Course Information
 
-| Field | Revised Entry |
+| Field | Entry |
 | --- | --- |
 | Course ID | A18011 |
 | Course Name | ELDA Lead Teams |
@@ -40,7 +40,7 @@ The course may involve periods of continuous physical activity of approximately 
 
 ## Governance and Delivery
 
-| Field | Revised Entry |
+| Field | Entry |
 | --- | --- |
 | Governance Body | Army Training Review Board (ATRB) |
 | Trade Sponsor / Authority | Army Command School (ACS) |
