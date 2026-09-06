@@ -80,8 +80,6 @@ Retain current SOLO administrative configuration as applicable.
 5. The Learning Provider is the New Zealand Army Leadership Centre (NZALC).
 6. Learning and individual development identified during ELDA Lead Teams should be carried forward through subsequent A1530 learning activities to support continued reflection and deliberate leadership development.
 
->! Review note: Note 2 uses "initial phase" rather than "first week". The course is six training days, so "first week" created an unnecessary internal inconsistency.
-
 ## Course Structure
 
 ### COG 1 — Experiential Leadership Development
