@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Build the revised A18011 'ELDA Lead Teams' Course Data Sheet as a compact
-branded .docx. Letterhead-style first page (no cover, no TOC); body typeset
+Build a revised ELDA Course Data Sheet as a compact branded .docx.
+Pick the sheet by name:  python3 build_elda_data_sheet.py lead-leaders
+(default: lead-teams). Letterhead-style first page (no cover, no TOC); body typeset
 from SOURCE_FILE on the established brand system.
 
 Source mini-syntax (a superset of the SOP builder's):
@@ -14,6 +15,7 @@ Source mini-syntax (a superset of the SOP builder's):
 
 import io
 import re
+import sys
 
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_TAB_ALIGNMENT
@@ -23,18 +25,36 @@ from docx.shared import Cm, Mm, Pt, RGBColor
 from PIL import Image
 
 # ----------------------------------------------------------------- CONFIG ---
-SOURCE_FILE        = "./elda-lead-teams-data-sheet.md"
+SHEETS = {
+    "lead-teams": dict(
+        source="./elda-lead-teams-data-sheet.md",
+        output="./output/elda-lead-teams-data-sheet.docx",
+        title="A18011 ELDA Lead Teams",
+        reference="SOLO Course Data Sheet A18011, AL 3.0",
+        footer_left="A18011 ELDA Lead Teams Course Data Sheet",
+    ),
+    "lead-leaders": dict(
+        source="./elda-lead-leaders-data-sheet.md",
+        output="./output/elda-lead-leaders-data-sheet.docx",
+        title="A18008 ELDA Lead Leaders",
+        reference="SOLO Course Data Sheet A18008, AL 3.1",
+        footer_left="A18008 ELDA Lead Leaders Course Data Sheet",
+    ),
+}
+SHEET = SHEETS[sys.argv[1] if len(sys.argv) > 1 else "lead-teams"]
+
+SOURCE_FILE        = SHEET["source"]
 LOGO_FILE          = "./assets/nz-army-logo.png"
-OUTPUT_DOCX        = "./output/elda-lead-teams-data-sheet.docx"
+OUTPUT_DOCX        = SHEET["output"]
 PROTECTIVE_MARKING = "UNCLASSIFIED"
-DOCUMENT_REFERENCE = "SOLO Course Data Sheet A18011, AL 3.0"
+DOCUMENT_REFERENCE = SHEET["reference"]
 FOOTER_REFERENCE   = "ACS 2026"
 DATE               = "September 2026"
 ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
 
-TITLE       = "A18011 ELDA Lead Teams"
+TITLE       = SHEET["title"]
 SUBTITLE_LINE = "Course Data Sheet"
-FOOTER_LEFT = "A18011 ELDA Lead Teams Course Data Sheet"
+FOOTER_LEFT = SHEET["footer_left"]
 
 ARMY_RED      = "C62026"
 DARKEST_HOUR  = "000000"
@@ -288,10 +308,16 @@ def add_field_table(rows):
                     if k:
                         p.add_run().add_break()
                     add_text_runs(p, part.strip(), size=Pt(10))
-    for row in table.rows:
+    for r_idx, row in enumerate(table.rows):
         trPr = row._tr.get_or_add_trPr()
         cant = OxmlElement("w:cantSplit")
         trPr.append(cant)
+        # Short tables stay in one piece: every row but the last keeps with
+        # the next, and the preceding heading already keeps with the table.
+        if len(table.rows) <= 8 and r_idx < len(table.rows) - 1:
+            for c in row.cells:
+                for p in c.paragraphs:
+                    p.paragraph_format.keep_with_next = True
     spacer = doc.add_paragraph()
     spacer.paragraph_format.space_after = Pt(4)
     return table
