@@ -1174,9 +1174,8 @@ ADDITIONAL_LINES = [
      "just the personnel issue"),
     ("Critical", "Contractor Engagement Close-out",
      "Engagement formally closed with no expectation of future work", 0,
-     "Confirm Jim has made the close-out call and record the outcome",
-     "ASAP. Jim owns the call; Mike accountable for closure. Individual not "
-     "to be re-engaged"),
+     "Make the close-out call to Drew and record the outcome",
+     "ASAP. Individual not to be re-engaged"),
     ("Critical", "Nemesis and Lead Teams Alignment",
      "Nemesis purpose clarified with OCS and Army leadership, or redesigned "
      "to deliver the intended Lead Teams outcomes", 0,

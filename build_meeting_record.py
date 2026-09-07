@@ -21,15 +21,6 @@ TAG = "NZALC Command and Staff Meeting"
 REFERENCE = "Meeting notes, September 2026"
 FOOTER_LEFT = "NZALC | Meeting Record"
 
-TAKEAWAY = (
-    "The centre's problem is no longer primarily designing good training. "
-    "The material and delivery architecture are increasingly mature. The "
-    "next phase is about institutionalising it: instructor behaviours, "
-    "induction, SOPs, assurance, administrative discipline, and ensuring "
-    "programmes such as Nemesis genuinely deliver the outcomes they claim "
-    "to deliver."
-)
-
 PRIORITIES = [
     ("Course delivery is in a strong position.",
      "Lead Teams and ELDA delivery is producing good outcomes and the updated "
@@ -73,10 +64,9 @@ ACTIONS = [
     ("High", "Review and tighten the staff and contractor onboarding and "
              "induction SOP, including safety induction, supervision, due "
              "diligence and documented completion", "Mike", "ASAP"),
-    ("High", "Close out the contractor engagement and ensure no expectation "
-             "of future work remains. Jim makes the formal close-out call; "
-             "Mike is accountable for confirming closure", "Jim (call); Mike "
-             "(closure)", "ASAP"),
+    ("High", "Make the close-out call to Drew, formally ending the contractor "
+             "engagement and ensuring no expectation of future work remains",
+     "Mike", "ASAP"),
     ("High", "Work with Army and OCS leadership to clarify Nemesis versus "
              "Lead Teams: intended outcomes, perform and recovery phases, "
              "coaching and appropriate positioning", "Mike", "Upcoming"),
@@ -139,38 +129,14 @@ def build():
     cds.add_header_footer(doc.sections[0], FOOTER_LEFT)
     cds.add_title_block(KICKER, TITLE, TAG, reference=REFERENCE, status=None)
 
-    # Key takeaway first, as a key message panel.
-    panel = doc.add_paragraph()
-    panel.paragraph_format.left_indent = Cm(0.3)
-    panel.paragraph_format.right_indent = Cm(0.3)
-    panel.paragraph_format.space_before = Pt(4)
-    panel.paragraph_format.space_after = Pt(6)
-    cds.set_shading(panel, cds.SWAMP_GREEN)
-    cds.set_border(panel, "left", cds.ARMY_RED, 28, space=10)
-    r = cds._run(panel, "KEY TAKEAWAY", cds.FONT_HEAD, Pt(7.5), True, False,
-                 cds.MOAWHANGO)
-    cds.letterspace(r, 30)
-    panel.add_run().add_break()
-    cds._run(panel, TAKEAWAY, cds.FONT_HEAD, Pt(10), True, False,
-             cds.RUAPEHU_WHITE)
-
     cds.add_section_heading("Five Priorities")
     for n, (lead, text) in enumerate(PRIORITIES, 1):
         cds.add_numbered(n, f"**{lead}** {text}")
 
     h = cds.add_section_heading("Consolidated Action List")
     h.paragraph_format.page_break_before = True
-    cds.add_body("Actions for Mike unless otherwise stated. High-priority "
-                 "actions are shaded.")
+    cds.add_body("Actions for Mike. High-priority actions are shaded.")
     add_action_table(doc)
-
-    cds.add_section_heading("Ownership Note")
-    cds.add_body(
-        "The formal close-out call to the contractor belongs to Jim, who was "
-        "tasked with it at the meeting. Mike remains accountable for ensuring "
-        "the engagement is closed and that no expectation of future work "
-        "remains, and for the wider fix: a repeatable onboarding SOP rather "
-        "than a one-off personnel response.")
 
     cds.finish(TITLE)
     doc.save(OUTPUT_DOCX)
