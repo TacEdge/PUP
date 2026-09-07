@@ -17,7 +17,7 @@ import build_elda_data_sheet as cds
 OUTPUT_DOCX = "./output/nzalc-meeting-record.docx"
 TITLE = "Priorities and Actions"
 KICKER = None
-TAG = "HQ Co-ord"
+TAG = "NZALC HQ Co-ord"
 REFERENCE = "Meeting notes, September 2026"
 FOOTER_LEFT = "NZALC | Meeting Record"
 
@@ -122,7 +122,7 @@ def build():
 
     h = cds.add_section_heading("Consolidated Action List")
     h.paragraph_format.page_break_before = True
-    cds.add_body("Actions agreed at the HQ Co-ord. High-priority actions are shaded.")
+    cds.add_body("Actions agreed at the NZALC HQ Co-ord. High-priority actions are shaded.")
     add_action_table(doc)
 
     cds.finish(TITLE)
