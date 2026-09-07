@@ -14,7 +14,7 @@
 | Qualifications / Certifications | Retain the existing DLMS qualifications/certifications, subject to confirmation that these remain current and accurately represent the qualification or certification awarded:<br>• AA18001 ELDA Alpine Touring<br>• AA18002 ELDA Rock Climbing<br>• AA18003 ELDA Sea Kayaking<br>• AA18004 ELDA White Water Kayaking<br>• AA18005 ELDA Wilderness<br>• AA18006 ELDA Cave |
 | Target Learners | 1. Regular Force Officers in the ranks of 2LT and LT.<br>2. Regular Force NCOs accepted onto the A1531 Regular Force All Arms Senior Non-Commissioned Officer Promotion Course. |
 | Learner Competency | Learners will be able to evaluate their leadership behaviour and its impact on others, and deliberately adapt their behaviour to improve leadership effectiveness across a range of contexts. |
-| Next Step | 1. Continue to apply, evaluate and adapt individual leadership behaviours in subsequent leadership appointments and workplace contexts.<br>2. Continue deliberate leadership development through ongoing reflection, feedback and behavioural strategy development.<br>3. Progress to ELDA Command and/or ELDA Lead Systems, where appropriate to career pathway and appointment. |
+| Next Step | 1. Continue to apply, evaluate and adapt individual leadership behaviours in subsequent leadership appointments and workplace contexts.<br>2. Continue deliberate leadership development through ongoing reflection, feedback and behavioural strategy development.<br>3. Progress to ELDA Lead Systems where appropriate to career pathway, and participate in ELDA Command as a member of a command team where appropriate to appointment. |
 
 ## Course Entry Requirements
 

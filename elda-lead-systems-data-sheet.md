@@ -14,7 +14,7 @@
 | Qualifications / Certifications | Retain the existing DLMS qualifications/certifications, subject to confirmation that these remain current and accurately represent the activity or certification awarded:<br>• AA18001 ELDA Alpine Touring<br>• AA18002 ELDA Rock Climbing<br>• AA18003 ELDA Sea Kayaking<br>• AA18004 ELDA White Water Kayaking<br>• AA18005 ELDA Wilderness<br>• AA18006 ELDA Cave<br>• AA18007 ELDA Adventure Racing |
 | Target Learners | 1. SNCOs and WOs accepted onto the A1532 Regular Force All Corps Warrant Officer Course.<br>2. Captains undertaking development prior to promotion to Major. |
 | Learner Competency | Learners will be able to analyse relationships and interdependencies within complex systems and deliberately apply influence and adaptive leadership behaviours to achieve outcomes beyond their direct authority. |
-| Next Step | 1. Apply systems leadership and influence strategies within increasingly complex organisational and operational contexts.<br>2. Continue deliberate reflection, feedback and adaptation of leadership behaviour.<br>3. Progress to ELDA Command, where appropriate to career pathway and appointment. |
+| Next Step | 1. Apply systems leadership and influence strategies within increasingly complex organisational and operational contexts.<br>2. Continue deliberate reflection, feedback and adaptation of leadership behaviour.<br>3. Participate in ELDA Command as a member of a command team, where appropriate to appointment. |
 
 ## Course Entry Requirements
 

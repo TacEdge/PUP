@@ -51,12 +51,14 @@ COURSES = [
         name="ELDA Lead Teams",
         code="A18011",
         scope="Leading a team",
+        stage="Lead the team",
+        unit="Self",
+        stage_text="Perform and lead under pressure",
         duration="6 Training Days",
         learners="Regular Force personnel selected for the A1530 Promotion "
                  "All Corps RF JNCO Course.",
         aim="Individual leadership effectiveness through small-team "
             "leadership under pressure.",
-        logic=["SELF", "TEAM", "REFLECT"],
         outcomes=[
             "Apply strategies to maintain effective performance under pressure",
             "Apply effective leadership behaviours within a small team "
@@ -70,12 +72,14 @@ COURSES = [
         name="ELDA Lead Leaders",
         code="A18008",
         scope="Leading among leaders",
+        stage="Understand your impact",
+        unit="Others",
+        stage_text="Understand and adapt your leadership impact",
         duration="6 Training Days",
         learners="Regular Force Officers (2LT and LT); Regular Force NCOs "
                  "accepted onto the A1531 SNCO Promotion Course.",
         aim="Leadership effectiveness through self-awareness, reflection "
             "and deliberate adaptation of leadership behaviour.",
-        logic=["VALUES", "SELF-AWARENESS", "ADAPT", "DEVELOP"],
         outcomes=[
             "Demonstrate Army ethos and values through leadership "
             "behaviour under challenging conditions",
@@ -83,18 +87,20 @@ COURSES = [
             "Adapt leadership behaviour to improve effectiveness",
             "Develop an individual leadership development strategy",
         ],
-        next_step="ELDA Lead Systems or ELDA Command, as appropriate to career pathway",
+        next_step="ELDA Lead Systems; ELDA Command as part of a command team",
     ),
     dict(
         name="ELDA Lead Systems",
         code="A18010",
         scope="Leading across a system",
+        stage="Influence the system",
+        unit="System",
+        stage_text="Understand interdependencies and influence beyond authority",
         duration="7 Training Days",
         learners="SNCOs and WOs accepted onto the A1532 All Corps Warrant "
                  "Officer Course; Captains preparing for promotion to Major.",
         aim="Leadership effectiveness within complex systems: "
             "interdependencies and influence beyond direct authority.",
-        logic=["VALUES & JUDGEMENT", "SYSTEM", "INFLUENCE", "ADAPT"],
         outcomes=[
             "Demonstrate Army ethos, values and sound judgement within "
             "complex environments",
@@ -104,39 +110,40 @@ COURSES = [
             "Evaluate and adapt leadership behaviour to improve system "
             "effectiveness",
         ],
-        next_step="ELDA Command, as appropriate to career pathway",
+        next_step="ELDA Command as part of a command team",
     ),
     dict(
         name="ELDA Command",
         code="A18009",
-        scope="Leading the organisation",
+        scope="Leading as a command team",
+        stage="Lead effectively together",
+        unit="Collective",
+        stage_text="Build cohesion, alignment and collective command effectiveness",
         duration="8–10 Training Days",
-        learners="Personnel selected for, preparing for, or undertaking "
-                 "significant command or senior leadership appointments.",
-        aim="Command effectiveness through self-awareness, judgement and "
-            "creating the conditions for organisational performance.",
-        logic=["STRATEGIC SELF-AWARENESS", "JUDGEMENT", "CONDITIONS",
-               "DELIBERATE DEVELOPMENT"],
+        learners="Established or forming command teams and leadership "
+                 "groups: unit headquarters, command teams and subordinate "
+                 "command teams.",
+        aim="Collective effectiveness of command teams: shared "
+            "understanding, cohesion, judgement and leadership alignment.",
         outcomes=[
-            "Evaluate personal command behaviour, judgement and bias",
-            "Exercise judgement and make decisions in complex and "
-            "demanding conditions",
-            "Create the conditions for effective team and organisational "
-            "performance",
-            "Establish strategies for sustained command effectiveness "
-            "across changing contexts",
+            "Develop shared understanding within the command team",
+            "Strengthen cohesion and effectiveness across the command team",
+            "Exercise collective judgement in complex and demanding "
+            "conditions",
+            "Create the conditions for organisational performance",
         ],
-        next_step="Command and senior leadership appointments",
+        next_step="Applied within the command team's appointments; individual "
+                  "Leadership Development Plans",
     ),
 ]
 
 CLOSING = (
-    "The pathway is not simply an increase in physical difficulty. It is an "
-    "increase in the scope, complexity and reach of leadership: from leading "
-    "a team, to understanding one's impact on other leaders, to influencing "
-    "outcomes across a wider system, to integrating these capabilities into "
-    "command judgement and the deliberate creation of the conditions for "
-    "organisational effectiveness."
+    "The ELDA pathway progressively broadens the leadership challenge: from "
+    "leading effectively within a team, to understanding one's impact on "
+    "other leaders, to influencing across complex systems. ELDA Command "
+    "brings these capabilities together at the collective level, developing "
+    "cohesive command teams able to align leadership effort, exercise sound "
+    "judgement and create the conditions for organisational effectiveness."
 )
 
 # ------------------------------------------------------------ XML helpers ---
@@ -378,7 +385,7 @@ def add_letterhead(doc, with_logo=True, title_style=None):
 LABEL_CM = 2.9
 ROWS = ["course", "scope", "learners", "aim", "logic", "outcomes", "next"]
 LABELS = {"scope": "Scope", "learners": "Learners", "aim": "Aim",
-          "logic": "Developmental logic", "outcomes": "Learning outcomes",
+          "logic": "Developmental progression", "outcomes": "Learning outcomes",
           "next": "Next step"}
 
 
@@ -422,16 +429,21 @@ def render_pathway_table(doc, text_width_cm=TEXT_WIDTH_CM):
                 set_border(p, "left", ARMY_RED, 18, space=4)
                 run(p, course["scope"], Pt(11), bold=True, color=SWAMP_GREEN)
             elif key == "logic":
+                # One progression read left to right: SELF -> OTHERS ->
+                # SYSTEM -> COLLECTIVE, each with its stage and one line.
                 cell_shading(cell, PALE_GREEN)
-                p.paragraph_format.line_spacing = 1.15
-                for i, stage in enumerate(course["logic"]):
-                    if i:
-                        p.add_run().add_break()
-                        run(p, "▼", Pt(8), color=ARMY_RED)
-                        p.add_run().add_break()
-                    r = run(p, stage, Pt(9.5), bold=True, color=SWAMP_GREEN)
-                    cds.letterspace(r, 10)
-                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                p.paragraph_format.line_spacing = 1.12
+                unit = course["unit"].upper()
+                if c_idx < len(COURSES):
+                    unit += "   →"
+                r = run(p, unit, Pt(7.5), bold=True, color=WAIOURU_HILLS)
+                cds.letterspace(r, 30)
+                p.add_run().add_break()
+                r = run(p, course["stage"].upper(), Pt(10.5), bold=True,
+                        color=SWAMP_GREEN)
+                cds.letterspace(r, 10)
+                p.add_run().add_break()
+                run(p, course["stage_text"], Pt(8.5), color=DARKEST_HOUR)
             elif key == "outcomes":
                 for i, lo in enumerate(course["outcomes"]):
                     if i:
