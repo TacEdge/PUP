@@ -55,20 +55,16 @@ SHEETS = {
         footer_left="A18008 ELDA Lead Leaders Course Data Sheet",
     ),
 }
-SHEET = SHEETS[sys.argv[1] if len(sys.argv) > 1 else "lead-teams"]
-
-SOURCE_FILE        = SHEET["source"]
 LOGO_FILE          = "./assets/nz-army-logo.png"
-OUTPUT_DOCX        = SHEET["output"]
 PROTECTIVE_MARKING = "UNCLASSIFIED"
-DOCUMENT_REFERENCE = SHEET["reference"]
 FOOTER_REFERENCE   = "ACS 2026"
 DATE               = "September 2026"
 ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
+SUBTITLE_LINE      = "Course Data Sheet"
 
-TITLE       = SHEET["title"]
-SUBTITLE_LINE = "Course Data Sheet"
-FOOTER_LEFT = SHEET["footer_left"]
+# Style used for "## " section headings; a compiled portfolio demotes it.
+SECTION_HEADING_STYLE = "Heading 1"
+doc = None   # bound by new_document() or by an importing builder
 
 ARMY_RED      = "C62026"
 DARKEST_HOUR  = "000000"
@@ -192,44 +188,52 @@ def _run(p, text, font, size, bold, italic, color):
 
 # ------------------------------------------------------------- doc set-up ---
 
-doc = Document()
-
-section = doc.sections[0]
-section.page_width = Mm(210)
-section.page_height = Mm(297)
-section.top_margin = Cm(2.2)
-section.bottom_margin = Cm(2.2)
-section.left_margin = Cm(2.3)
-section.right_margin = Cm(2.3)
-section.header_distance = Cm(1.0)
-section.footer_distance = Cm(1.0)
-
 TEXT_WIDTH_CM = 16.4
 
-normal = doc.styles["Normal"]
-strip_style_rpr(normal)
-force_font(normal, FONT_BODY)
-normal.font.size = Pt(10.5)
-force_color(normal, DARKEST_HOUR)
-nf = normal.paragraph_format
-nf.line_spacing = 1.12
-nf.space_after = Pt(5)
-nf.space_before = Pt(0)
-nf.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
-h1 = doc.styles["Heading 1"]
-strip_style_rpr(h1)
-force_font(h1, FONT_HEAD)
-h1.font.bold = True
-h1.font.size = Pt(12)
-force_color(h1, SWAMP_GREEN)
-h1.paragraph_format.space_before = Pt(12)
-h1.paragraph_format.space_after = Pt(5)
-h1.paragraph_format.keep_with_next = True
+def new_document():
+    """A4 portrait document with the brand Normal / Heading styles."""
+    global doc
+    doc = Document()
+    section = doc.sections[0]
+    section.page_width = Mm(210)
+    section.page_height = Mm(297)
+    section.top_margin = Cm(2.2)
+    section.bottom_margin = Cm(2.2)
+    section.left_margin = Cm(2.3)
+    section.right_margin = Cm(2.3)
+    section.header_distance = Cm(1.0)
+    section.footer_distance = Cm(1.0)
+    apply_styles(doc)
+    return doc
+
+
+def apply_styles(document):
+    normal = document.styles["Normal"]
+    strip_style_rpr(normal)
+    force_font(normal, FONT_BODY)
+    normal.font.size = Pt(10.5)
+    force_color(normal, DARKEST_HOUR)
+    nf = normal.paragraph_format
+    nf.line_spacing = 1.12
+    nf.space_after = Pt(5)
+    nf.space_before = Pt(0)
+    nf.alignment = WD_ALIGN_PARAGRAPH.LEFT
+
+    for name, size, space_before in (("Heading 1", 12, 12), ("Heading 2", 12, 12)):
+        h = document.styles[name]
+        strip_style_rpr(h)
+        force_font(h, FONT_HEAD)
+        h.font.bold = True
+        h.font.size = Pt(size)
+        force_color(h, SWAMP_GREEN)
+        h.paragraph_format.space_before = Pt(space_before)
+        h.paragraph_format.space_after = Pt(5)
+        h.paragraph_format.keep_with_next = True
 
 
 def add_section_heading(text):
-    p = doc.add_paragraph(style="Heading 1")
+    p = doc.add_paragraph(style=SECTION_HEADING_STYLE)
     add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(12), bold=True,
                   color=SWAMP_GREEN)
     return p
@@ -427,197 +431,224 @@ def marking_paragraph(container, existing=True):
     return p
 
 
-marking_paragraph(section.header)
-marking_paragraph(section.footer)
-info = section.footer.add_paragraph()
-info.paragraph_format.space_before = Pt(2)
-info.paragraph_format.space_after = Pt(0)
-info.paragraph_format.tab_stops.add_tab_stop(
-    Cm(TEXT_WIDTH_CM / 2), WD_TAB_ALIGNMENT.CENTER)
-info.paragraph_format.tab_stops.add_tab_stop(
-    Cm(TEXT_WIDTH_CM), WD_TAB_ALIGNMENT.RIGHT)
+def add_header_footer(section, footer_left, text_width_cm=TEXT_WIDTH_CM):
+    marking_paragraph(section.header)
+    marking_paragraph(section.footer)
+    info = section.footer.add_paragraph()
+    info.paragraph_format.space_before = Pt(2)
+    info.paragraph_format.space_after = Pt(0)
+    info.paragraph_format.tab_stops.add_tab_stop(
+        Cm(text_width_cm / 2), WD_TAB_ALIGNMENT.CENTER)
+    info.paragraph_format.tab_stops.add_tab_stop(
+        Cm(text_width_cm), WD_TAB_ALIGNMENT.RIGHT)
 
+    def footer_run(text):
+        r = info.add_run(text)
+        force_font(r, FONT_HEAD)
+        r.font.size = Pt(8.5)
+        force_color(r, DARKEST_HOUR)
+        return r
 
-def footer_run(text):
-    run = info.add_run(text)
-    force_font(run, FONT_HEAD)
-    run.font.size = Pt(8.5)
-    force_color(run, DARKEST_HOUR)
-    return run
+    footer_run(footer_left)
+    footer_run("\t")
+    footer_run(FOOTER_REFERENCE)
+    footer_run("\tPage ")
+    for r in add_field(info, "PAGE", "1"):
+        force_font(r, FONT_HEAD)
+        r.font.size = Pt(8.5)
+    footer_run(" of ")
+    for r in add_field(info, "NUMPAGES", "1"):
+        force_font(r, FONT_HEAD)
+        r.font.size = Pt(8.5)
 
-
-footer_run(FOOTER_LEFT)
-footer_run("\t")
-footer_run(FOOTER_REFERENCE)
-footer_run("\tPage ")
-for r in add_field(info, "PAGE", "1"):
-    force_font(r, FONT_HEAD)
-    r.font.size = Pt(8.5)
-footer_run(" of ")
-for r in add_field(info, "NUMPAGES", "1"):
-    force_font(r, FONT_HEAD)
-    r.font.size = Pt(8.5)
 
 # -------------------------------------------------------------- letterhead --
 
-_logo = Image.open(LOGO_FILE).convert("RGBA")
-_logo = _logo.crop(_logo.getchannel("A").getbbox())
-_buf = io.BytesIO()
-_logo.save(_buf, "PNG")
-_buf.seek(0)
-doc.add_picture(_buf, width=Mm(42))
-logo_para = doc.paragraphs[-1]
-logo_para.paragraph_format.space_before = Pt(0)
-logo_para.paragraph_format.space_after = Pt(14)
 
-title_p = doc.add_paragraph()
-title_p.paragraph_format.space_after = Pt(1)
-t = title_p.add_run(TITLE)
-force_font(t, FONT_HEAD)
-t.font.size = Pt(20)
-t.bold = True
-force_color(t, DARKEST_HOUR)
+def add_logo(width_mm=42, space_after=14):
+    logo = Image.open(LOGO_FILE).convert("RGBA")
+    logo = logo.crop(logo.getchannel("A").getbbox())
+    buf = io.BytesIO()
+    logo.save(buf, "PNG")
+    buf.seek(0)
+    doc.add_picture(buf, width=Mm(width_mm))
+    logo_para = doc.paragraphs[-1]
+    logo_para.paragraph_format.space_before = Pt(0)
+    logo_para.paragraph_format.space_after = Pt(space_after)
+    return logo_para
 
-sub_title_p = doc.add_paragraph()
-sub_title_p.paragraph_format.space_after = Pt(4)
-set_border(sub_title_p, "bottom", ARMY_RED, 18, space=8)
-st = sub_title_p.add_run(SUBTITLE_LINE)
-force_font(st, FONT_HEAD)
-st.font.size = Pt(12)
-st.bold = True
-force_color(st, SWAMP_GREEN)
 
-org_p = doc.add_paragraph()
-org_p.paragraph_format.space_before = Pt(6)
-org_p.paragraph_format.space_after = Pt(6)
-o = org_p.add_run(ORIGINATOR)
-force_font(o, FONT_HEAD)
-o.font.size = Pt(10.5)
-force_color(o, SWAMP_GREEN)
+def add_letterhead(title, subtitle, reference, with_logo=True,
+                   title_style=None):
+    if with_logo:
+        add_logo()
 
-meta_p = doc.add_paragraph()
-meta_p.paragraph_format.space_after = Pt(10)
-set_border(meta_p, "bottom", WAIOURU_HILLS, 6, space=6)
-for i, (label, value) in enumerate([
-        ("Reference", DOCUMENT_REFERENCE), ("Date", DATE)]):
-    if i:
-        gap = meta_p.add_run("      ")
-        force_font(gap, FONT_HEAD)
-    lab = meta_p.add_run(f"{label}  ")
-    force_font(lab, FONT_HEAD)
-    lab.font.size = Pt(9)
-    lab.bold = True
-    force_color(lab, SWAMP_GREEN)
-    val = meta_p.add_run(value)
-    force_font(val, FONT_HEAD)
-    val.font.size = Pt(9)
-    force_color(val, DARKEST_HOUR)
+    title_p = doc.add_paragraph(style=title_style) if title_style \
+        else doc.add_paragraph()
+    title_p.paragraph_format.space_after = Pt(1)
+    t = title_p.add_run(title)
+    force_font(t, FONT_HEAD)
+    t.font.size = Pt(20)
+    t.bold = True
+    force_color(t, DARKEST_HOUR)
+
+    sub_title_p = doc.add_paragraph()
+    sub_title_p.paragraph_format.space_after = Pt(4)
+    set_border(sub_title_p, "bottom", ARMY_RED, 18, space=8)
+    st = sub_title_p.add_run(subtitle)
+    force_font(st, FONT_HEAD)
+    st.font.size = Pt(12)
+    st.bold = True
+    force_color(st, SWAMP_GREEN)
+
+    org_p = doc.add_paragraph()
+    org_p.paragraph_format.space_before = Pt(6)
+    org_p.paragraph_format.space_after = Pt(6)
+    o = org_p.add_run(ORIGINATOR)
+    force_font(o, FONT_HEAD)
+    o.font.size = Pt(10.5)
+    force_color(o, SWAMP_GREEN)
+
+    meta_p = doc.add_paragraph()
+    meta_p.paragraph_format.space_after = Pt(10)
+    set_border(meta_p, "bottom", WAIOURU_HILLS, 6, space=6)
+    for i, (label, value) in enumerate([("Reference", reference), ("Date", DATE)]):
+        if i:
+            gap = meta_p.add_run("      ")
+            force_font(gap, FONT_HEAD)
+        lab = meta_p.add_run(f"{label}  ")
+        force_font(lab, FONT_HEAD)
+        lab.font.size = Pt(9)
+        lab.bold = True
+        force_color(lab, SWAMP_GREEN)
+        val = meta_p.add_run(value)
+        force_font(val, FONT_HEAD)
+        val.font.size = Pt(9)
+        force_color(val, DARKEST_HOUR)
+    return title_p
+
 
 # ------------------------------------------------------------------- body ---
 
-with open(SOURCE_FILE, encoding="utf-8") as fh:
-    lines = fh.read().splitlines()
 
-i = 0
-while i < len(lines):
-    line = lines[i]
+def render_markdown(lines):
+    """Typeset the source mini-syntax (see module docstring)."""
+    i = 0
+    while i < len(lines):
+        line = lines[i]
 
-    if not line.strip():
-        i += 1
-        continue
-
-    if line.startswith("# "):
-        i += 1  # document title already in letterhead
-        continue
-
-    if line.startswith("## "):
-        heading = add_section_heading(line[3:].strip())
-        if line[3:].strip().startswith("Annex"):
-            heading.paragraph_format.page_break_before = True
-        i += 1
-        continue
-
-    if line.startswith("#### "):
-        add_sub_heading(line[5:].strip(), 4)
-        i += 1
-        continue
-
-    if line.startswith("### "):
-        add_sub_heading(line[4:].strip(), 3)
-        i += 1
-        continue
-
-    if line.startswith("|"):
-        rows = []
-        while i < len(lines) and lines[i].startswith("|"):
-            cells = [c.strip() for c in lines[i].strip().strip("|").split("|")]
-            if not all(set(c) <= set("-: ") for c in cells):
-                rows.append((cells[0], cells[1] if len(cells) > 1 else ""))
+        if not line.strip():
             i += 1
-        add_field_table(rows)
-        continue
+            continue
 
-    if line.startswith(">> "):
-        boxes = []
-        while i < len(lines) and lines[i].startswith(">> "):
-            label, _, text = lines[i][3:].partition("|")
-            boxes.append((label.strip(), text.strip()))
+        if line.startswith("# "):
+            i += 1  # document title already in letterhead
+            continue
+
+        if line.startswith("## "):
+            heading = add_section_heading(line[3:].strip())
+            if line[3:].strip().startswith("Annex"):
+                heading.paragraph_format.page_break_before = True
             i += 1
-        add_chain(boxes)
-        continue
+            continue
 
-    if line.startswith(">! "):
-        block = []
-        while i < len(lines) and lines[i].startswith(">! "):
-            block.append(lines[i][3:].strip())
+        if line.startswith("#### "):
+            add_sub_heading(line[5:].strip(), 4)
             i += 1
-        add_callout(block)
-        continue
+            continue
 
-    if line.startswith("* "):
-        add_bullet(line[2:].strip())
+        if line.startswith("### "):
+            add_sub_heading(line[4:].strip(), 3)
+            i += 1
+            continue
+
+        if line.startswith("|"):
+            rows = []
+            while i < len(lines) and lines[i].startswith("|"):
+                cells = [c.strip() for c in lines[i].strip().strip("|").split("|")]
+                if not all(set(c) <= set("-: ") for c in cells):
+                    rows.append((cells[0], cells[1] if len(cells) > 1 else ""))
+                i += 1
+            add_field_table(rows)
+            continue
+
+        if line.startswith(">> "):
+            boxes = []
+            while i < len(lines) and lines[i].startswith(">> "):
+                label, _, text = lines[i][3:].partition("|")
+                boxes.append((label.strip(), text.strip()))
+                i += 1
+            add_chain(boxes)
+            continue
+
+        if line.startswith(">! "):
+            block = []
+            while i < len(lines) and lines[i].startswith(">! "):
+                block.append(lines[i][3:].strip())
+                i += 1
+            add_callout(block)
+            continue
+
+        if line.startswith("* "):
+            add_bullet(line[2:].strip())
+            i += 1
+            continue
+
+        if line.startswith("    * "):
+            add_bullet(line[6:].strip(), level=2)
+            i += 1
+            continue
+
+        m = re.match(r"^(\d+)\. (.*)$", line)
+        if m:
+            add_numbered(m.group(1), m.group(2).strip())
+            i += 1
+            continue
+
+        add_body(line.strip())
         i += 1
-        continue
 
-    if line.startswith("    * "):
-        add_bullet(line[6:].strip(), level=2)
-        i += 1
-        continue
-
-    m = re.match(r"^(\d+)\. (.*)$", line)
-    if m:
-        add_numbered(m.group(1), m.group(2).strip())
-        i += 1
-        continue
-
-    add_body(line.strip())
-    i += 1
 
 # ----------------------------------------------------------------- finish ---
 
-USED_STYLE_IDS = {"Normal", "Heading1", "DefaultParagraphFont",
-                  "TableNormal", "TableGrid", "NoList", "Header", "Footer"}
-styles_el = doc.styles.element
-for st in list(styles_el.findall(qn("w:style"))):
-    if st.get(qn("w:styleId")) not in USED_STYLE_IDS:
-        styles_el.remove(st)
-for rFonts in styles_el.iter(qn("w:rFonts")):
-    for attr in ("ascii", "hAnsi", "cs"):
-        rFonts.set(qn(f"w:{attr}"), FONT_BODY)
-    for attr in ("asciiTheme", "hAnsiTheme", "cstheme", "eastAsiaTheme",
-                 "eastAsia"):
-        rFonts.attrib.pop(qn(f"w:{attr}"), None)
+USED_STYLE_IDS = {"Normal", "Heading1", "Heading2", "DefaultParagraphFont",
+                  "TableNormal", "TableGrid", "NoList", "Header", "Footer",
+                  "TOC1", "TOC2", "TOCHeading"}
 
-while doc.paragraphs and not doc.paragraphs[-1].text.strip() \
-        and not doc.paragraphs[-1]._p.findall(qn("w:r") + "/" + qn("w:drawing")):
-    _el = doc.paragraphs[-1]._element
-    _el.getparent().remove(_el)
 
-mark_update_fields(doc)
+def finish(title):
+    styles_el = doc.styles.element
+    for st in list(styles_el.findall(qn("w:style"))):
+        if st.get(qn("w:styleId")) not in USED_STYLE_IDS:
+            styles_el.remove(st)
+    for rFonts in styles_el.iter(qn("w:rFonts")):
+        for attr in ("ascii", "hAnsi", "cs"):
+            rFonts.set(qn(f"w:{attr}"), FONT_BODY)
+        for attr in ("asciiTheme", "hAnsiTheme", "cstheme", "eastAsiaTheme",
+                     "eastAsia"):
+            rFonts.attrib.pop(qn(f"w:{attr}"), None)
 
-props = doc.core_properties
-props.title = TITLE
-props.author = ORIGINATOR
+    while doc.paragraphs and not doc.paragraphs[-1].text.strip() \
+            and not doc.paragraphs[-1]._p.findall(qn("w:r") + "/" + qn("w:drawing")):
+        _el = doc.paragraphs[-1]._element
+        _el.getparent().remove(_el)
 
-doc.save(OUTPUT_DOCX)
-print(f"Saved {OUTPUT_DOCX}")
+    mark_update_fields(doc)
+    props = doc.core_properties
+    props.title = title
+    props.author = ORIGINATOR
+
+
+def build_sheet(sheet):
+    new_document()
+    add_header_footer(doc.sections[0], sheet["footer_left"])
+    add_letterhead(sheet["title"], SUBTITLE_LINE, sheet["reference"])
+    with open(sheet["source"], encoding="utf-8") as fh:
+        render_markdown(fh.read().splitlines())
+    finish(sheet["title"])
+    doc.save(sheet["output"])
+    print(f"Saved {sheet['output']}")
+
+
+if __name__ == "__main__":
+    build_sheet(SHEETS[sys.argv[1] if len(sys.argv) > 1 else "lead-teams"])

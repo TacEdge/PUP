@@ -252,29 +252,31 @@ def table_borders(table, color, sz=4):
 
 # ------------------------------------------------------------- doc set-up ---
 
-doc = Document()
-
-section = doc.sections[0]
-section.orientation = WD_ORIENT.LANDSCAPE
-section.page_width = Mm(297)
-section.page_height = Mm(210)
-section.top_margin = Cm(1.1)
-section.bottom_margin = Cm(1.1)
-section.left_margin = Cm(1.8)
-section.right_margin = Cm(1.8)
-section.header_distance = Cm(0.7)
-section.footer_distance = Cm(0.7)
-
 TEXT_WIDTH_CM = 29.7 - 3.6
 
-normal = doc.styles["Normal"]
-strip_style_rpr(normal)
-force_font(normal, FONT)
-normal.font.size = Pt(9)
-force_color(normal, DARKEST_HOUR)
-normal.paragraph_format.space_after = Pt(0)
-normal.paragraph_format.space_before = Pt(0)
-normal.paragraph_format.line_spacing = 1.04
+
+def set_landscape(section):
+    section.orientation = WD_ORIENT.LANDSCAPE
+    section.page_width = Mm(297)
+    section.page_height = Mm(210)
+    section.top_margin = Cm(1.1)
+    section.bottom_margin = Cm(1.1)
+    section.left_margin = Cm(1.8)
+    section.right_margin = Cm(1.8)
+    section.header_distance = Cm(0.7)
+    section.footer_distance = Cm(0.7)
+
+
+def apply_styles(doc):
+    normal = doc.styles["Normal"]
+    strip_style_rpr(normal)
+    force_font(normal, FONT)
+    normal.font.size = Pt(9)
+    force_color(normal, DARKEST_HOUR)
+    normal.paragraph_format.space_after = Pt(0)
+    normal.paragraph_format.space_before = Pt(0)
+    normal.paragraph_format.line_spacing = 1.04
+
 
 # ------------------------------------------------------- headers & footers --
 
@@ -287,150 +289,180 @@ def marking_paragraph(container):
     return p
 
 
-marking_paragraph(section.header)
-marking_paragraph(section.footer)
-info = section.footer.add_paragraph()
-info.paragraph_format.space_before = Pt(2)
-info.paragraph_format.tab_stops.add_tab_stop(
-    Cm(TEXT_WIDTH_CM / 2), WD_TAB_ALIGNMENT.CENTER)
-info.paragraph_format.tab_stops.add_tab_stop(
-    Cm(TEXT_WIDTH_CM), WD_TAB_ALIGNMENT.RIGHT)
-run(info, FOOTER_LEFT, Pt(8.5))
-run(info, "\t" + FOOTER_REFERENCE, Pt(8.5))
-run(info, "\tPage ", Pt(8.5))
-for r in add_field(info, "PAGE", "1"):
-    force_font(r, FONT)
-    r.font.size = Pt(8.5)
-run(info, " of ", Pt(8.5))
-for r in add_field(info, "NUMPAGES", "1"):
-    force_font(r, FONT)
-    r.font.size = Pt(8.5)
+def add_header_footer(section, footer_left=FOOTER_LEFT,
+                      text_width_cm=TEXT_WIDTH_CM):
+    marking_paragraph(section.header)
+    marking_paragraph(section.footer)
+    info = section.footer.add_paragraph()
+    info.paragraph_format.space_before = Pt(2)
+    info.paragraph_format.tab_stops.add_tab_stop(
+        Cm(text_width_cm / 2), WD_TAB_ALIGNMENT.CENTER)
+    info.paragraph_format.tab_stops.add_tab_stop(
+        Cm(text_width_cm), WD_TAB_ALIGNMENT.RIGHT)
+    run(info, footer_left, Pt(8.5))
+    run(info, "\t" + FOOTER_REFERENCE, Pt(8.5))
+    run(info, "\tPage ", Pt(8.5))
+    for r in add_field(info, "PAGE", "1"):
+        force_font(r, FONT)
+        r.font.size = Pt(8.5)
+    run(info, " of ", Pt(8.5))
+    for r in add_field(info, "NUMPAGES", "1"):
+        force_font(r, FONT)
+        r.font.size = Pt(8.5)
+
 
 # -------------------------------------------------------------- letterhead --
 
-_logo = Image.open(LOGO_FILE).convert("RGBA")
-_logo = _logo.crop(_logo.getchannel("A").getbbox())
-_buf = io.BytesIO()
-_logo.save(_buf, "PNG")
-_buf.seek(0)
-doc.add_picture(_buf, width=Mm(28))
-doc.paragraphs[-1].paragraph_format.space_after = Pt(3)
 
-title_p = doc.add_paragraph()
-title_p.paragraph_format.space_after = Pt(0)
-run(title_p, TITLE, Pt(18), bold=True)
+def add_letterhead(doc, with_logo=True, title_style=None):
+    if with_logo:
+        logo = Image.open(LOGO_FILE).convert("RGBA")
+        logo = logo.crop(logo.getchannel("A").getbbox())
+        buf = io.BytesIO()
+        logo.save(buf, "PNG")
+        buf.seek(0)
+        doc.add_picture(buf, width=Mm(28))
+        doc.paragraphs[-1].paragraph_format.space_after = Pt(3)
 
-sub_p = doc.add_paragraph()
-sub_p.paragraph_format.space_after = Pt(3)
-set_border(sub_p, "bottom", ARMY_RED, 18, space=6)
-run(sub_p, SUBTITLE_LINE, Pt(11), bold=True, color=SWAMP_GREEN)
+    title_p = doc.add_paragraph(style=title_style) if title_style \
+        else doc.add_paragraph()
+    title_p.paragraph_format.space_after = Pt(0)
+    run(title_p, TITLE, Pt(18), bold=True)
 
-meta_p = doc.add_paragraph()
-meta_p.paragraph_format.space_before = Pt(4)
-meta_p.paragraph_format.space_after = Pt(6)
-set_border(meta_p, "bottom", WAIOURU_HILLS, 6, space=5)
-run(meta_p, ORIGINATOR, Pt(9.5), color=SWAMP_GREEN)
-run(meta_p, "      ", Pt(9))
-for i, (label, value) in enumerate([("Reference", DOCUMENT_REFERENCE),
-                                    ("Date", DATE)]):
-    if i:
-        run(meta_p, "      ", Pt(9))
-    run(meta_p, f"{label}  ", Pt(8.5), bold=True, color=SWAMP_GREEN)
-    run(meta_p, value, Pt(8.5))
+    sub_p = doc.add_paragraph()
+    sub_p.paragraph_format.space_after = Pt(3)
+    set_border(sub_p, "bottom", ARMY_RED, 18, space=6)
+    run(sub_p, SUBTITLE_LINE, Pt(11), bold=True, color=SWAMP_GREEN)
+
+    meta_p = doc.add_paragraph()
+    meta_p.paragraph_format.space_before = Pt(4)
+    meta_p.paragraph_format.space_after = Pt(6)
+    set_border(meta_p, "bottom", WAIOURU_HILLS, 6, space=5)
+    run(meta_p, ORIGINATOR, Pt(9.5), color=SWAMP_GREEN)
+    run(meta_p, "      ", Pt(9))
+    for i, (label, value) in enumerate([("Reference", DOCUMENT_REFERENCE),
+                                        ("Date", DATE)]):
+        if i:
+            run(meta_p, "      ", Pt(9))
+        run(meta_p, f"{label}  ", Pt(8.5), bold=True, color=SWAMP_GREEN)
+        run(meta_p, value, Pt(8.5))
+    return title_p
+
 
 # ------------------------------------------------------------------ table ---
 
 LABEL_CM = 2.9
-COL_CM = (TEXT_WIDTH_CM - LABEL_CM) / len(COURSES)
 ROWS = ["course", "scope", "learners", "aim", "logic", "outcomes", "next"]
-LABELS = {"scope": "Scope", "duration": "Duration", "learners": "Learners",
-          "aim": "Aim", "logic": "Developmental logic",
-          "outcomes": "Learning outcomes", "next": "Next step"}
+LABELS = {"scope": "Scope", "learners": "Learners", "aim": "Aim",
+          "logic": "Developmental logic", "outcomes": "Learning outcomes",
+          "next": "Next step"}
 
-table = doc.add_table(rows=len(ROWS), cols=len(COURSES) + 1)
-table.alignment = WD_TABLE_ALIGNMENT.CENTER
-table.autofit = False
-table_borders(table, WAIOURU_HILLS)
-for c_idx, col in enumerate(table.columns):
-    col.width = Cm(LABEL_CM if c_idx == 0 else COL_CM)
 
-for r_idx, key in enumerate(ROWS):
-    row = table.rows[r_idx]
-    trPr = row._tr.get_or_add_trPr()
-    trPr.append(OxmlElement("w:cantSplit"))
-    for c_idx in range(len(COURSES) + 1):
-        cell = row.cells[c_idx]
-        cell.width = Cm(LABEL_CM if c_idx == 0 else COL_CM)
-        cell_margins(cell)
-        p = cell.paragraphs[0]
+def render_pathway_table(doc, text_width_cm=TEXT_WIDTH_CM):
+    col_cm = (text_width_cm - LABEL_CM) / len(COURSES)
+    table = doc.add_table(rows=len(ROWS), cols=len(COURSES) + 1)
+    table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    table.autofit = False
+    table_borders(table, WAIOURU_HILLS)
+    for c_idx, col in enumerate(table.columns):
+        col.width = Cm(LABEL_CM if c_idx == 0 else col_cm)
 
-        if c_idx == 0:
-            cell_shading(cell, SWAMP_GREEN if key == "course" else MOAWHANGO)
-            if key != "course":
-                run(p, LABELS[key], Pt(8.5), bold=True, color=SWAMP_GREEN)
-            continue
+    for r_idx, key in enumerate(ROWS):
+        row = table.rows[r_idx]
+        trPr = row._tr.get_or_add_trPr()
+        trPr.append(OxmlElement("w:cantSplit"))
+        for c_idx in range(len(COURSES) + 1):
+            cell = row.cells[c_idx]
+            cell.width = Cm(LABEL_CM if c_idx == 0 else col_cm)
+            cell_margins(cell)
+            p = cell.paragraphs[0]
+            p.paragraph_format.space_after = Pt(0)
+            p.paragraph_format.line_spacing = 1.04
 
-        course = COURSES[c_idx - 1]
-        if key == "course":
-            cell_shading(cell, SWAMP_GREEN)
-            run(p, course["name"], Pt(10), bold=True, color=RUAPEHU_WHITE)
-            p.add_run().add_break()
-            run(p, f'{course["code"]}  |  {course["duration"]}', Pt(8.5), color=MOAWHANGO)
-        elif key == "scope":
-            cell_shading(cell, MOAWHANGO)
-            set_border(p, "left", ARMY_RED, 18, space=4)
-            run(p, course["scope"], Pt(9.5), bold=True, color=SWAMP_GREEN)
-        elif key == "logic":
-            for i, stage in enumerate(course["logic"]):
-                if i:
-                    p.add_run().add_break()
-                    run(p, "▼", Pt(7), color=ARMY_RED)
-                    p.add_run().add_break()
-                run(p, stage, Pt(8.5), bold=True, color=SWAMP_GREEN)
-            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        elif key == "outcomes":
-            for i, lo in enumerate(course["outcomes"]):
-                if i:
-                    p.add_run().add_break()
-                run(p, f"LO 1.{i + 1}  ", Pt(8), bold=True, color=SWAMP_GREEN)
-                run(p, lo, Pt(8))
-        else:
-            run(p, course["next_step" if key == "next" else key], Pt(8))
+            if c_idx == 0:
+                cell_shading(cell, SWAMP_GREEN if key == "course" else MOAWHANGO)
+                if key != "course":
+                    run(p, LABELS[key], Pt(8.5), bold=True, color=SWAMP_GREEN)
+                continue
 
-# ---------------------------------------------------------------- closing ---
+            course = COURSES[c_idx - 1]
+            if key == "course":
+                cell_shading(cell, SWAMP_GREEN)
+                run(p, course["name"], Pt(10), bold=True, color=RUAPEHU_WHITE)
+                p.add_run().add_break()
+                run(p, f'{course["code"]}  |  {course["duration"]}', Pt(8.5),
+                    color=MOAWHANGO)
+            elif key == "scope":
+                cell_shading(cell, MOAWHANGO)
+                set_border(p, "left", ARMY_RED, 18, space=4)
+                run(p, course["scope"], Pt(9.5), bold=True, color=SWAMP_GREEN)
+            elif key == "logic":
+                for i, stage in enumerate(course["logic"]):
+                    if i:
+                        p.add_run().add_break()
+                        run(p, "▼", Pt(7), color=ARMY_RED)
+                        p.add_run().add_break()
+                    run(p, stage, Pt(8.5), bold=True, color=SWAMP_GREEN)
+                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            elif key == "outcomes":
+                for i, lo in enumerate(course["outcomes"]):
+                    if i:
+                        p.add_run().add_break()
+                    run(p, f"LO 1.{i + 1}  ", Pt(8), bold=True, color=SWAMP_GREEN)
+                    run(p, lo, Pt(8))
+            else:
+                run(p, course["next_step" if key == "next" else key], Pt(8))
+    return table
 
-close_p = doc.add_paragraph()
-close_p.paragraph_format.space_before = Pt(8)
-close_p.paragraph_format.left_indent = Cm(0.4)
-close_p.paragraph_format.right_indent = Cm(0.4)
-set_shading(close_p, MOAWHANGO)
-set_border(close_p, "left", ARMY_RED, 28, space=8)
-close_p.paragraph_format.space_after = Pt(0)
-run(close_p, CLOSING, Pt(8.5), bold=True)
+
+def render_closing(doc):
+    close_p = doc.add_paragraph()
+    close_p.paragraph_format.space_before = Pt(8)
+    close_p.paragraph_format.left_indent = Cm(0.4)
+    close_p.paragraph_format.right_indent = Cm(0.4)
+    set_shading(close_p, MOAWHANGO)
+    set_border(close_p, "left", ARMY_RED, 28, space=8)
+    close_p.paragraph_format.space_after = Pt(0)
+    run(close_p, CLOSING, Pt(8.5), bold=True)
+    return close_p
+
 
 # ----------------------------------------------------------------- finish ---
 
-USED_STYLE_IDS = {"Normal", "DefaultParagraphFont", "TableNormal",
-                  "TableGrid", "NoList", "Header", "Footer"}
-styles_el = doc.styles.element
-for st in list(styles_el.findall(qn("w:style"))):
-    if st.get(qn("w:styleId")) not in USED_STYLE_IDS:
-        styles_el.remove(st)
-for rFonts in styles_el.iter(qn("w:rFonts")):
-    for attr in ("ascii", "hAnsi", "cs"):
-        rFonts.set(qn(f"w:{attr}"), FONT)
-    for attr in ("asciiTheme", "hAnsiTheme", "cstheme", "eastAsiaTheme",
-                 "eastAsia"):
-        rFonts.attrib.pop(qn(f"w:{attr}"), None)
 
-settings = doc.settings.element
-upd = OxmlElement("w:updateFields")
-upd.set(qn("w:val"), "true")
-settings.append(upd)
+def finish(doc, used_style_ids=("Normal", "DefaultParagraphFont",
+                                "TableNormal", "TableGrid", "NoList",
+                                "Header", "Footer")):
+    styles_el = doc.styles.element
+    for st in list(styles_el.findall(qn("w:style"))):
+        if st.get(qn("w:styleId")) not in used_style_ids:
+            styles_el.remove(st)
+    for rFonts in styles_el.iter(qn("w:rFonts")):
+        for attr in ("ascii", "hAnsi", "cs"):
+            rFonts.set(qn(f"w:{attr}"), FONT)
+        for attr in ("asciiTheme", "hAnsiTheme", "cstheme", "eastAsiaTheme",
+                     "eastAsia"):
+            rFonts.attrib.pop(qn(f"w:{attr}"), None)
+    settings = doc.settings.element
+    upd = OxmlElement("w:updateFields")
+    upd.set(qn("w:val"), "true")
+    settings.append(upd)
 
-props = doc.core_properties
-props.title = TITLE
-props.author = ORIGINATOR
 
-doc.save(OUTPUT_DOCX)
-print(f"Saved {OUTPUT_DOCX}")
+def build():
+    doc = Document()
+    set_landscape(doc.sections[0])
+    apply_styles(doc)
+    add_header_footer(doc.sections[0])
+    add_letterhead(doc)
+    render_pathway_table(doc)
+    render_closing(doc)
+    finish(doc)
+    doc.core_properties.title = TITLE
+    doc.core_properties.author = ORIGINATOR
+    doc.save(OUTPUT_DOCX)
+    print(f"Saved {OUTPUT_DOCX}")
+
+
+if __name__ == "__main__":
+    build()
