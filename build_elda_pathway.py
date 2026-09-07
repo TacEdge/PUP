@@ -28,7 +28,7 @@ FOOTER_REFERENCE   = "ACS 2026"
 DATE               = "September 2026"
 ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
 
-TITLE         = "ELDA Pathway"
+TITLE         = "Experiential Leadership Development Activity Pathway"
 SUBTITLE_LINE = "Experiential Leadership Development Activities: Course Overview"
 STATUS        = "Draft for Validation"
 FOOTER_LEFT   = "NZALC | ELDA Pathway Overview"
@@ -50,15 +50,14 @@ COURSES = [
     dict(
         name="ELDA Lead Teams",
         code="A18011",
-        scope="Leading a team",
-        stage="Lead the team",
-        unit="Self",
-        stage_text="Perform and lead under pressure",
         duration="6 Training Days",
+        unit="Individual / Team",
+        scope="Leading a team",
         learners="Regular Force personnel selected for the A1530 Promotion "
                  "All Corps RF JNCO Course.",
-        aim="Individual leadership effectiveness through small-team "
+        aim="Develop individual leadership effectiveness through small-team "
             "leadership under pressure.",
+        logic=["LEAD SELF", "LEAD TEAM", "REFLECT", "DEVELOP"],
         outcomes=[
             "Apply strategies to maintain effective performance under pressure",
             "Apply effective leadership behaviours within a small team "
@@ -66,20 +65,20 @@ COURSES = [
             "Evaluate personal leadership performance and develop an "
             "individual leadership development plan",
         ],
-        next_step="ELDA Lead Leaders",
+        next_step="ELDA Lead Leaders.",
     ),
     dict(
         name="ELDA Lead Leaders",
         code="A18008",
-        scope="Leading among leaders",
-        stage="Understand your impact",
-        unit="Others",
-        stage_text="Understand and adapt your leadership impact",
         duration="6 Training Days",
+        unit="Other Leaders",
+        scope="Leading among leaders",
         learners="Regular Force Officers (2LT and LT); Regular Force NCOs "
                  "accepted onto the A1531 SNCO Promotion Course.",
-        aim="Leadership effectiveness through self-awareness, reflection "
-            "and deliberate adaptation of leadership behaviour.",
+        aim="Develop leadership effectiveness through self-awareness, "
+            "reflection and deliberate adaptation of leadership behaviour.",
+        logic=["UNDERSTAND SELF", "UNDERSTAND OTHERS", "ADAPT BEHAVIOUR",
+               "DEVELOP DELIBERATELY"],
         outcomes=[
             "Demonstrate Army ethos and values through leadership "
             "behaviour under challenging conditions",
@@ -87,20 +86,22 @@ COURSES = [
             "Adapt leadership behaviour to improve effectiveness",
             "Develop an individual leadership development strategy",
         ],
-        next_step="ELDA Lead Systems; ELDA Command as part of a command team",
+        next_step="ELDA Lead Systems or ELDA Command, as appropriate to "
+                  "career pathway.",
     ),
     dict(
         name="ELDA Lead Systems",
         code="A18010",
-        scope="Leading across a system",
-        stage="Influence the system",
-        unit="System",
-        stage_text="Understand interdependencies and influence beyond authority",
         duration="7 Training Days",
+        unit="System",
+        scope="Leading across a system",
         learners="SNCOs and WOs accepted onto the A1532 All Corps Warrant "
                  "Officer Course; Captains preparing for promotion to Major.",
-        aim="Leadership effectiveness within complex systems: "
-            "interdependencies and influence beyond direct authority.",
+        aim="Develop leadership effectiveness within complex systems through "
+            "understanding interdependencies, exercising influence and "
+            "adapting leadership behaviour.",
+        logic=["UNDERSTAND THE SYSTEM", "NAVIGATE INTERDEPENDENCE",
+               "INFLUENCE OUTCOMES", "ADAPT & DEVELOP"],
         outcomes=[
             "Demonstrate Army ethos, values and sound judgement within "
             "complex environments",
@@ -110,21 +111,22 @@ COURSES = [
             "Evaluate and adapt leadership behaviour to improve system "
             "effectiveness",
         ],
-        next_step="ELDA Command as part of a command team",
+        next_step="ELDA Command, as appropriate to career pathway.",
     ),
     dict(
         name="ELDA Command",
         code="A18009",
-        scope="Leading as a command team",
-        stage="Lead effectively together",
-        unit="Collective",
-        stage_text="Build cohesion, alignment and collective command effectiveness",
         duration="8–10 Training Days",
-        learners="Established or forming command teams and leadership "
-                 "groups: unit headquarters, command teams and subordinate "
-                 "command teams.",
-        aim="Collective effectiveness of command teams: shared "
-            "understanding, cohesion, judgement and leadership alignment.",
+        unit="Command Collective / Organisation",
+        scope="Leading collectively at command level",
+        learners="Established or forming command teams and leadership groups, "
+                 "including unit HQs, command teams, principal staff and "
+                 "subordinate command teams.",
+        aim="Develop collective command effectiveness through shared "
+            "understanding, cohesion, collective judgement and deliberate "
+            "creation of the conditions for organisational performance.",
+        logic=["UNDERSTAND EACH OTHER", "BUILD COHESION",
+               "EXERCISE COLLECTIVE JUDGEMENT", "CREATE THE CONDITIONS"],
         outcomes=[
             "Develop shared understanding within the command team",
             "Strengthen cohesion and effectiveness across the command team",
@@ -132,18 +134,20 @@ COURSES = [
             "conditions",
             "Create the conditions for organisational performance",
         ],
-        next_step="Applied within the command team's appointments; individual "
-                  "Leadership Development Plans",
+        next_step="Continued command-team development and application within "
+                  "command and senior leadership appointments.",
     ),
 ]
 
+SCOPE_CAPTION = "Increasing scope, interdependence and organisational consequence"
+
 CLOSING = (
-    "The ELDA pathway progressively broadens the leadership challenge: from "
-    "leading effectively within a team, to understanding one's impact on "
-    "other leaders, to influencing across complex systems. ELDA Command "
-    "brings these capabilities together at the collective level, developing "
-    "cohesive command teams able to align leadership effort, exercise sound "
-    "judgement and create the conditions for organisational effectiveness."
+    "The ELDA pathway deliberately expands the scope and complexity of "
+    "leadership: from leading self and a small team, to understanding one's "
+    "impact on other leaders, to influencing outcomes across an "
+    "interconnected system, and ultimately to developing the collective "
+    "effectiveness of command teams that create the conditions for "
+    "organisational performance."
 )
 
 # ------------------------------------------------------------ XML helpers ---
@@ -333,26 +337,20 @@ def add_letterhead(doc, with_logo=True, title_style=None):
         buf = io.BytesIO()
         logo.save(buf, "PNG")
         buf.seek(0)
-        doc.add_picture(buf, width=Mm(26))
-        doc.paragraphs[-1].paragraph_format.space_after = Pt(8)
+        doc.add_picture(buf, width=Mm(24))
+        doc.paragraphs[-1].paragraph_format.space_after = Pt(5)
 
     k = doc.add_paragraph()
     k.paragraph_format.space_after = Pt(0)
-    r = run(k, "PATHWAY OVERVIEW", Pt(8.5), bold=True, color=SWAMP_GREEN)
+    r = run(k, "NEW ZEALAND ARMY LEADERSHIP CENTRE", Pt(8.5), bold=True, color=SWAMP_GREEN)
     cds.letterspace(r, 40)
 
     title_p = doc.add_paragraph(style=title_style) if title_style \
         else doc.add_paragraph()
     title_p.paragraph_format.space_before = Pt(0)
-    title_p.paragraph_format.space_after = Pt(2)
-    run(title_p, TITLE, Pt(20), bold=True)
-
-    tag_p = doc.add_paragraph()
-    tag_p.paragraph_format.space_after = Pt(3)
-    set_border(tag_p, "bottom", ARMY_RED, 18, space=5)
-    r = run(tag_p, "EXPERIENTIAL LEADERSHIP DEVELOPMENT ACTIVITIES", Pt(9),
-            bold=True, color=SWAMP_GREEN)
-    cds.letterspace(r, 30)
+    title_p.paragraph_format.space_after = Pt(3)
+    set_border(title_p, "bottom", ARMY_RED, 18, space=4)
+    run(title_p, TITLE, Pt(17), bold=True)
 
     meta_p = doc.add_paragraph()
     meta_p.paragraph_format.space_before = Pt(3)
@@ -369,23 +367,30 @@ def add_letterhead(doc, with_logo=True, title_style=None):
 
     # The pathway band: course sequence and scope, the first thing to read.
     band = doc.add_paragraph()
-    band.paragraph_format.space_before = Pt(8)
-    band.paragraph_format.space_after = Pt(5)
+    band.paragraph_format.space_before = Pt(5)
+    band.paragraph_format.space_after = Pt(0)
     for i, course in enumerate(COURSES):
         if i:
             run(band, "   →   ", Pt(12), bold=True, color=ARMY_RED)
         r = run(band, course["name"].replace("ELDA ", "").upper(), Pt(12),
                 bold=True, color=SWAMP_GREEN)
         cds.letterspace(r, 20)
+    cap = doc.add_paragraph()
+    cap.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    cap.paragraph_format.space_before = Pt(0)
+    cap.paragraph_format.space_after = Pt(2)
+    r = run(cap, SCOPE_CAPTION.upper() + "  →", Pt(7), bold=True,
+            color=WAIOURU_HILLS)
+    cds.letterspace(r, 25)
     return title_p
 
 
 # ------------------------------------------------------------------ table ---
 
 LABEL_CM = 2.9
-ROWS = ["course", "scope", "learners", "aim", "logic", "outcomes", "next"]
-LABELS = {"scope": "Scope", "learners": "Learners", "aim": "Aim",
-          "logic": "Developmental progression", "outcomes": "Learning outcomes",
+ROWS = ["course", "unit", "scope", "learners", "aim", "logic", "outcomes", "next"]
+LABELS = {"unit": "", "scope": "Scope", "learners": "Learners", "aim": "Aim",
+          "logic": "Developmental logic", "outcomes": "Learning outcomes",
           "next": "Next step"}
 
 
@@ -405,13 +410,18 @@ def render_pathway_table(doc, text_width_cm=TEXT_WIDTH_CM):
         for c_idx in range(len(COURSES) + 1):
             cell = row.cells[c_idx]
             cell.width = Cm(LABEL_CM if c_idx == 0 else col_cm)
-            pad = 65 if key in ("scope", "logic") else 45
+            pad = 12 if key == "unit" else (45 if key in ("scope", "logic") else 35)
             cell_margins(cell, top=pad, bottom=pad)
             p = cell.paragraphs[0]
             p.paragraph_format.space_after = Pt(0)
             p.paragraph_format.line_spacing = 1.04
 
             if c_idx == 0:
+                if key == "unit":
+                    cell_shading(cell, WAIOURU_HILLS)
+                    r = run(p, "SCOPE", Pt(7), bold=True, color=RUAPEHU_WHITE)
+                    cds.letterspace(r, 30)
+                    continue
                 cell_shading(cell, SWAMP_GREEN if key == "course" else MOAWHANGO)
                 if key != "course":
                     run(p, LABELS[key], Pt(8.5), bold=True, color=SWAMP_GREEN)
@@ -422,28 +432,33 @@ def render_pathway_table(doc, text_width_cm=TEXT_WIDTH_CM):
                 cell_shading(cell, SWAMP_GREEN)
                 run(p, course["name"], Pt(11), bold=True, color=RUAPEHU_WHITE)
                 p.add_run().add_break()
-                run(p, f'{course["code"]}  |  {course["duration"]}', Pt(8),
+                run(p, f'{course["code"]}  ·  {course["duration"]}', Pt(8),
                     color=MOAWHANGO)
+            elif key == "unit":
+                # Thin scope bar: what is changing across the pathway.
+                cell_shading(cell, WAIOURU_HILLS)
+                label = course["unit"].upper()
+                if c_idx < len(COURSES):
+                    label += "   →"
+                r = run(p, label, Pt(7.5), bold=True, color=RUAPEHU_WHITE)
+                cds.letterspace(r, 25)
             elif key == "scope":
                 cell_shading(cell, MOAWHANGO)
                 set_border(p, "left", ARMY_RED, 18, space=4)
-                run(p, course["scope"], Pt(11), bold=True, color=SWAMP_GREEN)
+                run(p, course["scope"], Pt(10.5), bold=True, color=SWAMP_GREEN)
             elif key == "logic":
-                # One progression read left to right: SELF -> OTHERS ->
-                # SYSTEM -> COLLECTIVE, each with its stage and one line.
+                # Same four-stage architecture in every column; read down for
+                # the course's journey, across for the widening scope.
                 cell_shading(cell, PALE_GREEN)
-                p.paragraph_format.line_spacing = 1.12
-                unit = course["unit"].upper()
-                if c_idx < len(COURSES):
-                    unit += "   →"
-                r = run(p, unit, Pt(7.5), bold=True, color=WAIOURU_HILLS)
-                cds.letterspace(r, 30)
-                p.add_run().add_break()
-                r = run(p, course["stage"].upper(), Pt(10.5), bold=True,
-                        color=SWAMP_GREEN)
-                cds.letterspace(r, 10)
-                p.add_run().add_break()
-                run(p, course["stage_text"], Pt(8.5), color=DARKEST_HOUR)
+                p.paragraph_format.line_spacing = 1.0
+                for i, stage in enumerate(course["logic"]):
+                    if i:
+                        p.add_run().add_break()
+                        run(p, "▼", Pt(7), color=ARMY_RED)
+                        p.add_run().add_break()
+                    r = run(p, stage, Pt(8.5), bold=True, color=SWAMP_GREEN)
+                    cds.letterspace(r, 8)
+                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
             elif key == "outcomes":
                 for i, lo in enumerate(course["outcomes"]):
                     if i:
@@ -458,7 +473,7 @@ def render_pathway_table(doc, text_width_cm=TEXT_WIDTH_CM):
 def render_closing(doc):
     """Key message panel: dark green, white text, red rule."""
     close_p = doc.add_paragraph()
-    close_p.paragraph_format.space_before = Pt(8)
+    close_p.paragraph_format.space_before = Pt(6)
     close_p.paragraph_format.space_after = Pt(0)
     close_p.paragraph_format.left_indent = Cm(0.3)
     close_p.paragraph_format.right_indent = Cm(0.3)
@@ -467,7 +482,7 @@ def render_closing(doc):
     r = run(close_p, "KEY MESSAGE", Pt(7.5), bold=True, color=MOAWHANGO)
     cds.letterspace(r, 30)
     close_p.add_run().add_break()
-    run(close_p, CLOSING, Pt(9), bold=True, color=RUAPEHU_WHITE)
+    run(close_p, CLOSING, Pt(8.5), bold=True, color=RUAPEHU_WHITE)
     return close_p
 
 

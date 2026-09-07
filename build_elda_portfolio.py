@@ -92,6 +92,13 @@ VALIDATION = [
         "against current NZDF policy.",
     ]),
     ("A18009 ELDA Command", [
+        "Course Capacity. The current maximum of 8 is not carried forward. "
+        "Set a maximum that suits the revised collective delivery model, "
+        "for example a unit HQ or a unit command team with its subordinate "
+        "command teams, and record it.",
+        "Suitability limits. Review the NZDF Civilian (2), International "
+        "non-MAP (1) and non-NZDF (1) limits against the collective "
+        "delivery model.",
         "Course Entry Requirements. Confirm the medical classification "
         "(A4 G3 Z1 or higher) and fitness requirement (Pass or higher) "
         "against current NZDF policy.",
