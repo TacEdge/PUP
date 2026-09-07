@@ -112,6 +112,6 @@ Learners exercise judgement, balance competing demands and risk, make timely dec
 
 Learners deliberately shape the leadership environment to enable trust, clarity, appropriate challenge, accountability, initiative and effective performance, recognising the effect their behaviour and use of authority have on others.
 
-#### LO 1.4: Develop strategies for continued command and leadership effectiveness
+#### LO 1.4: Establish strategies for sustained command effectiveness across changing contexts
 
-Learners integrate experiential learning, feedback and self-evaluation to identify command and leadership strengths, risks and development priorities, and establish deliberate strategies for continued effectiveness across changing contexts and responsibilities.
+Learners integrate experiential learning, feedback and self-evaluation to identify command and leadership strengths, risks and development priorities, and establish deliberate strategies for sustained command effectiveness across changing contexts and responsibilities.

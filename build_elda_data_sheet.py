@@ -60,7 +60,8 @@ PROTECTIVE_MARKING = "UNCLASSIFIED"
 FOOTER_REFERENCE   = "ACS 2026"
 DATE               = "September 2026"
 ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
-SUBTITLE_LINE      = "Course Data Sheet"
+SUBTITLE_LINE      = "Proposed Revised Course Data Sheet"
+STATUS             = "Draft for Validation"
 
 # Style used for "## " section headings; a compiled portfolio demotes it.
 SECTION_HEADING_STYLE = "Heading 1"
@@ -512,7 +513,8 @@ def add_letterhead(title, subtitle, reference, with_logo=True,
     meta_p = doc.add_paragraph()
     meta_p.paragraph_format.space_after = Pt(10)
     set_border(meta_p, "bottom", WAIOURU_HILLS, 6, space=6)
-    for i, (label, value) in enumerate([("Reference", reference), ("Date", DATE)]):
+    for i, (label, value) in enumerate([("Reference", reference), ("Date", DATE),
+                                        ("Status", STATUS)]):
         if i:
             gap = meta_p.add_run("      ")
             force_font(gap, FONT_HEAD)

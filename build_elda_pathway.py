@@ -28,6 +28,7 @@ ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
 
 TITLE         = "ELDA Pathway"
 SUBTITLE_LINE = "Experiential Leadership Development Activities: Course Overview"
+STATUS        = "Draft for Validation"
 FOOTER_LEFT   = "ELDA Pathway Overview"
 
 ARMY_RED      = "C62026"
@@ -49,11 +50,11 @@ COURSES = [
         duration="6 Training Days",
         learners="Regular Force personnel selected for the A1530 Promotion "
                  "All Corps RF JNCO Course.",
-        aim="Develop individual leadership effectiveness through "
-            "experiential small-team leadership under pressure.",
+        aim="Individual leadership effectiveness through small-team "
+            "leadership under pressure.",
         logic=["SELF", "TEAM", "REFLECT"],
         outcomes=[
-            "Maintain effective performance under pressure",
+            "Apply strategies to maintain effective performance under pressure",
             "Apply effective leadership behaviours within a small team "
             "under challenging conditions",
             "Evaluate personal leadership performance and develop an "
@@ -68,9 +69,8 @@ COURSES = [
         duration="6 Training Days",
         learners="Regular Force Officers (2LT and LT); Regular Force NCOs "
                  "accepted onto the A1531 SNCO Promotion Course.",
-        aim="Develop leadership effectiveness through increased "
-            "self-awareness, reflection and deliberate adaptation of "
-            "leadership behaviour in challenging environments.",
+        aim="Leadership effectiveness through self-awareness, reflection "
+            "and deliberate adaptation of leadership behaviour.",
         logic=["VALUES", "SELF-AWARENESS", "ADAPT", "DEVELOP"],
         outcomes=[
             "Demonstrate Army ethos and values through leadership "
@@ -88,13 +88,12 @@ COURSES = [
         duration="7 Training Days",
         learners="SNCOs and WOs accepted onto the A1532 All Corps Warrant "
                  "Officer Course; Captains preparing for promotion to Major.",
-        aim="Develop leadership effectiveness within complex systems: "
-            "understand interdependencies, influence beyond direct "
-            "authority and achieve outcomes through others.",
+        aim="Leadership effectiveness within complex systems: "
+            "interdependencies and influence beyond direct authority.",
         logic=["VALUES & JUDGEMENT", "SYSTEM", "INFLUENCE", "ADAPT"],
         outcomes=[
-            "Demonstrate Army ethos and values when leading within complex "
-            "environments",
+            "Demonstrate Army ethos, values and sound judgement within "
+            "complex environments",
             "Analyse relationships and interdependencies within a complex "
             "system",
             "Influence others to achieve outcomes beyond direct authority",
@@ -110,9 +109,8 @@ COURSES = [
         duration="8–10 Training Days",
         learners="Personnel selected for, preparing for, or undertaking "
                  "significant command or senior leadership appointments.",
-        aim="Develop command effectiveness through self-awareness, "
-            "judgement and deliberate leadership behaviour that creates the "
-            "conditions for team and organisational performance.",
+        aim="Command effectiveness through self-awareness, judgement and "
+            "creating the conditions for organisational performance.",
         logic=["STRATEGIC SELF-AWARENESS", "JUDGEMENT", "CONDITIONS",
                "DELIBERATE DEVELOPMENT"],
         outcomes=[
@@ -121,8 +119,8 @@ COURSES = [
             "demanding conditions",
             "Create the conditions for effective team and organisational "
             "performance",
-            "Develop strategies for continued command and leadership "
-            "effectiveness",
+            "Establish strategies for sustained command effectiveness "
+            "across changing contexts",
         ],
         next_step="Command and senior leadership appointments",
     ),
@@ -341,7 +339,7 @@ def add_letterhead(doc, with_logo=True, title_style=None):
     run(meta_p, ORIGINATOR, Pt(9.5), color=SWAMP_GREEN)
     run(meta_p, "      ", Pt(9))
     for i, (label, value) in enumerate([("Reference", DOCUMENT_REFERENCE),
-                                        ("Date", DATE)]):
+                                        ("Date", DATE), ("Status", STATUS)]):
         if i:
             run(meta_p, "      ", Pt(9))
         run(meta_p, f"{label}  ", Pt(8.5), bold=True, color=SWAMP_GREEN)

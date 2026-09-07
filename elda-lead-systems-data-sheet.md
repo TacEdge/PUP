@@ -100,7 +100,7 @@ Yes. The syllabus is to be aligned to the revised learning outcomes below.
 
 ### COG 1: Systems Leadership and Influence
 
-#### LO 1.1: Demonstrate Army ethos and values when leading within complex environments
+#### LO 1.1: Demonstrate Army ethos, values and sound judgement within complex environments
 
 Learners demonstrate Army ethos and values through their leadership behaviour and judgement while operating within complex environments characterised by competing demands, uncertainty, interdependence and pressure.
 
