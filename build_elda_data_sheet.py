@@ -10,7 +10,7 @@ Source mini-syntax (a superset of the SOP builder's):
   | a | b |          two-column field tables (separator row ignored)
   >! text           review-note callout
   >> LABEL | text   one box in the learning-architecture chain
-  * text / 1. text  bullets and numbered points
+  * text / 1. text  bullets and numbered points (four-space '    * ' nests)
 """
 
 import io
@@ -32,6 +32,13 @@ SHEETS = {
         title="A18011 ELDA Lead Teams",
         reference="SOLO Course Data Sheet A18011, AL 3.0",
         footer_left="A18011 ELDA Lead Teams Course Data Sheet",
+    ),
+    "lead-systems": dict(
+        source="./elda-lead-systems-data-sheet.md",
+        output="./output/elda-lead-systems-data-sheet.docx",
+        title="A18010 ELDA Lead Systems",
+        reference="SOLO Course Data Sheet A18010, AL 3.0",
+        footer_left="A18010 ELDA Lead Systems Course Data Sheet",
     ),
     "lead-leaders": dict(
         source="./elda-lead-leaders-data-sheet.md",
@@ -367,12 +374,13 @@ def add_callout(text_lines):
     return p
 
 
-def add_bullet(text):
+def add_bullet(text, level=1):
     p = doc.add_paragraph()
-    p.paragraph_format.left_indent = Cm(0.7)
+    indent = 0.7 * level
+    p.paragraph_format.left_indent = Cm(indent)
     p.paragraph_format.first_line_indent = Cm(-0.42)
     p.paragraph_format.space_after = Pt(2)
-    p.paragraph_format.tab_stops.add_tab_stop(Cm(0.7))
+    p.paragraph_format.tab_stops.add_tab_stop(Cm(indent))
     bullet = p.add_run("•\t")
     force_font(bullet, FONT_HEAD)
     force_color(bullet, ARMY_RED)
@@ -561,6 +569,11 @@ while i < len(lines):
 
     if line.startswith("* "):
         add_bullet(line[2:].strip())
+        i += 1
+        continue
+
+    if line.startswith("    * "):
+        add_bullet(line[6:].strip(), level=2)
         i += 1
         continue
 
