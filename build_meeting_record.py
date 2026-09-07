@@ -16,8 +16,8 @@ import build_elda_data_sheet as cds
 
 OUTPUT_DOCX = "./output/nzalc-meeting-record.docx"
 TITLE = "Priorities and Actions"
-KICKER = "Meeting Record"
-TAG = "NZALC Command and Staff Meeting"
+KICKER = None
+TAG = "HQ Co-ord"
 REFERENCE = "Meeting notes, September 2026"
 FOOTER_LEFT = "NZALC | Meeting Record"
 
@@ -41,13 +41,6 @@ PRIORITIES = [
      "resolved with OCS and Army leadership: either clarify Nemesis's "
      "distinct purpose or redesign it to achieve the intended Lead Teams "
      "outcomes."),
-    ("Administration and assurance need continued focus.",
-     "H&S audit actions, visitor management, signage, security training, "
-     "POs and invoices and contractor administration are progressing but "
-     "require active tracking. Jim's field strengths are recognised; the "
-     "answer is to provide more deliberate administrative support and "
-     "prioritisation around him rather than allowing critical tasks to "
-     "drift."),
     ("The unit is otherwise in a good operational position.",
      "Courses, November activities, leave, end-of-year events and "
      "leadership-development work are broadly on track. The recent push to "
@@ -58,12 +51,12 @@ PRIORITIES = [
 # (priority, action, owner, timing)
 ACTIONS = [
     ("High", "Chase remaining Lead Leaders officer nominations and confirm "
-             "final attendance", "Mike", "Tomorrow"),
-    ("High", "Follow up Lighthouse approval for Engineer Survival", "Mike",
+             "final attendance", "Tony", "Tomorrow"),
+    ("High", "Follow up Lighthouse approval for Engineer Survival", "Red",
      "ASAP"),
     ("High", "Review and tighten the staff and contractor onboarding and "
              "induction SOP, including safety induction, supervision, due "
-             "diligence and documented completion", "Mike", "ASAP"),
+             "diligence and documented completion", "Tony", "ASAP"),
     ("High", "Make the close-out call to Drew, formally ending the contractor "
              "engagement and ensuring no expectation of future work remains",
      "Mike", "ASAP"),
@@ -71,22 +64,16 @@ ACTIONS = [
              "Lead Teams: intended outcomes, perform and recovery phases, "
              "coaching and appropriate positioning", "Mike", "Upcoming"),
     ("High", "Track outstanding H&S audit actions, including kayak audit "
-             "follow-up", "Mike", "Ongoing"),
-    ("Medium", "Coordinate with Jim and Dave Bertram on leadership journal "
-               "use and briefing for current and upcoming courses", "Mike",
-     "Current courses"),
+             "follow-up", "Jim", "Ongoing"),
     ("Medium", "Prepare the ATG submission presentation and have Dave review "
                "it", "Mike", "Wed to Thu"),
     ("Medium", "Develop the leadership-development programme for the 16 to "
                "17 Nov Linton team-building activity, including allocation "
-               "of instructors and session responsibilities", "Mike",
+               "of instructors and session responsibilities", "TBC",
      "Before Nov"),
     ("Medium", "Organise the end-of-year farewell event, investigating the "
-               "week of 23 Nov as the preferred option", "Mike",
+               "week of 23 Nov as the preferred option", "Red",
      "Confirm soon"),
-    ("Medium", "Provide Jim targeted admin support, particularly safety "
-               "assurance, contractor administration and PO tracking",
-     "Mike", "Ongoing"),
 ]
 
 
@@ -129,13 +116,13 @@ def build():
     cds.add_header_footer(doc.sections[0], FOOTER_LEFT)
     cds.add_title_block(KICKER, TITLE, TAG, reference=REFERENCE, status=None)
 
-    cds.add_section_heading("Five Priorities")
+    cds.add_section_heading("Priorities")
     for n, (lead, text) in enumerate(PRIORITIES, 1):
         cds.add_numbered(n, f"**{lead}** {text}")
 
     h = cds.add_section_heading("Consolidated Action List")
     h.paragraph_format.page_break_before = True
-    cds.add_body("Actions for Mike. High-priority actions are shaded.")
+    cds.add_body("Actions agreed at the HQ Co-ord. High-priority actions are shaded.")
     add_action_table(doc)
 
     cds.finish(TITLE)

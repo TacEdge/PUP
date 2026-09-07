@@ -1161,17 +1161,17 @@ ADDITIONAL_LINES = [
     ("Critical", "Lead Leaders Officer Nominations",
      "Final attendance confirmed", 0,
      "Chase remaining officer nominations and confirm final attendance",
-     "Due tomorrow"),
+     "Due tomorrow. Owner: Tony"),
     ("Critical", "Engineer Survival: Lighthouse Approval",
      "Lighthouse approval received", 0,
      "Follow up Lighthouse approval",
-     "ASAP"),
+     "ASAP. Owner: Red"),
     ("Critical", "Staff and Contractor Onboarding SOP",
      "Clear, repeatable onboarding SOP in place covering safety induction, "
      "supervision, role suitability, due diligence and documented completion", 0,
      "Review and tighten the onboarding and induction SOP",
-     "ASAP. Lesson from the recent contractor engagement: fix the system, not "
-     "just the personnel issue"),
+     "ASAP. Owner: Tony. Lesson from the recent contractor engagement: fix "
+     "the system, not just the personnel issue"),
     ("Critical", "Contractor Engagement Close-out",
      "Engagement formally closed with no expectation of future work", 0,
      "Make the close-out call to Drew and record the outcome",
@@ -1186,11 +1186,7 @@ ADDITIONAL_LINES = [
     ("Critical", "H&S Audit Actions",
      "All outstanding audit actions closed", 0,
      "Track outstanding actions, including kayak audit follow-up",
-     "Ongoing"),
-    ("Important", "Leadership Journal on Current Courses",
-     "Journal briefed and in use on current and upcoming courses", 0,
-     "Coordinate with Jim and Dave Bertram on journal use and briefing",
-     "Current courses"),
+     "Ongoing. Owner: Jim"),
     ("Important", "ATG Submission Presentation",
      "Presentation prepared and reviewed by Dave", 0,
      "Prepare the presentation and have Dave review it",
@@ -1199,17 +1195,11 @@ ADDITIONAL_LINES = [
      "Leadership-development programme developed with instructors and "
      "session responsibilities allocated", 0,
      "Develop the programme and allocate instructors and sessions",
-     "Before Nov"),
+     "Before Nov. Owner: TBC"),
     ("Important", "End-of-Year Farewell Event",
      "Event organised", 0,
      "Investigate the week of 23 Nov as the preferred option and confirm",
-     "Confirm soon"),
-    ("Important", "Admin Support to Jim",
-     "Safety assurance, contractor administration and PO tracking supported "
-     "and on track", 0,
-     "Provide targeted admin support and prioritisation around Jim",
-     "Ongoing. Jim's field strengths recognised; keep critical admin from "
-     "drifting"),
+     "Confirm soon. Owner: Red"),
 ]
 
 # Conditional formats, validations and summary formulas cover this many
