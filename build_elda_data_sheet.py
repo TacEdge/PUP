@@ -40,6 +40,13 @@ SHEETS = {
         reference="SOLO Course Data Sheet A18010, AL 3.0",
         footer_left="A18010 ELDA Lead Systems Course Data Sheet",
     ),
+    "command": dict(
+        source="./elda-command-data-sheet.md",
+        output="./output/elda-command-data-sheet.docx",
+        title="A18009 ELDA Command",
+        reference="SOLO Course Data Sheet A18009, AL 2.5",
+        footer_left="A18009 ELDA Command Course Data Sheet",
+    ),
     "lead-leaders": dict(
         source="./elda-lead-leaders-data-sheet.md",
         output="./output/elda-lead-leaders-data-sheet.docx",
