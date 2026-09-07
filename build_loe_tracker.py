@@ -23,6 +23,7 @@ Usage:  python3 build_loe_tracker.py [source.xlsx] [output.xlsm]
 """
 from __future__ import annotations
 
+import datetime
 import re
 import struct
 import sys
@@ -1013,7 +1014,7 @@ def cell(ref: str, style: int, shared: int | None = None) -> str:
 
 def add_complete_column(sheet_xml: str, ss: dict[str, int], last_row: int) -> str:
     """Add column H (Complete) to the main sheet: header, tick boxes, widths."""
-    sheet_xml = sheet_xml.replace('<dimension ref="A1:G31"/>', f'<dimension ref="A1:H{last_row}"/>', 1)
+    sheet_xml = re.sub(r'<dimension ref="A1:G\d+"/>', f'<dimension ref="A1:H{last_row}"/>', sheet_xml, count=1)
     sheet_xml = sheet_xml.replace(
         "</cols>", '<col min="8" max="8" width="11.5" customWidth="1"/></cols>', 1)
     sheet_xml = sheet_xml.replace('spans="1:7"', 'spans="1:8"')
@@ -1039,13 +1040,15 @@ def add_complete_column(sheet_xml: str, ss: dict[str, int], last_row: int) -> st
         "</dataValidations>",
         '<dataValidation type="none" allowBlank="1" showInputMessage="1" '
         'promptTitle="Last Updated" prompt="Double-click to stamp today\'s date." '
-        'sqref="G8:G38"/></dataValidations>', 1)
+        f'sqref="G8:G{TRACK_LIMIT_ROW}"/></dataValidations>', 1)
     return sheet_xml
 
 
-def widen_table(table_xml: str, last_row: int) -> str:
-    """Extend tblLoE from A:G to A:H with a Complete column."""
-    table_xml = table_xml.replace(f'ref="A7:G{last_row}"', f'ref="A7:H{last_row}"')
+def widen_table(table_xml: str, last_row: int, new_last_row: int) -> str:
+    """Extend tblLoE from A:G to A:H with a Complete column, and down to
+    new_last_row to take the appended lines."""
+    assert f'ref="A7:G{last_row}"' in table_xml, "table ref not found"
+    table_xml = table_xml.replace(f'ref="A7:G{last_row}"', f'ref="A7:H{new_last_row}"')
     table_xml = table_xml.replace('<tableColumns count="7">', '<tableColumns count="8">', 1)
     table_xml = table_xml.replace(
         "</tableColumns>", '<tableColumn id="8" name="Complete"/></tableColumns>', 1)
@@ -1149,6 +1152,102 @@ ARCHIVE_HINT = ("COMPLETED LINES LAND HERE AUTOMATICALLY - CLICK A LINE'S TICK B
                 "TO SEND IT BACK TO THE ACTIVE TRACKER")
 
 
+
+# Rows beyond the source file's table: the tracker grows here.  Each entry is
+# (priority, line of effort, end state, progress 0-1, next action, notes).
+# Last Updated is stamped with ADDITIONS_DATE.
+ADDITIONS_DATE = datetime.date(2026, 9, 7)
+ADDITIONAL_LINES = [
+    ("Critical", "Lead Leaders Officer Nominations",
+     "Final attendance confirmed", 0,
+     "Chase remaining officer nominations and confirm final attendance",
+     "Due tomorrow"),
+    ("Critical", "Engineer Survival: Lighthouse Approval",
+     "Lighthouse approval received", 0,
+     "Follow up Lighthouse approval",
+     "ASAP"),
+    ("Critical", "Staff and Contractor Onboarding SOP",
+     "Clear, repeatable onboarding SOP in place covering safety induction, "
+     "supervision, role suitability, due diligence and documented completion", 0,
+     "Review and tighten the onboarding and induction SOP",
+     "ASAP. Lesson from the recent contractor engagement: fix the system, not "
+     "just the personnel issue"),
+    ("Critical", "Contractor Engagement Close-out",
+     "Engagement formally closed with no expectation of future work", 0,
+     "Confirm Jim has made the close-out call and record the outcome",
+     "ASAP. Jim owns the call; Mike accountable for closure. Individual not "
+     "to be re-engaged"),
+    ("Critical", "Nemesis and Lead Teams Alignment",
+     "Nemesis purpose clarified with OCS and Army leadership, or redesigned "
+     "to deliver the intended Lead Teams outcomes", 0,
+     "Engage Army/OCS leadership on intended outcomes, perform/recovery "
+     "phases, coaching and positioning",
+     "Upcoming. Missing elements: structured cognitive preparation, "
+     "coaching/reflection and recovery phases"),
+    ("Critical", "H&S Audit Actions",
+     "All outstanding audit actions closed", 0,
+     "Track outstanding actions, including kayak audit follow-up",
+     "Ongoing"),
+    ("Important", "Leadership Journal on Current Courses",
+     "Journal briefed and in use on current and upcoming courses", 0,
+     "Coordinate with Jim and Dave Bertram on journal use and briefing",
+     "Current courses"),
+    ("Important", "ATG Submission Presentation",
+     "Presentation prepared and reviewed by Dave", 0,
+     "Prepare the presentation and have Dave review it",
+     "Wed to Thu"),
+    ("Important", "Linton Team-Building Activity (16 to 17 Nov)",
+     "Leadership-development programme developed with instructors and "
+     "session responsibilities allocated", 0,
+     "Develop the programme and allocate instructors and sessions",
+     "Before Nov"),
+    ("Important", "End-of-Year Farewell Event",
+     "Event organised", 0,
+     "Investigate the week of 23 Nov as the preferred option and confirm",
+     "Confirm soon"),
+    ("Important", "Admin Support to Jim",
+     "Safety assurance, contractor administration and PO tracking supported "
+     "and on track", 0,
+     "Provide targeted admin support and prioritisation around Jim",
+     "Ongoing. Jim's field strengths recognised; keep critical admin from "
+     "drifting"),
+]
+
+# Conditional formats, validations and summary formulas cover this many
+# rows so the table can keep growing before anything needs re-extending.
+TRACK_LIMIT_ROW = 80
+
+
+def _xml_text(text: str) -> str:
+    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def append_lines(sheet_xml: str, lines, ss: dict[str, int], first_new_row: int) -> str:
+    """Append ADDITIONAL_LINES as table rows in the source column layout
+    (A-G); the Complete column is added afterwards like every other row."""
+    serial = (ADDITIONS_DATE - datetime.date(1899, 12, 30)).days
+    rows = []
+    for i, (priority, line, end_state, progress, action, notes) in enumerate(lines):
+        r = first_new_row + i
+        cells = [
+            f'<c r="A{r}" s="5" t="s"><v>{ss[priority]}</v></c>',
+            f'<c r="B{r}" s="6" t="inlineStr"><is><t>{_xml_text(line)}</t></is></c>',
+            f'<c r="C{r}" s="6" t="inlineStr"><is><t>{_xml_text(end_state)}</t></is></c>',
+            f'<c r="D{r}" s="7"><v>{progress}</v></c>',
+            f'<c r="E{r}" s="6" t="inlineStr"><is><t>{_xml_text(action)}</t></is></c>',
+            f'<c r="F{r}" s="6" t="inlineStr"><is><t>{_xml_text(notes)}</t></is></c>',
+            f'<c r="G{r}" s="8"><v>{serial}</v></c>',
+        ]
+        rows.append(f'<row r="{r}" spans="1:7" ht="31.5" customHeight="1">' + "".join(cells) + "</row>")
+    return sheet_xml.replace("</sheetData>", "".join(rows) + "</sheetData>", 1)
+
+
+def extend_ranges(xml: str, old_limit: int, new_limit: int) -> str:
+    """Push every X8:X<old_limit> range (formats, validations, formulas) down
+    to new_limit."""
+    return re.sub(rf"([A-H])8:([A-H]){old_limit}\b", rf"\g<1>8:\g<2>{new_limit}", xml)
+
+
 def build(src: str, dst: str) -> None:
     vba_bin = build_vba_project_bin()
 
@@ -1161,19 +1260,23 @@ def build(src: str, dst: str) -> None:
     header_row, last_row = int(ref.group(2)), int(ref.group(4))
     assert header_row + 1 == FIRST_DATA_ROW, "table header row moved"
     assert f'name="{TABLE_NAME}"' in table_xml and ref.group(3) == "G"
-    parts["xl/tables/table1.xml"] = widen_table(table_xml, last_row).encode("utf-8")
+    source_last_row = last_row
+    last_row = source_last_row + len(ADDITIONAL_LINES)
+    parts["xl/tables/table1.xml"] = widen_table(table_xml, source_last_row, last_row).encode("utf-8")
 
     sst_xml, ss = add_shared_strings(
         parts["xl/sharedStrings.xml"].decode("utf-8"),
         ["Complete", "Completed", TICK_EMPTY, ARCHIVE_TITLE, ARCHIVE_HINT, "Priority",
          "Line of Effort", "End State / Output", "Progress %", "Next Action", "Notes",
-         "Last Updated"])
+         "Last Updated"] + PRIORITY_ORDER)
     parts["xl/sharedStrings.xml"] = sst_xml.encode("utf-8")
     strings = shared_strings(sst_xml)
 
     parts["xl/styles.xml"] = add_tick_style(parts["xl/styles.xml"].decode("utf-8")).encode("utf-8")
 
     sheet = parts["xl/worksheets/sheet1.xml"].decode("utf-8")
+    sheet = append_lines(sheet, ADDITIONAL_LINES, ss, source_last_row + 1)
+    sheet = extend_ranges(sheet, 38, TRACK_LIMIT_ROW)
     sheet = sort_table_rows(sheet, strings, FIRST_DATA_ROW, last_row)
     sheet, n = re.subn(r"<sheetPr>", '<sheetPr codeName="Sheet1">', sheet, count=1)
     assert n == 1, "sheetPr not found"
@@ -1192,7 +1295,8 @@ def build(src: str, dst: str) -> None:
     workbook, n = re.subn(r"<workbookPr/>", '<workbookPr codeName="ThisWorkbook"/>', workbook, count=1)
     assert n == 1, "workbookPr not found"
     workbook = workbook.replace("</sheets>", '<sheet name="Archive" sheetId="2" r:id="rIdArchive"/></sheets>', 1)
-    workbook = workbook.replace("'Lines of Effort Tracker'!$A$1:$G$38", "'Lines of Effort Tracker'!$A$1:$H$38", 1)
+    workbook = workbook.replace("'Lines of Effort Tracker'!$A$1:$G$38",
+                                f"'Lines of Effort Tracker'!$A$1:$H${TRACK_LIMIT_ROW}", 1)
     parts["xl/workbook.xml"] = workbook.encode("utf-8")
 
     rels = parts["xl/_rels/workbook.xml.rels"].decode("utf-8")
