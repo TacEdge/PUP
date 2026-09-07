@@ -25,12 +25,12 @@ import build_elda_data_sheet as cds
 import build_elda_pathway as pathway
 
 OUTPUT_DOCX = "./output/elda-course-portfolio.docx"
-TITLE = "Proposed Revised ELDA Course Portfolio"
-SUBTITLE = ("NZALC Experiential Leadership Development Activities: "
-            "Pathway Overview and Course Data Sheets")
+TITLE = "NZALC ELDA Course Portfolio"
+SUBTITLE_1 = "Experiential Leadership Development Activities"
+SUBTITLE_2 = "Pathway Overview and Course Data Sheets"
 REFERENCE = "Course Data Sheets A18011, A18008, A18010, A18009"
-STATUS = "Draft for Validation"
-FOOTER_LEFT = "Proposed Revised ELDA Course Portfolio"
+STATUS = "Proposed Revision: Draft for Validation"
+FOOTER_LEFT = "NZALC | ELDA Course Portfolio"
 
 # Pathway order, not course-code order.
 SHEET_ORDER = ["lead-teams", "lead-leaders", "lead-systems", "command"]
@@ -102,17 +102,10 @@ VALIDATION = [
 
 
 def render_validation(doc):
-    title = doc.add_paragraph(style="Heading 1")
-    cds.add_text_runs(title, "Points for Validation", base_font=cds.FONT_HEAD,
-                      size=Pt(20), bold=True)
-    sub = doc.add_paragraph()
-    sub.paragraph_format.space_after = Pt(4)
-    cds.set_border(sub, "bottom", cds.ARMY_RED, 18, space=8)
-    cds.add_text_runs(sub, "Administrative entries to confirm before publication",
-                      base_font=cds.FONT_HEAD, size=Pt(12), bold=True,
-                      color=cds.SWAMP_GREEN)
+    cds.add_title_block("Portfolio", "Points for Validation",
+                        "Administrative entries to confirm before publication",
+                        reference=None, with_logo=False, title_style="Heading 1")
     intro = doc.add_paragraph()
-    intro.paragraph_format.space_before = Pt(8)
     cds.add_text_runs(intro, (
         "The learning outcomes, aims and notes in this portfolio are the "
         "proposed redraft. The entries below were carried over from the "
@@ -122,6 +115,7 @@ def render_validation(doc):
         "is submitted as the authoritative revision."))
     for heading, items in VALIDATION:
         cds.add_sub_heading(heading, 3)
+        cds._context["notes"] = True   # supporting material: notes sizing
         for n, item in enumerate(items, 1):
             lead, _, rest = item.partition(". ")
             cds.add_numbered(n, f"**{lead}.** {rest}")
@@ -133,33 +127,53 @@ def build():
     cds.add_header_footer(doc.sections[0], FOOTER_LEFT)
 
     # ---- 1. cover -------------------------------------------------------
-    cds.add_logo(width_mm=48, space_after=60)
-    t = doc.add_paragraph()
-    t.paragraph_format.space_after = Pt(4)
-    cds.add_text_runs(t, TITLE, base_font=cds.FONT_HEAD, size=Pt(28), bold=True)
-    s = doc.add_paragraph()
-    s.paragraph_format.space_after = Pt(6)
-    cds.set_border(s, "bottom", cds.ARMY_RED, 24, space=10)
-    cds.add_text_runs(s, SUBTITLE, base_font=cds.FONT_HEAD, size=Pt(13),
-                      bold=True, color=cds.SWAMP_GREEN)
+    cds.add_logo(width_mm=46, space_after=54)
+
+    # Hero block: a single dark-green cell carrying the title.
+    hero = doc.add_table(rows=1, cols=1)
+    hero.autofit = False
+    hero.columns[0].width = Cm(cds.TEXT_WIDTH_CM)
+    cell = hero.cell(0, 0)
+    cell.width = Cm(cds.TEXT_WIDTH_CM)
+    cds._cell_shading(cell, cds.SWAMP_GREEN)
+    cds._cell_margins(cell, top=420, bottom=420, left=440, right=440)
+    k = cell.paragraphs[0]
+    k.paragraph_format.space_after = Pt(10)
+    r = cds._run(k, "NEW ZEALAND ARMY LEADERSHIP CENTRE", cds.FONT_HEAD,
+                 Pt(9.5), True, False, cds.MOAWHANGO)
+    cds.letterspace(r, 50)
+    t = cell.add_paragraph()
+    t.paragraph_format.space_after = Pt(14)
+    t.paragraph_format.line_spacing = 1.0
+    cds._run(t, TITLE, cds.FONT_HEAD, Pt(34), True, False, cds.RUAPEHU_WHITE)
+    s1 = cell.add_paragraph()
+    s1.paragraph_format.space_after = Pt(2)
+    cds._run(s1, SUBTITLE_1, cds.FONT_HEAD, Pt(14), True, False, cds.RUAPEHU_WHITE)
+    s2 = cell.add_paragraph()
+    s2.paragraph_format.space_after = Pt(0)
+    cds._run(s2, SUBTITLE_2, cds.FONT_HEAD, Pt(12), False, False, cds.MOAWHANGO)
+
+    rule = doc.add_paragraph()
+    rule.paragraph_format.space_after = Pt(10)
+    cds.set_border(rule, "bottom", cds.ARMY_RED, 24, space=1)
+
     o = doc.add_paragraph()
-    o.paragraph_format.space_before = Pt(10)
-    cds.add_text_runs(o, cds.ORIGINATOR, base_font=cds.FONT_HEAD, size=Pt(11),
-                      color=cds.SWAMP_GREEN)
-    for pairs in ([("Reference", REFERENCE), ("Date", cds.DATE)],
-                  [("Status", STATUS)]):
-        m = doc.add_paragraph()
-        m.paragraph_format.space_after = Pt(2)
-        for i, (label, value) in enumerate(pairs):
-            if i:
-                cds.add_text_runs(m, "      ", base_font=cds.FONT_HEAD)
-            cds.add_text_runs(m, f"{label}  ", base_font=cds.FONT_HEAD, size=Pt(9.5),
-                              bold=True, color=cds.SWAMP_GREEN)
-            cds.add_text_runs(m, value, base_font=cds.FONT_HEAD, size=Pt(9.5),
-                              bold=(label == "Status"))
+    o.paragraph_format.space_before = Pt(6)
+    o.paragraph_format.space_after = Pt(2)
+    cds._run(o, cds.ORIGINATOR_LONG, cds.FONT_HEAD, Pt(10.5), False, False,
+             cds.SWAMP_GREEN)
+    m = doc.add_paragraph()
+    m.paragraph_format.space_after = Pt(0)
+    for i, (label, value) in enumerate([("Reference", REFERENCE), ("Date", cds.DATE),
+                                        ("Status", STATUS)]):
+        if i:
+            cds._run(m, "   ·   ", cds.FONT_HEAD, Pt(9), False, False, cds.WAIOURU_HILLS)
+        cds._run(m, f"{label}: ", cds.FONT_HEAD, Pt(9), True, False, cds.SWAMP_GREEN)
+        cds._run(m, value, cds.FONT_HEAD, Pt(9), label == "Status", False,
+                 cds.ARMY_RED if label == "Status" else cds.DARKEST_HOUR)
 
     intro = doc.add_paragraph()
-    intro.paragraph_format.space_before = Pt(36)
+    intro.paragraph_format.space_before = Pt(48)
     cds.add_text_runs(intro, (
         "This portfolio brings together the proposed revised course data "
         "sheets for the four Experiential Leadership Development Activity "
@@ -213,10 +227,10 @@ def build():
 
     for key in SHEET_ORDER:
         sheet = cds.SHEETS[key]
-        title = cds.add_letterhead(sheet["title"], cds.SUBTITLE_LINE,
-                                   sheet["reference"], with_logo=False,
-                                   title_style="Heading 1")
-        title.paragraph_format.page_break_before = True
+        cds.add_letterhead(sheet["title"], cds.SUBTITLE_LINE,
+                           sheet["reference"], with_logo=False,
+                           title_style="Heading 1", sheet=sheet,
+                           page_break=True)
         with open(sheet["source"], encoding="utf-8") as fh:
             cds.render_markdown(fh.read().splitlines())
 

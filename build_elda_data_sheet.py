@@ -29,30 +29,34 @@ SHEETS = {
     "lead-teams": dict(
         source="./elda-lead-teams-data-sheet.md",
         output="./output/elda-lead-teams-data-sheet.docx",
+        code="A18011", name="ELDA Lead Teams",
         title="A18011 ELDA Lead Teams",
         reference="SOLO Course Data Sheet A18011, AL 3.0",
-        footer_left="A18011 ELDA Lead Teams Course Data Sheet",
+        footer_left="NZALC | ELDA Lead Teams Course Data Sheet",
     ),
     "lead-systems": dict(
         source="./elda-lead-systems-data-sheet.md",
         output="./output/elda-lead-systems-data-sheet.docx",
+        code="A18010", name="ELDA Lead Systems",
         title="A18010 ELDA Lead Systems",
         reference="SOLO Course Data Sheet A18010, AL 3.0",
-        footer_left="A18010 ELDA Lead Systems Course Data Sheet",
+        footer_left="NZALC | ELDA Lead Systems Course Data Sheet",
     ),
     "command": dict(
         source="./elda-command-data-sheet.md",
         output="./output/elda-command-data-sheet.docx",
+        code="A18009", name="ELDA Command",
         title="A18009 ELDA Command",
         reference="SOLO Course Data Sheet A18009, AL 2.5",
-        footer_left="A18009 ELDA Command Course Data Sheet",
+        footer_left="NZALC | ELDA Command Course Data Sheet",
     ),
     "lead-leaders": dict(
         source="./elda-lead-leaders-data-sheet.md",
         output="./output/elda-lead-leaders-data-sheet.docx",
+        code="A18008", name="ELDA Lead Leaders",
         title="A18008 ELDA Lead Leaders",
         reference="SOLO Course Data Sheet A18008, AL 3.1",
-        footer_left="A18008 ELDA Lead Leaders Course Data Sheet",
+        footer_left="NZALC | ELDA Lead Leaders Course Data Sheet",
     ),
 }
 LOGO_FILE          = "./assets/nz-army-logo.png"
@@ -60,6 +64,7 @@ PROTECTIVE_MARKING = "UNCLASSIFIED"
 FOOTER_REFERENCE   = "ACS 2026"
 DATE               = "September 2026"
 ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
+ORIGINATOR_LONG    = "New Zealand Army Leadership Centre | Army Command School"
 SUBTITLE_LINE      = "Proposed Revised Course Data Sheet"
 STATUS             = "Draft for Validation"
 
@@ -73,6 +78,15 @@ RUAPEHU_WHITE = "FFFFFF"
 SWAMP_GREEN   = "002516"
 WAIOURU_HILLS = "A89662"
 MOAWHANGO     = "CDD2B7"
+PALE_GREEN    = "EEF1E5"   # learning-outcome blocks, logic row
+GRID_GREY     = "D9D9D2"   # internal table rules
+MID_GREY      = "8A8A8A"   # de-emphasised locator steps
+
+# The developmental pathway, in order; the locator line under each course
+# title marks the current course.
+PATHWAY = ["LEAD TEAMS", "LEAD LEADERS", "LEAD SYSTEMS", "COMMAND"]
+PATHWAY_INDEX = {"ELDA Lead Teams": 0, "ELDA Lead Leaders": 1,
+                 "ELDA Lead Systems": 2, "ELDA Command": 3}
 
 FONT_HEAD = "Arial"
 FONT_BODY = "Arial"
@@ -187,6 +201,19 @@ def _run(p, text, font, size, bold, italic, color):
     return run
 
 
+def letterspace(run, twentieths=30):
+    """Track out a run slightly (value in twentieths of a point)."""
+    rPr = run._r.get_or_add_rPr()
+    sp = OxmlElement("w:spacing")
+    sp.set(qn("w:val"), str(twentieths))
+    rPr.append(sp)
+
+
+# Rendering state set by render_markdown: body paragraphs under a learning
+# outcome are indented to sit within its block, and Notes are subordinated.
+_context = {"lo": False, "notes": False}
+
+
 # ------------------------------------------------------------- doc set-up ---
 
 TEXT_WIDTH_CM = 16.4
@@ -221,41 +248,78 @@ def apply_styles(document):
     nf.space_before = Pt(0)
     nf.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
-    for name, size, space_before in (("Heading 1", 12, 12), ("Heading 2", 12, 12)):
+    for name in ("Heading 1", "Heading 2"):
         h = document.styles[name]
         strip_style_rpr(h)
         force_font(h, FONT_HEAD)
         h.font.bold = True
-        h.font.size = Pt(size)
+        h.font.size = Pt(12)
         force_color(h, SWAMP_GREEN)
-        h.paragraph_format.space_before = Pt(space_before)
-        h.paragraph_format.space_after = Pt(5)
+        h.paragraph_format.space_before = Pt(18)
+        h.paragraph_format.space_after = Pt(8)
         h.paragraph_format.keep_with_next = True
 
 
 def add_section_heading(text):
+    """Major section: green heading, 18 pt above, 8 pt below (one rule
+    everywhere)."""
+    _context["lo"] = False
+    _context["notes"] = False
     p = doc.add_paragraph(style=SECTION_HEADING_STYLE)
-    add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(12), bold=True,
+    add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(12.5), bold=True,
                   color=SWAMP_GREEN)
     return p
 
 
 def add_body(text):
     p = doc.add_paragraph()
+    if _context["lo"]:
+        p.paragraph_format.left_indent = Cm(0.55)
+        p.paragraph_format.space_after = Pt(4)
     add_text_runs(p, text)
     return p
 
 
 def add_sub_heading(text, level):
-    """### (level 3) and #### (level 4) headings beneath a section."""
+    """### sub-section headings and #### learning-outcome blocks."""
+    _context["lo"] = False
+    _context["notes"] = False
+    if level == 4:
+        return add_outcome_block(text)
+
     p = doc.add_paragraph()
     p.paragraph_format.keep_with_next = True
-    p.paragraph_format.space_before = Pt(8 if level == 3 else 6)
-    p.paragraph_format.space_after = Pt(3)
-    size = Pt(10.5) if level == 3 else Pt(10)
-    color = SWAMP_GREEN if level == 3 else DARKEST_HOUR
-    add_text_runs(p, text, base_font=FONT_HEAD, size=size, bold=True,
-                  color=color)
+    p.paragraph_format.space_before = Pt(12)
+    p.paragraph_format.space_after = Pt(4)
+    add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(10.5), bold=True,
+                  color=SWAMP_GREEN)
+    if text.strip() == "Notes":
+        _context["notes"] = True
+    return p
+
+
+def add_outcome_block(text):
+    """A learning outcome: pale green block with a green left rule, the LO
+    number as a small label and the title beneath it."""
+    label, _, title = text.partition(":")
+    if not title:
+        label, title = "", text
+    p = doc.add_paragraph()
+    p.paragraph_format.keep_with_next = True
+    p.paragraph_format.space_before = Pt(10)
+    p.paragraph_format.space_after = Pt(6)
+    p.paragraph_format.left_indent = Cm(0.55)
+    p.paragraph_format.right_indent = Cm(0.3)
+    set_shading(p, PALE_GREEN)
+    set_border(p, "left", SWAMP_GREEN, 14, space=10)
+    if label:
+        r = _run(p, label.strip().upper(), FONT_HEAD, Pt(8.5), True, False,
+                 SWAMP_GREEN)
+        letterspace(r, 20)
+        p.add_run().add_break()
+    add_text_runs(p, title.strip(), base_font=FONT_HEAD, size=Pt(11),
+                  bold=True, color=DARKEST_HOUR)
+    _context["lo"] = True
     return p
 
 
@@ -280,7 +344,7 @@ def _cell_margins(cell, top=60, bottom=60, left=100, right=100):
     tcPr.append(mar)
 
 
-def _table_borders(table, color, sz=4):
+def _table_borders(table, color, sz=4, outer=None):
     tblPr = table._tbl.tblPr
     borders = OxmlElement("w:tblBorders")
     for side in ("top", "left", "bottom", "right", "insideH", "insideV"):
@@ -288,20 +352,28 @@ def _table_borders(table, color, sz=4):
         el.set(qn("w:val"), "single")
         el.set(qn("w:sz"), str(sz))
         el.set(qn("w:space"), "0")
-        el.set(qn("w:color"), color)
+        el.set(qn("w:color"), outer if (outer and not side.startswith("inside")) else color)
         borders.append(el)
     tblPr.append(borders)
+
+
+def _cell_valign_top(cell):
+    tcPr = cell._tc.get_or_add_tcPr()
+    va = OxmlElement("w:vAlign")
+    va.set(qn("w:val"), "top")
+    tcPr.append(va)
 
 
 FIELD_COL_CM = 4.6
 
 
 def add_field_table(rows):
-    """Two-column table: shaded field labels on the left, entries on the right."""
+    """Two-column table: shaded field labels on the left, entries on the
+    right.  Light internal rules, top-aligned cells, generous padding."""
     header, body = rows[0], rows[1:]
     table = doc.add_table(rows=len(body) + 1, cols=2)
     table.autofit = False
-    _table_borders(table, WAIOURU_HILLS)
+    _table_borders(table, GRID_GREY, outer=WAIOURU_HILLS)
     widths = (Cm(FIELD_COL_CM), Cm(TEXT_WIDTH_CM - FIELD_COL_CM))
     for col, width in zip(table.columns, widths):
         col.width = width
@@ -310,10 +382,11 @@ def add_field_table(rows):
         for c_idx, text in enumerate((label, value)):
             cell = table.cell(r_idx, c_idx)
             cell.width = widths[c_idx]
-            _cell_margins(cell)
+            _cell_margins(cell, top=60, bottom=60, left=110, right=110)
+            _cell_valign_top(cell)
             p = cell.paragraphs[0]
             p.paragraph_format.space_after = Pt(0)
-            p.paragraph_format.line_spacing = 1.05
+            p.paragraph_format.line_spacing = 1.12
             if is_header:
                 _cell_shading(cell, SWAMP_GREEN)
                 add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(9),
@@ -326,7 +399,7 @@ def add_field_table(rows):
                 for k, part in enumerate(text.split("<br>")):
                     if k:
                         p.add_run().add_break()
-                    add_text_runs(p, part.strip(), size=Pt(10))
+                    add_text_runs(p, part.strip(), size=Pt(9.5))
     for r_idx, row in enumerate(table.rows):
         trPr = row._tr.get_or_add_trPr()
         cant = OxmlElement("w:cantSplit")
@@ -338,7 +411,7 @@ def add_field_table(rows):
                 for p in c.paragraphs:
                     p.paragraph_format.keep_with_next = True
     spacer = doc.add_paragraph()
-    spacer.paragraph_format.space_after = Pt(4)
+    spacer.paragraph_format.space_after = Pt(6)
     return table
 
 
@@ -395,23 +468,34 @@ def add_bullet(text, level=1):
     p.paragraph_format.tab_stops.add_tab_stop(Cm(indent))
     bullet = p.add_run("•\t")
     force_font(bullet, FONT_HEAD)
-    force_color(bullet, ARMY_RED)
+    force_color(bullet, SWAMP_GREEN)
     bullet.bold = True
     add_text_runs(p, text)
     return p
 
 
 def add_numbered(num, lead):
+    """Numbered point.  Under a Notes heading the type is a little smaller
+    and tighter so notes read as supporting material."""
     p = doc.add_paragraph()
     p.paragraph_format.left_indent = Cm(0.7)
     p.paragraph_format.first_line_indent = Cm(-0.7)
-    p.paragraph_format.space_before = Pt(3)
-    p.paragraph_format.space_after = Pt(2)
     p.paragraph_format.tab_stops.add_tab_stop(Cm(0.7))
+    size = None
+    if _context["notes"]:
+        size = Pt(9.5)
+        p.paragraph_format.line_spacing = 1.05
+        p.paragraph_format.space_before = Pt(1)
+        p.paragraph_format.space_after = Pt(2)
+    else:
+        p.paragraph_format.space_before = Pt(3)
+        p.paragraph_format.space_after = Pt(2)
     n = p.add_run(f"{num}.\t")
     force_font(n, FONT_HEAD)
-    n.bold = False
-    add_text_runs(p, lead)
+    if size:
+        n.font.size = size
+    force_color(n, SWAMP_GREEN if _context["notes"] else DARKEST_HOUR)
+    add_text_runs(p, lead, size=size)
     return p
 
 
@@ -466,7 +550,7 @@ def add_header_footer(section, footer_left, text_width_cm=TEXT_WIDTH_CM):
 # -------------------------------------------------------------- letterhead --
 
 
-def add_logo(width_mm=42, space_after=14):
+def add_logo(width_mm=42, space_after=10):
     logo = Image.open(LOGO_FILE).convert("RGBA")
     logo = logo.crop(logo.getchannel("A").getbbox())
     buf = io.BytesIO()
@@ -479,55 +563,104 @@ def add_logo(width_mm=42, space_after=14):
     return logo_para
 
 
-def add_letterhead(title, subtitle, reference, with_logo=True,
-                   title_style=None):
+def add_locator(current=None, size=Pt(8.5), align_left=True, arrow_color=None):
+    """LEAD TEAMS -> LEAD LEADERS -> LEAD SYSTEMS -> COMMAND, with the
+    current course in dark green and the rest muted."""
+    p = doc.add_paragraph()
+    if not align_left:
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Pt(6)
+    p.paragraph_format.space_after = Pt(2)
+    for i, step in enumerate(PATHWAY):
+        if i:
+            a = _run(p, "  →  ", FONT_HEAD, size, False, False,
+                     arrow_color or WAIOURU_HILLS)
+        here = current is not None and PATHWAY[current] == step
+        r = _run(p, step, FONT_HEAD, size, here or current is None, False,
+                 SWAMP_GREEN if (here or current is None) else MID_GREY)
+        letterspace(r, 15)
+    return p
+
+
+def add_title_block(kicker, title, tag, reference=None, locator=None,
+                    with_logo=True, title_style=None, status=None,
+                    page_break=False):
+    """Layered document opening: small kicker (course code), the title as
+    the anchor, a caps tag line closed by the red rule, then originator and
+    reference details, then an optional pathway locator."""
     if with_logo:
         add_logo()
 
+    if kicker:
+        k = doc.add_paragraph()
+        k.paragraph_format.space_after = Pt(0)
+        k.paragraph_format.keep_with_next = True
+        k.paragraph_format.page_break_before = page_break
+        page_break = False
+        r = _run(k, kicker.upper(), FONT_HEAD, Pt(10), True, False, SWAMP_GREEN)
+        letterspace(r, 40)
+
     title_p = doc.add_paragraph(style=title_style) if title_style \
         else doc.add_paragraph()
-    title_p.paragraph_format.space_after = Pt(1)
+    title_p.paragraph_format.space_before = Pt(0)
+    title_p.paragraph_format.space_after = Pt(4)
+    title_p.paragraph_format.keep_with_next = True
+    title_p.paragraph_format.page_break_before = page_break
     t = title_p.add_run(title)
     force_font(t, FONT_HEAD)
-    t.font.size = Pt(20)
+    t.font.size = Pt(24)
     t.bold = True
     force_color(t, DARKEST_HOUR)
 
-    sub_title_p = doc.add_paragraph()
-    sub_title_p.paragraph_format.space_after = Pt(4)
-    set_border(sub_title_p, "bottom", ARMY_RED, 18, space=8)
-    st = sub_title_p.add_run(subtitle)
-    force_font(st, FONT_HEAD)
-    st.font.size = Pt(12)
-    st.bold = True
-    force_color(st, SWAMP_GREEN)
+    tag_p = doc.add_paragraph()
+    tag_p.paragraph_format.space_after = Pt(6)
+    tag_p.paragraph_format.keep_with_next = True
+    set_border(tag_p, "bottom", ARMY_RED, 18, space=8)
+    r = _run(tag_p, tag.upper(), FONT_HEAD, Pt(9.5), True, False, SWAMP_GREEN)
+    letterspace(r, 30)
 
     org_p = doc.add_paragraph()
     org_p.paragraph_format.space_before = Pt(6)
-    org_p.paragraph_format.space_after = Pt(6)
-    o = org_p.add_run(ORIGINATOR)
-    force_font(o, FONT_HEAD)
-    o.font.size = Pt(10.5)
-    force_color(o, SWAMP_GREEN)
+    org_p.paragraph_format.space_after = Pt(2)
+    org_p.paragraph_format.keep_with_next = True
+    _run(org_p, ORIGINATOR_LONG, FONT_HEAD, Pt(10), False, False, SWAMP_GREEN)
 
-    meta_p = doc.add_paragraph()
-    meta_p.paragraph_format.space_after = Pt(10)
-    set_border(meta_p, "bottom", WAIOURU_HILLS, 6, space=6)
-    for i, (label, value) in enumerate([("Reference", reference), ("Date", DATE),
-                                        ("Status", STATUS)]):
-        if i:
-            gap = meta_p.add_run("      ")
-            force_font(gap, FONT_HEAD)
-        lab = meta_p.add_run(f"{label}  ")
-        force_font(lab, FONT_HEAD)
-        lab.font.size = Pt(9)
-        lab.bold = True
-        force_color(lab, SWAMP_GREEN)
-        val = meta_p.add_run(value)
-        force_font(val, FONT_HEAD)
-        val.font.size = Pt(9)
-        force_color(val, DARKEST_HOUR)
+    if reference:
+        meta_p = doc.add_paragraph()
+        meta_p.paragraph_format.space_after = Pt(0)
+        meta_p.paragraph_format.keep_with_next = True
+        parts = [("Reference", reference), ("Date", DATE)]
+        if status:
+            parts.append(("Status", status))
+        for i, (label, value) in enumerate(parts):
+            if i:
+                _run(meta_p, "   ·   ", FONT_HEAD, Pt(9), False, False, WAIOURU_HILLS)
+            _run(meta_p, f"{label}: ", FONT_HEAD, Pt(9), True, False, SWAMP_GREEN)
+            _run(meta_p, value, FONT_HEAD, Pt(9), label == "Status", False,
+                 ARMY_RED if label == "Status" else DARKEST_HOUR)
+
+    if locator is not None:
+        add_locator(locator)
+    else:
+        gap = doc.add_paragraph()
+        gap.paragraph_format.space_after = Pt(10)
     return title_p
+
+
+def add_letterhead(title, subtitle, reference, with_logo=True,
+                   title_style=None, sheet=None, status=None, page_break=False):
+    """Course data sheet opening.  `sheet` supplies the code, name and
+    pathway position; without it the title is used as-is."""
+    if sheet:
+        return add_title_block(sheet["code"], sheet["name"], subtitle,
+                               reference, locator=PATHWAY_INDEX[sheet["name"]],
+                               with_logo=with_logo, title_style=title_style,
+                               status=status or STATUS,
+                           page_break=page_break)
+    return add_title_block(None, title, subtitle, reference,
+                           with_logo=with_logo, title_style=title_style,
+                           status=status or STATUS,
+                           page_break=page_break)
 
 
 # ------------------------------------------------------------------- body ---
@@ -535,6 +668,8 @@ def add_letterhead(title, subtitle, reference, with_logo=True,
 
 def render_markdown(lines):
     """Typeset the source mini-syntax (see module docstring)."""
+    _context["lo"] = False
+    _context["notes"] = False
     i = 0
     while i < len(lines):
         line = lines[i]
@@ -644,7 +779,7 @@ def finish(title):
 def build_sheet(sheet):
     new_document()
     add_header_footer(doc.sections[0], sheet["footer_left"])
-    add_letterhead(sheet["title"], SUBTITLE_LINE, sheet["reference"])
+    add_letterhead(sheet["title"], SUBTITLE_LINE, sheet["reference"], sheet=sheet)
     with open(sheet["source"], encoding="utf-8") as fh:
         render_markdown(fh.read().splitlines())
     finish(sheet["title"])

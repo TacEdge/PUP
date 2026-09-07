@@ -17,11 +17,13 @@ from docx.oxml.ns import qn
 from docx.shared import Cm, Mm, Pt, RGBColor
 from PIL import Image
 
+import build_elda_data_sheet as cds
+
 # ----------------------------------------------------------------- CONFIG ---
 LOGO_FILE          = "./assets/nz-army-logo.png"
 OUTPUT_DOCX        = "./output/elda-pathway-overview.docx"
 PROTECTIVE_MARKING = "UNCLASSIFIED"
-DOCUMENT_REFERENCE = "Course Data Sheets A18011, A18008, A18010, A18009"
+DOCUMENT_REFERENCE = "CDS A18011, A18008, A18010, A18009"
 FOOTER_REFERENCE   = "ACS 2026"
 DATE               = "September 2026"
 ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
@@ -29,7 +31,7 @@ ORIGINATOR         = "NZ Army Leadership Centre | Army Command School"
 TITLE         = "ELDA Pathway"
 SUBTITLE_LINE = "Experiential Leadership Development Activities: Course Overview"
 STATUS        = "Draft for Validation"
-FOOTER_LEFT   = "ELDA Pathway Overview"
+FOOTER_LEFT   = "NZALC | ELDA Pathway Overview"
 
 ARMY_RED      = "C62026"
 DARKEST_HOUR  = "000000"
@@ -37,6 +39,8 @@ RUAPEHU_WHITE = "FFFFFF"
 SWAMP_GREEN   = "002516"
 WAIOURU_HILLS = "A89662"
 MOAWHANGO     = "CDD2B7"
+PALE_GREEN    = "EEF1E5"
+GRID_GREY     = "D9D9D2"
 
 FONT = "Arial"
 
@@ -236,14 +240,14 @@ def cell_margins(cell, top=40, bottom=40, left=90, right=90):
     tcPr.append(mar)
 
 
-def table_borders(table, color, sz=4):
+def table_borders(table, color, sz=4, outer=None):
     borders = OxmlElement("w:tblBorders")
     for side in ("top", "left", "bottom", "right", "insideH", "insideV"):
         el = OxmlElement(f"w:{side}")
         el.set(qn("w:val"), "single")
         el.set(qn("w:sz"), str(sz))
         el.set(qn("w:space"), "0")
-        el.set(qn("w:color"), color)
+        el.set(qn("w:color"), outer if (outer and not side.startswith("inside")) else color)
         borders.append(el)
     table._tbl.tblPr.append(borders)
 
@@ -313,37 +317,59 @@ def add_header_footer(section, footer_left=FOOTER_LEFT,
 
 
 def add_letterhead(doc, with_logo=True, title_style=None):
+    """Compact layered opening for the landscape page, then the pathway
+    band: the four courses in sequence, which is the page's organising
+    idea."""
     if with_logo:
         logo = Image.open(LOGO_FILE).convert("RGBA")
         logo = logo.crop(logo.getchannel("A").getbbox())
         buf = io.BytesIO()
         logo.save(buf, "PNG")
         buf.seek(0)
-        doc.add_picture(buf, width=Mm(28))
-        doc.paragraphs[-1].paragraph_format.space_after = Pt(3)
+        doc.add_picture(buf, width=Mm(26))
+        doc.paragraphs[-1].paragraph_format.space_after = Pt(8)
+
+    k = doc.add_paragraph()
+    k.paragraph_format.space_after = Pt(0)
+    r = run(k, "PATHWAY OVERVIEW", Pt(8.5), bold=True, color=SWAMP_GREEN)
+    cds.letterspace(r, 40)
 
     title_p = doc.add_paragraph(style=title_style) if title_style \
         else doc.add_paragraph()
-    title_p.paragraph_format.space_after = Pt(0)
-    run(title_p, TITLE, Pt(18), bold=True)
+    title_p.paragraph_format.space_before = Pt(0)
+    title_p.paragraph_format.space_after = Pt(2)
+    run(title_p, TITLE, Pt(20), bold=True)
 
-    sub_p = doc.add_paragraph()
-    sub_p.paragraph_format.space_after = Pt(3)
-    set_border(sub_p, "bottom", ARMY_RED, 18, space=6)
-    run(sub_p, SUBTITLE_LINE, Pt(11), bold=True, color=SWAMP_GREEN)
+    tag_p = doc.add_paragraph()
+    tag_p.paragraph_format.space_after = Pt(3)
+    set_border(tag_p, "bottom", ARMY_RED, 18, space=5)
+    r = run(tag_p, "EXPERIENTIAL LEADERSHIP DEVELOPMENT ACTIVITIES", Pt(9),
+            bold=True, color=SWAMP_GREEN)
+    cds.letterspace(r, 30)
 
     meta_p = doc.add_paragraph()
-    meta_p.paragraph_format.space_before = Pt(4)
-    meta_p.paragraph_format.space_after = Pt(6)
-    set_border(meta_p, "bottom", WAIOURU_HILLS, 6, space=5)
-    run(meta_p, ORIGINATOR, Pt(9.5), color=SWAMP_GREEN)
+    meta_p.paragraph_format.space_before = Pt(3)
+    meta_p.paragraph_format.space_after = Pt(0)
+    run(meta_p, cds.ORIGINATOR_LONG, Pt(9), color=SWAMP_GREEN)
     run(meta_p, "      ", Pt(9))
     for i, (label, value) in enumerate([("Reference", DOCUMENT_REFERENCE),
                                         ("Date", DATE), ("Status", STATUS)]):
         if i:
-            run(meta_p, "      ", Pt(9))
-        run(meta_p, f"{label}  ", Pt(8.5), bold=True, color=SWAMP_GREEN)
-        run(meta_p, value, Pt(8.5))
+            run(meta_p, "   ·   ", Pt(8.5), color=WAIOURU_HILLS)
+        run(meta_p, f"{label}: ", Pt(8.5), bold=True, color=SWAMP_GREEN)
+        run(meta_p, value, Pt(8.5), bold=(label == "Status"),
+            color=ARMY_RED if label == "Status" else DARKEST_HOUR)
+
+    # The pathway band: course sequence and scope, the first thing to read.
+    band = doc.add_paragraph()
+    band.paragraph_format.space_before = Pt(8)
+    band.paragraph_format.space_after = Pt(5)
+    for i, course in enumerate(COURSES):
+        if i:
+            run(band, "   →   ", Pt(12), bold=True, color=ARMY_RED)
+        r = run(band, course["name"].replace("ELDA ", "").upper(), Pt(12),
+                bold=True, color=SWAMP_GREEN)
+        cds.letterspace(r, 20)
     return title_p
 
 
@@ -361,7 +387,7 @@ def render_pathway_table(doc, text_width_cm=TEXT_WIDTH_CM):
     table = doc.add_table(rows=len(ROWS), cols=len(COURSES) + 1)
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.autofit = False
-    table_borders(table, WAIOURU_HILLS)
+    table_borders(table, GRID_GREY, outer=WAIOURU_HILLS)
     for c_idx, col in enumerate(table.columns):
         col.width = Cm(LABEL_CM if c_idx == 0 else col_cm)
 
@@ -372,7 +398,8 @@ def render_pathway_table(doc, text_width_cm=TEXT_WIDTH_CM):
         for c_idx in range(len(COURSES) + 1):
             cell = row.cells[c_idx]
             cell.width = Cm(LABEL_CM if c_idx == 0 else col_cm)
-            cell_margins(cell)
+            pad = 65 if key in ("scope", "logic") else 45
+            cell_margins(cell, top=pad, bottom=pad)
             p = cell.paragraphs[0]
             p.paragraph_format.space_after = Pt(0)
             p.paragraph_format.line_spacing = 1.04
@@ -386,42 +413,49 @@ def render_pathway_table(doc, text_width_cm=TEXT_WIDTH_CM):
             course = COURSES[c_idx - 1]
             if key == "course":
                 cell_shading(cell, SWAMP_GREEN)
-                run(p, course["name"], Pt(10), bold=True, color=RUAPEHU_WHITE)
+                run(p, course["name"], Pt(11), bold=True, color=RUAPEHU_WHITE)
                 p.add_run().add_break()
-                run(p, f'{course["code"]}  |  {course["duration"]}', Pt(8.5),
+                run(p, f'{course["code"]}  |  {course["duration"]}', Pt(8),
                     color=MOAWHANGO)
             elif key == "scope":
                 cell_shading(cell, MOAWHANGO)
                 set_border(p, "left", ARMY_RED, 18, space=4)
-                run(p, course["scope"], Pt(9.5), bold=True, color=SWAMP_GREEN)
+                run(p, course["scope"], Pt(11), bold=True, color=SWAMP_GREEN)
             elif key == "logic":
+                cell_shading(cell, PALE_GREEN)
+                p.paragraph_format.line_spacing = 1.15
                 for i, stage in enumerate(course["logic"]):
                     if i:
                         p.add_run().add_break()
-                        run(p, "▼", Pt(7), color=ARMY_RED)
+                        run(p, "▼", Pt(8), color=ARMY_RED)
                         p.add_run().add_break()
-                    run(p, stage, Pt(8.5), bold=True, color=SWAMP_GREEN)
+                    r = run(p, stage, Pt(9.5), bold=True, color=SWAMP_GREEN)
+                    cds.letterspace(r, 10)
                 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
             elif key == "outcomes":
                 for i, lo in enumerate(course["outcomes"]):
                     if i:
                         p.add_run().add_break()
-                    run(p, f"LO 1.{i + 1}  ", Pt(8), bold=True, color=SWAMP_GREEN)
-                    run(p, lo, Pt(8))
+                    run(p, f"LO 1.{i + 1}  ", Pt(7.5), bold=True, color=SWAMP_GREEN)
+                    run(p, lo, Pt(7.5))
             else:
                 run(p, course["next_step" if key == "next" else key], Pt(8))
     return table
 
 
 def render_closing(doc):
+    """Key message panel: dark green, white text, red rule."""
     close_p = doc.add_paragraph()
     close_p.paragraph_format.space_before = Pt(8)
-    close_p.paragraph_format.left_indent = Cm(0.4)
-    close_p.paragraph_format.right_indent = Cm(0.4)
-    set_shading(close_p, MOAWHANGO)
-    set_border(close_p, "left", ARMY_RED, 28, space=8)
     close_p.paragraph_format.space_after = Pt(0)
-    run(close_p, CLOSING, Pt(8.5), bold=True)
+    close_p.paragraph_format.left_indent = Cm(0.3)
+    close_p.paragraph_format.right_indent = Cm(0.3)
+    set_shading(close_p, SWAMP_GREEN)
+    set_border(close_p, "left", ARMY_RED, 28, space=10)
+    r = run(close_p, "KEY MESSAGE", Pt(7.5), bold=True, color=MOAWHANGO)
+    cds.letterspace(r, 30)
+    close_p.add_run().add_break()
+    run(close_p, CLOSING, Pt(9), bold=True, color=RUAPEHU_WHITE)
     return close_p
 
 
