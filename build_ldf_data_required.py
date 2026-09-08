@@ -32,8 +32,8 @@ CATEGORIES = [
     ("Development intervention",
      "Which course or programme develops the individual for this transition (SOLO code, LDS, ELDA, promotion course)?",
      "SOLO course catalogue; ILD course list; NZALC course data sheets"),
-    ("Mandate",
-     "Is that development a prerequisite for promotion, embedded in the promotion course, expected but not mandatory, or unconnected?",
+    ("Career linkage",
+     "Where does the link between the development and the transition sit: 4 formally mandated (in policy or embedded in the qualifying course), 3 functionally required (policed, not in policy), 2 expected (self-selected, high uptake), 1 self-selected (uptake by inclination), 0 unconnected?",
      "SOLO prerequisites; promotion course CDS; Army promotion policy"),
 ]
 
@@ -69,18 +69,18 @@ KNOWN = {
     ("T6", "Officer", "Development intervention"): (MEET + "LDS Lead Organisation with an ELDA component (retreat setting, equine behaviour, psychometric profiling, external facilitation such as Rob Holt). Timing of the LDS element to check.", "STATED 9 SEP"),
     ("T6", "Soldier", "Development intervention"): (MEET + "As for Officer.", "STATED 9 SEP"),
     # mandates
-    ("T1", "Officer", "Mandate"): (MEET + "Embedded: qualifying on NZCC qualifies both LDS and ELDA Lead Teams.", "STATED 9 SEP"),
-    ("T1", "Soldier", "Mandate"): (MEET + "Mandated for PTE to LCPL as an included course within the JNCO course.", "STATED 9 SEP"),
-    ("T2", "Officer", "Mandate"): (MEET + "Recommended, not mandated in promotion policy. Policed in function by OCS and COs: no 2LT or LT promotes to CAPT without it in practice. The single most important cell: confirm against promotion policy.", "STATED 9 SEP"),
-    ("T2", "Soldier", "Mandate"): (MEET + "Mandated in promotion policy: CPL promoting to SGT must complete the SNCO course, which carries it. 'Very clear on the NCO front.'", "STATED 9 SEP"),
-    ("T3", "Officer", "Mandate"): (MEET + "Neither ELDA Lead Systems nor ILD LDS Lead Systems is mandated; neither is policed in function; uptake self-selecting. Confirm against promotion policy.", "STATED 9 SEP"),
-    ("T3", "Soldier", "Mandate"): (MEET + "ELDA Lead Systems mandated on the WO course. Whether ILD LDS Lead Systems is a prerequisite for WO2: understanding is yes, with a question mark. Dave to check the promotion-course CDS.", "STATED 9 SEP"),
-    ("T4", "Officer", "Mandate"): (MEET + "Not mandated; impression is that all MAJ to LTCOL complete it. Confirm against promotion policy.", "STATED 9 SEP"),
-    ("T4", "Soldier", "Mandate"): (MEET + "Expected for promotion to WO1; 'pretty sure' not mandated in policy; most attend subject to an ILD seat. Confirm against promotion policy.", "STATED 9 SEP"),
-    ("T5", "Officer", "Mandate"): (MEET + "Mandate not stated; attendance without exception (selected, scrutinised, ambitious).", "STATED 9 SEP"),
-    ("T5", "Soldier", "Mandate"): (MEET + "Mandate not stated; attendance without exception.", "STATED 9 SEP"),
-    ("T6", "Officer", "Mandate"): (MEET + "Mandate not stated; all complete it well before required.", "STATED 9 SEP"),
-    ("T6", "Soldier", "Mandate"): (MEET + "Mandate not stated; all complete it well before required.", "STATED 9 SEP"),
+    ("T1", "Officer", "Career linkage"): (MEET + 'Level 4, formally mandated: embedded in NZCC; qualifying on NZCC qualifies both LDS and ELDA Lead Teams.', 'STATED 9 SEP'),
+    ("T1", "Soldier", "Career linkage"): (MEET + 'Level 4, formally mandated: an included course within the JNCO course for PTE to LCPL.', 'STATED 9 SEP'),
+    ("T2", "Officer", "Career linkage"): (MEET + 'Level 3, functionally required: not in promotion policy, but policed by OCS and COs so that no 2LT or LT promotes to CAPT without it in practice. The single most important cell: confirm the policy position.', 'TO CONFIRM'),
+    ("T2", "Soldier", "Career linkage"): (MEET + "Level 4, formally mandated in promotion policy: CPL promoting to SGT must complete the SNCO course, which carries it. 'Very clear on the NCO front.'", 'STATED 9 SEP'),
+    ("T3", "Officer", "Career linkage"): (MEET + 'Level 1, self-selected: neither ELDA Lead Systems nor ILD LDS Lead Systems is mandated or policed; uptake rests on inclination. The weakest point on either continuum.', 'STATED 9 SEP'),
+    ("T3", "Soldier", "Career linkage"): (MEET + "Level 4 for ELDA Lead Systems (mandated on the WO course). ILD LDS Lead Systems as a WO2 prerequisite: 'understanding is yes', with a question mark. Dave to check the promotion-course CDS.", 'TO CONFIRM'),
+    ("T4", "Officer", "Career linkage"): (MEET + 'Level 2, expected: not mandated; impression is that all MAJ to LTCOL complete it. Confirm against promotion policy.', 'TO CONFIRM'),
+    ("T4", "Soldier", "Career linkage"): (MEET + "Level 2, expected: expected for promotion to WO1; 'pretty sure' not in policy; most attend subject to an ILD seat. Confirm against promotion policy.", 'TO CONFIRM'),
+    ("T5", "Officer", "Career linkage"): (MEET + 'Level 2, expected: ILD pathway; attendance without exception (selected, scrutinised, ambitious). Mandate not stated.', 'STATED 9 SEP'),
+    ("T5", "Soldier", "Career linkage"): (MEET + 'Level 2, expected: ILD pathway; attendance without exception. Mandate not stated.', 'STATED 9 SEP'),
+    ("T6", "Officer", "Career linkage"): (MEET + 'Level 2, expected: senior selection pathway; all complete it well before required. Mandate not stated.', 'STATED 9 SEP'),
+    ("T6", "Soldier", "Career linkage"): (MEET + 'Level 2, expected: senior selection pathway; all complete it well before required. Mandate not stated.', 'STATED 9 SEP'),
 }
 
 CROSS_CUTTING = [
@@ -93,6 +93,8 @@ CROSS_CUTTING = [
     ("X7", "Delivery", "The 2012 division of delivery: single-Service providers to Lead Leaders, ILD for Lead Systems and above, Army retaining the ELDA function. " + MEET + "as stated; source document to cite.", "ILD; NZDF leadership governance", "STATED 9 SEP"),
     ("X8", "Explanation", "The candidate explanation for the difference. " + MEET + "'a scheduling oversight in the face of tempo'; non-required training is bumped; senior leaders assume the training is universal. Test against X1, X5 and X6 before it is presented as more than a candidate.", "COMDT ACS; AITC", "STATED 9 SEP"),
 ]
+
+CAT_CODE = {"Promotion point": "PROM", "Development intervention": "DEV", "Career linkage": "LINK"}
 
 STATUSES = ["DATA REQUIRED", "TO CONFIRM", "STATED 9 SEP", "KNOWN", "NOT APPLICABLE"]
 
@@ -129,7 +131,7 @@ def build():
             for cat, question, source in CATEGORIES:
                 n += 1
                 known, status = KNOWN.get((code, cont, cat), ("", "DATA REQUIRED"))
-                ws.append([f"{code}-{'O' if cont == 'Officer' else 'R'}-{cat.split(' ')[0][:4].upper()}",
+                ws.append([f"{code}-{'O' if cont == 'Officer' else 'R'}-{CAT_CODE[cat]}",
                            code, frm, to, cont, cat, question, source, known, status, "", "", ""])
     for cid, area, item, source, status in CROSS_CUTTING:
         ws.append([cid, "All", "", "", "Both", area, item, source, "", status, "", "", ""])
@@ -166,7 +168,8 @@ def build():
         ("STATUS VALUES", True),
         ("DATA REQUIRED: nothing in hand.", False),
         ("TO CONFIRM: something in hand but from an estimate (the Leadership Levels poster) or a session document, not authoritative policy.", False),
-        ("STATED 9 SEP: stated at the NZALC meeting of 9 Sep 2026 (Mike and Dave). Treated as the working position; still to be checked against promotion policy or the course data sheet named in the row.", False),
+        ("STATED 9 SEP: stated at the NZALC meeting of 9 Sep 2026 (Mike and Dave); the transcript governs over the generated notes. Treated as the working position; still to be checked against an authoritative source.", False),
+        ("TO CONFIRM also marks the career-linkage cells where the meeting itself left a question mark or where a policy check decides the state (officer T2 to T4, soldier T3 and T4).", False),
         ("KNOWN: confirmed against an authoritative source.", False),
         ("NOT APPLICABLE: the category does not apply to this transition for this continuum (state why in Notes).", False),
         ("", False),
@@ -175,8 +178,10 @@ def build():
     for cat, q, _ in CATEGORIES:
         lines.append((f"{cat}: {q}", False))
     lines += [("", False), ("PRIORITY", True),
-              ("The Officer Mandate rows at T2 to T4 decide the piece: confirm the meeting's statements against promotion policy (X1) first.", False),
-              ("Then the Soldier Mandate row at T3 (Dave: is ILD LDS Lead Systems a prerequisite in the WO promotion-course CDS?).", False)]
+              ("The Officer Career linkage rows at T2 to T4 decide the piece: confirm the meeting's statements against promotion policy (X1) first.", False),
+              ("Then the Soldier Career linkage row at T3 (Dave: is ILD LDS Lead Systems a prerequisite in the WO promotion-course CDS?).", False),
+              ("", False), ("LINKAGE SCALE", True),
+              ("4 formally mandated; 3 functionally required; 2 expected (high uptake); 1 self-selected (uptake by inclination); 0 unconnected. Record the level in the Answer column once confirmed.", False)]
     for i, (text, bold) in enumerate(lines, 1):
         c = lg.cell(row=i, column=1, value=text)
         c.font = Font(name="Arial", size=10, bold=bold, color=GREEN if bold else "000000")
