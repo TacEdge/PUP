@@ -129,10 +129,8 @@ def page1(doc):
     pg = Page(doc, 1, "The question",
               "One page. One question. Nothing competes with it.")
     pg.box(M, 80, W - 2 * M, 430, fill=None, stroke=LIGHT)
-    q = ("To what extent does the Army's promotion and career-development "
-         "continuum deliberately develop its people for the changes in "
-         "leadership required at each Leadership Development Framework "
-         "transition?")
+    q = ("How well do the Army's Officer and Other Rank promotion continuums "
+         "align with the intent and design of the LDF?")
     rect = pymupdf.Rect(M + 90, 150, W - M - 90, 420)
     pg.p.insert_textbox(rect, q, fontsize=22, fontname="helvetica-bold",
                         color=INK, align=1, lineheight=1.25)
@@ -140,10 +138,10 @@ def page1(doc):
     pg.placeholder(M + 20, 95, 90, 28, "logo")
     pg.text(W / 2, 470, "[No subtitle. No agenda. No sources. Those come on page 2.]", 7, NOTE, align=1)
     pg.note(M, 520, W - 2 * M,
-            "The reader should be able to repeat the question from memory after this page. "
-            "Type only, generous white space, one weight. 'To what extent' and 'deliberately' may be "
-            "set heavier than the rest in the polished version: the first tells the reader the answer "
-            "is a degree, not a yes or no; the second is the hinge of the analysis.")
+            "This is COMDT's tasking in his own terms, so AITC recognises it as the question they asked. "
+            "Type only, generous white space, one weight. 'How well' signals a graded answer. The sharper "
+            "analytical test (deliberate development at each transition, linked to promotion) is applied on "
+            "pages 4 to 6, not stated here.")
 
 
 def page2(doc):
@@ -161,6 +159,7 @@ def page2(doc):
         pg.labelled_box(x - 30, y - 14, 60, 28, e, fill=FILL, size=6.5)
     pg.labelled_box(cx - 34, cy - 12, 68, 24, "LEADERSHIP\nFRAMEWORK", fill=FILL2, size=6, bold=True)
     pg.text(cx, 360, "'The framework remains constant.'", 7, NOTE, align=1)
+    pg.text(M, 72, "LDF: the NZDF Leadership Framework (six Key Elements) and Leadership Development System (seven levels), taken together.", 6.5, INK)
 
     # Centre: seven-level staircase with environment bands
     x0, y0 = 300, 330
@@ -229,8 +228,11 @@ def page3(doc):
 def matrix(pg, mode="populate"):
     """The centrepiece grid used by pages 4, 5 and 6.
     mode: populate | align | gaps"""
-    top, left = 78, M
+    top, left = 84, M
     spine_w = 150
+    pg.text(M, 70, "THE TEST AT EACH TRANSITION:", 6.5, INK, bold=True)
+    pg.text(M + 118, 70, "does the continuum deliberately develop the individual for the change in leadership required, "
+            "and is that development linked to promotion?", 6.5, INK)
     side_w = (W - 2 * M - spine_w) / 2
     rowh = 56
     catw = side_w / 6
@@ -349,9 +351,8 @@ def page7(doc):
     pg = Page(doc, 7, "The question for Army",
               "End at the strategic level. No answer is predetermined.")
     pg.box(M, 80, W - 2 * M, 300, fill=None, stroke=LIGHT)
-    q = ("If the LDF defines the leadership transitions Army expects its people to make, "
-         "how deliberately should promotion, appointment and professional development "
-         "be aligned to those transitions?")
+    q = ("Given these facts, how should Army decide about the development "
+         "of leaders at all levels?")
     rect = pymupdf.Rect(M + 80, 120, W - M - 80, 330)
     pg.p.insert_textbox(rect, q, fontsize=19, fontname="helvetica-bold", color=INK, align=1, lineheight=1.25)
     # three levers, no options
@@ -362,9 +363,9 @@ def page7(doc):
         pg.labelled_box(x, 400, lw, 34, l, fill=FILL2, size=8, bold=True)
         pg.text(x + lw / 2, 450, "[the three levers AITC controls; no recommendation attached]", 6, MID, align=1)
     pg.note(M, 480, W - 2 * M,
-            "Mirror of page 1: type only, one question. The three levers are named because they are the "
-            "decision space, but no option, model or preferred answer is shown. The page exists to hand the "
-            "discussion to AITC, not to close it.")
+            "Mirror of page 1, in COMDT's words: present the facts, then challenge the organisation to "
+            "decide. The three levers are named because they are the decision space, but no option, model "
+            "or preferred answer is shown. The page exists to hand the discussion to AITC, not to close it.")
 
 
 def build():

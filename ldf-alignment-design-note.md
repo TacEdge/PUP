@@ -4,9 +4,15 @@
 
 This note is the first output for the AITC discussion piece on Army leadership development and promotion alignment. It does not answer the question. It sets out the analytical and visual structure through which the question can be answered, the seven-page wireframe sequence, the data still required, and the assumptions that have deliberately not been made.
 
-The question under test is:
+The tasking from COMDT ACS is to consider how the Officer and Other Rank promotion continuums align with the intent and design of the LDF, present the facts, and challenge the organisation to decide about the development of leaders at all levels. The piece therefore carries three wordings, each with a fixed place.
 
->! To what extent does the Army's promotion and career-development continuum deliberately develop its people for the changes in leadership required at each Leadership Development Framework transition?
+| Place | Wording |
+| --- | --- |
+| Headline (page 1) | How well do the Army's Officer and Other Rank promotion continuums align with the intent and design of the LDF? |
+| Analytical test (pages 4 to 6) | At each LDF transition: does the continuum deliberately develop the individual for the change in leadership required, and is that development linked to promotion? |
+| Closing (page 7) | Given these facts, how should Army decide about the development of leaders at all levels? |
+
+"LDF" is used throughout as COMDT's term for the NZDF Leadership Framework and Leadership Development System taken together, and is defined once on page 2.
 
 ## 2. The Source Architecture
 
@@ -59,7 +65,7 @@ The central visual holds the NZDF LDF fixed in the middle as the doctrinal refer
 
 ### Rows are transitions, not levels
 
-Each row of the matrix is a transition: the current level, the developmental shift, and the new level. The row asks one question of each continuum: to what extent does the career system deliberately develop the individual for this shift?
+Each row of the matrix is a transition: the current level, the developmental shift, and the new level. The row applies the analytical test to each continuum: does it deliberately develop the individual for this shift, and is that development linked to promotion?
 
 ### Six categories per side
 
@@ -74,7 +80,7 @@ Each continuum answers the same six questions for every transition. The Officer 
 
 ### Status language
 
-The question asks "to what extent", so the answer for each transition is a degree, read across the row as the balance of aligned cells, named gaps and unknowns, rather than a yes or no. Every cell carries one of three states until the data is complete. The state is written in the cell as a short tag, so the matrix reads correctly in greyscale and colour is an addition rather than the carrier of meaning.
+The headline asks "how well", so the answer for each transition is a degree, read across the row as the balance of aligned cells, named gaps and unknowns, rather than a yes or no. Every cell carries one of three states until the data is complete. The state is written in the cell as a short tag, so the matrix reads correctly in greyscale and colour is an addition rather than the carrier of meaning.
 
 | Tag | Meaning | Colour in the polished version |
 | --- | --- | --- |
@@ -99,13 +105,13 @@ Where a gap is identified it is named by type rather than only coloured red, so 
 
 The wireframes are in the accompanying PDF. Each page carries its own annotation. In summary:
 
-1. **The question.** Type only. One question, generous space, nothing competing. The reader should be able to repeat it afterwards.
+1. **The question.** Type only. COMDT's question in his own terms, generous space, nothing competing. The reader should be able to repeat it afterwards.
 2. **The system we already have.** Three posters become one picture: the ring of six constant elements, the staircase of seven levels with the three environments as faint bands, and a single axis of increasing scope, scale, complexity and consequence. One message line: the framework remains constant; its expression changes as responsibility increases.
 3. **What actually changes.** Seven columns, one bold sentence each, with the source Value Add headings beneath for traceability. The six transition gates, T1 to T6, are introduced here and reused on every later page.
-4. **Two career systems, one leadership framework.** The centrepiece matrix. Dark spine, mirrored columns, status tags. Populated only with what the four sources support: the LDS delivery model per level and the rank estimate from the Leadership Levels poster, both tagged TO CONFIRM. Everything else is DATA REQUIRED.
+4. **Two career systems, one leadership framework.** The centrepiece matrix, with the analytical test stated once above it. Dark spine, mirrored columns, status tags. Populated only with what the four sources support: the LDS delivery model per level and the rank estimate from the Leadership Levels poster, both tagged TO CONFIRM. Everything else is DATA REQUIRED.
 5. **Where do the systems align.** The identical grid with everything that is not demonstrably aligned faded out. Green is used here and nowhere earlier.
 6. **Where are the gaps.** The identical grid with each gap named by type. Officer-versus-OR asymmetry is read across a row. Amber and red appear only on this page and page 5.
-7. **The question for Army.** Type only again. The three levers AITC controls are named (promotion, appointment, professional development) with no option or recommendation attached.
+7. **The question for Army.** Type only again, in COMDT's words: given these facts, how should Army decide about the development of leaders at all levels? The three levers AITC controls are named (promotion, appointment, professional development) with no option or recommendation attached.
 
 Three rules hold across the set: the grid never changes shape between pages 4, 5 and 6; colour is never the only carrier of meaning; and nothing appears in a cell that a source does not support.
 
