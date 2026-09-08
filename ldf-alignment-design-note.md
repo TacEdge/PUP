@@ -10,12 +10,15 @@ Read against that, the issue is narrow:
 
 The earlier seven-page construct tested six categories at six transitions for two continuums. That was a diagnostic of the whole system. COMDT is asking a sharper question, so the product is reduced to two pages and the six-category matrix is withdrawn from the briefing product.
 
-## 2. The Two Pages
+On 9 September 2026 Mike and Dave walked each transition of both continuums and recorded what is mandated, what is recommended, what is policed in function, and what history the decision-makers should have. That meeting is now the main source for the cells on page 1. Everything it stated is tagged STATED 9 SEP until it is checked against promotion policy and the promotion-course data sheets. The meeting also actioned a current-versus-desired mapping, which is carried as a detachable third page.
+
+## 2. The Pages
 
 | Page | Purpose | What is on it |
 | --- | --- | --- |
 | 1. Two continuums. One leadership framework. | Show the asymmetry | One visual. The LDF's seven levels as the spine. Officer continuum on the left, Soldier continuum on the right, each showing rank, the development intervention at that point, and whether it is mandated. Headline question above; the question for Army beneath. |
-| 2. The discrepancy | Let the answer emerge, then pose the challenge | Two flows with identical steps. Soldier: promotion point, mandated development, development completed, promotion: a deliberate link. Officer: promotion point, development exists, not mandated?, promotion: an unclear link. Then: is this difference a conscious choice? If so, what is the rationale? If not, should Army apply a more consistent principle? |
+| 2. The discrepancy | Let the answer emerge, give the background, then pose the challenge | Two flows with identical steps. Soldier: promotion point, development mandated in policy, development completed, promotion: a deliberate link. Officer: promotion point, development exists and is recommended, not in policy (policed in function at T2, self-selected from T3), promotion: an unclear link. A background strip: what has been tried, why it stalled, and the explanation offered at the meeting, marked as not established. Then: is this difference a conscious choice? If so, what is the rationale? If not, should Army apply a more consistent principle? |
+| 3. Current and desired: one page (detachable) | Answer the meeting action for a current-versus-desired mapping | One table: LDF transition, then for each continuum the rank, the course and who delivers it, the mandate now, and the desired mandate. Shaded cells are the change. Below it: what changes (a mandate written into promotion policy, ILD seats aligned to Army promotion timing, the officer window placed after unit experience) and what does not (no new courses, no new money). Tabled only if the room answers page 2 with "not a conscious choice". |
 
 The three wordings are fixed:
 
@@ -36,22 +39,32 @@ Two points from the sources still govern how the spine is used.
 
 ## 4. What Is Known and What Is Not
 
-Populated cells on page 1 are limited to what the four sources and the NZALC course data sheets support, and every one is tagged TO CONFIRM until checked against SOLO and promotion policy.
+Populated cells on page 1 now rest on the 9 September meeting, read against the four source documents and the NZALC course data sheets. Ranks follow the meeting: WO2 is the Lead Systems tick and WO1 the Lead Capability tick.
 
 | Transition | Soldier | Officer |
 | --- | --- | --- |
-| T1 Lead Self to Lead Teams | A1530 JNCO Course includes ELDA Lead Teams (A18011) and LDS Lead Teams (D03020) | Commissioning course; whether LDS Lead Teams is embedded is unknown |
-| T2 Lead Teams to Lead Leaders | A1531 SNCO Course; ELDA Lead Leaders (A18008); LDS Lead Leaders (D03030) prerequisite | ELDA Lead Leaders targets 2LT and LT; the link to substantive CAPT is the live request |
-| T3 Lead Leaders to Lead Systems | A1532 WO Course; ELDA Lead Systems (A18010) | ELDA Lead Systems targets CAPT preparing for MAJ; A1302 Staff and Tactics referenced |
-| T4 to T6 | LDS courses delivered by ILD; Army practice unknown | LDS courses delivered by ILD; Army practice unknown |
+| Entry | Lead Self compulsory on entry, delivered through train-the-trainer (TAD, ACS) | Lead Self compulsory, as for soldiers |
+| T1 Lead Self to Lead Teams | PTE to LCPL. Mandated: ELDA Lead Teams (A18011) is embedded in the JNCO course (A1530) as the performance-under-pressure module, with LDS Lead Teams (D03020) sequenced alongside | OCDT to 2LT. Embedded: NZCC includes ELDA Lead Teams (the former Nemesis, rebranded with the same learning outcomes) and LDS Lead Teams, delivered by ALC at OCS in March, two years running |
+| T2 Lead Teams to Lead Leaders | CPL to SGT. Mandated in promotion policy: the SNCO course (A1531) carries ELDA Lead Leaders (A18008) and LDS Lead Leaders (D03030). "Very clear on the NCO front" | 2LT and LT to CAPT. Recommended, not mandated: not in promotion policy, but policed in function by OCS and COs so that in practice no 2LT or LT promotes without it. "Super murky on the officer front". This is the substantive CAPT request |
+| T3 Lead Leaders to Lead Systems | SSGT to WO2. ELDA Lead Systems (A18010) mandated on the WO course (A1532). LDS Lead Systems is ILD-delivered and Army cannot guarantee seats, so it is routinely done before or after the promotion course. Whether it is a prerequisite for WO2 is Dave's action | CAPT to MAJ. Neither ELDA Lead Systems nor the ILD LDS Lead Systems course is mandated, and neither is policed in function. Uptake is self-selecting. CAPT to OC is the largest single jump in scope of influence |
+| T4 Lead Systems to Lead Capability | WO2 to WO1. LDS Lead Capability (ILD). Expected for promotion; "pretty sure" not in policy. Most attend, subject to an ILD seat | MAJ to LTCOL. LDS Lead Capability (ILD). Not mandated; the impression is that all complete it |
+| T5 Lead Capability to Lead Integrated Capability | WO1s. One ELDA week (ALC caving or Navy sailing) and one LDS week in Wellington, both run and funded by ILD. 12 to 16 students a course; attended without exception | LTCOL and COL. The same course; attended without exception |
+| T6 Lead Integrated Capability to Lead Organisation | Senior WO1s considered for the senior appointments. LDS Lead Organisation with an ELDA component (retreat setting, equine behaviour, psychometric profiling, external facilitation); all complete it well before they need to | COL and BRIG. The same course; all complete it well before required |
+
+Two structural facts from the meeting shape the reading of the table.
+
+1. **The 2012 division of delivery.** Single-Service providers train Lead Self to Lead Leaders, which covers most of the organisation. ILD trains Lead Systems and above for all three Services, and Army retains the ELDA function at those levels. Army therefore cannot guarantee an ILD seat, which is why LDS Lead Systems sits outside the WO promotion course and why a mandate above T2 is harder to enforce on either continuum.
+2. **Where the gap bites.** Attendance is near-universal at LTCOL and above and at WO1 and above, because those groups are selected, scrutinised and ambitious. The formative years in unit, 2LT to MAJ, are where leadership development is missed, and where the promotion policy carries no marker.
+
+The background the decision-makers should have, carried on page 2, is also from the meeting: a two-year pilot attaching Lead Leaders to Grade 2 and 3 coursing was withdrawn as untenable time away from units; a distributed, self-scheduled approach was agreed instead; the Post Commissioning Programme delivered Lead Leaders to every junior officer but before unit experience; AITC agreed in principle that officers should complete it and the proposal was parked in a headquarters restructure; and ACS was not at the table for later course redesigns.
+
+Dave's own answer to COMDT's question, offered at the meeting and shown on page 2 as a candidate rather than a finding, was "a scheduling oversight in the face of tempo": training that is not required is the training that gets bumped.
 
 The facts still required are the same three for every transition on each side, and are listed in the accompanying register:
 
 1. **Promotion point.** The authoritative Army promotion or career point that corresponds to the transition.
 2. **Development intervention.** The course or programme that develops the individual for that transition, with its SOLO code.
-3. **Mandate.** Whether that development is a prerequisite for promotion, embedded in the promotion course, expected but not mandatory, or unconnected.
-
-The most important single fact is the Officer answer to item 3 at T2 and T3, because that is where the asymmetry is expected to show and where the substantive Captain request sits.
+3. **Mandate.** Whether that development is a prerequisite for promotion, embedded in the promotion course, expected but not mandatory, or unconnected. For the officer side at T2 to T4 this is now a check of promotion policy against what the meeting stated, not an open question.
 
 ## 5. Tone
 
@@ -60,3 +73,13 @@ The piece does not set out to prove the Officer system wrong. COMDT's posture is
 ## 6. What Has Been Withdrawn
 
 The six-category matrix (rank, appointment, development, career linkage, timing, assurance), the gap taxonomy, and the seven-page sequence remain in the repository history as analytical scaffolding. They are not part of the briefing product. If AITC asks for the fuller diagnostic after the discussion, they can be revived from the retained data register without redesign.
+
+## 7. Actions From the 9 September Meeting
+
+| Action | Owner | Where it lands in this product |
+| --- | --- | --- |
+| Verify whether the ILD LDS Lead Systems course is a prerequisite in the promotion-course data sheet for SSGT to WO2 | Dave | Page 1, soldier T3; register row T3-R-MAND |
+| Check officer promotion requirements in policy for leadership training mandates at each rank | Team | Page 1, officer T2 to T6; register rows T2-O-MAND to T6-O-MAND, and X1 |
+| Develop a visual mapping of the current versus desired framework, highlighting discrepancies and critical points | Team | Pages 1 and 3 |
+| Confirm timing and scheduling of the courses at each transition and their delivery mechanism | Team | Page 3, course and delivery columns; register X3 and X6 |
+| Prepare a future-state plan: progression levels, delivery agents, policy endorsements linking training to promotion | Team | Page 3, held as detachable until AITC answers page 2 |

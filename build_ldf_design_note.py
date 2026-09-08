@@ -15,7 +15,7 @@ SOURCE = "./ldf-alignment-design-note.md"
 OUTPUT_DOCX = "./output/ldf-alignment-design-note.docx"
 TITLE = "Officer and Soldier Leadership Development"
 KICKER = "Design Note"
-TAG = "Two-page AITC discussion piece: design draft"
+TAG = "AITC discussion piece, two pages plus a detachable future state: design draft"
 REFERENCE = ("NZDF Leadership Framework v2 (Oct 2025); LDS, Leadership Levels "
              "and Leadership Framework posters")
 STATUS = "Design draft for approval"
