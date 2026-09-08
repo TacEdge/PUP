@@ -6,7 +6,7 @@ This note is the first output for the AITC discussion piece on Army leadership d
 
 The question under test is:
 
->! Does the Army's promotion and career-development continuum deliberately prepare, select and develop its people for the changes in leadership purpose, mindset, behaviours, scope and scale required at each LDF transition?
+>! To what extent does the Army's promotion and career-development continuum deliberately develop its people for the changes in leadership required at each Leadership Development Framework transition?
 
 ## 2. The Source Architecture
 
@@ -59,7 +59,7 @@ The central visual holds the NZDF LDF fixed in the middle as the doctrinal refer
 
 ### Rows are transitions, not levels
 
-Each row of the matrix is a transition: the current level, the developmental shift, and the new level. The row asks one question of each continuum: does the career system deliberately prepare the individual for this shift?
+Each row of the matrix is a transition: the current level, the developmental shift, and the new level. The row asks one question of each continuum: to what extent does the career system deliberately develop the individual for this shift?
 
 ### Six categories per side
 
@@ -74,7 +74,7 @@ Each continuum answers the same six questions for every transition. The Officer 
 
 ### Status language
 
-Every cell carries one of three states until the data is complete. The state is written in the cell as a short tag, so the matrix reads correctly in greyscale and colour is an addition rather than the carrier of meaning.
+The question asks "to what extent", so the answer for each transition is a degree, read across the row as the balance of aligned cells, named gaps and unknowns, rather than a yes or no. Every cell carries one of three states until the data is complete. The state is written in the cell as a short tag, so the matrix reads correctly in greyscale and colour is an addition rather than the carrier of meaning.
 
 | Tag | Meaning | Colour in the polished version |
 | --- | --- | --- |

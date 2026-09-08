@@ -129,10 +129,10 @@ def page1(doc):
     pg = Page(doc, 1, "The question",
               "One page. One question. Nothing competes with it.")
     pg.box(M, 80, W - 2 * M, 430, fill=None, stroke=LIGHT)
-    q = ("Does the Army's promotion and career-development continuum "
-         "deliberately prepare, select and develop its people for the changes "
-         "in leadership purpose, mindset, behaviours, scope and scale required "
-         "at each LDF transition?")
+    q = ("To what extent does the Army's promotion and career-development "
+         "continuum deliberately develop its people for the changes in "
+         "leadership required at each Leadership Development Framework "
+         "transition?")
     rect = pymupdf.Rect(M + 90, 150, W - M - 90, 420)
     pg.p.insert_textbox(rect, q, fontsize=22, fontname="helvetica-bold",
                         color=INK, align=1, lineheight=1.25)
@@ -141,8 +141,9 @@ def page1(doc):
     pg.text(W / 2, 470, "[No subtitle. No agenda. No sources. Those come on page 2.]", 7, NOTE, align=1)
     pg.note(M, 520, W - 2 * M,
             "The reader should be able to repeat the question from memory after this page. "
-            "Type only, generous white space, one weight. The word 'deliberately' may be set "
-            "heavier than the rest in the polished version; it is the hinge of the analysis.")
+            "Type only, generous white space, one weight. 'To what extent' and 'deliberately' may be "
+            "set heavier than the rest in the polished version: the first tells the reader the answer "
+            "is a degree, not a yes or no; the second is the hinge of the analysis.")
 
 
 def page2(doc):
