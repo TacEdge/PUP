@@ -13,13 +13,13 @@ import build_elda_data_sheet as cds
 
 SOURCE = "./ldf-alignment-design-note.md"
 OUTPUT_DOCX = "./output/ldf-alignment-design-note.docx"
-TITLE = "LDF Alignment"
+TITLE = "Officer and Soldier Leadership Development"
 KICKER = "Design Note"
-TAG = "Analytical and Visual Framework: First Output"
+TAG = "Two-page AITC discussion piece: design draft"
 REFERENCE = ("NZDF Leadership Framework v2 (Oct 2025); LDS, Leadership Levels "
              "and Leadership Framework posters")
 STATUS = "Design draft for approval"
-FOOTER_LEFT = "NZALC | LDF Alignment Design Note"
+FOOTER_LEFT = "NZALC | Leadership Development Design Note"
 
 
 def build():

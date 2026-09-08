@@ -1,143 +1,62 @@
-# LDF Alignment Design Note
+# Officer and Soldier Leadership Development Design Note
 
-## 1. Purpose of this Note
+## 1. The Tasking, Reduced to Its Point
 
-This note is the first output for the AITC discussion piece on Army leadership development and promotion alignment. It does not answer the question. It sets out the analytical and visual structure through which the question can be answered, the seven-page wireframe sequence, the data still required, and the assumptions that have deliberately not been made.
+COMDT ACS asked ACS (ALC) to table a discussion piece at the AITC before end of year on how the Officer and Other Rank promotion continuums align with the intent and design of the LDF: present the facts and challenge the organisation to decide about the development of leaders at all levels. The trigger was a request to link Lead Leaders to promotion to substantive Captain.
 
-The tasking from COMDT ACS is to consider how the Officer and Other Rank promotion continuums align with the intent and design of the LDF, present the facts, and challenge the organisation to decide about the development of leaders at all levels. The piece therefore carries three wordings, each with a fixed place.
+Read against that, the issue is narrow:
+
+>! Army applies a deliberate link between leadership development and promotion within the Soldier continuum. The equivalent relationship within the Officer continuum is less clear. Is this difference deliberate, and if so, why?
+
+The earlier seven-page construct tested six categories at six transitions for two continuums. That was a diagnostic of the whole system. COMDT is asking a sharper question, so the product is reduced to two pages and the six-category matrix is withdrawn from the briefing product.
+
+## 2. The Two Pages
+
+| Page | Purpose | What is on it |
+| --- | --- | --- |
+| 1. Two continuums. One leadership framework. | Show the asymmetry | One visual. The LDF's seven levels as the spine. Officer continuum on the left, Soldier continuum on the right, each showing rank, the development intervention at that point, and whether it is mandated. Headline question above; the question for Army beneath. |
+| 2. The discrepancy | Let the answer emerge, then pose the challenge | Two flows with identical steps. Soldier: promotion point, mandated development, development completed, promotion: a deliberate link. Officer: promotion point, development exists, not mandated?, promotion: an unclear link. Then: is this difference a conscious choice? If so, what is the rationale? If not, should Army apply a more consistent principle? |
+
+The three wordings are fixed:
 
 | Place | Wording |
 | --- | --- |
-| Headline (page 1) | How well do the Army's Officer and Other Rank promotion continuums align with the intent and design of the LDF? |
-| Analytical test (pages 4 to 6) | At each LDF transition: does the continuum deliberately develop the individual for the change in leadership required, and is that development linked to promotion? |
-| Closing (page 7) | Given these facts, how should Army decide about the development of leaders at all levels? |
+| Headline, page 1 | How deliberately does Army link leadership development to progression through its Officer and Soldier promotion continuums? |
+| Question, foot of page 1 | If Army deliberately mandates leadership development for soldiers as they progress through increased leadership responsibility, why is the same principle not applied consistently to officers? |
+| Challenge, page 2 | Is this difference a conscious choice? If so, what is the rationale for treating Officer and Soldier leadership development differently? If not, should Army apply a more consistent principle to development before progression into increased leadership responsibility? |
 
-"LDF" is used throughout as COMDT's term for the NZDF Leadership Framework and Leadership Development System taken together, and is defined once on page 2.
+## 3. Why the LDF Stays in the Middle
 
-## 2. The Source Architecture
+The LDF is retained as the spine because it is the common reference that makes the comparison fair. Its levels describe progressively different leadership requirements: a genuine shift from effective individual contribution, to getting things done through others, through other leaders, to running a system, building capability, integrating at enterprise level, and stewarding the institution. Placing the two continuums against it allows one question to be asked at each transition: at the same developmental shift, what does Army require of a soldier, and what does it require of an officer?
 
-### What the sources are
+Two points from the sources still govern how the spine is used.
 
-| Source | What it establishes |
-| --- | --- |
-| NZDF Leadership Framework poster | Six Key Elements and 27 Essential Tasks that apply at every level. The elements are constant; their expression changes. |
-| NZDF Leadership Development System poster | Seven levels, each entered by "commencement of the first role" at that level; an LDS course for each level; the Orientation, Build and Advance phases of transition; development occurring 10 percent on course, 20 percent through coaching and mentoring, 70 percent through guided experimentation on the job. |
-| NZDF Leadership Levels poster | An approximate mapping of NZDF ranks and pay codes to the seven levels across six transitions. The poster itself states the alignment is "only an estimation" and that a true alignment would come from analysing individual position descriptions. |
-| NZDF Leadership Framework document (v2, October 2025) | The Value Adds for each level, which state the leadership purpose and mindset required; the one-page Leader Development Guides (Essential Tasks and Behaviour Statements); the three leadership environments; and the intent that Essential Tasks map to the PDR. |
+1. **The rank mapping is an estimate.** The Leadership Levels poster says its alignment of rank to level is "only an estimation". Rank pairings on page 1 place the comparison; they do not assert that a rank equals a level. The page says so in one line.
+2. **The LDS intends development before the transition.** The Leadership Development System places the LDS course in the Orientation phase, ideally about six months before the first posting to the new level. Whether Army's promotion courses achieve that for either continuum is part of what the facts must show.
 
-### Three things the sources make clear
+## 4. What Is Known and What Is Not
 
-1. **The framework is the "what". The system is the "how far".** The six Key Elements never change. The seven levels describe progressively different leadership environments, each defined by the scope and scale of the leadership tasks and responsibilities.
-2. **The transition is where the work is.** The LDS poster places the LDS course before the first posting to a new level and describes a three-phase transition (Orientation, Build, Advance). The Value Adds are written explicitly to be different from the level below and the level above, so that leaders "understand, and prepare for, how they add unique value at the next leadership level".
-3. **The rank mapping is not doctrine.** The Leadership Levels poster is an estimate. Any Army rank-to-level alignment used in the analysis must therefore be treated as a hypothesis to confirm, not a given.
+Populated cells on page 1 are limited to what the four sources and the NZALC course data sheets support, and every one is tagged TO CONFIRM until checked against SOLO and promotion policy.
 
-### The three environments
-
-The LDF groups the seven levels into three environments, each with its own cultural responsibility. This grouping is useful because the largest mindset changes sit at the environment boundaries.
-
-| Environment | Levels | Cultural responsibility |
+| Transition | Soldier | Officer |
 | --- | --- | --- |
-| Foundational (Paparahi) | Lead Self, Lead Teams, Lead Leaders | Tone: set and monitor the tone of the team |
-| Operational (Paheko) | Lead Systems, Lead Capability | Climate: develop and monitor unit climate |
-| Strategic (Rautaki) | Lead Integrated Capability, Lead Organisation | Culture: monitor and develop organisational culture |
+| T1 Lead Self to Lead Teams | A1530 JNCO Course includes ELDA Lead Teams (A18011) and LDS Lead Teams (D03020) | Commissioning course; whether LDS Lead Teams is embedded is unknown |
+| T2 Lead Teams to Lead Leaders | A1531 SNCO Course; ELDA Lead Leaders (A18008); LDS Lead Leaders (D03030) prerequisite | ELDA Lead Leaders targets 2LT and LT; the link to substantive CAPT is the live request |
+| T3 Lead Leaders to Lead Systems | A1532 WO Course; ELDA Lead Systems (A18010) | ELDA Lead Systems targets CAPT preparing for MAJ; A1302 Staff and Tactics referenced |
+| T4 to T6 | LDS courses delivered by ILD; Army practice unknown | LDS courses delivered by ILD; Army practice unknown |
 
-## 3. What Changes at Each Transition
+The facts still required are the same three for every transition on each side, and are listed in the accompanying register:
 
-The table distils the distinctive developmental shift at each level from the Value Adds and level introductions in the LDF document. The distilled statement is the one line that will appear on page 3 of the discussion piece. The source headings are listed so every statement is traceable.
+1. **Promotion point.** The authoritative Army promotion or career point that corresponds to the transition.
+2. **Development intervention.** The course or programme that develops the individual for that transition, with its SOLO code.
+3. **Mandate.** Whether that development is a prerequisite for promotion, embedded in the promotion course, expected but not mandatory, or unconnected.
 
-| Level | Distilled shift | Value Adds in the source |
-| --- | --- | --- |
-| Lead Self | Effective individual contribution: deliver on the leader's intent, master the role, support the team. | Follow leader's intent; Apply good judgement; Support others; Pursue excellence |
-| Lead Teams | Accountable for others for the first time. Get things done through others and set the tone. | Coach and develop a team; Align with unit objectives; Set the tone; Get things done through others |
-| Lead Leaders | Get things done through other leaders. Step back from direct control, think in systems, connect teams to the organisation. | Coach team leaders; Get things done through other leaders; Adopt systems thinking; Connect teams to the organisation |
-| Lead Systems | Run an entire system with delegated autonomy. Turn capability intent into priorities and plans; grow the next operational leaders. | Grow curious leaders; Explain the why and the what; Run an entire system |
-| Lead Capability | Build and sustain capability beyond your own tenure. Turn strategy into action and advise upward honestly. | Turn strategy into action; Provide sound and honest advice upwards; Build capability by expanding professional expertise; Create a positive unit climate |
-| Lead Integrated Capability | Lead at enterprise level: integrate capabilities, work with external partners, develop strategic leaders. The source calls this "a significant shift in skill and mind-set". | Develop strategic leaders; Promote strategic collaboration; Implement the strategic agenda; Promote organisational excellence |
-| Lead Organisation | Institutional stewardship: create the strategic agenda, maintain ministerial confidence, own the culture and the Leadership Development System. | Evolve organisational systems; Facilitate strategic collaboration; Create the strategic agenda; Maintain ministerial confidence; Lead organisational culture |
+The most important single fact is the Officer answer to item 3 at T2 and T3, because that is where the asymmetry is expected to show and where the substantive Captain request sits.
 
-The six transitions between these levels, T1 to T6, are the unit of analysis for everything that follows.
+## 5. Tone
 
-## 4. The Analytical Model
+The piece does not set out to prove the Officer system wrong. COMDT's posture is the intellectual stance: are we consciously choosing to deviate from best practice, and if so, why? There may be a defensible reason for treating Officer development differently. The job of the two pages is to expose the difference clearly enough that Army has to articulate that reason, or decide to change. Both branches of the closing question are given equal weight, and no recommendation is attached.
 
-### One spine, two continuums
+## 6. What Has Been Withdrawn
 
-The central visual holds the NZDF LDF fixed in the middle as the doctrinal reference, with the Army Officer continuum on the left and the Army Other Rank continuum on the right. The two continuums are never merged. The purpose is to see, for each transition, where Officer development aligns, where OR development aligns, where both do, where one does better than the other, where development exists but is disconnected from promotion, where it happens too early or too late, where nothing exists, and where the policy or data is unclear.
-
-### Rows are transitions, not levels
-
-Each row of the matrix is a transition: the current level, the developmental shift, and the new level. The row applies the analytical test to each continuum: does it deliberately develop the individual for this shift, and is that development linked to promotion?
-
-### Six categories per side
-
-Each continuum answers the same six questions for every transition. The Officer columns run right-to-left and the OR columns left-to-right, so the same category sits the same distance from the spine on both sides.
-
-1. **Rank / career point.** Which promotion or career transition corresponds to this LDF transition?
-2. **Appointment / responsibility.** What increased leadership responsibility is assumed?
-3. **Formal development.** What course, programme or intervention exists?
-4. **Career linkage.** Prerequisite for promotion; embedded in a promotion course; prerequisite for appointment; expected but not mandatory; or disconnected.
-5. **Timing.** Before, at, or after the transition; or unclear.
-6. **Assurance.** How Army knows the individual is ready to operate at the new level.
-
-### Status language
-
-The headline asks "how well", so the answer for each transition is a degree, read across the row as the balance of aligned cells, named gaps and unknowns, rather than a yes or no. Every cell carries one of three states until the data is complete. The state is written in the cell as a short tag, so the matrix reads correctly in greyscale and colour is an addition rather than the carrier of meaning.
-
-| Tag | Meaning | Colour in the polished version |
-| --- | --- | --- |
-| KNOWN | Confirmed against an authoritative source | Green where aligned; otherwise a named gap |
-| TO CONFIRM | Something in hand, but from an estimate or a working document rather than policy | Amber |
-| DATA REQUIRED | Nothing in hand | Grey |
-
-### Gap taxonomy
-
-Where a gap is identified it is named by type rather than only coloured red, so the reader sees the nature of the problem.
-
-| Gap type | Definition |
-| --- | --- |
-| DEVELOPMENT | No deliberate development identified for the transition. |
-| ALIGNMENT | Development exists but does not correspond cleanly with the LDF transition. |
-| TIMING | Development occurs after the individual has already transitioned. |
-| CONSEQUENCE | Appropriate development exists but has no formal relationship with promotion or appointment. |
-| ASSURANCE | No clear mechanism establishes readiness for the next leadership level. |
-| DATA | Insufficient information currently available. |
-
-## 5. The Seven Pages and Their Visual Logic
-
-The wireframes are in the accompanying PDF. Each page carries its own annotation. In summary:
-
-1. **The question.** Type only. COMDT's question in his own terms, generous space, nothing competing. The reader should be able to repeat it afterwards.
-2. **The system we already have.** Three posters become one picture: the ring of six constant elements, the staircase of seven levels with the three environments as faint bands, and a single axis of increasing scope, scale, complexity and consequence. One message line: the framework remains constant; its expression changes as responsibility increases.
-3. **What actually changes.** Seven columns, one bold sentence each, with the source Value Add headings beneath for traceability. The six transition gates, T1 to T6, are introduced here and reused on every later page.
-4. **Two career systems, one leadership framework.** The centrepiece matrix, with the analytical test stated once above it. Dark spine, mirrored columns, status tags. Populated only with what the four sources support: the LDS delivery model per level and the rank estimate from the Leadership Levels poster, both tagged TO CONFIRM. Everything else is DATA REQUIRED.
-5. **Where do the systems align.** The identical grid with everything that is not demonstrably aligned faded out. Green is used here and nowhere earlier.
-6. **Where are the gaps.** The identical grid with each gap named by type. Officer-versus-OR asymmetry is read across a row. Amber and red appear only on this page and page 5.
-7. **The question for Army.** Type only again, in COMDT's words: given these facts, how should Army decide about the development of leaders at all levels? The three levers AITC controls are named (promotion, appointment, professional development) with no option or recommendation attached.
-
-Three rules hold across the set: the grid never changes shape between pages 4, 5 and 6; colour is never the only carrier of meaning; and nothing appears in a cell that a source does not support.
-
-## 6. What Is Missing
-
-The four sources describe the NZDF system. They contain almost nothing about the Army career continuum, which is the other half of the comparison. Specifically, the analysis cannot proceed to findings without:
-
-1. Army promotion policy for each rank, Officer and OR, and the prerequisites it sets.
-2. The Army career-development continuum documents for both continuums.
-3. The full list of Army promotion and career courses in SOLO, with the LDS content each includes or requires.
-4. ILD delivery data for Lead Systems and above: which Army ranks attend, when, and whether attendance is mandated.
-5. The mapping of LDF Essential Tasks to the Army PDR, and whether PDR outcomes reach promotion boards.
-6. Any readiness assessment applied at first appointment to a new level.
-7. The authoritative Army view of which rank equates to each LDF level, replacing the poster estimate.
-
-The accompanying spreadsheet lists every cell of the matrix as a row to populate: 72 transition-by-continuum-by-category items plus the eight cross-cutting items above. Rows already carrying something from the sources are marked TO CONFIRM with the evidence quoted.
-
-## 7. Assumptions Deliberately Not Made
-
-1. That the Leadership Levels poster's rank mapping is authoritative for Army. It is labelled an estimate and is used only as a hypothesis.
-2. That an LDS course exists in Army delivery at every level. The LDS poster describes NZDF intent; Army delivery is not evidenced.
-3. That ELDA courses are the LDS courses. The NZALC course data sheets developed in this project reference LDS courses as prerequisites or sequencing, which implies they are distinct. This is recorded as TO CONFIRM.
-4. That promotion courses contain or require leadership development aligned to the transition. Nothing in the four sources says so.
-5. That development occurring within a promotion course occurs before the transition. Whether a promotion course sits before or after assumption of the new role is a Timing question for the data.
-6. That the PDR functions as assurance. The LDF says Essential Tasks map to the PDR; whether Army uses that mapping to establish readiness is unknown.
-7. That Officer and OR transitions happen at the same career age or in the same order of appointment. The two continuums are kept separate precisely so this is not assumed.
-8. That Warrant Officer tiers correspond to the operational and strategic levels in the way the poster suggests.
-9. That Nemesis, the Leadership Journal, or any other NZALC activity discussed in this project is part of the formal continuum. They are not entered anywhere in the matrix.
-10. That Reserve Force, lateral entrants and civilian leaders are in scope. This is raised as a scoping decision for AITC.
+The six-category matrix (rank, appointment, development, career linkage, timing, assurance), the gap taxonomy, and the seven-page sequence remain in the repository history as analytical scaffolding. They are not part of the briefing product. If AITC asks for the fuller diagnostic after the discussion, they can be revived from the retained data register without redesign.

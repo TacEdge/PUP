@@ -22,70 +22,58 @@ TRANSITIONS = [
     ("T5", "Lead Capability", "Lead Integrated Capability"),
     ("T6", "Lead Integrated Capability", "Lead Organisation"),
 ]
-CONTINUUMS = ["Officer", "Other Rank"]
+CONTINUUMS = ["Officer", "Soldier"]
 
 # category -> (question to answer, likely source)
 CATEGORIES = [
-    ("Rank / career point",
-     "Which Army promotion or career point corresponds to this transition?",
-     "Army career management policy; DFO promotion regulations; Army Career Management"),
-    ("Appointment / responsibility",
-     "What appointment or increase in leadership responsibility is assumed at this point?",
-     "Position descriptions; establishment; corps career profiles"),
-    ("Formal development",
-     "What course, programme or intervention exists for this transition (LDS course, promotion course, ELDA, other)?",
+    ("Promotion point",
+     "Which Army promotion or career point corresponds to this LDF transition?",
+     "Army promotion policy; Army Career Management"),
+    ("Development intervention",
+     "Which course or programme develops the individual for this transition (SOLO code, LDS, ELDA, promotion course)?",
      "SOLO course catalogue; ILD course list; NZALC course data sheets"),
-    ("Career linkage",
-     "Is the intervention a prerequisite for promotion, embedded in a promotion course, a prerequisite for appointment, expected but not mandatory, or disconnected?",
-     "SOLO prerequisites; promotion course CDS; DFO / Army promotion policy"),
-    ("Timing",
-     "Does the development occur before, at or after the transition (LDS intent: about six months prior, in the Orientation phase)?",
-     "Course scheduling; nomination windows; career management practice"),
-    ("Assurance",
-     "How does Army know the individual is ready to lead at the new level (assessment, PDR mapping, board, competency sign-off)?",
-     "PDR / performance system; promotion board criteria; course assessment"),
+    ("Mandate",
+     "Is that development a prerequisite for promotion, embedded in the promotion course, expected but not mandatory, or unconnected?",
+     "SOLO prerequisites; promotion course CDS; Army promotion policy"),
 ]
 
 # Items already in hand from the four sources or this project's session documents.
 KNOWN = {
-    ("T1", "Officer", "Rank / career point"): ("Leadership Levels poster: OCDT (Lead Self) to Junior Officer (Lead Teams). Poster states rank alignment is 'only an estimation'.", "TO CONFIRM"),
-    ("T1", "Other Rank", "Rank / career point"): ("Leadership Levels poster: PTE to LCPL / CPL. 'Only an estimation'.", "TO CONFIRM"),
-    ("T2", "Officer", "Rank / career point"): ("Leadership Levels poster: Junior Officer spans Transition One and Two.", "TO CONFIRM"),
-    ("T2", "Other Rank", "Rank / career point"): ("Leadership Levels poster: SGT / SSGT / WO band.", "TO CONFIRM"),
-    ("T3", "Officer", "Rank / career point"): ("Leadership Levels poster: MAJ (Transition Three).", "TO CONFIRM"),
-    ("T3", "Other Rank", "Rank / career point"): ("Leadership Levels poster: WO band; Tier 5 WO at Transition Four.", "TO CONFIRM"),
-    ("T4", "Officer", "Rank / career point"): ("Leadership Levels poster: LTCOL (Transition Four).", "TO CONFIRM"),
-    ("T4", "Other Rank", "Rank / career point"): ("Leadership Levels poster: Tier 5 WO.", "TO CONFIRM"),
-    ("T5", "Officer", "Rank / career point"): ("Leadership Levels poster: COL (Transition Five).", "TO CONFIRM"),
-    ("T5", "Other Rank", "Rank / career point"): ("Leadership Levels poster: Tier 4 WO.", "TO CONFIRM"),
-    ("T6", "Officer", "Rank / career point"): ("Leadership Levels poster: BRIG and above (Transition Six).", "TO CONFIRM"),
-    ("T6", "Other Rank", "Rank / career point"): ("Leadership Levels poster: Tier 3 WO and above.", "TO CONFIRM"),
-    ("T1", "Officer", "Formal development"): ("LDS poster: LDS Lead Teams course embedded in single-Service development courses.", "TO CONFIRM"),
-    ("T1", "Other Rank", "Formal development"): ("LDS poster: LDS Lead Teams course embedded in single-Service development courses. Session documents: ELDA Lead Teams (A18011) is an included course within A1530 JNCO Course; D03020 LDS Lead Teams sequencing referenced.", "TO CONFIRM"),
-    ("T2", "Officer", "Formal development"): ("LDS poster: LDS Lead Leaders course delivered by single-Service learning providers. Session documents: ELDA Lead Leaders (A18008) targets 2LT and LT; prerequisite D03030 / D03003 LDS Lead Leaders referenced.", "TO CONFIRM"),
-    ("T2", "Other Rank", "Formal development"): ("LDS poster: as for Officer. Session documents: ELDA Lead Leaders targets NCOs accepted onto A1531 SNCO Promotion Course.", "TO CONFIRM"),
-    ("T3", "Officer", "Formal development"): ("LDS poster: LDS Lead Systems course delivered by ILD. Session documents: ELDA Lead Systems (A18010) targets Captains preparing for promotion to Major; A1302 Staff and Tactics Grade Two referenced.", "TO CONFIRM"),
-    ("T3", "Other Rank", "Formal development"): ("LDS poster: as for Officer. Session documents: ELDA Lead Systems targets SNCOs and WOs accepted onto A1532 WO Course.", "TO CONFIRM"),
-    ("T4", "Officer", "Formal development"): ("LDS poster: LDS Lead Capability course delivered by ILD.", "TO CONFIRM"),
-    ("T4", "Other Rank", "Formal development"): ("LDS poster: LDS Lead Capability course delivered by ILD.", "TO CONFIRM"),
-    ("T5", "Officer", "Formal development"): ("LDS poster: LDS Lead Integrated course delivered by ILD.", "TO CONFIRM"),
-    ("T5", "Other Rank", "Formal development"): ("LDS poster: LDS Lead Integrated course delivered by ILD.", "TO CONFIRM"),
-    ("T6", "Officer", "Formal development"): ("LDS poster: LDS Lead Organisation course delivered by ILD.", "TO CONFIRM"),
-    ("T6", "Other Rank", "Formal development"): ("LDS poster: LDS Lead Organisation course delivered by ILD.", "TO CONFIRM"),
+    ("T1", "Officer", "Promotion point"): ("Leadership Levels poster: OCDT (Lead Self) to Junior Officer (Lead Teams). Poster states rank alignment is 'only an estimation'.", "TO CONFIRM"),
+    ("T1", "Soldier", "Promotion point"): ("Leadership Levels poster: PTE to LCPL / CPL. 'Only an estimation'.", "TO CONFIRM"),
+    ("T2", "Officer", "Promotion point"): ("Leadership Levels poster: Junior Officer spans Transition One and Two.", "TO CONFIRM"),
+    ("T2", "Soldier", "Promotion point"): ("Leadership Levels poster: SGT / SSGT / WO band.", "TO CONFIRM"),
+    ("T3", "Officer", "Promotion point"): ("Leadership Levels poster: MAJ (Transition Three).", "TO CONFIRM"),
+    ("T3", "Soldier", "Promotion point"): ("Leadership Levels poster: WO band; Tier 5 WO at Transition Four.", "TO CONFIRM"),
+    ("T4", "Officer", "Promotion point"): ("Leadership Levels poster: LTCOL (Transition Four).", "TO CONFIRM"),
+    ("T4", "Soldier", "Promotion point"): ("Leadership Levels poster: Tier 5 WO.", "TO CONFIRM"),
+    ("T5", "Officer", "Promotion point"): ("Leadership Levels poster: COL (Transition Five).", "TO CONFIRM"),
+    ("T5", "Soldier", "Promotion point"): ("Leadership Levels poster: Tier 4 WO.", "TO CONFIRM"),
+    ("T6", "Officer", "Promotion point"): ("Leadership Levels poster: BRIG and above (Transition Six).", "TO CONFIRM"),
+    ("T6", "Soldier", "Promotion point"): ("Leadership Levels poster: Tier 3 WO and above.", "TO CONFIRM"),
+    ("T1", "Officer", "Development intervention"): ("LDS poster: LDS Lead Teams course embedded in single-Service development courses.", "TO CONFIRM"),
+    ("T1", "Soldier", "Development intervention"): ("LDS poster: LDS Lead Teams course embedded in single-Service development courses. Session documents: ELDA Lead Teams (A18011) is an included course within A1530 JNCO Course; D03020 LDS Lead Teams sequencing referenced.", "TO CONFIRM"),
+    ("T2", "Officer", "Development intervention"): ("LDS poster: LDS Lead Leaders course delivered by single-Service learning providers. Session documents: ELDA Lead Leaders (A18008) targets 2LT and LT; prerequisite D03030 / D03003 LDS Lead Leaders referenced.", "TO CONFIRM"),
+    ("T2", "Soldier", "Development intervention"): ("LDS poster: as for Officer. Session documents: ELDA Lead Leaders targets NCOs accepted onto A1531 SNCO Promotion Course.", "TO CONFIRM"),
+    ("T3", "Officer", "Development intervention"): ("LDS poster: LDS Lead Systems course delivered by ILD. Session documents: ELDA Lead Systems (A18010) targets Captains preparing for promotion to Major; A1302 Staff and Tactics Grade Two referenced.", "TO CONFIRM"),
+    ("T3", "Soldier", "Development intervention"): ("LDS poster: as for Officer. Session documents: ELDA Lead Systems targets SNCOs and WOs accepted onto A1532 WO Course.", "TO CONFIRM"),
+    ("T4", "Officer", "Development intervention"): ("LDS poster: LDS Lead Capability course delivered by ILD.", "TO CONFIRM"),
+    ("T4", "Soldier", "Development intervention"): ("LDS poster: LDS Lead Capability course delivered by ILD.", "TO CONFIRM"),
+    ("T5", "Officer", "Development intervention"): ("LDS poster: LDS Lead Integrated course delivered by ILD.", "TO CONFIRM"),
+    ("T5", "Soldier", "Development intervention"): ("LDS poster: LDS Lead Integrated course delivered by ILD.", "TO CONFIRM"),
+    ("T6", "Officer", "Development intervention"): ("LDS poster: LDS Lead Organisation course delivered by ILD.", "TO CONFIRM"),
+    ("T6", "Soldier", "Development intervention"): ("LDS poster: LDS Lead Organisation course delivered by ILD.", "TO CONFIRM"),
 }
-for t, _, _ in TRANSITIONS:
-    for c in CONTINUUMS:
-        KNOWN.setdefault((t, c, "Timing"), ("LDS poster intent only: LDS course 'ideally 6 months prior to transition to the new level'. Army practice not known.", "DATA REQUIRED"))
+KNOWN[("T2", "Officer", "Mandate")] = ("The trigger for the tasking: a request to link Lead Leaders to promotion to substantive Captain, implying no current mandate. The single most important cell.", "DATA REQUIRED")
+KNOWN[("T1", "Soldier", "Mandate")] = ("Session documents: ELDA Lead Teams is an included course within the A1530 JNCO Course.", "TO CONFIRM")
+KNOWN[("T2", "Soldier", "Mandate")] = ("Session documents: D03030 LDS Lead Leaders listed as a prerequisite; ELDA Lead Leaders targets NCOs accepted onto A1531.", "TO CONFIRM")
 
 CROSS_CUTTING = [
-    ("X1", "Policy", "Army promotion policy: the authoritative statement of promotion prerequisites for each rank, Officer and OR.", "DFO / Army orders; Army Career Management"),
-    ("X2", "Policy", "Army career-development continuum documents (Officer and OR), including any published 'career pathway' diagrams.", "Army Career Management; Corps career profiles"),
-    ("X3", "Courses", "Complete list of Army promotion and career courses with codes, target ranks and included or prerequisite LDS content.", "SOLO"),
-    ("X4", "Courses", "ILD delivery data for Lead Systems and above: which Army ranks attend, when in career, and whether attendance is mandated.", "ILD; Army Career Management"),
-    ("X5", "Assurance", "How the LDF Essential Tasks map to the Army PDR and whether PDR outcomes feed promotion boards.", "PDR policy; promotion board terms of reference"),
-    ("X6", "Assurance", "Whether any readiness assessment exists at the point of first appointment to a new leadership level.", "Army Career Management; commanders"),
-    ("X7", "Scope", "Treatment of Reserve Force, lateral entrants and civilian leaders: in or out of scope for this analysis.", "AITC direction"),
-    ("X8", "Scope", "Which Army rank equates to each LDF level: the authoritative Army view, replacing the LDS poster estimate.", "AITC / Army Leadership Centre"),
+    ("X1", "Policy", "Army promotion policy: the authoritative statement of promotion prerequisites for each rank, Officer and Soldier.", "Army orders; Army Career Management"),
+    ("X2", "Courses", "Complete list of Army promotion courses with codes, target ranks and the LDS or ELDA content each includes or requires.", "SOLO"),
+    ("X3", "Courses", "ILD delivery data for Lead Capability and above: which Army ranks attend, when, and whether attendance is mandated.", "ILD; Army Career Management"),
+    ("X4", "Scope", "The authoritative Army view of which rank corresponds to each LDF transition, replacing the LDS poster estimate.", "AITC / Army Leadership Centre"),
+    ("X5", "Scope", "The substantive Captain request: its current status and any rationale already recorded for not linking Lead Leaders to promotion.", "COMDT ACS; Army Career Management"),
 ]
 
 STATUSES = ["DATA REQUIRED", "TO CONFIRM", "KNOWN", "NOT APPLICABLE"]
@@ -154,26 +142,21 @@ def build():
     lines = [
         ("LDF ALIGNMENT: DATA REQUIRED REGISTER", True),
         ("", False),
-        ("One row per transition (T1 to T6), per continuum (Officer, Other Rank), per analytical category, plus cross-cutting items X1 to X8.", False),
+        ("One row per transition (T1 to T6), per continuum (Officer, Soldier), per fact (promotion point, development intervention, mandate), plus cross-cutting items X1 to X5.", False),
         ("Populate the three cream columns: Answer, Source cited, Notes. Set Status when done.", False),
         ("", False),
         ("STATUS VALUES", True),
-        ("DATA REQUIRED: nothing in hand. Grey on the matrix.", False),
-        ("TO CONFIRM: something in hand but from an estimate (the Leadership Levels poster) or a session document, not authoritative policy. Amber on the matrix.", False),
-        ("KNOWN: confirmed against an authoritative source. Eligible for green or a named gap on the matrix.", False),
+        ("DATA REQUIRED: nothing in hand.", False),
+        ("TO CONFIRM: something in hand but from an estimate (the Leadership Levels poster) or a session document, not authoritative policy.", False),
+        ("KNOWN: confirmed against an authoritative source.", False),
         ("NOT APPLICABLE: the category does not apply to this transition for this continuum (state why in Notes).", False),
         ("", False),
         ("CATEGORY MEANINGS", True),
     ]
     for cat, q, _ in CATEGORIES:
         lines.append((f"{cat}: {q}", False))
-    lines += [("", False), ("GAP TYPES (assigned during analysis, not data entry)", True),
-              ("DEVELOPMENT: no deliberate development identified for the transition.", False),
-              ("ALIGNMENT: development exists but does not correspond cleanly with the LDF transition.", False),
-              ("TIMING: development occurs after the individual has already transitioned.", False),
-              ("CONSEQUENCE: appropriate development exists but has no formal relationship with promotion or appointment.", False),
-              ("ASSURANCE: no clear mechanism establishes readiness for the next leadership level.", False),
-              ("DATA: insufficient information currently available.", False)]
+    lines += [("", False), ("PRIORITY", True),
+              ("The Officer Mandate rows at T2 and T3 decide the piece. Populate those first.", False)]
     for i, (text, bold) in enumerate(lines, 1):
         c = lg.cell(row=i, column=1, value=text)
         c.font = Font(name="Arial", size=10, bold=bold, color=GREEN if bold else "000000")
