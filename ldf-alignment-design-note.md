@@ -8,23 +8,31 @@ The first design reduced the issue to a proposition: Army deliberately links lea
 
 >! The Officer side is not simply "nothing is mandated". The link between development and the career transition runs on a spectrum, from formally mandated, through functionally required, to expected or self-selected, to unconnected. The Soldier continuum sits at the formal end for its lower transitions. The Officer continuum is strong at commissioning, weakest in the operational middle, and strong again at the top. Is that shape a conscious choice?
 
-The seven-page diagnostic and its six-category matrix remain withdrawn. The product is two pages, with a detachable third page for the current-versus-desired mapping the meeting actioned.
+The seven-page diagnostic and its six-category matrix remain withdrawn. The product is two pages. The current-versus-desired mapping the meeting actioned is held as an ALC working paper and is not part of the discussion piece: COMDT asked whether the difference is deliberate, and Army has not yet answered.
 
 ## 2. The Pages
 
+Page 1 is the product. Page 2 is the discussion. Both are built to be understood from three metres: one status per transition, and nothing on the page that explains a cell.
+
 | Page | Purpose | What is on it |
 | --- | --- | --- |
-| 1. Two continuums. One leadership framework. | Show the asymmetry on a scale, not as a binary | One visual. The LDF's seven levels as the spine. Officer continuum on the left, Soldier continuum on the right. Each box gives the development at that transition, the career linkage state (formally mandated, functionally required, expected, self-selected, unconnected) and a four-segment meter, with segments outlined where a policy check is still owed. Headline question above; the question for Army beneath. |
-| 2. The officer development gap | Show the shape of the gap, give the history, pose the challenge | The officer continuum drawn horizontally in five stages: commissioning, LT to CAPT, CAPT to MAJ, MAJ to LTCOL, senior officer. A band whose thickness is the linkage level, so the waist at CAPT to MAJ is visible. The soldier continuum at the same transitions as a strip beneath, for contrast. The statement: the issue may not be an absence of development but the absence of a consistently deliberate mechanism. A history strip. Then COMDT's question, IF YES and IF NO, no recommendation. |
-| 3. Current and desired: one page (detachable) | Answer the meeting action for a current-versus-desired mapping | One table: LDF transition, then for each continuum the rank, the course and who delivers it, the linkage now and the linkage desired. Shaded cells are the change. Beneath: what changes (the linkage written into promotion policy, ILD seats aligned to Army promotion timing, the officer window placed after unit experience) and what does not (no new courses, no new money). Tabled only if the room answers page 2 with "no". |
+| 1. Two continuums. One leadership framework. | Make the discrepancy impossible to miss | Officer continuum, common LDF spine, Soldier continuum. Every horizontal row is one LDF transition read across two career systems, and both cells sit on the same line. Each cell carries the rank transition, the course, one status (mandated, functionally required, expected, self-selected) and at most one qualifying line. Mandated cells are shaded. Headline question above; the closing line beneath. |
+| 2. Where is development deliberately linked to progression? | Show the shape, then pose the challenge | The officer continuum as a band whose thickness is the linkage level at each transition, so it narrows at CAPT to MAJ and widens again at the top. The soldier band immediately beneath as the comparator. The mechanism statement. Three short facts. Then COMDT's question, IF YES and IF NO, and stop. |
+
+Held back, as a working paper: the current-versus-desired mapping (transition, rank, course and delivery, linkage now, linkage desired). It prescribes a future state, which exceeds the tasking until Army has answered the question on page 2.
+
+Row discipline on page 1 is the rule that makes the comparison fair: OCDT to 2LT and PTE to LCPL both sit on the Lead Self to Lead Teams line because Lead Teams is embedded in NZCC and in the JNCO course respectively; if a later check moves a rank pairing, the cell moves rows rather than the row being relabelled.
+
+Evidence status (STATED 9 SEP, TO CONFIRM), course codes and delivery organisations are off the page. They live in the data register and in speaker notes.
 
 The fixed wordings:
 
 | Place | Wording |
 | --- | --- |
 | Headline, page 1 | How deliberately does Army link leadership development to progression through its Officer and Soldier promotion continuums? |
-| Question, foot of page 1 | If Army deliberately mandates leadership development for soldiers as they progress through increased leadership responsibility, why is the same principle not applied consistently to officers? |
+| Close, page 1 | Same leadership framework. Different mechanisms for ensuring development occurs. |
 | Statement, page 2 | The issue may not be an absence of leadership development. It is the absence of a consistently deliberate mechanism linking the right development to the right career transition. |
+| Facts, page 2 | Soldiers: leadership development is deliberately embedded in key promotion pathways. Officers: equivalent development exists, but its linkage to career progression varies considerably across the continuum. The question: is that difference deliberate, and if so, what is the rationale? |
 | Challenge, page 2 | Is this a conscious choice? If yes, what is the rationale for treating Officer and Soldier leadership development differently? If no, should Army establish a more consistent mechanism for ensuring development occurs before increased leadership responsibility? |
 
 ## 3. The Linkage Scale and the Shape of the Gap
@@ -41,7 +49,7 @@ The meeting made a binary comparison untenable. At the 2LT and LT to CAPT transi
 
 Read on that scale, the officer continuum has a shape. Commissioning is structured: Lead Teams is embedded in NZCC. LT to CAPT is functionally enforced but not policy-embedded. CAPT to MAJ is the weakest point: neither ELDA nor LDS Lead Systems is mandated or policed, uptake rests on inclination, and it is the transition at which scope of influence grows most, from platoon to OC. From MAJ to LTCOL participation strengthens, and at LTCOL and above it is near-universal, because those officers are selected, scrutinised and career-conscious. Dave called the middle the grey zone: the officers doing the practical enabling and leading of Army, without the same systematic training link.
 
-That is the core organisational insight, and page 2 is built on it. The problem is not soldiers developed and officers not. It is junior development, a hollow operational middle, and strong participation again at senior level. Strong participation at the top may also explain why senior leaders assume the same development is happening throughout Army.
+That is the emerging pattern, and page 2 is built on it. The problem is not soldiers developed and officers not. It is junior development, a hollow operational middle, and strong participation again at senior level. Strong participation at the top may also explain why senior leaders assume the same development is happening throughout Army. The page does not call it a gap or a finding: it shows the shape and asks whether it is deliberate.
 
 ## 4. Why the LDF Stays in the Middle
 
@@ -81,11 +89,15 @@ The facts still required are the same three for every transition on each side, a
 
 COMDT does not want an accusatory paper, and the meeting gives the history that makes one unnecessary. Intent and senior buy-in existed: AITC agreed in principle that officers should complete the development. Lead Leaders was attached to Grade 2 and 3 coursing for a two-year trial, and the additional time away from units was judged untenable. A distributed model was then preferred, leaving officers to schedule the development within their careers. Later restructuring and course redesigns proceeded without ACS at the table, so no integrated solution emerged. The Post Commissioning Programme got every junior officer through Lead Leaders, but before unit experience, which the meeting judged the wrong time.
 
-Dave's assessment near the end was that this looks like a scheduling and implementation problem under organisational tempo rather than an intentional decision to develop officers differently: when development is not formally required, it is what gets displaced. That may be the answer to COMDT's question. It is not put forward as ALC's finding. Page 2 carries it as context, marked as the assessment offered at the meeting, and leaves AITC to answer the institutional question. Both branches of the closing question are given equal weight, and no recommendation is attached.
+Dave's assessment near the end was that this looks like a scheduling and implementation problem under organisational tempo rather than an intentional decision to develop officers differently: when development is not formally required, it is what gets displaced. That may be the answer to COMDT's question. It is not put forward as ALC's finding and it is not on the page. The history and the assessment are speaker notes for whoever tables the piece, so that the room does not retread old ground, and AITC is left to answer the institutional question. Both branches of the closing question are given equal weight, and no recommendation is attached.
 
 ## 7. What Has Been Withdrawn
 
-The six-category matrix (rank, appointment, development, career linkage, timing, assurance), the gap taxonomy, and the seven-page sequence remain in the repository history as analytical scaffolding. They are not part of the briefing product. The binary MANDATED? boxes of the first two-page draft are replaced by the linkage scale.
+1. The six-category matrix, the gap taxonomy and the seven-page sequence remain in the repository history as analytical scaffolding.
+2. The binary MANDATED? boxes, the linkage meters and the evidence chips of the earlier two-page drafts. One status per cell replaces them; the evidence sits in the register.
+3. The third page. The current-versus-desired mapping is an ALC working paper, not part of the discussion piece.
+4. The claim of "no new courses and no new money". No new course needs designing, but whether guaranteed ILD seats and timing aligned to promotion carry a capacity or resource implication is not known. The working paper says so.
+5. Any labelling of the officer pattern as a gap or a finding on the page itself.
 
 ## 8. Actions From the 9 September Meeting
 
@@ -93,6 +105,6 @@ The six-category matrix (rank, appointment, development, career linkage, timing,
 | --- | --- | --- |
 | Verify whether the ILD LDS Lead Systems course is a prerequisite in the promotion-course data sheet for SSGT to WO2 | Dave | Page 1, soldier T3; register row T3-R-LINK |
 | Check officer promotion requirements in policy for leadership training mandates at each rank | Team | Page 1, officer T2 to T4; register rows T2-O-LINK to T4-O-LINK, and X1 |
-| Develop a visual mapping of the current versus desired framework, highlighting discrepancies and critical points | Team | Pages 1 to 3 |
-| Confirm timing and scheduling of the courses at each transition and their delivery mechanism | Team | Page 3, course and delivery columns; register X3 and X6 |
-| Prepare a future-state plan: progression levels, delivery agents, policy endorsements linking training to promotion | Team | Page 3, held as detachable until AITC answers page 2 |
+| Develop a visual mapping of the current versus desired framework, highlighting discrepancies and critical points | Team | Pages 1 and 2 (current); the working paper (desired) |
+| Confirm timing and scheduling of the courses at each transition and their delivery mechanism | Team | Working paper, course and delivery columns; register X3 and X6 |
+| Prepare a future-state plan: progression levels, delivery agents, policy endorsements linking training to promotion | Team | Working paper, held until AITC answers page 2 |
