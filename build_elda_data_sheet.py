@@ -367,6 +367,48 @@ def _cell_valign_top(cell):
 FIELD_COL_CM = 4.6
 
 
+def add_wide_table(rows):
+    """General table (three or more columns): dark header row, shaded first
+    column, equal widths for the remaining columns."""
+    ncols = max(len(r) for r in rows)
+    rows = [tuple(r) + ("",) * (ncols - len(r)) for r in rows]
+    table = doc.add_table(rows=len(rows), cols=ncols)
+    table.autofit = False
+    _table_borders(table, GRID_GREY, outer=WAIOURU_HILLS)
+    first = Cm(3.6)
+    rest = Cm((TEXT_WIDTH_CM - 3.6) / (ncols - 1))
+    widths = [first] + [rest] * (ncols - 1)
+    for col, width in zip(table.columns, widths):
+        col.width = width
+    for r_idx, row in enumerate(rows):
+        for c_idx, text in enumerate(row):
+            cell = table.cell(r_idx, c_idx)
+            cell.width = widths[c_idx]
+            _cell_margins(cell, top=60, bottom=60, left=100, right=100)
+            _cell_valign_top(cell)
+            p = cell.paragraphs[0]
+            p.paragraph_format.space_after = Pt(0)
+            p.paragraph_format.line_spacing = 1.12
+            if r_idx == 0:
+                _cell_shading(cell, SWAMP_GREEN)
+                add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(9),
+                              bold=True, color=RUAPEHU_WHITE)
+            elif c_idx == 0:
+                _cell_shading(cell, MOAWHANGO)
+                add_text_runs(p, text, base_font=FONT_HEAD, size=Pt(9),
+                              bold=True, color=SWAMP_GREEN)
+            else:
+                for k, part in enumerate(text.split("<br>")):
+                    if k:
+                        p.add_run().add_break()
+                    add_text_runs(p, part.strip(), size=Pt(9))
+    for row in table.rows:
+        row._tr.get_or_add_trPr().append(OxmlElement("w:cantSplit"))
+    spacer = doc.add_paragraph()
+    spacer.paragraph_format.space_after = Pt(6)
+    return table
+
+
 def add_field_table(rows):
     """Two-column table: shaded field labels on the left, entries on the
     right.  Light internal rules, top-aligned cells, generous padding."""
@@ -704,9 +746,12 @@ def render_markdown(lines):
             while i < len(lines) and lines[i].startswith("|"):
                 cells = [c.strip() for c in lines[i].strip().strip("|").split("|")]
                 if not all(set(c) <= set("-: ") for c in cells):
-                    rows.append((cells[0], cells[1] if len(cells) > 1 else ""))
+                    rows.append(tuple(cells))
                 i += 1
-            add_field_table(rows)
+            if max(len(r) for r in rows) > 2:
+                add_wide_table(rows)
+            else:
+                add_field_table([(r[0], r[1] if len(r) > 1 else "") for r in rows])
             continue
 
         if line.startswith(">> "):
