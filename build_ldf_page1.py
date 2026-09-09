@@ -404,7 +404,11 @@ def main():
                                   (spine_x, spine_w, "LEADERSHIP DEVELOPMENT FRAMEWORK", 0.6, 6.4),
                                   (sx0, sx1 - sx0, "OTHER RANK PROMOTION CONTINUUM", 1.6, 7.2)):
         pg.box(x, hy, w, 26, fill=BLACK, stroke=None, radius=3)
-        pg.spaced(x + w / 2, hy + 16.5, label, size + 0.8, WHITE, bold=True, spacing=sp, align=1)
+        if x == spine_x:
+            pg.spaced(x + w / 2, hy + 11.5, "LEADERSHIP DEVELOPMENT", 7, WHITE, bold=True, spacing=1.2, align=1)
+            pg.spaced(x + w / 2, hy + 21, "FRAMEWORK", 7, WHITE, bold=True, spacing=1.2, align=1)
+        else:
+            pg.spaced(x + w / 2, hy + 16.5, label, size + 0.8, WHITE, bold=True, spacing=sp, align=1)
 
     y = hy + 32
     bandh = 80
