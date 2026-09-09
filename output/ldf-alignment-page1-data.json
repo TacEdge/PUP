@@ -43,7 +43,7 @@
       "frm": "LEAD SELF",
       "to": "LEAD TEAMS",
       "officer": {
-        "rank": "OCDT  >  2LT",
+        "rank": "OCDT > 2LT",
         "rank_src": [
           "LEVELS",
           "MTG"
@@ -54,7 +54,7 @@
           "duration": "To confirm",
           "delivered": "To confirm",
           "embedded": "NZCC",
-          "note": "Included course within NZCC",
+          "note": null,
           "sources": [
             "MTG"
           ]
@@ -65,7 +65,7 @@
           "duration": "To confirm",
           "delivered": "NZALC",
           "embedded": "NZCC",
-          "note": "Included course within NZCC",
+          "note": null,
           "sources": [
             "LDS",
             "MTG"
@@ -73,7 +73,7 @@
         }
       },
       "soldier": {
-        "rank": "PTE  >  LCPL",
+        "rank": "PTE > LCPL",
         "rank_src": [
           "LEVELS",
           "MTG"
@@ -84,7 +84,7 @@
           "duration": "6 training days",
           "delivered": "NZALC",
           "embedded": "JNCO Course (A1530)",
-          "note": "Included course within A1530",
+          "note": null,
           "sources": [
             "CDS",
             "MTG"
@@ -96,7 +96,7 @@
           "duration": "To confirm",
           "delivered": "To confirm",
           "embedded": "JNCO Course (A1530)",
-          "note": "Sequenced after ELDA Lead Teams",
+          "note": null,
           "sources": [
             "LDS",
             "CDS",
@@ -110,7 +110,7 @@
       "frm": "LEAD TEAMS",
       "to": "LEAD LEADERS",
       "officer": {
-        "rank": "2LT / LT  >  CAPT",
+        "rank": "2LT / LT > CAPT",
         "rank_src": [
           "LEVELS",
           "MTG"
@@ -121,7 +121,7 @@
           "duration": "6 training days",
           "delivered": "NZALC",
           "embedded": null,
-          "note": "Routinely enforced in practice",
+          "note": "Enforced in practice",
           "sources": [
             "CDS",
             "MTG"
@@ -133,7 +133,7 @@
           "duration": "To confirm",
           "delivered": "To confirm",
           "embedded": null,
-          "note": "Routinely enforced in practice",
+          "note": "Enforced in practice",
           "sources": [
             "LDS",
             "CDS",
@@ -143,7 +143,7 @@
         }
       },
       "soldier": {
-        "rank": "CPL  >  SGT",
+        "rank": "CPL > SGT",
         "rank_src": [
           "LEVELS",
           "MTG"
@@ -154,7 +154,7 @@
           "duration": "6 training days",
           "delivered": "NZALC",
           "embedded": "SNCO Course (A1531)",
-          "note": "In promotion policy",
+          "note": null,
           "sources": [
             "CDS",
             "MTG"
@@ -166,7 +166,7 @@
           "duration": "To confirm",
           "delivered": "To confirm",
           "embedded": "SNCO Course (A1531)",
-          "note": "In promotion policy",
+          "note": null,
           "sources": [
             "LDS",
             "CDS",
@@ -181,7 +181,7 @@
       "frm": "LEAD LEADERS",
       "to": "LEAD SYSTEMS",
       "officer": {
-        "rank": "CAPT  >  MAJ",
+        "rank": "CAPT > MAJ",
         "rank_src": [
           "LEVELS",
           "MTG"
@@ -192,7 +192,7 @@
           "duration": "7 training days",
           "delivered": "NZALC",
           "embedded": null,
-          "note": "Attendance self-selected",
+          "note": "Self-selected",
           "sources": [
             "CDS",
             "MTG"
@@ -204,7 +204,7 @@
           "duration": "To confirm",
           "delivered": "ILD",
           "embedded": null,
-          "note": "Attendance self-selected",
+          "note": "Self-selected",
           "sources": [
             "LDS",
             "MTG"
@@ -212,7 +212,7 @@
         }
       },
       "soldier": {
-        "rank": "SSGT  >  WO2",
+        "rank": "SSGT > WO2",
         "rank_src": [
           "LEVELS",
           "MTG"
@@ -223,7 +223,7 @@
           "duration": "7 training days",
           "delivered": "NZALC",
           "embedded": "WO Course (A1532)",
-          "note": "Included in WO Course",
+          "note": null,
           "sources": [
             "CDS",
             "MTG"
@@ -235,7 +235,7 @@
           "duration": "To confirm",
           "delivered": "ILD",
           "embedded": null,
-          "note": "Prerequisite status: check WO Course CDS",
+          "note": "Check WO Course CDS",
           "sources": [
             "LDS",
             "MTG"
@@ -248,7 +248,7 @@
       "frm": "LEAD SYSTEMS",
       "to": "LEAD CAPABILITY",
       "officer": {
-        "rank": "MAJ  >  LTCOL",
+        "rank": "MAJ > LTCOL",
         "rank_src": [
           "LEVELS",
           "MTG"
@@ -271,7 +271,7 @@
           "duration": "To confirm",
           "delivered": "ILD",
           "embedded": null,
-          "note": "High observed uptake",
+          "note": null,
           "sources": [
             "LDS",
             "MTG"
@@ -279,7 +279,7 @@
         }
       },
       "soldier": {
-        "rank": "WO2  >  WO1",
+        "rank": "WO2 > WO1",
         "rank_src": [
           "LEVELS",
           "MTG"
@@ -302,7 +302,7 @@
           "duration": "To confirm",
           "delivered": "ILD",
           "embedded": null,
-          "note": "Expected in practice; policy to check",
+          "note": null,
           "sources": [
             "LDS",
             "MTG"
@@ -315,7 +315,7 @@
       "frm": "LEAD CAPABILITY",
       "to": "LEAD INTEGRATED CAPABILITY",
       "officer": {
-        "rank": "LTCOL  >  COL",
+        "rank": "LTCOL > COL",
         "rank_src": [
           "LEVELS",
           "MTG"
@@ -326,7 +326,7 @@
           "duration": "1 week",
           "delivered": "ILD",
           "embedded": "LDS LIC Course",
-          "note": "Activity support from NZALC or Navy",
+          "note": null,
           "sources": [
             "MTG"
           ]
@@ -337,7 +337,7 @@
           "duration": "1 week",
           "delivered": "ILD",
           "embedded": null,
-          "note": "Full attendance observed",
+          "note": null,
           "sources": [
             "LDS",
             "MTG"
@@ -345,7 +345,7 @@
         }
       },
       "soldier": {
-        "rank": "Tier 5 WO  >  Tier 4 WO",
+        "rank": "Tier 5 WO > Tier 4 WO",
         "rank_src": [
           "LEVELS"
         ],
@@ -355,7 +355,7 @@
           "duration": "1 week",
           "delivered": "ILD",
           "embedded": "LDS LIC Course",
-          "note": "Activity support from NZALC or Navy",
+          "note": null,
           "sources": [
             "MTG"
           ]
@@ -366,7 +366,7 @@
           "duration": "1 week",
           "delivered": "ILD",
           "embedded": null,
-          "note": "Full attendance observed",
+          "note": null,
           "sources": [
             "LDS",
             "MTG"
@@ -379,7 +379,7 @@
       "frm": "LEAD INTEGRATED CAPABILITY",
       "to": "LEAD ORGANISATION",
       "officer": {
-        "rank": "COL  >  BRIG+",
+        "rank": "COL > BRIG+",
         "rank_src": [
           "LEVELS",
           "MTG"
@@ -390,7 +390,7 @@
           "duration": "To confirm",
           "delivered": "To confirm",
           "embedded": "Lead Organisation Course",
-          "note": "Externally facilitated",
+          "note": null,
           "sources": [
             "MTG"
           ]
@@ -401,7 +401,7 @@
           "duration": "To confirm",
           "delivered": "ILD",
           "embedded": null,
-          "note": "Full attendance observed",
+          "note": null,
           "sources": [
             "LDS",
             "MTG"
@@ -409,7 +409,7 @@
         }
       },
       "soldier": {
-        "rank": "Tier 4 WO  >  Tier 3 WO+",
+        "rank": "Tier 4 WO > Tier 3 WO+",
         "rank_src": [
           "LEVELS"
         ],
@@ -419,7 +419,7 @@
           "duration": "To confirm",
           "delivered": "To confirm",
           "embedded": "Lead Organisation Course",
-          "note": "Externally facilitated",
+          "note": null,
           "sources": [
             "MTG"
           ]
@@ -430,7 +430,7 @@
           "duration": "To confirm",
           "delivered": "ILD",
           "embedded": null,
-          "note": "Full attendance observed",
+          "note": null,
           "sources": [
             "LDS",
             "MTG"

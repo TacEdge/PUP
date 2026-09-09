@@ -202,12 +202,18 @@ def badge(page, cx, cy, radius, level_index, color, fill=(1, 1, 1), ring=True):
     fonts 'Arial' and 'Arial-Bold' registered."""
     sh = page.new_shape()
     sh.draw_circle((cx, cy), radius)
-    sh.finish(color=color if ring else None, fill=fill, width=max(0.7, radius * 0.07))
+    sh.finish(color=None, fill=fill)
     sh.commit()
     if level_index in RASTER and os.path.exists(RASTER[level_index][0]):
         path, frac = RASTER[level_index]
         half = radius / frac                       # image half-width so the disc matches the badge
         page.insert_image(pymupdf.Rect(cx - half, cy - half, cx + half, cy + half), filename=path)
-        return
-    sh = page.new_shape()
-    ICONS[level_index](page, sh, cx, cy, radius * SCALE[level_index], color, fill)
+    else:
+        sh = page.new_shape()
+        ICONS[level_index](page, sh, cx, cy, radius * SCALE[level_index], color, fill)
+    if ring:
+        # the poster's ring, drawn last so it covers the cut edge of a raster glyph
+        sh = page.new_shape()
+        sh.draw_circle((cx, cy), radius * 0.96)
+        sh.finish(color=color, fill=None, width=max(0.8, radius * 0.1))
+        sh.commit()

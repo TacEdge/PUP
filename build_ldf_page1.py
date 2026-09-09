@@ -38,11 +38,16 @@ SOURCES = {
     "AMEND": "Marked-up amendments to page 1, 9 Sep 2026: ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice",
 }
 
-TITLE = "Two continuums. One leadership development framework."
+TITLE = "Two promotion continuums. One leadership development framework."
 SUBTITLE = "How do Officer and Other Rank promotion continuums align to the intent and design of the LDF?"
-CLOSE = "Same leadership framework. Different mechanisms for ensuring development occurs."
-CAVEAT = ("Rank pairings place the two continuums against the same LDF transitions for comparison; "
-          "they do not assert that rank itself defines an LDF level.")
+OBSERVATION = [
+    "Other Rank leadership development appears deliberately embedded within key promotion pathways.",
+    "Equivalent officer leadership development exists at comparable LDF transitions, but its formal linkage to promotion varies across the continuum.",
+]
+OBSERVATION_CAVEAT = "An observation from the mapping, not yet a policy conclusion."
+STATUS_MEANING = {"Mandated": "promotion prerequisite or embedded requirement",
+                  "Not mandated": "development available but not required",
+                  "To confirm": "policy position not yet verified"}
 
 TC = "To confirm"
 
@@ -72,82 +77,82 @@ NO_ELDA = dict(course=None, mandate=None, duration=None, delivered=None, embedde
 DATA = [
     dict(transition="T1", frm="LEAD SELF", to="LEAD TEAMS",
          officer=dict(
-             rank="OCDT  >  2LT", rank_src=["LEVELS", "MTG"],
+             rank="OCDT > 2LT", rank_src=["LEVELS", "MTG"],
              elda=course("ELDA Lead Teams", "Mandated", TC, TC, embedded="NZCC",
-                         note="Included course within NZCC", src=["MTG"]),
+                         note=None, src=["MTG"]),
              lds=course("LDS Lead Teams", "Mandated", TC, "NZALC", embedded="NZCC",
-                        note="Included course within NZCC", src=["LDS", "MTG"])),
+                        note=None, src=["LDS", "MTG"])),
          soldier=dict(
-             rank="PTE  >  LCPL", rank_src=["LEVELS", "MTG"],
+             rank="PTE > LCPL", rank_src=["LEVELS", "MTG"],
              elda=course("ELDA Lead Teams", "Mandated", "6 training days", "NZALC", embedded="JNCO Course (A1530)",
-                         note="Included course within A1530", src=["CDS", "MTG"]),
+                         note=None, src=["CDS", "MTG"]),
              lds=course("LDS Lead Teams", "Mandated", TC, TC, embedded="JNCO Course (A1530)",
-                        note="Sequenced after ELDA Lead Teams", src=["LDS", "CDS", "AMEND"]))),
+                        note=None, src=["LDS", "CDS", "AMEND"]))),
     dict(transition="T2", frm="LEAD TEAMS", to="LEAD LEADERS",
          officer=dict(
-             rank="2LT / LT  >  CAPT", rank_src=["LEVELS", "MTG"],
+             rank="2LT / LT > CAPT", rank_src=["LEVELS", "MTG"],
              elda=course("ELDA Lead Leaders", "Not mandated", "6 training days", "NZALC",
-                         note="Routinely enforced in practice", src=["CDS", "MTG"]),
+                         note='Enforced in practice', src=["CDS", "MTG"]),
              lds=course("LDS Lead Leaders", "Not mandated", TC, TC,
-                        note="Routinely enforced in practice", src=["LDS", "CDS", "MTG", "AMEND"])),
+                        note='Enforced in practice', src=["LDS", "CDS", "MTG", "AMEND"])),
          soldier=dict(
-             rank="CPL  >  SGT", rank_src=["LEVELS", "MTG"],
+             rank="CPL > SGT", rank_src=["LEVELS", "MTG"],
              elda=course("ELDA Lead Leaders", "Mandated", "6 training days", "NZALC", embedded="SNCO Course (A1531)",
-                         note="In promotion policy", src=["CDS", "MTG"]),
+                         note=None, src=["CDS", "MTG"]),
              lds=course("LDS Lead Leaders", "Mandated", TC, TC, embedded="SNCO Course (A1531)",
-                        note="In promotion policy", src=["LDS", "CDS", "MTG", "AMEND"]))),
+                        note=None, src=["LDS", "CDS", "MTG", "AMEND"]))),
     dict(transition="T3", frm="LEAD LEADERS", to="LEAD SYSTEMS",
          officer=dict(
-             rank="CAPT  >  MAJ", rank_src=["LEVELS", "MTG"],
+             rank="CAPT > MAJ", rank_src=["LEVELS", "MTG"],
              elda=course("ELDA Lead Systems", "Not mandated", "7 training days", "NZALC",
-                         note="Attendance self-selected", src=["CDS", "MTG"]),
+                         note='Self-selected', src=["CDS", "MTG"]),
              lds=course("LDS Lead Systems", "Not mandated", TC, "ILD",
-                        note="Attendance self-selected", src=["LDS", "MTG"])),
+                        note='Self-selected', src=["LDS", "MTG"])),
          soldier=dict(
-             rank="SSGT  >  WO2", rank_src=["LEVELS", "MTG"],
+             rank="SSGT > WO2", rank_src=["LEVELS", "MTG"],
              elda=course("ELDA Lead Systems", "Mandated", "7 training days", "NZALC", embedded="WO Course (A1532)",
-                         note="Included in WO Course", src=["CDS", "MTG"]),
+                         note=None, src=["CDS", "MTG"]),
              lds=course("LDS Lead Systems", TC, TC, "ILD",
-                        note="Prerequisite status: check WO Course CDS", src=["LDS", "MTG"]))),
+                        note='Check WO Course CDS', src=["LDS", "MTG"]))),
     dict(transition="T4", frm="LEAD SYSTEMS", to="LEAD CAPABILITY",
          officer=dict(
-             rank="MAJ  >  LTCOL", rank_src=["LEVELS", "MTG"],
+             rank="MAJ > LTCOL", rank_src=["LEVELS", "MTG"],
              elda=course("ELDA Command", "Not mandated", "7 training days", "NZALC",
                          note="On request", src=["CDS", "AMEND"]),
              lds=course("LDS Lead Capability", TC, TC, "ILD",
-                        note="High observed uptake", src=["LDS", "MTG"])),
+                        note=None, src=["LDS", "MTG"])),
          soldier=dict(
-             rank="WO2  >  WO1", rank_src=["LEVELS", "MTG"],
+             rank="WO2 > WO1", rank_src=["LEVELS", "MTG"],
              elda=course("ELDA Command", "Not mandated", "7 training days", "NZALC",
                          note="On request", src=["CDS", "AMEND"]),
              lds=course("LDS Lead Capability", TC, TC, "ILD",
-                        note="Expected in practice; policy to check", src=["LDS", "MTG"]))),
+                        note=None, src=["LDS", "MTG"]))),
     dict(transition="T5", frm="LEAD CAPABILITY", to="LEAD INTEGRATED CAPABILITY",
          officer=dict(
-             rank="LTCOL  >  COL", rank_src=["LEVELS", "MTG"],
+             rank="LTCOL > COL", rank_src=["LEVELS", "MTG"],
              elda=course("ELDA component", TC, "1 week", "ILD",
-                         embedded="LDS LIC Course", note="Activity support from NZALC or Navy", src=["MTG"]),
+                         embedded="LDS LIC Course", note=None, src=["MTG"]),
              lds=course("LDS Lead Integrated Capability", TC, "1 week", "ILD",
-                        note="Full attendance observed", src=["LDS", "MTG"])),
+                        note=None, src=["LDS", "MTG"])),
          soldier=dict(
-             rank="Tier 5 WO  >  Tier 4 WO", rank_src=["LEVELS"],
+             rank="Tier 5 WO > Tier 4 WO", rank_src=["LEVELS"],
              elda=course("ELDA component", TC, "1 week", "ILD",
-                         embedded="LDS LIC Course", note="Activity support from NZALC or Navy", src=["MTG"]),
+                         embedded="LDS LIC Course", note=None, src=["MTG"]),
              lds=course("LDS Lead Integrated Capability", TC, "1 week", "ILD",
-                        note="Full attendance observed", src=["LDS", "MTG"]))),
+                        note=None, src=["LDS", "MTG"]))),
     dict(transition="T6", frm="LEAD INTEGRATED CAPABILITY", to="LEAD ORGANISATION",
          officer=dict(
-             rank="COL  >  BRIG+", rank_src=["LEVELS", "MTG"],
+             rank="COL > BRIG+", rank_src=["LEVELS", "MTG"],
              elda=course("ELDA component", TC, TC, TC,
-                         embedded="Lead Organisation Course", note="Externally facilitated", src=["MTG"]),
+                         embedded="Lead Organisation Course", note=None, src=["MTG"]),
              lds=course("LDS Lead Organisation", TC, TC, "ILD",
-                        note="Full attendance observed", src=["LDS", "MTG"])),
+                        note=None, src=["LDS", "MTG"])),
          soldier=dict(
-             rank="Tier 4 WO  >  Tier 3 WO+", rank_src=["LEVELS"],
+             rank="Tier 4 WO > Tier 3 WO+", rank_src=["LEVELS"],
              elda=course("ELDA component", TC, TC, TC,
-                         embedded="Lead Organisation Course", note="Externally facilitated", src=["MTG"]),
+                         embedded="Lead Organisation Course", note=None, src=["MTG"]),
              lds=course("LDS Lead Organisation", TC, TC, "ILD",
-                        note="Full attendance observed", src=["LDS", "MTG"]))),
+                        note=None, src=["LDS", "MTG"]))),
 ]
 
 # ------------------------------------------------------------------ drawing
@@ -277,41 +282,44 @@ def letterhead(pg):
 
 
 def field(pg, x, y, label, value, value_color=INK, bold=False):
-    pg.spaced(x, y, label, 5.6, MID, bold=True, spacing=0.9)
-    lw = pg.width(label, 5.6, True) + len(label) * 0.9 + 6
-    pg.text(x + lw, y, value, 7.6, value_color, bold=bold)
+    pg.spaced(x, y, label, 5.4, MID, bold=True, spacing=0.9)
+    lw = pg.width(label, 5.4, True) + len(label) * 0.9 + 6
+    pg.text(x + lw, y, value, 7.4, value_color, bold=bold)
+    return lw + pg.width(value, 7.4, bold)
 
 
 def course_card(pg, x, y, w, h, c):
+    """A capability card: name, mandate as the hero, one row of facts."""
     if c["course"] is None:
         pg.box(x, y, w, h, fill=WHITE, stroke=GRID, dashes="[2 2] 0", radius=3)
         pg.text(x + w / 2, y + h / 2 + 2.5, c["note"], 7.2, MID, align=1)
         return
+    fill, col = STATUS_STYLE[c["mandate"]]
     pg.box(x, y, w, h, fill=CARD, stroke=GRID, radius=3)
-    pg.text(x + 9, y + 11.5, c["course"], 9, BLACK, bold=True)
-    if c["note"]:
-        nx = x + 9 + pg.width(c["course"], 9, True) + 8
-        pg.text(nx, y + 11.5, c["note"], 6.6, MID)
-    pg.pill(x + w - 7, y + 3.5, c["mandate"], right=True)
-    fx, fy = x + 9, y + 23.5
-    field(pg, fx, fy, "DURATION", c["duration"], MID if c["duration"] == TC else INK)
-    fx += 106
+    pg.box(x, y + 3, 3.5, h - 6, fill=col, stroke=None)                     # status accent bar
+    pg.spaced(x + 12, y + 14, c["course"].upper(), 8.2, BLACK, bold=True, spacing=0.5)
+    pw = pg.width(c["mandate"].upper(), 8, True) + 18
+    pg.box(x + w - 8 - pw, y + 6, pw, 16, fill=fill, stroke=None, radius=3)
+    pg.text(x + w - 8 - pw / 2, y + 17.5, c["mandate"].upper(), 8, col, bold=True, align=1)
+    fx, fy = x + 12, y + 30
+    fx += field(pg, fx, fy, "DURATION", c["duration"], MID if c["duration"] == TC else INK) + 14
     dcol = DELIVERY_STYLE.get(c["delivered"], MID if c["delivered"] == TC else INK)
-    field(pg, fx, fy, "DELIVERED", c["delivered"], dcol, bold=c["delivered"] in DELIVERY_STYLE)
+    fx += field(pg, fx, fy, "DELIVERY", c["delivered"], dcol, bold=c["delivered"] in DELIVERY_STYLE) + 14
     if c["embedded"]:
-        fx += 92
         field(pg, fx, fy, "EMBEDDED", c["embedded"], MID if c["embedded"] == TC else INK)
+    if c["note"]:
+        pg.text(x + w - 8, fy, c["note"], 6.2, MID, align=2)
 
 
 def rank_card(pg, x, y, w, h, rank):
-    pg.box(x, y, w, h, fill=WHITE, stroke=SWAMP, width=1.1, radius=3)
-    lines = [s.strip() for s in rank.split(">")]
-    if len(lines) == 2:
-        pg.text(x + w / 2, y + h / 2 - 7, lines[0], 10, BLACK, bold=True, align=1)
-        pg.text(x + w / 2, y + h / 2 + 1.5, "to", 6.5, MID, align=1)
-        pg.text(x + w / 2, y + h / 2 + 12, lines[1], 10, BLACK, bold=True, align=1)
+    pg.box(x, y, w, h, fill=WHITE, stroke=BLACK, width=1.1, radius=3)
+    parts = [t.strip() for t in rank.split(">")]
+    if len(parts) == 2:
+        pg.text(x + w / 2, y + h / 2 - 8, parts[0], 10.5, BLACK, bold=True, align=1)
+        pg.text(x + w / 2, y + h / 2 + 2, "\u2193", 10, GOLD, bold=True, align=1)
+        pg.text(x + w / 2, y + h / 2 + 13, parts[1], 10.5, BLACK, bold=True, align=1)
     else:
-        pg.text(x + w / 2, y + h / 2 + 4, lines[0], 10.5, BLACK, bold=True, align=1)
+        pg.text(x + w / 2, y + h / 2 + 4, parts[0], 10.5, BLACK, bold=True, align=1)
 
 
 def side_rows(pg, data_key, x0, x1, y0, band_h, bandh, mirror):
@@ -325,9 +333,26 @@ def side_rows(pg, data_key, x0, x1, y0, band_h, bandh, mirror):
         y = y0 + i * bandh
         s = t[data_key]
         rank_card(pg, rx, y, rw, band_h, s["rank"])
-        ch = (band_h - 6) / 2
+        ch = (band_h - 5) / 2
         course_card(pg, cx, y, cw, ch, s["elda"])
-        course_card(pg, cx, y + ch + 6, cw, ch, s["lds"])
+        course_card(pg, cx, y + ch + 5, cw, ch, s["lds"])
+
+
+def transition_block(pg, x, y, w, h, n, level_index, name, desc):
+    """The unit of analysis: one LDF transition, shown as the level it enters."""
+    pg.box(x, y, w, h, fill=BLACK, stroke=None, radius=3)
+    br = 16
+    ldf_icons.badge(pg.p, x + 8 + br, y + h / 2, br, level_index, BLACK, WHITE, ring=True)
+    tw = w - 8 - 2 * br
+    tx = x + 8 + 2 * br + tw / 2
+    cy = y + h / 2
+    pg.spaced(tx, cy - 12, f"TRANSITION {n}", 6, GOLD, bold=True, spacing=1.6, align=1)
+    size = 9.5
+    while pg.width(name, size, True) > tw - 10 and size > 7:
+        size -= 0.25
+    pg.text(tx, cy + 5, name, size, WHITE, bold=True, align=1)
+    pg.textbox(x + 8 + 2 * br + 2, cy + 10, tw - 6, 30, desc, 6.4, GRID, align=1, lh=1.2)
+
 
 
 def main():
@@ -341,36 +366,67 @@ def main():
     sx0, sx1 = spine_x + spine_w + side_gap, W - M
 
     hy = 140
-    for x, w, label, sp in ((ox0, ox1 - ox0, "OFFICER CONTINUUM", 1.6),
-                            (spine_x, spine_w, "LEADERSHIP DEVELOPMENT FRAMEWORK", 0.7),
-                            (sx0, sx1 - sx0, "SOLDIER CONTINUUM", 1.6)):
-        pg.box(x, hy, w, 18, fill=SWAMP, stroke=None, radius=3)
-        pg.spaced(x + w / 2, hy + 12.5, label, 7.2, WHITE, bold=True, spacing=sp, align=1)
+    for x, w, label, fill in ((ox0, ox1 - ox0, "OFFICER PROMOTION CONTINUUM", SWAMP),
+                              (spine_x, spine_w, "LEADERSHIP DEVELOPMENT FRAMEWORK", BLACK),
+                              (sx0, sx1 - sx0, "OTHER RANK PROMOTION CONTINUUM", SWAMP)):
+        pg.box(x, hy, w, 18, fill=fill, stroke=None, radius=3)
+        pg.spaced(x + w / 2, hy + 12.5, label, 7.2 if fill is SWAMP else 6.4, WHITE, bold=True,
+                  spacing=0.6 if fill is BLACK else 1.6, align=1)
 
-    top, bandh, lvl_h = 168, 100, 34
-    band_h = bandh - lvl_h - 6
-    badge_r = 14
-    for i, (name, desc) in enumerate(LEVELS):
+    # entry state: Lead Self, before the first transition
+    ey = hy + 26
+    pg.box(spine_x, ey, spine_w, 20, fill=BLACK, stroke=None, radius=3)
+    ldf_icons.badge(pg.p, spine_x + 8 + 8, ey + 10, 8, 0, BLACK, WHITE, ring=True)
+    pg.spaced(spine_x + 30, ey + 13, "ENTRY", 5.4, GOLD, bold=True, spacing=1.4)
+    pg.text(spine_x + 62, ey + 13.5, "LEAD SELF", 7.5, WHITE, bold=True)
+    pg.text(spine_x + spine_w - 8, ey + 13.5, LEVELS[0][1], 6, GRID, align=2)
+
+    top, bandh = ey + 30, 90
+    band_h = bandh - 6
+    for i in range(6):
         y = top + i * bandh
-        # the poster's block language and palette: black block, white badge, black glyph, gold LEAD, white name
-        pg.box(spine_x, y, spine_w, lvl_h, fill=BLACK, stroke=None, radius=3)
-        ldf_icons.badge(pg.p, spine_x + 5 + badge_r, y + lvl_h / 2, badge_r, i, BLACK, WHITE, ring=False)
-        tx = spine_x + 5 + 2 * badge_r + (spine_w - 5 - 2 * badge_r) / 2
-        lead, rest = name.split(" ", 1)
-        pg.spaced(tx, y + 10, lead, 5.6, GOLD, bold=False, spacing=1.4, align=1)
-        pg.text(tx, y + 20, rest, 7.6, WHITE, bold=True, align=1)
-        pg.text(tx, y + 29, desc, 5.8, GRID, align=1)
-        if i < 6:
-            by = y + lvl_h + 4
-            mid = by + band_h / 2
-            pg.line(M, mid, W - M, mid, GRID, dashes="[1 3] 0")
-            pg.arrow(W / 2, y + lvl_h + 2, W / 2, y + bandh - 2)
-            pg.text(W / 2 + 9, mid + 3, f"T{i + 1}", 7, MID, bold=True)
-    y0 = top + lvl_h + 4
-    side_rows(pg, "officer", ox0, ox1, y0, band_h, bandh, mirror=False)
-    side_rows(pg, "soldier", sx0, sx1, y0, band_h, bandh, mirror=True)
+        name, desc = LEVELS[i + 1]
+        transition_block(pg, spine_x, y, spine_w, band_h, i + 1, i + 1, name, desc)
+        mid = y + band_h / 2
+        pg.line(ox0, mid, ox1, mid, GRID, dashes="[1 3] 0")
+        pg.line(sx0, mid, sx1, mid, GRID, dashes="[1 3] 0")
+        if i < 5:
+            pg.arrow(W / 2, y + band_h, W / 2, y + bandh - 1)
+    side_rows(pg, "officer", ox0, ox1, top, band_h, bandh, mirror=False)
+    side_rows(pg, "soldier", sx0, sx1, top, band_h, bandh, mirror=True)
 
-    doc.set_metadata({"title": "Officer and Soldier Leadership Development: Page 1",
+    # legend
+    ly = top + 6 * bandh + 2
+    lx = M
+    pg.spaced(lx, ly + 9, "READ THIS PAGE LEFT TO RIGHT", 5.6, INK, bold=True, spacing=1.2)
+    lx += 150
+    for st in ("Mandated", "Not mandated", TC):
+        fill, col = STATUS_STYLE[st]
+        pg.box(lx, ly + 1, 9, 9, fill=fill, stroke=None, radius=2)
+        pg.text(lx + 13, ly + 9, st, 6.6, col, bold=True)
+        lx += pg.width(st, 6.6, True) + 16
+        pg.text(lx, ly + 9, STATUS_MEANING[st], 6.2, MID)
+        lx += pg.width(STATUS_MEANING[st], 6.2) + 18
+    lx += 8
+    pg.text(lx, ly + 9, "NZALC", 6.6, SWAMP, bold=True)
+    lx += pg.width("NZALC", 6.6, True) + 3
+    pg.text(lx, ly + 9, "delivered", 6.2, MID)
+    lx += pg.width("delivered", 6.2) + 14
+    pg.text(lx, ly + 9, "ILD", 6.6, GOLD, bold=True)
+    lx += pg.width("ILD", 6.6, True) + 3
+    pg.text(lx, ly + 9, "delivered (Institute for Leader Development, tri-Service)", 6.2, MID)
+
+    # emerging observation
+    oy = ly + 18
+    oh = 46
+    pg.box(M, oy, W - 2 * M, oh, fill=PALE, stroke=None, radius=3)
+    pg.box(M, oy + 4, 3.5, oh - 8, fill=SWAMP, stroke=None)
+    pg.spaced(M + 14, oy + 13, "EMERGING OBSERVATION", 6.2, SWAMP, bold=True, spacing=1.6)
+    pg.text(M + 14, oy + 26, OBSERVATION[0], 8, BLACK)
+    pg.text(M + 14, oy + 37.5, OBSERVATION[1], 8, BLACK)
+    pg.text(W - M - 10, oy + 13, OBSERVATION_CAVEAT, 6.4, MID, align=2)
+
+    doc.set_metadata({"title": "Officer and Other Rank Leadership Development: Page 1",
                       "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
     with open(OUT_DATA, "w", encoding="utf-8") as fh:
