@@ -26,6 +26,7 @@ import pymupdf
 RASTER = {
     3: ("./assets/ldf-icon-lead-systems.png", 0.965),
     5: ("./assets/ldf-icon-lead-integrated-capability.png", 0.965),
+    6: ("./assets/ldf-icon-lead-organisation.png", 0.965),
 }
 
 
