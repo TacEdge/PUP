@@ -37,7 +37,7 @@ SOURCES = {
     "MTG": "NZALC review of 9 Sep 2026 (transcript): mandate position and delivery practice as stated by ACS staff",
     "LDFENV": "NZDF Leadership Framework v2, The Leadership Environments and Tone, Climate, Culture: Foundational / Paparahi (Lead Self, Lead Teams, Lead Leaders), Operational / Paheko (Lead Systems, Lead Capability), Strategic / Rautaki (Lead Integrated Capability, Lead Organisation)",
     "LSW": "Lead Self Workbook (TAD) 2026: LDS Lead Self forms part of the LDS and is designed for Regular Force personnel enlisting into the NZDF",
-    "AMEND": "Amendments from ACS (ALC), 9 and 10 Sep 2026: LDS Lead Capability is not mandated for promotion to WO1; Lead Integrated Capability is one 11-day course; Lead Organisation is three courses, Phase One (5 days), Phase Two (5 days) and Phase Three (2 days); ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice; at Lead Integrated Capability and Lead Organisation both Officers and Other Ranks are selected to attend",
+    "AMEND": "Amendments from ACS (ALC), 9 and 10 Sep 2026: LDS Lead Systems is mandated for promotion to WO2; LDS Lead Capability is not mandated for promotion to WO1; Lead Integrated Capability is one 11-day course; Lead Organisation is three courses, Phase One (5 days), Phase Two (5 days) and Phase Three (2 days); ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice; at Lead Integrated Capability and Lead Organisation both Officers and Other Ranks are selected to attend",
 }
 
 TITLE = "Two promotion continuums. One leadership development framework."
@@ -130,8 +130,8 @@ DATA = [
              rank="SSGT > WO2", rank_src=["LEVELS", "MTG"],
              courses=[course("ELDA Lead Systems", "Mandated", "7 training days", "NZALC", embedded="WO Course (A1532)",
                          note=None, src=["CDS", "MTG"]),
-                      course("LDS Lead Systems", TC, "5 days", "ILD",
-                        note="Check WO Course CDS", src=["LDS", "MTG", "AMEND"])])),
+                      course("LDS Lead Systems", "Mandated", "5 days", "ILD", embedded="WO Course (A1532)",
+                        note=None, src=["LDS", "MTG", "AMEND"])])),
     dict(transition="T4", frm="LEAD SYSTEMS", to="LEAD CAPABILITY",
          officer=dict(
              rank="MAJ > LTCOL", rank_src=["LEVELS", "MTG"],
