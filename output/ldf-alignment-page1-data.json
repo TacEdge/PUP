@@ -5,7 +5,7 @@
     "LEVELS": "NZDF Leadership Levels poster: rank to transition alignment (stated by the poster to be an estimation)",
     "CDS": "NZALC course data sheets A18011, A18008, A18010: duration, provider, target learners, prerequisites, included courses",
     "MTG": "NZALC review of 9 Sep 2026 (transcript): mandate position and delivery practice as stated by ACS staff",
-    "AMEND": "Marked-up amendments to page 1, 9 Sep 2026: ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice"
+    "AMEND": "Amendments from ACS (ALC), 9 Sep 2026: ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice; at Lead Integrated Capability and Lead Organisation both Officers and Other Ranks are selected to attend"
   },
   "levels": [
     [
@@ -322,18 +322,19 @@
         ],
         "elda": {
           "course": "ELDA component",
-          "mandate": "To confirm",
+          "mandate": "Selected",
           "duration": "1 week",
           "delivered": "ILD",
           "embedded": "LDS LIC Course",
           "note": null,
           "sources": [
-            "MTG"
+            "MTG",
+            "AMEND"
           ]
         },
         "lds": {
           "course": "LDS Lead Integrated Capability",
-          "mandate": "To confirm",
+          "mandate": "Selected",
           "duration": "1 week",
           "delivered": "ILD",
           "embedded": null,
@@ -351,18 +352,19 @@
         ],
         "elda": {
           "course": "ELDA component",
-          "mandate": "To confirm",
+          "mandate": "Selected",
           "duration": "1 week",
           "delivered": "ILD",
           "embedded": "LDS LIC Course",
           "note": null,
           "sources": [
-            "MTG"
+            "MTG",
+            "AMEND"
           ]
         },
         "lds": {
           "course": "LDS Lead Integrated Capability",
-          "mandate": "To confirm",
+          "mandate": "Selected",
           "duration": "1 week",
           "delivered": "ILD",
           "embedded": null,
@@ -386,7 +388,7 @@
         ],
         "elda": {
           "course": "ELDA component",
-          "mandate": "To confirm",
+          "mandate": "Selected",
           "duration": "To confirm",
           "delivered": "To confirm",
           "embedded": "Lead Organisation Course",
@@ -397,7 +399,7 @@
         },
         "lds": {
           "course": "LDS Lead Organisation",
-          "mandate": "To confirm",
+          "mandate": "Selected",
           "duration": "To confirm",
           "delivered": "ILD",
           "embedded": null,
@@ -415,7 +417,7 @@
         ],
         "elda": {
           "course": "ELDA component",
-          "mandate": "To confirm",
+          "mandate": "Selected",
           "duration": "To confirm",
           "delivered": "To confirm",
           "embedded": "Lead Organisation Course",
@@ -426,7 +428,7 @@
         },
         "lds": {
           "course": "LDS Lead Organisation",
-          "mandate": "To confirm",
+          "mandate": "Selected",
           "duration": "To confirm",
           "delivered": "ILD",
           "embedded": null,

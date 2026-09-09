@@ -35,7 +35,7 @@ SOURCES = {
     "LEVELS": "NZDF Leadership Levels poster: rank to transition alignment (stated by the poster to be an estimation)",
     "CDS": "NZALC course data sheets A18011, A18008, A18010: duration, provider, target learners, prerequisites, included courses",
     "MTG": "NZALC review of 9 Sep 2026 (transcript): mandate position and delivery practice as stated by ACS staff",
-    "AMEND": "Marked-up amendments to page 1, 9 Sep 2026: ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice",
+    "AMEND": "Amendments from ACS (ALC), 9 Sep 2026: ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice; at Lead Integrated Capability and Lead Organisation both Officers and Other Ranks are selected to attend",
 }
 
 TITLE = "Two promotion continuums. One leadership development framework."
@@ -47,6 +47,7 @@ OBSERVATION = [
 OBSERVATION_CAVEAT = "An observation from the mapping, not yet a policy conclusion."
 STATUS_MEANING = {"Mandated": "promotion prerequisite or embedded requirement",
                   "Not mandated": "development available but not required",
+                  "Selected": "attendance by selection, not by mandate",
                   "To confirm": "policy position not yet verified"}
 
 TC = "To confirm"
@@ -130,28 +131,28 @@ DATA = [
     dict(transition="T5", frm="LEAD CAPABILITY", to="LEAD INTEGRATED CAPABILITY",
          officer=dict(
              rank="LTCOL > COL", rank_src=["LEVELS", "MTG"],
-             elda=course("ELDA component", TC, "1 week", "ILD",
-                         embedded="LDS LIC Course", note=None, src=["MTG"]),
-             lds=course("LDS Lead Integrated Capability", TC, "1 week", "ILD",
+             elda=course("ELDA component", "Selected", "1 week", "ILD",
+                         embedded="LDS LIC Course", note=None, src=["MTG", "AMEND"]),
+             lds=course("LDS Lead Integrated Capability", "Selected", "1 week", "ILD",
                         note=None, src=["LDS", "MTG"])),
          soldier=dict(
              rank="Tier 5 WO > Tier 4 WO", rank_src=["LEVELS"],
-             elda=course("ELDA component", TC, "1 week", "ILD",
-                         embedded="LDS LIC Course", note=None, src=["MTG"]),
-             lds=course("LDS Lead Integrated Capability", TC, "1 week", "ILD",
+             elda=course("ELDA component", "Selected", "1 week", "ILD",
+                         embedded="LDS LIC Course", note=None, src=["MTG", "AMEND"]),
+             lds=course("LDS Lead Integrated Capability", "Selected", "1 week", "ILD",
                         note=None, src=["LDS", "MTG"]))),
     dict(transition="T6", frm="LEAD INTEGRATED CAPABILITY", to="LEAD ORGANISATION",
          officer=dict(
              rank="COL > BRIG+", rank_src=["LEVELS", "MTG"],
-             elda=course("ELDA component", TC, TC, TC,
+             elda=course("ELDA component", "Selected", TC, TC,
                          embedded="Lead Organisation Course", note=None, src=["MTG"]),
-             lds=course("LDS Lead Organisation", TC, TC, "ILD",
+             lds=course("LDS Lead Organisation", "Selected", TC, "ILD",
                         note=None, src=["LDS", "MTG"])),
          soldier=dict(
              rank="Tier 4 WO > Tier 3 WO+", rank_src=["LEVELS"],
-             elda=course("ELDA component", TC, TC, TC,
+             elda=course("ELDA component", "Selected", TC, TC,
                          embedded="Lead Organisation Course", note=None, src=["MTG"]),
-             lds=course("LDS Lead Organisation", TC, TC, "ILD",
+             lds=course("LDS Lead Organisation", "Selected", TC, "ILD",
                         note=None, src=["LDS", "MTG"]))),
 ]
 
@@ -178,9 +179,12 @@ PALE_RED = rgb("F7E4E4")
 NEUTRAL = rgb("F1F1EF")
 CARD = rgb("FAFAF8")
 
+PALE_GOLD = rgb("F3EEDF")
+DARK_GOLD = rgb("7A6535")
 STATUS_STYLE = {
     "Mandated": (PALE, SWAMP),
     "Not mandated": (PALE_RED, ARMY_RED),
+    "Selected": (PALE_GOLD, DARK_GOLD),
     TC: (NEUTRAL, MID),
 }
 DELIVERY_STYLE = {"NZALC": SWAMP, "ILD": GOLD}
@@ -399,14 +403,14 @@ def main():
     ly = top + 6 * bandh + 2
     lx = M
     pg.spaced(lx, ly + 9, "READ THIS PAGE LEFT TO RIGHT", 5.6, INK, bold=True, spacing=1.2)
-    lx += 150
-    for st in ("Mandated", "Not mandated", TC):
+    lx += 128
+    for st in ("Mandated", "Not mandated", "Selected", TC):
         fill, col = STATUS_STYLE[st]
         pg.box(lx, ly + 1, 9, 9, fill=fill, stroke=None, radius=2)
         pg.text(lx + 13, ly + 9, st, 6.6, col, bold=True)
         lx += pg.width(st, 6.6, True) + 16
         pg.text(lx, ly + 9, STATUS_MEANING[st], 6.2, MID)
-        lx += pg.width(STATUS_MEANING[st], 6.2) + 18
+        lx += pg.width(STATUS_MEANING[st], 6.2) + 12
     lx += 8
     pg.text(lx, ly + 9, "NZALC", 6.6, SWAMP, bold=True)
     lx += pg.width("NZALC", 6.6, True) + 3
