@@ -1,0 +1,436 @@
+{
+  "sources": {
+    "LDF": "NZDF Leadership Framework v2 (10 Oct 2025): level names and value-add headings",
+    "LDS": "NZDF Leadership Development System poster: which LDS course exists at each level and who delivers it",
+    "LEVELS": "NZDF Leadership Levels poster: rank to transition alignment (stated by the poster to be an estimation)",
+    "CDS": "NZALC course data sheets A18011, A18008, A18010: duration, provider, target learners, prerequisites, included courses",
+    "MTG": "NZALC review of 9 Sep 2026 (transcript): mandate position and delivery practice as stated by ACS staff"
+  },
+  "levels": [
+    [
+      "LEAD SELF",
+      "Follow leader's intent"
+    ],
+    [
+      "LEAD TEAMS",
+      "Get things done through others"
+    ],
+    [
+      "LEAD LEADERS",
+      "Get things done through other leaders"
+    ],
+    [
+      "LEAD SYSTEMS",
+      "Run an entire system"
+    ],
+    [
+      "LEAD CAPABILITY",
+      "Turn strategy into action"
+    ],
+    [
+      "LEAD INTEGRATED CAPABILITY",
+      "Lead at enterprise level"
+    ],
+    [
+      "LEAD ORGANISATION",
+      "Evolve the organisation"
+    ]
+  ],
+  "transitions": [
+    {
+      "transition": "T1",
+      "frm": "LEAD SELF",
+      "to": "LEAD TEAMS",
+      "officer": {
+        "rank": "OCDT  >  2LT",
+        "rank_src": [
+          "LEVELS",
+          "MTG"
+        ],
+        "elda": {
+          "course": "ELDA Lead Teams",
+          "mandate": "Mandated",
+          "duration": "To confirm",
+          "delivered": "To confirm",
+          "embedded": "NZCC",
+          "note": "Included course within NZCC",
+          "sources": [
+            "MTG"
+          ]
+        },
+        "lds": {
+          "course": "LDS Lead Teams",
+          "mandate": "Mandated",
+          "duration": "To confirm",
+          "delivered": "NZALC",
+          "embedded": "NZCC",
+          "note": "Included course within NZCC",
+          "sources": [
+            "LDS",
+            "MTG"
+          ]
+        }
+      },
+      "soldier": {
+        "rank": "PTE  >  LCPL",
+        "rank_src": [
+          "LEVELS",
+          "MTG"
+        ],
+        "elda": {
+          "course": "ELDA Lead Teams",
+          "mandate": "Mandated",
+          "duration": "6 training days",
+          "delivered": "NZALC",
+          "embedded": "JNCO Course (A1530)",
+          "note": "Included course within A1530",
+          "sources": [
+            "CDS",
+            "MTG"
+          ]
+        },
+        "lds": {
+          "course": "LDS Lead Teams",
+          "mandate": "To confirm",
+          "duration": "To confirm",
+          "delivered": "To confirm",
+          "embedded": "To confirm",
+          "note": "Sequenced after ELDA Lead Teams",
+          "sources": [
+            "LDS",
+            "CDS"
+          ]
+        }
+      }
+    },
+    {
+      "transition": "T2",
+      "frm": "LEAD TEAMS",
+      "to": "LEAD LEADERS",
+      "officer": {
+        "rank": "2LT / LT  >  CAPT",
+        "rank_src": [
+          "LEVELS",
+          "MTG"
+        ],
+        "elda": {
+          "course": "ELDA Lead Leaders",
+          "mandate": "Not mandated",
+          "duration": "6 training days",
+          "delivered": "NZALC",
+          "embedded": null,
+          "note": "Routinely enforced in practice",
+          "sources": [
+            "CDS",
+            "MTG"
+          ]
+        },
+        "lds": {
+          "course": "LDS Lead Leaders",
+          "mandate": "Not mandated",
+          "duration": "To confirm",
+          "delivered": "To confirm",
+          "embedded": null,
+          "note": "Prerequisite for ELDA Lead Leaders",
+          "sources": [
+            "LDS",
+            "CDS",
+            "MTG"
+          ]
+        }
+      },
+      "soldier": {
+        "rank": "CPL  >  SGT",
+        "rank_src": [
+          "LEVELS",
+          "MTG"
+        ],
+        "elda": {
+          "course": "ELDA Lead Leaders",
+          "mandate": "Mandated",
+          "duration": "6 training days",
+          "delivered": "NZALC",
+          "embedded": "SNCO Course (A1531)",
+          "note": "In promotion policy",
+          "sources": [
+            "CDS",
+            "MTG"
+          ]
+        },
+        "lds": {
+          "course": "LDS Lead Leaders",
+          "mandate": "Mandated",
+          "duration": "To confirm",
+          "delivered": "To confirm",
+          "embedded": "SNCO Course pathway",
+          "note": "Prerequisite for ELDA Lead Leaders",
+          "sources": [
+            "LDS",
+            "CDS",
+            "MTG"
+          ]
+        }
+      }
+    },
+    {
+      "transition": "T3",
+      "frm": "LEAD LEADERS",
+      "to": "LEAD SYSTEMS",
+      "officer": {
+        "rank": "CAPT  >  MAJ",
+        "rank_src": [
+          "LEVELS",
+          "MTG"
+        ],
+        "elda": {
+          "course": "ELDA Lead Systems",
+          "mandate": "Not mandated",
+          "duration": "7 training days",
+          "delivered": "NZALC",
+          "embedded": null,
+          "note": "Attendance self-selected",
+          "sources": [
+            "CDS",
+            "MTG"
+          ]
+        },
+        "lds": {
+          "course": "LDS Lead Systems",
+          "mandate": "Not mandated",
+          "duration": "To confirm",
+          "delivered": "ILD",
+          "embedded": null,
+          "note": "Attendance self-selected",
+          "sources": [
+            "LDS",
+            "MTG"
+          ]
+        }
+      },
+      "soldier": {
+        "rank": "SSGT  >  WO2",
+        "rank_src": [
+          "LEVELS",
+          "MTG"
+        ],
+        "elda": {
+          "course": "ELDA Lead Systems",
+          "mandate": "Mandated",
+          "duration": "7 training days",
+          "delivered": "NZALC",
+          "embedded": "WO Course (A1532)",
+          "note": "Included in WO Course",
+          "sources": [
+            "CDS",
+            "MTG"
+          ]
+        },
+        "lds": {
+          "course": "LDS Lead Systems",
+          "mandate": "To confirm",
+          "duration": "To confirm",
+          "delivered": "ILD",
+          "embedded": null,
+          "note": "Prerequisite status: check WO Course CDS",
+          "sources": [
+            "LDS",
+            "MTG"
+          ]
+        }
+      }
+    },
+    {
+      "transition": "T4",
+      "frm": "LEAD SYSTEMS",
+      "to": "LEAD CAPABILITY",
+      "officer": {
+        "rank": "MAJ  >  LTCOL",
+        "rank_src": [
+          "LEVELS",
+          "MTG"
+        ],
+        "elda": {
+          "course": null,
+          "mandate": null,
+          "duration": null,
+          "delivered": null,
+          "embedded": null,
+          "note": "No ELDA course at this level",
+          "sources": [
+            "MTG"
+          ]
+        },
+        "lds": {
+          "course": "LDS Lead Capability",
+          "mandate": "To confirm",
+          "duration": "To confirm",
+          "delivered": "ILD",
+          "embedded": null,
+          "note": "High observed uptake",
+          "sources": [
+            "LDS",
+            "MTG"
+          ]
+        }
+      },
+      "soldier": {
+        "rank": "WO2  >  WO1",
+        "rank_src": [
+          "LEVELS",
+          "MTG"
+        ],
+        "elda": {
+          "course": null,
+          "mandate": null,
+          "duration": null,
+          "delivered": null,
+          "embedded": null,
+          "note": "No ELDA course at this level",
+          "sources": [
+            "MTG"
+          ]
+        },
+        "lds": {
+          "course": "LDS Lead Capability",
+          "mandate": "To confirm",
+          "duration": "To confirm",
+          "delivered": "ILD",
+          "embedded": null,
+          "note": "Expected in practice; policy to check",
+          "sources": [
+            "LDS",
+            "MTG"
+          ]
+        }
+      }
+    },
+    {
+      "transition": "T5",
+      "frm": "LEAD CAPABILITY",
+      "to": "LEAD INTEGRATED CAPABILITY",
+      "officer": {
+        "rank": "LTCOL  >  COL",
+        "rank_src": [
+          "LEVELS",
+          "MTG"
+        ],
+        "elda": {
+          "course": "ELDA component",
+          "mandate": "To confirm",
+          "duration": "1 week",
+          "delivered": "ILD",
+          "embedded": "LDS LIC Course",
+          "note": "Activity support from NZALC or Navy",
+          "sources": [
+            "MTG"
+          ]
+        },
+        "lds": {
+          "course": "LDS Lead Integrated Capability",
+          "mandate": "To confirm",
+          "duration": "1 week",
+          "delivered": "ILD",
+          "embedded": null,
+          "note": "Full attendance observed",
+          "sources": [
+            "LDS",
+            "MTG"
+          ]
+        }
+      },
+      "soldier": {
+        "rank": "Tier 5 WO  >  Tier 4 WO",
+        "rank_src": [
+          "LEVELS"
+        ],
+        "elda": {
+          "course": "ELDA component",
+          "mandate": "To confirm",
+          "duration": "1 week",
+          "delivered": "ILD",
+          "embedded": "LDS LIC Course",
+          "note": "Activity support from NZALC or Navy",
+          "sources": [
+            "MTG"
+          ]
+        },
+        "lds": {
+          "course": "LDS Lead Integrated Capability",
+          "mandate": "To confirm",
+          "duration": "1 week",
+          "delivered": "ILD",
+          "embedded": null,
+          "note": "Full attendance observed",
+          "sources": [
+            "LDS",
+            "MTG"
+          ]
+        }
+      }
+    },
+    {
+      "transition": "T6",
+      "frm": "LEAD INTEGRATED CAPABILITY",
+      "to": "LEAD ORGANISATION",
+      "officer": {
+        "rank": "COL  >  BRIG+",
+        "rank_src": [
+          "LEVELS",
+          "MTG"
+        ],
+        "elda": {
+          "course": "ELDA component",
+          "mandate": "To confirm",
+          "duration": "To confirm",
+          "delivered": "To confirm",
+          "embedded": "Lead Organisation Course",
+          "note": "Externally facilitated",
+          "sources": [
+            "MTG"
+          ]
+        },
+        "lds": {
+          "course": "LDS Lead Organisation",
+          "mandate": "To confirm",
+          "duration": "To confirm",
+          "delivered": "ILD",
+          "embedded": null,
+          "note": "Full attendance observed",
+          "sources": [
+            "LDS",
+            "MTG"
+          ]
+        }
+      },
+      "soldier": {
+        "rank": "Tier 4 WO  >  Tier 3 WO+",
+        "rank_src": [
+          "LEVELS"
+        ],
+        "elda": {
+          "course": "ELDA component",
+          "mandate": "To confirm",
+          "duration": "To confirm",
+          "delivered": "To confirm",
+          "embedded": "Lead Organisation Course",
+          "note": "Externally facilitated",
+          "sources": [
+            "MTG"
+          ]
+        },
+        "lds": {
+          "course": "LDS Lead Organisation",
+          "mandate": "To confirm",
+          "duration": "To confirm",
+          "delivered": "ILD",
+          "embedded": null,
+          "note": "Full attendance observed",
+          "sources": [
+            "LDS",
+            "MTG"
+          ]
+        }
+      }
+    }
+  ]
+}
