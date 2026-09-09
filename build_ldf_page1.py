@@ -21,6 +21,8 @@ import math
 import pymupdf
 from PIL import Image
 
+import ldf_icons
+
 OUT = "./output/ldf-alignment-page1.pdf"
 OUT_DATA = "./output/ldf-alignment-page1-data.json"
 LOGO_FILE = "./assets/nz-army-logo.png"
@@ -345,13 +347,16 @@ def main():
         pg.box(x, hy, w, 18, fill=SWAMP, stroke=None, radius=3)
         pg.spaced(x + w / 2, hy + 12.5, label, 7.2, WHITE, bold=True, spacing=sp, align=1)
 
-    top, bandh, lvl_h = 168, 100, 22
+    top, bandh, lvl_h = 168, 100, 28
     band_h = bandh - lvl_h - 8
+    badge_r = 13
     for i, (name, desc) in enumerate(LEVELS):
         y = top + i * bandh
         pg.box(spine_x, y, spine_w, lvl_h, fill=MOAWHANGO, stroke=None, radius=3)
-        pg.text(spine_x + spine_w / 2, y + 9.5, name, 7.2, SWAMP, bold=True, align=1)
-        pg.text(spine_x + spine_w / 2, y + 17.8, desc, 6.2, SWAMP, align=1)
+        ldf_icons.badge(pg.p, spine_x + 6 + badge_r, y + lvl_h / 2, badge_r, i, SWAMP, WHITE)
+        tx = spine_x + 6 + 2 * badge_r + (spine_w - 6 - 2 * badge_r) / 2
+        pg.text(tx, y + 12, name, 7.2, SWAMP, bold=True, align=1)
+        pg.text(tx, y + 20.5, desc, 6.2, SWAMP, align=1)
         if i < 6:
             by = y + lvl_h + 4
             mid = by + band_h / 2
