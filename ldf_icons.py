@@ -52,6 +52,25 @@ def _bulb(sh, x, y, s, color, white, lw):
         sh.finish(color=white, width=lw * 0.6)
 
 
+def _rounded_path(sh, pts, rr):
+    """A polyline whose interior corners are rounded with radius rr."""
+    if len(pts) < 3:
+        sh.draw_polyline(pts)
+        return
+    cur = pts[0]
+    for k in range(1, len(pts) - 1):
+        a, b, c = pts[k - 1], pts[k], pts[k + 1]
+        d1 = math.hypot(b[0] - a[0], b[1] - a[1])
+        d2 = math.hypot(c[0] - b[0], c[1] - b[1])
+        rk = min(rr, d1 / 2, d2 / 2)
+        p_in = (b[0] - (b[0] - a[0]) / d1 * rk, b[1] - (b[1] - a[1]) / d1 * rk)
+        p_out = (b[0] + (c[0] - b[0]) / d2 * rk, b[1] + (c[1] - b[1]) / d2 * rk)
+        sh.draw_line(cur, p_in)
+        sh.draw_curve(p_in, b, p_out)
+        cur = p_out
+    sh.draw_line(cur, pts[-1])
+
+
 # ------------------------------------------------------------------ icons --
 def icon_self(page, sh, cx, cy, r, color, white):
     _figure(sh, cx, cy, 1.35 * r, color)
@@ -80,25 +99,29 @@ def icon_leaders(page, sh, cx, cy, r, color, white):
 
 
 def icon_systems(page, sh, cx, cy, r, color, white):
-    lw = max(0.6, 0.085 * r)
-    # traces run from the badge rim or a node, turn at right angles, and end in a node
+    """Circuit: ring nodes spread through the badge, traces that turn at
+    rounded right angles, several running out to the badge rim."""
+    lw = max(0.6, 0.09 * r)
+    R = 1.6                        # beyond the badge rim in glyph units, so rim traces run off the edge
+    nodes = [(-0.10, -0.78), (0.22, -0.46), (0.62, -0.46), (0.46, -0.06), (-0.50, 0.00),
+             (0.14, 0.22), (-0.70, 0.46), (0.50, 0.56), (0.06, 0.82)]
     traces = [
-        [(-1.0, 0.05), (-0.62, 0.05), (-0.62, -0.42), (-0.28, -0.42)],
-        [(-0.28, -0.42), (-0.28, -0.72), (0.08, -0.72)],
-        [(0.08, -0.72), (0.4, -0.72), (0.4, -0.38), (0.72, -0.38)],
-        [(-0.62, 0.05), (-0.62, 0.55), (-0.32, 0.55)],
-        [(-0.32, 0.55), (-0.32, 0.18), (0.1, 0.18)],
-        [(0.1, 0.18), (0.1, -0.1), (0.48, -0.1)],
-        [(0.1, 0.18), (0.1, 0.62), (0.44, 0.62)],
-        [(0.44, 0.62), (0.44, 0.92), (0.44, 1.0)],
-        [(0.48, -0.1), (0.78, -0.1), (0.78, 0.28)],
+        [(-0.10, -0.78), (0.62, -0.78), (0.62, -0.46)],                    # top node across and down to C
+        [(-R, -0.30), (-0.50, -0.30), (-0.50, 0.00)],                       # in from the left rim to E
+        [(0.22, -0.46), (-0.16, -0.46), (-0.16, 0.22), (0.14, 0.22)],       # B round to F
+        [(0.62, -0.46), (R, -0.46)],                                        # C out to the right rim
+        [(0.46, -0.06), (0.86, -0.06), (0.86, R)],                          # D out to the lower right rim
+        [(0.14, 0.22), (0.46, 0.22), (0.46, -0.06)],                        # F up to D
+        [(-0.50, 0.00), (-0.50, 0.46), (-0.70, 0.46)],                      # E down to G
+        [(-0.70, 0.46), (-0.70, 0.66), (0.06, 0.66), (0.06, 0.82)],         # G along the bottom to I
+        [(0.14, 0.22), (0.14, 0.56), (0.50, 0.56)],                         # F down to H
+        [(0.50, 0.56), (0.50, R)],                                          # H out to the bottom rim
     ]
-    nodes = [(-0.28, -0.42), (0.08, -0.72), (0.72, -0.38), (-0.32, 0.55), (0.1, 0.18), (0.48, -0.1), (0.44, 0.62), (0.78, 0.28), (-0.62, 0.05)]
     for t in traces:
-        sh.draw_polyline([(cx + x * r, cy + y * r) for x, y in t])
-        sh.finish(color=color, width=lw, closePath=False, lineJoin=1)
+        _rounded_path(sh, [(cx + x * r, cy + y * r) for x, y in t], 0.14 * r)
+        sh.finish(color=color, width=lw, closePath=False, lineJoin=1, lineCap=1)
     for x, y in nodes:
-        sh.draw_circle((cx + x * r, cy + y * r), 0.12 * r)
+        sh.draw_circle((cx + x * r, cy + y * r), 0.13 * r)
         sh.finish(color=color, fill=white, width=lw)
     sh.commit()
 
@@ -163,6 +186,7 @@ def icon_organisation(page, sh, cx, cy, r, color, white):
 
 
 ICONS = [icon_self, icon_teams, icon_leaders, icon_systems, icon_capability, icon_integrated, icon_organisation]
+SCALE = [0.7, 0.7, 0.7, 0.6, 0.7, 0.7, 0.7]      # glyph radius as a fraction of the badge radius
 
 
 def badge(page, cx, cy, radius, level_index, color, fill=(1, 1, 1), ring=True):
@@ -173,4 +197,4 @@ def badge(page, cx, cy, radius, level_index, color, fill=(1, 1, 1), ring=True):
     sh.finish(color=color if ring else None, fill=fill, width=max(0.7, radius * 0.07))
     sh.commit()
     sh = page.new_shape()
-    ICONS[level_index](page, sh, cx, cy, radius * 0.7, color, fill)
+    ICONS[level_index](page, sh, cx, cy, radius * SCALE[level_index], color, fill)
