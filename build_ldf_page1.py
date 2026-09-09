@@ -41,9 +41,9 @@ SOURCES = {
 }
 
 TITLE = "Two promotion continuums. One leadership development framework."
-SUBTITLE = "How do Officer and Other Rank promotion continuums align to the intent and design of the LDF?"
+SUBTITLE = "How do Officer and Soldier promotion continuums align to the intent and design of the LDF?"
 OBSERVATION = [
-    "Other Rank leadership development appears deliberately embedded within key promotion pathways.",
+    "Soldier leadership development appears deliberately embedded within key promotion pathways.",
     "Equivalent officer leadership development exists at comparable LDF transitions, but its formal linkage to promotion varies across the continuum.",
 ]
 OBSERVATION_CAVEAT = "An observation from the mapping, not yet a policy conclusion."
@@ -402,7 +402,7 @@ def main():
     hy = 138
     for x, w, label, sp, size in ((ox0, ox1 - ox0, "OFFICER PROMOTION CONTINUUM", 1.6, 7.2),
                                   (spine_x, spine_w, "LEADERSHIP DEVELOPMENT FRAMEWORK", 0.6, 6.4),
-                                  (sx0, sx1 - sx0, "OTHER RANK PROMOTION CONTINUUM", 1.6, 7.2)):
+                                  (sx0, sx1 - sx0, "SOLDIER PROMOTION CONTINUUM", 1.6, 7.2)):
         pg.box(x, hy, w, 26, fill=BLACK, stroke=None, radius=3)
         if x == spine_x:
             pg.spaced(x + w / 2, hy + 11.5, "LEADERSHIP DEVELOPMENT", 7, WHITE, bold=True, spacing=1.2, align=1)
@@ -439,7 +439,7 @@ def main():
             y += bandh
         y += 0
 
-    doc.set_metadata({"title": "Officer and Other Rank Leadership Development: Page 1",
+    doc.set_metadata({"title": "Officer and Soldier Leadership Development: Page 1",
                       "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
     with open(OUT_DATA, "w", encoding="utf-8") as fh:
