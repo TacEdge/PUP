@@ -37,13 +37,13 @@ SOURCES = {
     "MTG": "NZALC review of 9 Sep 2026 (transcript): mandate position and delivery practice as stated by ACS staff",
     "LDFENV": "NZDF Leadership Framework v2, The Leadership Environments and Tone, Climate, Culture: Foundational / Paparahi (Lead Self, Lead Teams, Lead Leaders), Operational / Paheko (Lead Systems, Lead Capability), Strategic / Rautaki (Lead Integrated Capability, Lead Organisation)",
     "LSW": "Lead Self Workbook (TAD) 2026: LDS Lead Self forms part of the LDS and is designed for Regular Force personnel enlisting into the NZDF",
-    "AMEND": "Amendments from ACS (ALC), 9 and 10 Sep 2026: LDS Lead Systems is mandated for promotion to WO2; LDS Lead Capability is not mandated for promotion to WO1; Lead Integrated Capability is one 11-day course; Lead Organisation is three courses, Phase One (5 days), Phase Two (5 days) and Phase Three (2 days); ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice; at Lead Integrated Capability and Lead Organisation both Officers and Other Ranks are selected to attend",
+    "AMEND": "Amendments from ACS (ALC), 9 and 10 Sep 2026: LDS Lead Systems is mandated for promotion to WO2; LDS Lead Capability is not mandated for promotion to WO1; Lead Integrated Capability is one 11-day course; Lead Organisation is three courses, Phase One (5 days), Phase Two (5 days) and Phase Three (2 days); ELDA Command at T4 (8 to 10 training days, NZALC); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice; at Lead Integrated Capability and Lead Organisation both Officers and Other Ranks are selected to attend",
 }
 
 TITLE = "Army Leadership Development Continuums"
-SUBTITLE = "Officer and Soldier promotion continuums mapped against the NZDF Leadership Development Framework"
+SUBTITLE = "Officer and Other Rank promotion continuums mapped against the NZDF Leadership Development Framework"
 OBSERVATION = [
-    "Soldier leadership development appears deliberately embedded within key promotion pathways.",
+    "Other Rank leadership development appears deliberately embedded within key promotion pathways.",
     "Equivalent officer leadership development exists at comparable LDF transitions, but its formal linkage to promotion varies across the continuum.",
 ]
 OBSERVATION_CAVEAT = "An observation from the mapping, not yet a policy conclusion."
@@ -135,13 +135,13 @@ DATA = [
     dict(transition="T4", frm="LEAD SYSTEMS", to="LEAD CAPABILITY",
          officer=dict(
              rank="MAJ > LTCOL", rank_src=["LEVELS", "MTG"],
-             courses=[course("ELDA Command", "Not mandated", "7 training days", "NZALC",
+             courses=[course("ELDA Command", "Not mandated", "8 to 10 training days", "NZALC",
                          note=None, src=["CDS", "AMEND"]),
                       course("LDS Lead Capability", "Not mandated", "7.5 days", "ILD",
                         note=None, src=["LDS", "MTG", "AMEND"])]),
          soldier=dict(
              rank="WO2 > WO1", rank_src=["LEVELS", "MTG"],
-             courses=[course("ELDA Command", "Not mandated", "7 training days", "NZALC",
+             courses=[course("ELDA Command", "Not mandated", "8 to 10 training days", "NZALC",
                          note=None, src=["CDS", "AMEND"]),
                       course("LDS Lead Capability", "Not mandated", "7.5 days", "ILD",
                         note=None, src=["LDS", "MTG", "AMEND"])])),
@@ -371,15 +371,14 @@ def side_row(pg, data_key, x0, x1, y, band_h, i, mirror):
 
 def transition_block(pg, x, y, w, h, label, level_index, name, desc):
     """The unit of analysis: one LDF transition, shown as the level it enters.
-    The entry state is drawn a step quieter: it is not one of the six."""
-    entry = label == "ENTRY"
-    pg.box(x, y, w, h, fill=rgb("3A3A3A") if entry else BLACK, stroke=None, radius=3)
+    The entry state is drawn the same as the six."""
+    pg.box(x, y, w, h, fill=BLACK, stroke=None, radius=3)
     br = 15
-    ldf_icons.badge(pg.p, x + 8 + br, y + h / 2, br, level_index, rgb("3A3A3A") if entry else BLACK, WHITE, ring=True)
+    ldf_icons.badge(pg.p, x + 8 + br, y + h / 2, br, level_index, BLACK, WHITE, ring=True)
     tw = w - 8 - 2 * br
     tx = x + 8 + 2 * br + tw / 2
     cy = y + h / 2
-    pg.spaced(tx, cy - 11, label, 6, GRID if entry else GOLD, bold=True, spacing=1.6, align=1)
+    pg.spaced(tx, cy - 11, label, 6, GOLD, bold=True, spacing=1.6, align=1)
     size = 9.5
     while pg.width(name, size, True) > tw - 10 and size > 7:
         size -= 0.25
@@ -401,7 +400,7 @@ def main():
     hy = 138
     for x, w, label, sp, size in ((ox0, ox1 - ox0, "OFFICER PROMOTION CONTINUUM", 1.6, 7.2),
                                   (spine_x, spine_w, "LEADERSHIP DEVELOPMENT FRAMEWORK", 0.6, 6.4),
-                                  (sx0, sx1 - sx0, "SOLDIER PROMOTION CONTINUUM", 1.6, 7.2)):
+                                  (sx0, sx1 - sx0, "OTHER RANK PROMOTION CONTINUUM", 1.6, 7.2)):
         pg.box(x, hy, w, 26, fill=BLACK, stroke=None, radius=3)
         if x == spine_x:
             pg.spaced(x + w / 2, hy + 11.5, "LEADERSHIP DEVELOPMENT", 7, WHITE, bold=True, spacing=1.2, align=1)
@@ -433,9 +432,6 @@ def main():
             pg.line(sx0, mid, sx1, mid, GRID, dashes="[1 3] 0")
             side_row(pg, "officer", ox0, ox1, y + 3, band_h, i, mirror=False)
             side_row(pg, "soldier", sx0, sx1, y + 3, band_h, i, mirror=True)
-            if i < len(DATA) - 1:
-                nxt = y + bandh + (env_h + env_gap if i == rows[-1] else 0)
-                pg.arrow(W / 2, y + 3 + band_h, W / 2, nxt + 2)
             y += bandh
         y += env_gap
 
