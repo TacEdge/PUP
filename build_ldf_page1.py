@@ -198,7 +198,6 @@ STATUS_STYLE = {
     "Selected": (PALE_GOLD, DARK_GOLD),
     TC: (NEUTRAL, MID),
 }
-DELIVERY_STYLE = {"NZALC": SWAMP, "ILD": GOLD}
 
 _reg = pymupdf.Font(fontfile=FONT_REG)
 _bold = pymupdf.Font(fontfile=FONT_BOLD)
@@ -296,11 +295,16 @@ def letterhead(pg):
         pg.text(x, 127, s, 8, col, bold=bold)
 
 
-def field(pg, x, y, label, value, value_color=INK, bold=False):
-    pg.spaced(x, y, label, 5.4, MID, bold=True, spacing=0.9)
-    lw = pg.width(label, 5.4, True) + len(label) * 0.9 + 6
-    pg.text(x + lw, y, value, 7.4, value_color, bold=bold)
-    return lw + pg.width(value, 7.4, bold)
+def field(pg, x, y, label, value, label_size=5.4, value_size=7.4):
+    """One labelled fact: label in small grey caps, value in the one body colour."""
+    pg.spaced(x, y, label, label_size, MID, bold=True, spacing=0.9)
+    lw = pg.width(label, label_size, True) + len(label) * 0.9 + 6
+    pg.text(x + lw, y, value, value_size, INK)
+    return lw + pg.width(value, value_size)
+
+
+def field_width(pg, label, value, label_size=5.4, value_size=7.4):
+    return pg.width(label, label_size, True) + len(label) * 0.9 + 6 + pg.width(value, value_size)
 
 
 def course_card(pg, x, y, w, h, c):
@@ -311,20 +315,19 @@ def course_card(pg, x, y, w, h, c):
     pg.box(x, y + 3, 3.5, h - 6, fill=col, stroke=None)                     # status accent bar
     compact = h < 30
     if compact:
-        # one line: name, then the values without labels, pill at the right
+        # one line: name, the same labelled fields at a smaller size, pill at the right
         by = y + h / 2 + 3.5
-        pg.spaced(x + 12, by, c["course"].upper(), 8, BLACK, bold=True, spacing=0.5)
-        nw = pg.width(c["course"].upper(), 8, True) + len(c["course"]) * 0.5
-        fx = x + 12 + nw + 16
-        pg.text(fx, by, c["duration"], 7.4, MID if c["duration"] == TC else INK)
-        fx += pg.width(c["duration"], 7.4) + 6
-        pg.text(fx, by, "\u00b7", 7.4, MID)
-        fx += 8
-        dcol = DELIVERY_STYLE.get(c["delivered"], MID if c["delivered"] == TC else INK)
-        pg.text(fx, by, c["delivered"], 7.4, dcol, bold=c["delivered"] in DELIVERY_STYLE)
-        pw = pg.width(c["mandate"].upper(), 8, True) + 18
-        pg.box(x + w - 8 - pw, y + h / 2 - 7, pw, 14, fill=fill, stroke=None, radius=3)
-        pg.text(x + w - 8 - pw / 2, y + h / 2 + 3.3, c["mandate"].upper(), 8, col, bold=True, align=1)
+        pg.spaced(x + 12, by, c["course"].upper(), 7.4, BLACK, bold=True, spacing=0.4)
+        nw = pg.width(c["course"].upper(), 7.4, True) + len(c["course"]) * 0.4
+        pw = pg.width(c["mandate"].upper(), 7.6, True) + 16
+        pill_x = x + w - 8 - pw
+        fx = x + 12 + nw + 12
+        fx += field(pg, fx, by, "DURATION", c["duration"], 4.6, 7) + 9
+        fx += field(pg, fx, by, "DELIVERY", c["delivered"], 4.6, 7)
+        if fx > pill_x - 4:
+            print(f"warning: compact card overruns its pill by {fx - pill_x + 4:.1f}pt: {c['course']}")
+        pg.box(pill_x, y + h / 2 - 7, pw, 14, fill=fill, stroke=None, radius=3)
+        pg.text(pill_x + pw / 2, y + h / 2 + 3.1, c["mandate"].upper(), 7.6, col, bold=True, align=1)
         return
     if True:
         ny = y + 14.5 if h < 50 else y + h / 2 - 4
@@ -334,11 +337,10 @@ def course_card(pg, x, y, w, h, c):
         pg.box(x + w - 8 - pw, py, pw, 15, fill=fill, stroke=None, radius=3)
         pg.text(x + w - 8 - pw / 2, py + 10.8, c["mandate"].upper(), 8.2, col, bold=True, align=1)
         fx, fy = x + 12, (y + h - 9.5) if h < 50 else (y + h / 2 + 12)
-    fx += field(pg, fx, fy, "DURATION", c["duration"], MID if c["duration"] == TC else INK) + 14
-    dcol = DELIVERY_STYLE.get(c["delivered"], MID if c["delivered"] == TC else INK)
-    fx += field(pg, fx, fy, "DELIVERY", c["delivered"], dcol, bold=c["delivered"] in DELIVERY_STYLE) + 14
+    fx += field(pg, fx, fy, "DURATION", c["duration"]) + 14
+    fx += field(pg, fx, fy, "DELIVERY", c["delivered"]) + 14
     if c["embedded"]:
-        field(pg, fx, fy, "EMBEDDED", c["embedded"], MID if c["embedded"] == TC else INK)
+        field(pg, fx, fy, "EMBEDDED", c["embedded"])
     if c["note"] and not compact:
         pg.text(x + w - 8, fy, c["note"], 6.2, MID, align=2)
 
@@ -355,7 +357,7 @@ def rank_card(pg, x, y, w, h, rank):
 
 
 def side_row(pg, data_key, x0, x1, y, band_h, i, mirror):
-    rw, gap = 92, 8
+    rw, gap = 84, 8
     cw = (x1 - x0) - rw - gap
     if mirror:
         rx, cx = x0, x0 + rw + gap
@@ -391,7 +393,7 @@ def main():
     doc = pymupdf.open()
     pg = Page(doc)
     letterhead(pg)
-    spine_w = 184
+    spine_w = 164
     spine_x = W / 2 - spine_w / 2
     side_gap = 16
     ox0, ox1 = M, spine_x - side_gap
