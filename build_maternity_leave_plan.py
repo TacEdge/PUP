@@ -29,7 +29,6 @@ STATUS = [
     ("RETURN", "28 January 2028. FTE to be confirmed in late November 2027."),
     ("COURSE DELIVERY", "Covered by Preferred Contractors throughout the absence."),
 ]
-COVER_LABEL = "Course delivery covered by Preferred Contractors"
 
 D = dt.date
 SPAN = (D(2026, 9, 1), D(2028, 1, 31))
@@ -59,7 +58,7 @@ def timeline(pg, y, h):
         return x0 + (d - SPAN[0]).days / total * (x1 - x0)
 
     month_axis(pg, y, h, SPAN, xof)
-    bar_y, bar_h = y + 50, 34
+    bar_y, bar_h = y + 44, 34
     # working period before leave, as a faint bar
     pg.box(x0, bar_y, xof(LEAVE[0][0]) - x0, bar_h, fill=FAINT, stroke=None)
     pg.text((x0 + xof(LEAVE[0][0])) / 2, bar_y + bar_h / 2 + 3, "Working as normal", 7, MID, align=1)
@@ -82,11 +81,6 @@ def timeline(pg, y, h):
             pg.line(cx, ly - 2, cx + 6, ly - 2, MID, width=0.6)
             pg.text(cx + 9, ly, f"{short}   {start:%-d %b} to {end:%-d %b %Y}", 6.5, INK)
             callout += 1
-    # cover band across the absence
-    csx, cex = xof(LEAVE[0][0]), xof(LEAVE[-1][1] + dt.timedelta(days=1))
-    cy = bar_y - 14
-    pg.box(csx, cy, cex - csx, 10, fill=WHITE, stroke=SWAMP, width=0.7, radius=2)
-    pg.text((csx + cex) / 2, cy + 7.3, COVER_LABEL.upper(), 5.6, SWAMP, bold=True, align=1)
     # markers
     tx = xof(TODAY)
     pg.line(tx, y + 28, tx, y + h, ARMY_RED, width=1.2)
@@ -119,7 +113,7 @@ def build():
     pg = Page(doc)
     y = letterhead(pg, KICKER, TITLE, ORIGINATOR, DATE, FOOTER_LEFT)
     y = status_block(pg, y, STATUS)
-    y = timeline(pg, y + 16, 156)
+    y = timeline(pg, y + 16, 150)
     sequence(pg, y + 34)
     doc.set_metadata({"title": "Kate Beckett: Maternity Leave Plan", "author": "Army Command School"})
     doc.save(OUT, garbage=3, deflate=True)

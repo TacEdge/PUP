@@ -120,13 +120,12 @@ def letterhead(pg, kicker, title, originator, date, footer_left, footer_ref="ACS
 
 
 def status_block(pg, y, rows, label_width=120):
-    """Pale green panel with a Swamp Green edge: letterspaced labels, plain values.
+    """Pale green panel: letterspaced labels, plain values.
     A value may be a list of lines."""
     lines = [(label, v if isinstance(v, list) else [v]) for label, v in rows]
     n = sum(len(v) for _, v in lines)
     h = 16 * n + 12
     pg.box(M, y, W - 2 * M, h, fill=PALE, stroke=None, radius=3)
-    pg.box(M, y + 4, 3.5, h - 8, fill=SWAMP, stroke=None)
     ly = y + 17
     for label, values in lines:
         pg.spaced(M + 14, ly, label, 7, SWAMP, bold=True, spacing=1.4)
