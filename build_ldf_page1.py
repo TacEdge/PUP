@@ -6,8 +6,8 @@ horizontal band, with the rank transition and each development
 intervention (ELDA, LDS) as separate cards.
 
     python3 build_ldf_page1.py
-        -> output/ldf-alignment-page1.pdf        (A3 landscape)
-        -> output/ldf-alignment-page1-data.json  (the data behind every card)
+        -> output/army-leadership-development-continuums.pdf        (A3 landscape)
+        -> output/army-leadership-development-continuums-data.json  (the data behind every card)
 
 Every field is taken from the source material listed in SOURCES below.
 A field the sources do not establish is "To confirm".  Nothing on the
@@ -23,8 +23,8 @@ from PIL import Image
 
 import ldf_icons
 
-OUT = "./output/ldf-alignment-page1.pdf"
-OUT_DATA = "./output/ldf-alignment-page1-data.json"
+OUT = "./output/army-leadership-development-continuums.pdf"
+OUT_DATA = "./output/army-leadership-development-continuums-data.json"
 LOGO_FILE = "./assets/nz-army-logo.png"
 FONT_REG = "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"
 FONT_BOLD = "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"
@@ -279,7 +279,7 @@ class Page:
 def letterhead(pg):
     pg.text(W / 2, 26, "UNCLASSIFIED", 9, BLACK, bold=True, align=1)
     pg.text(W / 2, H - 30, "UNCLASSIFIED", 9, BLACK, bold=True, align=1)
-    pg.text(M, H - 17, "Leadership Development Framework Discussion", 8.5, BLACK)
+    pg.text(M, H - 17, "Army Leadership Development Continuums", 8.5, BLACK)
     pg.text(W / 2, H - 17, "ACS 2026", 8.5, BLACK, align=1)
     pg.text(W - M, H - 17, "Page 1 of 2", 8.5, BLACK, align=2)
     png, (iw, ih) = logo_png()
@@ -439,7 +439,7 @@ def main():
             y += bandh
         y += 0
 
-    doc.set_metadata({"title": "Officer and Soldier Leadership Development: Page 1",
+    doc.set_metadata({"title": "Army Leadership Development Continuums",
                       "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
     with open(OUT_DATA, "w", encoding="utf-8") as fh:
