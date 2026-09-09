@@ -37,7 +37,7 @@ SOURCES = {
     "MTG": "NZALC review of 9 Sep 2026 (transcript): mandate position and delivery practice as stated by ACS staff",
     "LDFENV": "NZDF Leadership Framework v2, The Leadership Environments and Tone, Climate, Culture: Foundational / Paparahi (Lead Self, Lead Teams, Lead Leaders), Operational / Paheko (Lead Systems, Lead Capability), Strategic / Rautaki (Lead Integrated Capability, Lead Organisation)",
     "LSW": "Lead Self Workbook (TAD) 2026: LDS Lead Self forms part of the LDS and is designed for Regular Force personnel enlisting into the NZDF",
-    "AMEND": "Amendments from ACS (ALC), 9 and 10 Sep 2026: ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice; at Lead Integrated Capability and Lead Organisation both Officers and Other Ranks are selected to attend",
+    "AMEND": "Amendments from ACS (ALC), 9 and 10 Sep 2026: Lead Integrated Capability is one 11-day course; Lead Organisation is three courses, Phase One (5 days), Phase Two (5 days) and Phase Three (2 days); ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice; at Lead Integrated Capability and Lead Organisation both Officers and Other Ranks are selected to attend",
 }
 
 TITLE = "Two promotion continuums. One leadership development framework."
@@ -80,9 +80,6 @@ def course(name, mandate, duration, delivered, embedded=None, note=None, src=())
                 embedded=embedded, note=note, sources=list(src))
 
 
-NO_ELDA = dict(course=None, mandate=None, duration=None, delivered=None, embedded=None,
-               note="No ELDA course at this level", sources=["CDS", "MTG"])
-
 # One entry per LDF transition T1..T6.  Each side: rank transition, ELDA
 # card, LDS card.  Mandate is the policy position: Mandated / Not mandated /
 # To confirm.  A note records practice where the sources state it.
@@ -90,90 +87,84 @@ DATA = [
     dict(transition="Entry", frm="Civilian", to="LEAD SELF",
          officer=dict(
              rank="Civilian > OCDT", rank_src=["MTG"],
-             elda=NO_ELDA,
-             lds=course("LDS Lead Self", "Mandated", "5 days", "OCS", embedded="Initial Induction Training",
-                        note=None, src=["LDS", "MTG", "AMEND"])),
+             courses=[course("LDS Lead Self", "Mandated", "5 days", "OCS", embedded="Initial Induction Training",
+                             note=None, src=["LDS", "MTG", "AMEND"])]),
          soldier=dict(
              rank="Civilian > PTE", rank_src=["MTG", "LSW"],
-             elda=NO_ELDA,
-             lds=course("LDS Lead Self", "Mandated", "5 days", "TAD", embedded="Recruit Training",
-                        note=None, src=["LDS", "LSW", "MTG", "AMEND"]))),
+             courses=[course("LDS Lead Self", "Mandated", "5 days", "TAD", embedded="Recruit Training",
+                             note=None, src=["LDS", "LSW", "MTG", "AMEND"])])),
     dict(transition="T1", frm="LEAD SELF", to="LEAD TEAMS",
          officer=dict(
              rank="OCDT > 2LT", rank_src=["LEVELS", "MTG"],
-             elda=course("ELDA Lead Teams", "Mandated", "3 days", "OCS", embedded="NZCC",
+             courses=[course("ELDA Lead Teams", "Mandated", "3 days", "OCS", embedded="NZCC",
                          note=None, src=["MTG", "AMEND"]),
-             lds=course("LDS Lead Teams", "Mandated", "3 days", "NZALC", embedded="NZCC",
-                        note=None, src=["LDS", "MTG", "AMEND"])),
+                      course("LDS Lead Teams", "Mandated", "3 days", "NZALC", embedded="NZCC",
+                        note=None, src=["LDS", "MTG", "AMEND"])]),
          soldier=dict(
              rank="PTE > LCPL", rank_src=["LEVELS", "MTG"],
-             elda=course("ELDA Lead Teams", "Mandated", "6 training days", "NZALC", embedded="JNCO Course (A1530)",
+             courses=[course("ELDA Lead Teams", "Mandated", "6 training days", "NZALC", embedded="JNCO Course (A1530)",
                          note=None, src=["CDS", "MTG"]),
-             lds=course("LDS Lead Teams", "Mandated", "5 days", "NZALC", embedded="JNCO Course (A1530)",
-                        note=None, src=["LDS", "CDS", "AMEND"]))),
+                      course("LDS Lead Teams", "Mandated", "5 days", "NZALC", embedded="JNCO Course (A1530)",
+                        note=None, src=["LDS", "CDS", "AMEND"])])),
     dict(transition="T2", frm="LEAD TEAMS", to="LEAD LEADERS",
          officer=dict(
              rank="2LT / LT > CAPT", rank_src=["LEVELS", "MTG"],
-             elda=course("ELDA Lead Leaders", "Not mandated", "6 training days", "NZALC",
+             courses=[course("ELDA Lead Leaders", "Not mandated", "6 training days", "NZALC",
                          note=None, src=["CDS", "MTG"]),
-             lds=course("LDS Lead Leaders", "Not mandated", "5 days", TC,
-                        note=None, src=["LDS", "CDS", "MTG", "AMEND"])),
+                      course("LDS Lead Leaders", "Not mandated", "5 days", TC,
+                        note=None, src=["LDS", "CDS", "MTG", "AMEND"])]),
          soldier=dict(
              rank="CPL > SGT", rank_src=["LEVELS", "MTG"],
-             elda=course("ELDA Lead Leaders", "Mandated", "6 training days", "NZALC", embedded="SNCO Course (A1531)",
+             courses=[course("ELDA Lead Leaders", "Mandated", "6 training days", "NZALC", embedded="SNCO Course (A1531)",
                          note=None, src=["CDS", "MTG"]),
-             lds=course("LDS Lead Leaders", "Mandated", "5 days", "NZALC", embedded="SNCO Course (A1531)",
-                        note=None, src=["LDS", "CDS", "MTG", "AMEND"]))),
+                      course("LDS Lead Leaders", "Mandated", "5 days", "NZALC", embedded="SNCO Course (A1531)",
+                        note=None, src=["LDS", "CDS", "MTG", "AMEND"])])),
     dict(transition="T3", frm="LEAD LEADERS", to="LEAD SYSTEMS",
          officer=dict(
              rank="CAPT > MAJ", rank_src=["LEVELS", "MTG"],
-             elda=course("ELDA Lead Systems", "Not mandated", "7 training days", "NZALC",
+             courses=[course("ELDA Lead Systems", "Not mandated", "7 training days", "NZALC",
                          note=None, src=["CDS", "MTG"]),
-             lds=course("LDS Lead Systems", "Not mandated", "5 days", "ILD",
-                        note=None, src=["LDS", "MTG", "AMEND"])),
+                      course("LDS Lead Systems", "Not mandated", "5 days", "ILD",
+                        note=None, src=["LDS", "MTG", "AMEND"])]),
          soldier=dict(
              rank="SSGT > WO2", rank_src=["LEVELS", "MTG"],
-             elda=course("ELDA Lead Systems", "Mandated", "7 training days", "NZALC", embedded="WO Course (A1532)",
+             courses=[course("ELDA Lead Systems", "Mandated", "7 training days", "NZALC", embedded="WO Course (A1532)",
                          note=None, src=["CDS", "MTG"]),
-             lds=course("LDS Lead Systems", TC, "5 days", "ILD",
-                        note="Check WO Course CDS", src=["LDS", "MTG", "AMEND"]))),
+                      course("LDS Lead Systems", TC, "5 days", "ILD",
+                        note="Check WO Course CDS", src=["LDS", "MTG", "AMEND"])])),
     dict(transition="T4", frm="LEAD SYSTEMS", to="LEAD CAPABILITY",
          officer=dict(
              rank="MAJ > LTCOL", rank_src=["LEVELS", "MTG"],
-             elda=course("ELDA Command", "Not mandated", "7 training days", "NZALC",
+             courses=[course("ELDA Command", "Not mandated", "7 training days", "NZALC",
                          note=None, src=["CDS", "AMEND"]),
-             lds=course("LDS Lead Capability", "Not mandated", "7.5 days", "ILD",
-                        note=None, src=["LDS", "MTG", "AMEND"])),
+                      course("LDS Lead Capability", "Not mandated", "7.5 days", "ILD",
+                        note=None, src=["LDS", "MTG", "AMEND"])]),
          soldier=dict(
              rank="WO2 > WO1", rank_src=["LEVELS", "MTG"],
-             elda=course("ELDA Command", "Not mandated", "7 training days", "NZALC",
+             courses=[course("ELDA Command", "Not mandated", "7 training days", "NZALC",
                          note=None, src=["CDS", "AMEND"]),
-             lds=course("LDS Lead Capability", TC, "7.5 days", "ILD",
-                        note=None, src=["LDS", "MTG", "AMEND"]))),
+                      course("LDS Lead Capability", TC, "7.5 days", "ILD",
+                        note=None, src=["LDS", "MTG", "AMEND"])])),
     dict(transition="T5", frm="LEAD CAPABILITY", to="LEAD INTEGRATED CAPABILITY",
          officer=dict(
              rank="LTCOL > COL", rank_src=["LEVELS", "MTG"],
-             elda=NO_ELDA,
-             lds=course("LDS Lead Integrated Capability", "Selected", "6 to 11 days", "ILD",
-                        note=None, src=["LDS", "MTG"])),
+             courses=[course("Lead Integrated Capability", "Selected", "11 days", "ILD",
+                             note=None, src=["LDS", "MTG", "AMEND"])]),
          soldier=dict(
              rank="Tier 5 WO > Tier 4 WO", rank_src=["LEVELS"],
-             elda=NO_ELDA,
-             lds=course("LDS Lead Integrated Capability", "Selected", "6 to 11 days", "ILD",
-                        note=None, src=["LDS", "MTG"]))),
+             courses=[course("Lead Integrated Capability", "Selected", "11 days", "ILD",
+                             note=None, src=["LDS", "MTG", "AMEND"])])),
     dict(transition="T6", frm="LEAD INTEGRATED CAPABILITY", to="LEAD ORGANISATION",
          officer=dict(
              rank="COL > BRIG+", rank_src=["LEVELS", "MTG"],
-             elda=course("ELDA component", "Selected", TC, TC,
-                         embedded="Lead Organisation Course", note=None, src=["MTG"]),
-             lds=course("LDS Lead Organisation", "Selected", TC, "ILD",
-                        note=None, src=["LDS", "MTG"])),
+             courses=[course("Lead Organisation Phase One", "Selected", "5 days", "ILD", note=None, src=["LDS", "AMEND"]),
+                      course("Lead Organisation Phase Two", "Selected", "5 days", "ILD", note=None, src=["LDS", "AMEND"]),
+                      course("Lead Organisation Phase Three", "Selected", "2 days", "ILD", note=None, src=["LDS", "AMEND"])]),
          soldier=dict(
              rank="Tier 4 WO > Tier 3 WO+", rank_src=["LEVELS"],
-             elda=course("ELDA component", "Selected", TC, TC,
-                         embedded="Lead Organisation Course", note=None, src=["MTG"]),
-             lds=course("LDS Lead Organisation", "Selected", TC, "ILD",
-                        note=None, src=["LDS", "MTG"]))),
+             courses=[course("Lead Organisation Phase One", "Selected", "5 days", "ILD", note=None, src=["LDS", "AMEND"]),
+                      course("Lead Organisation Phase Two", "Selected", "5 days", "ILD", note=None, src=["LDS", "AMEND"]),
+                      course("Lead Organisation Phase Three", "Selected", "2 days", "ILD", note=None, src=["LDS", "AMEND"])])),
 ]
 
 # ------------------------------------------------------------------ drawing
@@ -313,25 +304,42 @@ def field(pg, x, y, label, value, value_color=INK, bold=False):
 
 
 def course_card(pg, x, y, w, h, c):
-    """A capability card: name, mandate as the hero, one row of facts."""
-    if c["course"] is None:
-        pg.box(x, y, w, h, fill=WHITE, stroke=GRID, dashes="[2 2] 0", radius=3)
-        pg.text(x + w / 2, y + h / 2 + 2.5, c["note"], 7.2, MID, align=1)
-        return
+    """A capability card: name, mandate as the hero, one row of facts.
+    Below 30pt it collapses to a single line."""
     fill, col = STATUS_STYLE[c["mandate"]]
     pg.box(x, y, w, h, fill=CARD, stroke=GRID, radius=3)
     pg.box(x, y + 3, 3.5, h - 6, fill=col, stroke=None)                     # status accent bar
-    pg.spaced(x + 12, y + 14.5, c["course"].upper(), 8.4, BLACK, bold=True, spacing=0.5)
-    pw = pg.width(c["mandate"].upper(), 8.2, True) + 18
-    pg.box(x + w - 8 - pw, y + 5.5, pw, 15, fill=fill, stroke=None, radius=3)
-    pg.text(x + w - 8 - pw / 2, y + 16.3, c["mandate"].upper(), 8.2, col, bold=True, align=1)
-    fx, fy = x + 12, y + h - 9.5
+    compact = h < 30
+    if compact:
+        # one line: name, then the values without labels, pill at the right
+        by = y + h / 2 + 3.5
+        pg.spaced(x + 12, by, c["course"].upper(), 8, BLACK, bold=True, spacing=0.5)
+        nw = pg.width(c["course"].upper(), 8, True) + len(c["course"]) * 0.5
+        fx = x + 12 + nw + 16
+        pg.text(fx, by, c["duration"], 7.4, MID if c["duration"] == TC else INK)
+        fx += pg.width(c["duration"], 7.4) + 6
+        pg.text(fx, by, "\u00b7", 7.4, MID)
+        fx += 8
+        dcol = DELIVERY_STYLE.get(c["delivered"], MID if c["delivered"] == TC else INK)
+        pg.text(fx, by, c["delivered"], 7.4, dcol, bold=c["delivered"] in DELIVERY_STYLE)
+        pw = pg.width(c["mandate"].upper(), 8, True) + 18
+        pg.box(x + w - 8 - pw, y + h / 2 - 7, pw, 14, fill=fill, stroke=None, radius=3)
+        pg.text(x + w - 8 - pw / 2, y + h / 2 + 3.3, c["mandate"].upper(), 8, col, bold=True, align=1)
+        return
+    if True:
+        ny = y + 14.5 if h < 50 else y + h / 2 - 4
+        pg.spaced(x + 12, ny, c["course"].upper(), 8.4, BLACK, bold=True, spacing=0.5)
+        pw = pg.width(c["mandate"].upper(), 8.2, True) + 18
+        py = y + 5.5 if h < 50 else y + h / 2 - 14
+        pg.box(x + w - 8 - pw, py, pw, 15, fill=fill, stroke=None, radius=3)
+        pg.text(x + w - 8 - pw / 2, py + 10.8, c["mandate"].upper(), 8.2, col, bold=True, align=1)
+        fx, fy = x + 12, (y + h - 9.5) if h < 50 else (y + h / 2 + 12)
     fx += field(pg, fx, fy, "DURATION", c["duration"], MID if c["duration"] == TC else INK) + 14
     dcol = DELIVERY_STYLE.get(c["delivered"], MID if c["delivered"] == TC else INK)
     fx += field(pg, fx, fy, "DELIVERY", c["delivered"], dcol, bold=c["delivered"] in DELIVERY_STYLE) + 14
     if c["embedded"]:
         field(pg, fx, fy, "EMBEDDED", c["embedded"], MID if c["embedded"] == TC else INK)
-    if c["note"]:
+    if c["note"] and not compact:
         pg.text(x + w - 8, fy, c["note"], 6.2, MID, align=2)
 
 
@@ -355,9 +363,11 @@ def side_row(pg, data_key, x0, x1, y, band_h, i, mirror):
         cx, rx = x0, x1 - rw
     s = DATA[i][data_key]
     rank_card(pg, rx, y, rw, band_h, s["rank"])
-    ch = (band_h - 5) / 2
-    course_card(pg, cx, y, cw, ch, s["elda"])
-    course_card(pg, cx, y + ch + 5, cw, ch, s["lds"])
+    n = len(s["courses"])
+    gap = 5
+    ch = (band_h - gap * (n - 1)) / n
+    for k, c in enumerate(s["courses"]):
+        course_card(pg, cx, y + k * (ch + gap), cw, ch, c)
 
 
 def transition_block(pg, x, y, w, h, label, level_index, name, desc):
