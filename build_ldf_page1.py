@@ -61,7 +61,7 @@ ENVIRONMENTS = [
     ("OPERATIONAL", "PAHEKO", "Systems and units  \u00b7  Climate", (3, 4)),
     ("STRATEGIC", "RAUTAKI", "Institution  \u00b7  Culture", (5, 6)),
 ]
-ENV_TINTS = ["F8F7F2", "F1F0E8", "EAE9DF"]
+ENV_TINTS = ["FAF9F6", "F7F6F1", "F4F3EC"]
 
 # LDF levels: name and the first value-add heading from the LDF (source: LDF).
 LEVELS = [
@@ -190,13 +190,11 @@ PALE_RED = rgb("F7E4E4")
 NEUTRAL = rgb("F1F1EF")
 CARD = rgb("FAFAF8")
 
-PALE_GOLD = rgb("F3EEDF")
-DARK_GOLD = rgb("7A6535")
 STATUS_STYLE = {
-    "Mandated": (PALE, SWAMP),
-    "Not mandated": (PALE_RED, ARMY_RED),
-    "Selected": (PALE_GOLD, DARK_GOLD),
-    TC: (NEUTRAL, MID),
+    "Mandated": (rgb("EEF3E8"), SWAMP),
+    "Not mandated": (rgb("F7ECEC"), rgb("8A2E2E")),
+    "Selected": (rgb("F5F0E3"), rgb("6F5C33")),
+    TC: (rgb("F1F1EF"), MID),
 }
 
 _reg = pymupdf.Font(fontfile=FONT_REG)
@@ -312,7 +310,6 @@ def course_card(pg, x, y, w, h, c):
     Below 30pt it collapses to a single line."""
     fill, col = STATUS_STYLE[c["mandate"]]
     pg.box(x, y, w, h, fill=CARD, stroke=GRID, radius=3)
-    pg.box(x, y + 3, 3.5, h - 6, fill=col, stroke=None)                     # status accent bar
     compact = h < 30
     if compact:
         # one line: name, the same labelled fields at a smaller size, pill at the right
@@ -410,8 +407,9 @@ def main():
         else:
             pg.spaced(x + w / 2, hy + 16.5, label, size + 0.8, WHITE, bold=True, spacing=sp, align=1)
 
-    y = hy + 32
-    bandh = 80
+    env_gap = 9
+    y = hy + 26 + env_gap
+    bandh = 78
     band_h = bandh - 6
     env_h = 17
     for k, (env, reo, subtitle, rows) in enumerate(ENVIRONMENTS):
@@ -421,7 +419,7 @@ def main():
         pg.spaced(M + 6, y + 12, f"{env}  /  {reo}", 8, BLACK, bold=True, spacing=1.8)
         lw = pg.width(f"{env}  /  {reo}", 8, True) + len(f"{env}  /  {reo}") * 1.8
         pg.text(M + 6 + lw + 14, y + 12, subtitle, 7.2, MID)
-        pg.line(M - 6, y + env_h - 1, W - M + 6, y + env_h - 1, GOLD, width=1.2)
+        pg.line(M - 6, y + env_h - 1, W - M + 6, y + env_h - 1, GOLD, width=0.8)
         y += env_h
         for i in rows:
             row = DATA[i]
@@ -434,10 +432,10 @@ def main():
             side_row(pg, "officer", ox0, ox1, y + 3, band_h, i, mirror=False)
             side_row(pg, "soldier", sx0, sx1, y + 3, band_h, i, mirror=True)
             if i < len(DATA) - 1:
-                nxt = y + bandh + (env_h if i == rows[-1] else 0)
+                nxt = y + bandh + (env_h + env_gap if i == rows[-1] else 0)
                 pg.arrow(W / 2, y + 3 + band_h, W / 2, nxt + 2)
             y += bandh
-        y += 0
+        y += env_gap
 
     doc.set_metadata({"title": "Army Leadership Development Continuums",
                       "author": "New Zealand Army Leadership Centre"})
