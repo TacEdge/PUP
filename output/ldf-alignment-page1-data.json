@@ -5,7 +5,7 @@
     "LEVELS": "NZDF Leadership Levels poster: rank to transition alignment (stated by the poster to be an estimation)",
     "CDS": "NZALC course data sheets A18011, A18008, A18010: duration, provider, target learners, prerequisites, included courses",
     "MTG": "NZALC review of 9 Sep 2026 (transcript): mandate position and delivery practice as stated by ACS staff",
-    "AMEND": "Marked-up amendments to page 1, 9 Sep 2026: ELDA Command placed at T4, 7 days, NZALC, on request"
+    "AMEND": "Marked-up amendments to page 1, 9 Sep 2026: ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice"
   },
   "levels": [
     [
@@ -92,14 +92,15 @@
         },
         "lds": {
           "course": "LDS Lead Teams",
-          "mandate": "To confirm",
+          "mandate": "Mandated",
           "duration": "To confirm",
           "delivered": "To confirm",
-          "embedded": "To confirm",
+          "embedded": "JNCO Course (A1530)",
           "note": "Sequenced after ELDA Lead Teams",
           "sources": [
             "LDS",
-            "CDS"
+            "CDS",
+            "AMEND"
           ]
         }
       }
@@ -132,11 +133,12 @@
           "duration": "To confirm",
           "delivered": "To confirm",
           "embedded": null,
-          "note": "Prerequisite for ELDA Lead Leaders",
+          "note": "Routinely enforced in practice",
           "sources": [
             "LDS",
             "CDS",
-            "MTG"
+            "MTG",
+            "AMEND"
           ]
         }
       },
@@ -163,12 +165,13 @@
           "mandate": "Mandated",
           "duration": "To confirm",
           "delivered": "To confirm",
-          "embedded": "SNCO Course pathway",
-          "note": "Prerequisite for ELDA Lead Leaders",
+          "embedded": "SNCO Course (A1531)",
+          "note": "In promotion policy",
           "sources": [
             "LDS",
             "CDS",
-            "MTG"
+            "MTG",
+            "AMEND"
           ]
         }
       }

@@ -33,7 +33,7 @@ SOURCES = {
     "LEVELS": "NZDF Leadership Levels poster: rank to transition alignment (stated by the poster to be an estimation)",
     "CDS": "NZALC course data sheets A18011, A18008, A18010: duration, provider, target learners, prerequisites, included courses",
     "MTG": "NZALC review of 9 Sep 2026 (transcript): mandate position and delivery practice as stated by ACS staff",
-    "AMEND": "Marked-up amendments to page 1, 9 Sep 2026: ELDA Command placed at T4, 7 days, NZALC, on request",
+    "AMEND": "Marked-up amendments to page 1, 9 Sep 2026: ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice",
 }
 
 TITLE = "Two continuums. One leadership development framework."
@@ -79,21 +79,21 @@ DATA = [
              rank="PTE  >  LCPL", rank_src=["LEVELS", "MTG"],
              elda=course("ELDA Lead Teams", "Mandated", "6 training days", "NZALC", embedded="JNCO Course (A1530)",
                          note="Included course within A1530", src=["CDS", "MTG"]),
-             lds=course("LDS Lead Teams", TC, TC, TC, embedded=TC,
-                        note="Sequenced after ELDA Lead Teams", src=["LDS", "CDS"]))),
+             lds=course("LDS Lead Teams", "Mandated", TC, TC, embedded="JNCO Course (A1530)",
+                        note="Sequenced after ELDA Lead Teams", src=["LDS", "CDS", "AMEND"]))),
     dict(transition="T2", frm="LEAD TEAMS", to="LEAD LEADERS",
          officer=dict(
              rank="2LT / LT  >  CAPT", rank_src=["LEVELS", "MTG"],
              elda=course("ELDA Lead Leaders", "Not mandated", "6 training days", "NZALC",
                          note="Routinely enforced in practice", src=["CDS", "MTG"]),
              lds=course("LDS Lead Leaders", "Not mandated", TC, TC,
-                        note="Prerequisite for ELDA Lead Leaders", src=["LDS", "CDS", "MTG"])),
+                        note="Routinely enforced in practice", src=["LDS", "CDS", "MTG", "AMEND"])),
          soldier=dict(
              rank="CPL  >  SGT", rank_src=["LEVELS", "MTG"],
              elda=course("ELDA Lead Leaders", "Mandated", "6 training days", "NZALC", embedded="SNCO Course (A1531)",
                          note="In promotion policy", src=["CDS", "MTG"]),
-             lds=course("LDS Lead Leaders", "Mandated", TC, TC, embedded="SNCO Course pathway",
-                        note="Prerequisite for ELDA Lead Leaders", src=["LDS", "CDS", "MTG"]))),
+             lds=course("LDS Lead Leaders", "Mandated", TC, TC, embedded="SNCO Course (A1531)",
+                        note="In promotion policy", src=["LDS", "CDS", "MTG", "AMEND"]))),
     dict(transition="T3", frm="LEAD LEADERS", to="LEAD SYSTEMS",
          officer=dict(
              rank="CAPT  >  MAJ", rank_src=["LEVELS", "MTG"],
