@@ -1,11 +1,16 @@
 """
-Vector glyphs for the seven LDF levels, redrawn from the NZDF Leadership
-Development System poster's icon set: a person (Lead Self), a team cluster
-(Lead Teams), leaders wearing the L badge (Lead Leaders), a circuit (Lead
-Systems), a lit bulb with a person inside (Lead Capability), a connected
-network of bulbs (Lead Integrated Capability) and a building (Lead
-Organisation).  Each is drawn inside a circular badge with PyMuPDF shapes so
-it prints crisply at any size.
+Vector glyphs for the seven LDF levels, mapped from the NZDF Leadership
+Development System poster's icon set:
+
+  Lead Self                  one figure wearing the L badge
+  Lead Teams                 twelve figures in a diamond lattice
+  Lead Leaders               four L-badged figures in a diamond
+  Lead Systems               a circuit: right-angled traces ending in nodes
+  Lead Capability            a lit bulb with an L-badged figure inside
+  Lead Integrated Capability nine small bulbs, joined as a wheel and rim
+  Lead Organisation          a stepped tower block with an L on the roof
+
+Drawn with PyMuPDF shapes inside a circular badge, so they print crisply.
 
     badge(page, cx, cy, radius, level_index, color, fill)
 """
@@ -15,124 +20,157 @@ import math
 import pymupdf
 
 
-def _person(sh, x, y, s, color, fill_body=True):
-    """A simple figure centred at (x, y), height about 1.3 * s."""
-    sh.draw_circle((x, y - 0.42 * s), 0.17 * s)
+# ----------------------------------------------------------------- figure --
+def _figure(sh, x, y, s, color):
+    """The poster's figure: round head, broad torso, narrower legs block.
+    Centred on (x, y); overall height about 1.25 * s."""
+    sh.draw_circle((x, y - 0.46 * s), 0.15 * s)
     sh.finish(color=None, fill=color)
-    r = pymupdf.Rect(x - 0.24 * s, y - 0.2 * s, x + 0.24 * s, y + 0.62 * s)
-    sh.draw_rect(r, radius=(0.35, 0.18))
-    sh.finish(color=None, fill=color if fill_body else None)
+    torso = pymupdf.Rect(x - 0.26 * s, y - 0.27 * s, x + 0.26 * s, y + 0.2 * s)
+    sh.draw_rect(torso, radius=(0.2, 0.12))
+    sh.finish(color=None, fill=color)
+    legs = pymupdf.Rect(x - 0.17 * s, y + 0.18 * s, x + 0.17 * s, y + 0.66 * s)
+    sh.draw_rect(legs)
+    sh.finish(color=None, fill=color)
 
 
-def _badge_L(page, x, y, size, color):
-    page.insert_text((x - size * 0.3, y + size * 0.35), "L", fontsize=size, fontname="Arial-Bold", color=color)
+def _L(page, x, y, size, color):
+    """A bold L, centred at (x, y)."""
+    w = pymupdf.get_text_length("L", fontname="helvetica-bold", fontsize=size)
+    page.insert_text((x - w / 2, y + size * 0.36), "L", fontsize=size, fontname="Arial-Bold", color=color)
 
 
+def _bulb(sh, x, y, s, color, white, lw):
+    """Bulb outline centred at (x, y): circle plus a screw base."""
+    sh.draw_circle((x, y - 0.12 * s), 0.46 * s)
+    sh.finish(color=color, fill=white, width=lw)
+    base = pymupdf.Rect(x - 0.17 * s, y + 0.3 * s, x + 0.17 * s, y + 0.62 * s)
+    sh.draw_rect(base, radius=(0.15, 0.25))
+    sh.finish(color=None, fill=color)
+    for k in (0.4, 0.48):
+        sh.draw_line((x - 0.17 * s, y + k * s), (x + 0.17 * s, y + k * s))
+        sh.finish(color=white, width=lw * 0.6)
+
+
+# ------------------------------------------------------------------ icons --
 def icon_self(page, sh, cx, cy, r, color, white):
-    _person(sh, cx, cy, 1.2 * r, color)
+    _figure(sh, cx, cy, 1.35 * r, color)
     sh.commit()
-    _badge_L(page, cx, cy + 0.2 * r, 0.6 * r, white)
+    _L(page, cx - 0.06 * r, cy - 0.02 * r, 0.62 * r, white)
 
 
 def icon_teams(page, sh, cx, cy, r, color, white):
-    s = 0.34 * r
-    rows = [(-0.62, 3), (-0.05, 4), (0.52, 3)]
+    s = 0.36 * r
+    rows = [(-0.92, 1), (-0.55, 2), (-0.18, 3), (0.19, 3), (0.56, 2), (0.93, 1)]
     for dy, n in rows:
         for k in range(n):
-            dx = (k - (n - 1) / 2) * 0.46
-            _person(sh, cx + dx * r, cy + dy * r, s, color)
+            dx = (k - (n - 1) / 2) * 0.5
+            _figure(sh, cx + dx * r, cy + dy * r, s, color)
     sh.commit()
 
 
 def icon_leaders(page, sh, cx, cy, r, color, white):
     s = 0.62 * r
-    pts = [(0, -0.6), (-0.58, 0.08), (0.58, 0.08), (0, 0.62)]
+    pts = [(0, -0.6), (-0.58, 0.05), (0.58, 0.05), (0, 0.66)]
     for dx, dy in pts:
-        _person(sh, cx + dx * r, cy + dy * r, s, color)
+        _figure(sh, cx + dx * r, cy + dy * r, s, color)
     sh.commit()
     for dx, dy in pts:
-        _badge_L(page, cx + dx * r, cy + dy * r + 0.2 * s, 0.42 * s, white)
+        _L(page, cx + dx * r - 0.03 * s, cy + dy * r - 0.03 * s, 0.3 * s, white)
 
 
 def icon_systems(page, sh, cx, cy, r, color, white):
-    nodes = [(-0.62, -0.5), (0.05, -0.62), (0.62, -0.2), (-0.55, 0.25), (0.15, 0.4), (0.6, 0.6), (-0.2, -0.1)]
-    traces = [[(-0.62, -0.5), (-0.2, -0.5), (-0.2, -0.1)],
-              [(0.05, -0.62), (0.05, -0.1), (-0.2, -0.1)],
-              [(0.62, -0.2), (0.3, -0.2), (0.3, 0.4), (0.15, 0.4)],
-              [(-0.55, 0.25), (-0.2, 0.25), (-0.2, -0.1)],
-              [(0.15, 0.4), (0.15, 0.6), (0.6, 0.6)],
-              [(-0.2, 0.25), (-0.2, 0.6), (0.15, 0.6)]]
+    lw = max(0.6, 0.085 * r)
+    # traces run from the badge rim or a node, turn at right angles, and end in a node
+    traces = [
+        [(-1.0, 0.05), (-0.62, 0.05), (-0.62, -0.42), (-0.28, -0.42)],
+        [(-0.28, -0.42), (-0.28, -0.72), (0.08, -0.72)],
+        [(0.08, -0.72), (0.4, -0.72), (0.4, -0.38), (0.72, -0.38)],
+        [(-0.62, 0.05), (-0.62, 0.55), (-0.32, 0.55)],
+        [(-0.32, 0.55), (-0.32, 0.18), (0.1, 0.18)],
+        [(0.1, 0.18), (0.1, -0.1), (0.48, -0.1)],
+        [(0.1, 0.18), (0.1, 0.62), (0.44, 0.62)],
+        [(0.44, 0.62), (0.44, 0.92), (0.44, 1.0)],
+        [(0.48, -0.1), (0.78, -0.1), (0.78, 0.28)],
+    ]
+    nodes = [(-0.28, -0.42), (0.08, -0.72), (0.72, -0.38), (-0.32, 0.55), (0.1, 0.18), (0.48, -0.1), (0.44, 0.62), (0.78, 0.28), (-0.62, 0.05)]
     for t in traces:
         sh.draw_polyline([(cx + x * r, cy + y * r) for x, y in t])
-        sh.finish(color=color, width=max(0.6, 0.09 * r), closePath=False)
+        sh.finish(color=color, width=lw, closePath=False, lineJoin=1)
     for x, y in nodes:
-        sh.draw_circle((cx + x * r, cy + y * r), 0.13 * r)
-        sh.finish(color=color, fill=white, width=max(0.6, 0.09 * r))
+        sh.draw_circle((cx + x * r, cy + y * r), 0.12 * r)
+        sh.finish(color=color, fill=white, width=lw)
     sh.commit()
 
 
 def icon_capability(page, sh, cx, cy, r, color, white):
-    bulb_c = (cx, cy - 0.1 * r)
-    sh.draw_circle(bulb_c, 0.46 * r)
-    sh.finish(color=color, width=max(0.6, 0.09 * r))
-    base = pymupdf.Rect(cx - 0.17 * r, cy + 0.36 * r, cx + 0.17 * r, cy + 0.66 * r)
-    sh.draw_rect(base)
-    sh.finish(color=None, fill=color)
-    for k in range(7):
-        a = math.pi * (1.0 + k / 6.0)          # rays over the top half
-        x0, y0 = bulb_c[0] + 0.6 * r * math.cos(a), bulb_c[1] + 0.6 * r * math.sin(a)
-        x1, y1 = bulb_c[0] + 0.82 * r * math.cos(a), bulb_c[1] + 0.82 * r * math.sin(a)
+    lw = max(0.6, 0.085 * r)
+    _bulb(sh, cx, cy + 0.02 * r, 1.25 * r, color, white, lw)
+    # seven rays: horizontals, upper and lower diagonals, and the top
+    for deg in (180, 225, 270, 315, 0, 135, 45):
+        a = math.radians(deg)
+        x0, y0 = cx + 0.72 * r * math.cos(a), cy - 0.12 * r + 0.72 * r * math.sin(a)
+        x1, y1 = cx + 0.95 * r * math.cos(a), cy - 0.12 * r + 0.95 * r * math.sin(a)
         sh.draw_line((x0, y0), (x1, y1))
-        sh.finish(color=color, width=max(0.6, 0.09 * r))
-    _person(sh, cx, cy - 0.08 * r, 0.5 * r, color)
+        sh.finish(color=color, width=lw)
+    _figure(sh, cx, cy - 0.1 * r, 0.62 * r, color)
     sh.commit()
-    _badge_L(page, cx, cy + 0.02 * r, 0.24 * r, white)
+    _L(page, cx - 0.03 * r, cy - 0.11 * r, 0.26 * r, white)
 
 
 def icon_integrated(page, sh, cx, cy, r, color, white):
-    grid = [(-0.55, -0.55), (0, -0.55), (0.55, -0.55), (-0.55, 0), (0, 0), (0.55, 0), (-0.55, 0.55), (0, 0.55), (0.55, 0.55)]
+    lw = max(0.5, 0.05 * r)
+    grid = [(-0.6, -0.6), (0, -0.6), (0.6, -0.6), (-0.6, 0), (0, 0), (0.6, 0), (-0.6, 0.6), (0, 0.6), (0.6, 0.6)]
     pts = [(cx + x * r, cy + y * r) for x, y in grid]
-    links = [(0, 1), (1, 2), (3, 4), (4, 5), (6, 7), (7, 8), (0, 3), (3, 6), (1, 4), (4, 7), (2, 5), (5, 8),
-             (0, 4), (4, 8), (2, 4), (4, 6)]
-    for a, b in links:
+    rim = [(0, 1), (1, 2), (2, 5), (5, 8), (8, 7), (7, 6), (6, 3), (3, 0)]
+    spokes = [(4, k) for k in range(9) if k != 4]
+    for a, b in rim + spokes:
         sh.draw_line(pts[a], pts[b])
-        sh.finish(color=color, width=max(0.5, 0.06 * r))
+        sh.finish(color=color, width=lw)
     for x, y in pts:
-        sh.draw_circle((x, y - 0.03 * r), 0.13 * r)
-        sh.finish(color=color, fill=white, width=max(0.6, 0.08 * r))
-        sh.draw_rect(pymupdf.Rect(x - 0.06 * r, y + 0.1 * r, x + 0.06 * r, y + 0.18 * r))
+        _bulb(sh, x, y - 0.02 * r, 0.42 * r, color, white, lw * 1.3)
+        sh.draw_circle((x, y - 0.12 * r), 0.045 * r)
+        sh.finish(color=None, fill=color)
+        sh.draw_rect(pymupdf.Rect(x - 0.035 * r, y - 0.09 * r, x + 0.035 * r, y + 0.03 * r))
         sh.finish(color=None, fill=color)
     sh.commit()
 
 
 def icon_organisation(page, sh, cx, cy, r, color, white):
-    b = pymupdf.Rect(cx - 0.42 * r, cy - 0.7 * r, cx + 0.42 * r, cy + 0.72 * r)
-    sh.draw_rect(b)
-    sh.finish(color=None, fill=color)
-    cols, rows = 3, 5
-    for i in range(cols):
-        for j in range(rows):
-            if j == 0 and i == 1:
-                continue
-            x = b.x0 + 0.1 * r + i * 0.26 * r
-            y = b.y0 + 0.36 * r + j * 0.24 * r
-            sh.draw_rect(pymupdf.Rect(x, y, x + 0.14 * r, y + 0.14 * r))
+    # stepped tower: the left third rises higher and carries the L
+    x0, x1 = cx - 0.42 * r, cx + 0.42 * r
+    top_l, top_r, bottom = cy - 0.9 * r, cy - 0.62 * r, cy + 0.88 * r
+    step_x = x0 + 0.34 * r
+    sh.draw_polyline([(x0, top_l), (step_x, top_l), (step_x, top_r), (x1, top_r), (x1, bottom), (x0, bottom)])
+    sh.finish(color=None, fill=color, closePath=True)
+    # windows: three columns, rows down the block; a door in the bottom middle
+    win = 0.15 * r
+    cols = [x0 + 0.08 * r, x0 + 0.34 * r, x0 + 0.6 * r]
+    rows = [top_r + 0.1 * r + k * 0.24 * r for k in range(6)]
+    for i, wx in enumerate(cols):
+        for j, wy in enumerate(rows):
+            if j == 5 and i == 1:
+                sh.draw_rect(pymupdf.Rect(wx, wy, wx + win, bottom))     # door
+            else:
+                sh.draw_rect(pymupdf.Rect(wx, wy, wx + win, wy + win))
             sh.finish(color=None, fill=white)
-    sh.draw_rect(pymupdf.Rect(cx - 0.12 * r, b.y0 + 0.06 * r, cx + 0.12 * r, b.y0 + 0.3 * r))
+    # the L on the roof of the taller part
+    lbox = pymupdf.Rect(x0 + 0.06 * r, top_l + 0.06 * r, step_x - 0.06 * r, top_r + 0.02 * r)
+    sh.draw_rect(lbox)
     sh.finish(color=None, fill=white)
     sh.commit()
-    _badge_L(page, cx, b.y0 + 0.18 * r, 0.26 * r, color)
+    _L(page, (lbox.x0 + lbox.x1) / 2, (lbox.y0 + lbox.y1) / 2, 0.22 * r, color)
 
 
 ICONS = [icon_self, icon_teams, icon_leaders, icon_systems, icon_capability, icon_integrated, icon_organisation]
 
 
 def badge(page, cx, cy, radius, level_index, color, fill=(1, 1, 1), ring=True):
-    """Circular badge with the level's glyph.  Requires the page to have the
+    """Circular badge with the level's glyph.  The page must have the
     fonts 'Arial' and 'Arial-Bold' registered."""
     sh = page.new_shape()
     sh.draw_circle((cx, cy), radius)
     sh.finish(color=color if ring else None, fill=fill, width=max(0.7, radius * 0.07))
     sh.commit()
     sh = page.new_shape()
-    ICONS[level_index](page, sh, cx, cy, radius * 0.72, color, fill)
+    ICONS[level_index](page, sh, cx, cy, radius * 0.7, color, fill)

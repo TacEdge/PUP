@@ -288,12 +288,12 @@ def course_card(pg, x, y, w, h, c):
         pg.text(x + w / 2, y + h / 2 + 2.5, c["note"], 7.2, MID, align=1)
         return
     pg.box(x, y, w, h, fill=CARD, stroke=GRID, radius=3)
-    pg.text(x + 9, y + 12.5, c["course"], 9.2, BLACK, bold=True)
+    pg.text(x + 9, y + 11.5, c["course"], 9, BLACK, bold=True)
     if c["note"]:
-        nx = x + 9 + pg.width(c["course"], 9.2, True) + 8
-        pg.text(nx, y + 12.5, c["note"], 6.6, MID)
-    pg.pill(x + w - 7, y + 4.5, c["mandate"], right=True)
-    fx, fy = x + 9, y + 25.5
+        nx = x + 9 + pg.width(c["course"], 9, True) + 8
+        pg.text(nx, y + 11.5, c["note"], 6.6, MID)
+    pg.pill(x + w - 7, y + 3.5, c["mandate"], right=True)
+    fx, fy = x + 9, y + 23.5
     field(pg, fx, fy, "DURATION", c["duration"], MID if c["duration"] == TC else INK)
     fx += 106
     dcol = DELIVERY_STYLE.get(c["delivered"], MID if c["delivered"] == TC else INK)
@@ -347,16 +347,19 @@ def main():
         pg.box(x, hy, w, 18, fill=SWAMP, stroke=None, radius=3)
         pg.spaced(x + w / 2, hy + 12.5, label, 7.2, WHITE, bold=True, spacing=sp, align=1)
 
-    top, bandh, lvl_h = 168, 100, 28
-    band_h = bandh - lvl_h - 8
-    badge_r = 13
+    top, bandh, lvl_h = 168, 100, 34
+    band_h = bandh - lvl_h - 6
+    badge_r = 14
     for i, (name, desc) in enumerate(LEVELS):
         y = top + i * bandh
-        pg.box(spine_x, y, spine_w, lvl_h, fill=MOAWHANGO, stroke=None, radius=3)
-        ldf_icons.badge(pg.p, spine_x + 6 + badge_r, y + lvl_h / 2, badge_r, i, SWAMP, WHITE)
-        tx = spine_x + 6 + 2 * badge_r + (spine_w - 6 - 2 * badge_r) / 2
-        pg.text(tx, y + 12, name, 7.2, SWAMP, bold=True, align=1)
-        pg.text(tx, y + 20.5, desc, 6.2, SWAMP, align=1)
+        # the poster's block language: dark block, white badge, gold LEAD, white level name
+        pg.box(spine_x, y, spine_w, lvl_h, fill=SWAMP, stroke=None, radius=3)
+        ldf_icons.badge(pg.p, spine_x + 5 + badge_r, y + lvl_h / 2, badge_r, i, SWAMP, WHITE, ring=False)
+        tx = spine_x + 5 + 2 * badge_r + (spine_w - 5 - 2 * badge_r) / 2
+        lead, rest = name.split(" ", 1)
+        pg.spaced(tx, y + 10, lead, 5.6, GOLD, bold=False, spacing=1.4, align=1)
+        pg.text(tx, y + 20, rest, 7.6, WHITE, bold=True, align=1)
+        pg.text(tx, y + 29, desc, 5.8, MOAWHANGO, align=1)
         if i < 6:
             by = y + lvl_h + 4
             mid = by + band_h / 2
