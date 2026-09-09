@@ -35,6 +35,7 @@ SOURCES = {
     "LEVELS": "NZDF Leadership Levels poster: rank to transition alignment (stated by the poster to be an estimation)",
     "CDS": "NZALC course data sheets A18011, A18008, A18010: duration, provider, target learners, prerequisites, included courses",
     "MTG": "NZALC review of 9 Sep 2026 (transcript): mandate position and delivery practice as stated by ACS staff",
+    "LSW": "Lead Self Workbook (TAD) 2026: LDS Lead Self forms part of the LDS and is designed for Regular Force personnel enlisting into the NZDF",
     "AMEND": "Amendments from ACS (ALC), 9 Sep 2026: ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice; at Lead Integrated Capability and Lead Organisation both Officers and Other Ranks are selected to attend",
 }
 
@@ -70,12 +71,23 @@ def course(name, mandate, duration, delivered, embedded=None, note=None, src=())
 
 
 NO_ELDA = dict(course=None, mandate=None, duration=None, delivered=None, embedded=None,
-               note="No ELDA course at this level", sources=["MTG"])
+               note="No ELDA course at this level", sources=["CDS", "MTG"])
 
 # One entry per LDF transition T1..T6.  Each side: rank transition, ELDA
 # card, LDS card.  Mandate is the policy position: Mandated / Not mandated /
 # To confirm.  A note records practice where the sources state it.
 DATA = [
+    dict(transition="Entry", frm="Civilian", to="LEAD SELF",
+         officer=dict(
+             rank="Civilian > OCDT", rank_src=["MTG"],
+             elda=NO_ELDA,
+             lds=course("LDS Lead Self", "Mandated", TC, TC, embedded="NZCC",
+                        note=None, src=["LDS", "MTG"])),
+         soldier=dict(
+             rank="Civilian > PTE", rank_src=["MTG", "LSW"],
+             elda=NO_ELDA,
+             lds=course("LDS Lead Self", "Mandated", TC, "TAD", embedded="Recruit Training",
+                        note=None, src=["LDS", "LSW", "MTG"]))),
     dict(transition="T1", frm="LEAD SELF", to="LEAD TEAMS",
          officer=dict(
              rank="OCDT > 2LT", rank_src=["LEVELS", "MTG"],
@@ -301,11 +313,11 @@ def course_card(pg, x, y, w, h, c):
     fill, col = STATUS_STYLE[c["mandate"]]
     pg.box(x, y, w, h, fill=CARD, stroke=GRID, radius=3)
     pg.box(x, y + 3, 3.5, h - 6, fill=col, stroke=None)                     # status accent bar
-    pg.spaced(x + 12, y + 14, c["course"].upper(), 8.2, BLACK, bold=True, spacing=0.5)
+    pg.spaced(x + 12, y + 13.5, c["course"].upper(), 8.2, BLACK, bold=True, spacing=0.5)
     pw = pg.width(c["mandate"].upper(), 8, True) + 18
-    pg.box(x + w - 8 - pw, y + 6, pw, 16, fill=fill, stroke=None, radius=3)
-    pg.text(x + w - 8 - pw / 2, y + 17.5, c["mandate"].upper(), 8, col, bold=True, align=1)
-    fx, fy = x + 12, y + 30
+    pg.box(x + w - 8 - pw, y + 4.5, pw, 15, fill=fill, stroke=None, radius=3)
+    pg.text(x + w - 8 - pw / 2, y + 15.3, c["mandate"].upper(), 8, col, bold=True, align=1)
+    fx, fy = x + 12, y + 27
     fx += field(pg, fx, fy, "DURATION", c["duration"], MID if c["duration"] == TC else INK) + 14
     dcol = DELIVERY_STYLE.get(c["delivered"], MID if c["delivered"] == TC else INK)
     fx += field(pg, fx, fy, "DELIVERY", c["delivered"], dcol, bold=c["delivered"] in DELIVERY_STYLE) + 14
@@ -319,9 +331,9 @@ def rank_card(pg, x, y, w, h, rank):
     pg.box(x, y, w, h, fill=WHITE, stroke=BLACK, width=1.1, radius=3)
     parts = [t.strip() for t in rank.split(">")]
     if len(parts) == 2:
-        pg.text(x + w / 2, y + h / 2 - 8, parts[0], 10.5, BLACK, bold=True, align=1)
-        pg.text(x + w / 2, y + h / 2 + 2, "\u2193", 10, GOLD, bold=True, align=1)
-        pg.text(x + w / 2, y + h / 2 + 13, parts[1], 10.5, BLACK, bold=True, align=1)
+        pg.text(x + w / 2, y + h / 2 - 7, parts[0], 10, BLACK, bold=True, align=1)
+        pg.text(x + w / 2, y + h / 2 + 2.5, "\u2193", 9, GOLD, bold=True, align=1)
+        pg.text(x + w / 2, y + h / 2 + 12.5, parts[1], 10, BLACK, bold=True, align=1)
     else:
         pg.text(x + w / 2, y + h / 2 + 4, parts[0], 10.5, BLACK, bold=True, align=1)
 
@@ -342,20 +354,20 @@ def side_rows(pg, data_key, x0, x1, y0, band_h, bandh, mirror):
         course_card(pg, cx, y + ch + 5, cw, ch, s["lds"])
 
 
-def transition_block(pg, x, y, w, h, n, level_index, name, desc):
+def transition_block(pg, x, y, w, h, label, level_index, name, desc):
     """The unit of analysis: one LDF transition, shown as the level it enters."""
     pg.box(x, y, w, h, fill=BLACK, stroke=None, radius=3)
-    br = 16
+    br = 15
     ldf_icons.badge(pg.p, x + 8 + br, y + h / 2, br, level_index, BLACK, WHITE, ring=True)
     tw = w - 8 - 2 * br
     tx = x + 8 + 2 * br + tw / 2
     cy = y + h / 2
-    pg.spaced(tx, cy - 12, f"TRANSITION {n}", 6, GOLD, bold=True, spacing=1.6, align=1)
+    pg.spaced(tx, cy - 11, label, 6, GOLD, bold=True, spacing=1.6, align=1)
     size = 9.5
     while pg.width(name, size, True) > tw - 10 and size > 7:
         size -= 0.25
     pg.text(tx, cy + 5, name, size, WHITE, bold=True, align=1)
-    pg.textbox(x + 8 + 2 * br + 2, cy + 10, tw - 6, 30, desc, 6.4, GRID, align=1, lh=1.2)
+    pg.textbox(x + 8 + 2 * br + 2, cy + 9, tw - 6, 30, desc, 6.4, GRID, align=1, lh=1.2)
 
 
 
@@ -377,30 +389,23 @@ def main():
         pg.spaced(x + w / 2, hy + 12.5, label, 7.2 if fill is SWAMP else 6.4, WHITE, bold=True,
                   spacing=0.6 if fill is BLACK else 1.6, align=1)
 
-    # entry state: Lead Self, before the first transition
-    ey = hy + 26
-    pg.box(spine_x, ey, spine_w, 20, fill=BLACK, stroke=None, radius=3)
-    ldf_icons.badge(pg.p, spine_x + 8 + 8, ey + 10, 8, 0, BLACK, WHITE, ring=True)
-    pg.spaced(spine_x + 30, ey + 13, "ENTRY", 5.4, GOLD, bold=True, spacing=1.4)
-    pg.text(spine_x + 62, ey + 13.5, "LEAD SELF", 7.5, WHITE, bold=True)
-    pg.text(spine_x + spine_w - 8, ey + 13.5, LEVELS[0][1], 6, GRID, align=2)
-
-    top, bandh = ey + 30, 90
+    top, bandh = hy + 26, 80
     band_h = bandh - 6
-    for i in range(6):
+    for i, row in enumerate(DATA):
         y = top + i * bandh
-        name, desc = LEVELS[i + 1]
-        transition_block(pg, spine_x, y, spine_w, band_h, i + 1, i + 1, name, desc)
+        name, desc = LEVELS[i]
+        label = "ENTRY" if row["transition"] == "Entry" else f"TRANSITION {row['transition'][1:]}"
+        transition_block(pg, spine_x, y, spine_w, band_h, label, i, name, desc)
         mid = y + band_h / 2
         pg.line(ox0, mid, ox1, mid, GRID, dashes="[1 3] 0")
         pg.line(sx0, mid, sx1, mid, GRID, dashes="[1 3] 0")
-        if i < 5:
+        if i < len(DATA) - 1:
             pg.arrow(W / 2, y + band_h, W / 2, y + bandh - 1)
     side_rows(pg, "officer", ox0, ox1, top, band_h, bandh, mirror=False)
     side_rows(pg, "soldier", sx0, sx1, top, band_h, bandh, mirror=True)
 
     # legend
-    ly = top + 6 * bandh + 2
+    ly = top + len(DATA) * bandh + 2
     lx = M
     pg.spaced(lx, ly + 9, "READ THIS PAGE LEFT TO RIGHT", 5.6, INK, bold=True, spacing=1.2)
     lx += 128
