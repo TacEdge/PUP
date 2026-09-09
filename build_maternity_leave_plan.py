@@ -29,7 +29,9 @@ MARKING = "UNCLASSIFIED"
 STATUS = [
     ("CURRENT STATUS", "Working as normal. Leave commences 21 December 2026."),
     ("RETURN", "28 January 2028. FTE to be confirmed in late November 2027."),
+    ("COURSE DELIVERY", "Covered by Preferred Contractors throughout the absence."),
 ]
+COVER_LABEL = "Course delivery covered by Preferred Contractors"
 
 D = dt.date
 SPAN = (D(2026, 9, 1), D(2028, 1, 31))
@@ -133,13 +135,12 @@ def letterhead(pg):
     pg.p.insert_image(pymupdf.Rect(M, 32, M + lh * iw / ih, 32 + lh), stream=png)
     pg.spaced(M, 68, KICKER, 7, SWAMP, bold=True, spacing=1.6)
     pg.text(M, 86, TITLE, 17, BLACK, bold=True)
-    pg.text(M, 99, SUBTITLE, 8.5, SWAMP)
-    pg.line(M, 105, W - M, 105, ARMY_RED, width=2)
-    pg.text(M, 116, ORIGINATOR, 8, SWAMP)
+    pg.line(M, 94, W - M, 94, ARMY_RED, width=2)
+    pg.text(M, 105, ORIGINATOR, 8, SWAMP)
     x = W - M
     for s, bold in ((DATE, False), ("Date: ", True)):
         x -= pg.width(s, 7.5, bold)
-        pg.text(x, 116, s, 7.5, BLACK, bold=bold)
+        pg.text(x, 105, s, 7.5, BLACK, bold=bold)
 
 
 def status_block(pg, y):
@@ -166,7 +167,7 @@ def timeline(pg, y, h):
     while d <= SPAN[1]:
         months.append(d)
         d = D(d.year + (d.month == 12), d.month % 12 + 1, 1)
-    bar_y, bar_h = y + 44, 34
+    bar_y, bar_h = y + 50, 34
     for k, m in enumerate(months):
         mx = xof(m)
         pg.line(mx, y + 26, mx, y + h, GRID, width=0.5)
@@ -197,6 +198,11 @@ def timeline(pg, y, h):
             pg.line(cx, ly - 2, cx + 6, ly - 2, MID, width=0.6)
             pg.text(cx + 9, ly, f"{short}   {start:%-d %b} to {end:%-d %b %Y}", 6.5, INK)
             callout += 1
+    # cover band across the absence
+    csx, cex = xof(LEAVE[0][0]), xof(LEAVE[-1][1] + dt.timedelta(days=1))
+    cy = bar_y - 14
+    pg.box(csx, cy, cex - csx, 10, fill=WHITE, stroke=SWAMP, width=0.7, radius=2)
+    pg.text((csx + cex) / 2, cy + 7.3, COVER_LABEL.upper(), 5.6, SWAMP, bold=True, align=1)
     # markers
     tx = xof(TODAY)
     pg.line(tx, y + 28, tx, y + h, ARMY_RED, width=1.2)
@@ -229,8 +235,8 @@ def build():
     doc = pymupdf.open()
     pg = Page(doc)
     letterhead(pg)
-    y = status_block(pg, 130)
-    y = timeline(pg, y + 16, 150)
+    y = status_block(pg, 119)
+    y = timeline(pg, y + 16, 156)
     sequence(pg, y + 34)
     doc.set_metadata({"title": "Kate Beckett: Maternity Leave Plan", "author": "Army Command School"})
     doc.save(OUT, garbage=3, deflate=True)
