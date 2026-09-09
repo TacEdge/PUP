@@ -40,7 +40,7 @@ SOURCES = {
     "AMEND": "Amendments from ACS (ALC), 9 and 10 Sep 2026: LDS Lead Systems is mandated for promotion to WO2; LDS Lead Capability is not mandated for promotion to WO1; Lead Integrated Capability is one 11-day course; Lead Organisation is three courses, Phase One (5 days), Phase Two (5 days) and Phase Three (2 days); ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice; at Lead Integrated Capability and Lead Organisation both Officers and Other Ranks are selected to attend",
 }
 
-TITLE = "Two promotion continuums. One leadership development framework."
+TITLE = "Army Leadership Development Continuums"
 SUBTITLE = "How do Officer and Soldier promotion continuums align to the intent and design of the LDF?"
 OBSERVATION = [
     "Soldier leadership development appears deliberately embedded within key promotion pathways.",
