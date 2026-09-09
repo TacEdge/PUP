@@ -420,7 +420,6 @@ def main():
         pg.spaced(M + 6, y + 12.5, f"{env}  /  {reo}", 8.8, BLACK, bold=True, spacing=2.0)
         lw = pg.width(f"{env}  /  {reo}", 8.8, True) + len(f"{env}  /  {reo}") * 2.0
         pg.text(M + 6 + lw + 14, y + 12.5, subtitle, 7.6, INK)
-        pg.line(M - 6, y + env_h - 1, W - M + 6, y + env_h - 1, GOLD, width=0.8)
         y += env_h
         for i in rows:
             row = DATA[i]
