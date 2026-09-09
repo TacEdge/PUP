@@ -226,10 +226,11 @@ class Page:
         sh.commit()
 
     def box(self, x, y, w, h, fill=None, stroke=GRID, width=0.8, dashes=None, radius=0):
+        """radius is in points; PyMuPDF takes it as a fraction of width and height."""
         sh = self.p.new_shape()
         r = pymupdf.Rect(x, y, x + w, y + h)
         if radius:
-            sh.draw_rect(r)  # PyMuPDF rounded rects need a ratio; keep square for print fidelity
+            sh.draw_rect(r, radius=(min(radius / w, 0.5), min(radius / h, 0.5)))
         else:
             sh.draw_rect(r)
         sh.finish(color=stroke, fill=fill, width=width, dashes=dashes)
@@ -249,7 +250,7 @@ class Page:
         w = self.width(label.upper(), size, True) + 14
         if right:
             x -= w
-        self.box(x, y, w, 12, fill=fill, stroke=None)
+        self.box(x, y, w, 12, fill=fill, stroke=None, radius=3)
         self.text(x + 7, y + 8.8, label.upper(), size, col, bold=True)
         return w
 
@@ -282,10 +283,10 @@ def field(pg, x, y, label, value, value_color=INK, bold=False):
 
 def course_card(pg, x, y, w, h, c):
     if c["course"] is None:
-        pg.box(x, y, w, h, fill=WHITE, stroke=GRID, dashes="[2 2] 0")
+        pg.box(x, y, w, h, fill=WHITE, stroke=GRID, dashes="[2 2] 0", radius=3)
         pg.text(x + w / 2, y + h / 2 + 2.5, c["note"], 7.2, MID, align=1)
         return
-    pg.box(x, y, w, h, fill=CARD, stroke=GRID)
+    pg.box(x, y, w, h, fill=CARD, stroke=GRID, radius=3)
     pg.text(x + 9, y + 12.5, c["course"], 9.2, BLACK, bold=True)
     if c["note"]:
         nx = x + 9 + pg.width(c["course"], 9.2, True) + 8
@@ -302,7 +303,7 @@ def course_card(pg, x, y, w, h, c):
 
 
 def rank_card(pg, x, y, w, h, rank):
-    pg.box(x, y, w, h, fill=WHITE, stroke=SWAMP, width=1.1)
+    pg.box(x, y, w, h, fill=WHITE, stroke=SWAMP, width=1.1, radius=3)
     lines = [s.strip() for s in rank.split(">")]
     if len(lines) == 2:
         pg.text(x + w / 2, y + h / 2 - 7, lines[0], 10, BLACK, bold=True, align=1)
@@ -342,14 +343,14 @@ def main():
     for x, w, label, sp in ((ox0, ox1 - ox0, "OFFICER CONTINUUM", 1.6),
                             (spine_x, spine_w, "LEADERSHIP DEVELOPMENT FRAMEWORK", 0.7),
                             (sx0, sx1 - sx0, "SOLDIER CONTINUUM", 1.6)):
-        pg.box(x, hy, w, 18, fill=SWAMP, stroke=None)
+        pg.box(x, hy, w, 18, fill=SWAMP, stroke=None, radius=3)
         pg.spaced(x + w / 2, hy + 12.5, label, 7.2, WHITE, bold=True, spacing=sp, align=1)
 
     top, bandh, lvl_h = 168, 100, 22
     band_h = bandh - lvl_h - 8
     for i, (name, desc) in enumerate(LEVELS):
         y = top + i * bandh
-        pg.box(spine_x, y, spine_w, lvl_h, fill=MOAWHANGO, stroke=None)
+        pg.box(spine_x, y, spine_w, lvl_h, fill=MOAWHANGO, stroke=None, radius=3)
         pg.text(spine_x + spine_w / 2, y + 9.5, name, 7.2, SWAMP, bold=True, align=1)
         pg.text(spine_x + spine_w / 2, y + 17.8, desc, 6.2, SWAMP, align=1)
         if i < 6:
