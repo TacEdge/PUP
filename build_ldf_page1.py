@@ -399,14 +399,14 @@ def main():
     ox0, ox1 = M, spine_x - side_gap
     sx0, sx1 = spine_x + spine_w + side_gap, W - M
 
-    hy = 140
+    hy = 138
     for x, w, label, sp, size in ((ox0, ox1 - ox0, "OFFICER PROMOTION CONTINUUM", 1.6, 7.2),
                                   (spine_x, spine_w, "LEADERSHIP DEVELOPMENT FRAMEWORK", 0.6, 6.4),
                                   (sx0, sx1 - sx0, "OTHER RANK PROMOTION CONTINUUM", 1.6, 7.2)):
-        pg.box(x, hy, w, 18, fill=BLACK, stroke=None, radius=3)
-        pg.spaced(x + w / 2, hy + 12.5, label, size, WHITE, bold=True, spacing=sp, align=1)
+        pg.box(x, hy, w, 26, fill=BLACK, stroke=None, radius=3)
+        pg.spaced(x + w / 2, hy + 16.5, label, size + 0.8, WHITE, bold=True, spacing=sp, align=1)
 
-    y = hy + 24
+    y = hy + 32
     bandh = 80
     band_h = bandh - 6
     env_h = 17
