@@ -24,7 +24,7 @@ import pymupdf
 # straight-on close-up exists: level index -> (RGBA file, disc radius as a
 # fraction of the image half-width).  These override the drawn glyph.
 RASTER = {
-    3: ("./assets/ldf-icon-lead-systems.png", 338 / 365),
+    3: ("./assets/ldf-icon-lead-systems.png", 0.965),
 }
 
 
