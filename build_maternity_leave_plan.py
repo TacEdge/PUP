@@ -209,7 +209,7 @@ def timeline(pg, y, h):
     pg.text(tx + 3, y + h - 3, "TODAY", 6.5, ARMY_RED, bold=True)
     cx = xof(CONFIRM_FTE[0])
     pg.line(cx, y + 28, cx, y + h, BLACK, width=0.8, dashes="[3 2] 0")
-    pg.text(cx - 3, y + 36, CONFIRM_FTE[1], 6.5, BLACK, bold=True, align=2)
+    pg.text(cx - 3, bar_y + bar_h + 14, CONFIRM_FTE[1], 6.5, BLACK, bold=True, align=2)
     rx = xof(RETURN[0])
     pg.line(rx, y + 28, rx, y + h, SWAMP, width=1.4)
     pg.text(rx - 3, y + h - 3, RETURN[1], 6.5, SWAMP, bold=True, align=2)
