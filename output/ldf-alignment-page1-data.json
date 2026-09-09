@@ -5,9 +5,40 @@
     "LEVELS": "NZDF Leadership Levels poster: rank to transition alignment (stated by the poster to be an estimation)",
     "CDS": "NZALC course data sheets A18011, A18008, A18010: duration, provider, target learners, prerequisites, included courses",
     "MTG": "NZALC review of 9 Sep 2026 (transcript): mandate position and delivery practice as stated by ACS staff",
+    "LDFENV": "NZDF Leadership Framework v2, The Leadership Environments and Tone, Climate, Culture: Foundational / Paparahi (Lead Self, Lead Teams, Lead Leaders), Operational / Paheko (Lead Systems, Lead Capability), Strategic / Rautaki (Lead Integrated Capability, Lead Organisation)",
     "LSW": "Lead Self Workbook (TAD) 2026: LDS Lead Self forms part of the LDS and is designed for Regular Force personnel enlisting into the NZDF",
     "AMEND": "Amendments from ACS (ALC), 9 and 10 Sep 2026: ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice; at Lead Integrated Capability and Lead Organisation both Officers and Other Ranks are selected to attend"
   },
+  "environments": [
+    [
+      "FOUNDATIONAL",
+      "PAPARAHI",
+      "Teams  \u00b7  Tone",
+      [
+        0,
+        1,
+        2
+      ]
+    ],
+    [
+      "OPERATIONAL",
+      "PAHEKO",
+      "Systems and units  \u00b7  Climate",
+      [
+        3,
+        4
+      ]
+    ],
+    [
+      "STRATEGIC",
+      "RAUTAKI",
+      "Institution  \u00b7  Culture",
+      [
+        5,
+        6
+      ]
+    ]
+  ],
   "levels": [
     [
       "LEAD SELF",

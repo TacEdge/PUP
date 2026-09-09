@@ -35,6 +35,7 @@ SOURCES = {
     "LEVELS": "NZDF Leadership Levels poster: rank to transition alignment (stated by the poster to be an estimation)",
     "CDS": "NZALC course data sheets A18011, A18008, A18010: duration, provider, target learners, prerequisites, included courses",
     "MTG": "NZALC review of 9 Sep 2026 (transcript): mandate position and delivery practice as stated by ACS staff",
+    "LDFENV": "NZDF Leadership Framework v2, The Leadership Environments and Tone, Climate, Culture: Foundational / Paparahi (Lead Self, Lead Teams, Lead Leaders), Operational / Paheko (Lead Systems, Lead Capability), Strategic / Rautaki (Lead Integrated Capability, Lead Organisation)",
     "LSW": "Lead Self Workbook (TAD) 2026: LDS Lead Self forms part of the LDS and is designed for Regular Force personnel enlisting into the NZDF",
     "AMEND": "Amendments from ACS (ALC), 9 and 10 Sep 2026: ELDA Command at T4 (7 days, NZALC, on request); LDS Lead Teams and LDS Lead Leaders embedded in the JNCO and SNCO Courses; officer LDS Lead Leaders routinely enforced in practice; at Lead Integrated Capability and Lead Organisation both Officers and Other Ranks are selected to attend",
 }
@@ -52,6 +53,15 @@ STATUS_MEANING = {"Mandated": "promotion prerequisite or embedded requirement",
                   "To confirm": "policy position not yet verified"}
 
 TC = "To confirm"
+
+# The three Leadership Environments (source: LDF, "The Leadership Environments
+# and Tone, Climate, Culture"): which levels each holds and the thing it shapes.
+ENVIRONMENTS = [
+    ("FOUNDATIONAL", "PAPARAHI", "Teams  \u00b7  Tone", (0, 1, 2)),
+    ("OPERATIONAL", "PAHEKO", "Systems and units  \u00b7  Climate", (3, 4)),
+    ("STRATEGIC", "RAUTAKI", "Institution  \u00b7  Culture", (5, 6)),
+]
+ENV_TINTS = ["F8F7F2", "F1F0E8", "EAE9DF"]
 
 # LDF levels: name and the first value-add heading from the LDF (source: LDF).
 LEVELS = [
@@ -336,20 +346,18 @@ def rank_card(pg, x, y, w, h, rank):
         pg.text(x + w / 2, y + h / 2 + 4, parts[0], 10.5, BLACK, bold=True, align=1)
 
 
-def side_rows(pg, data_key, x0, x1, y0, band_h, bandh, mirror):
+def side_row(pg, data_key, x0, x1, y, band_h, i, mirror):
     rw, gap = 92, 8
     cw = (x1 - x0) - rw - gap
     if mirror:
         rx, cx = x0, x0 + rw + gap
     else:
         cx, rx = x0, x1 - rw
-    for i, t in enumerate(DATA):
-        y = y0 + i * bandh
-        s = t[data_key]
-        rank_card(pg, rx, y, rw, band_h, s["rank"])
-        ch = (band_h - 5) / 2
-        course_card(pg, cx, y, cw, ch, s["elda"])
-        course_card(pg, cx, y + ch + 5, cw, ch, s["lds"])
+    s = DATA[i][data_key]
+    rank_card(pg, rx, y, rw, band_h, s["rank"])
+    ch = (band_h - 5) / 2
+    course_card(pg, cx, y, cw, ch, s["elda"])
+    course_card(pg, cx, y + ch + 5, cw, ch, s["lds"])
 
 
 def transition_block(pg, x, y, w, h, label, level_index, name, desc):
@@ -386,26 +394,40 @@ def main():
         pg.box(x, hy, w, 18, fill=BLACK, stroke=None, radius=3)
         pg.spaced(x + w / 2, hy + 12.5, label, size, WHITE, bold=True, spacing=sp, align=1)
 
-    top, bandh = hy + 26, 90
+    y = hy + 24
+    bandh = 80
     band_h = bandh - 6
-    for i, row in enumerate(DATA):
-        y = top + i * bandh
-        name, desc = LEVELS[i]
-        label = "ENTRY" if row["transition"] == "Entry" else f"TRANSITION {row['transition'][1:]}"
-        transition_block(pg, spine_x, y, spine_w, band_h, label, i, name, desc)
-        mid = y + band_h / 2
-        pg.line(ox0, mid, ox1, mid, GRID, dashes="[1 3] 0")
-        pg.line(sx0, mid, sx1, mid, GRID, dashes="[1 3] 0")
-        if i < len(DATA) - 1:
-            pg.arrow(W / 2, y + band_h, W / 2, y + bandh - 1)
-    side_rows(pg, "officer", ox0, ox1, top, band_h, bandh, mirror=False)
-    side_rows(pg, "soldier", sx0, sx1, top, band_h, bandh, mirror=True)
+    env_h = 17
+    for k, (env, reo, subtitle, rows) in enumerate(ENVIRONMENTS):
+        # the environment band: full width, so both continuums sit inside the same environment
+        bh = env_h + len(rows) * bandh
+        pg.box(M - 6, y, W - 2 * M + 12, bh, fill=rgb(ENV_TINTS[k]), stroke=None, radius=4)
+        pg.spaced(M + 6, y + 12, f"{env}  /  {reo}", 8, BLACK, bold=True, spacing=1.8)
+        lw = pg.width(f"{env}  /  {reo}", 8, True) + len(f"{env}  /  {reo}") * 1.8
+        pg.text(M + 6 + lw + 14, y + 12, subtitle, 7.2, MID)
+        pg.line(M - 6, y + env_h - 1, W - M + 6, y + env_h - 1, GOLD, width=1.2)
+        y += env_h
+        for i in rows:
+            row = DATA[i]
+            name, desc = LEVELS[i]
+            label = "ENTRY" if row["transition"] == "Entry" else f"TRANSITION {row['transition'][1:]}"
+            transition_block(pg, spine_x, y + 3, spine_w, band_h, label, i, name, desc)
+            mid = y + 3 + band_h / 2
+            pg.line(ox0, mid, ox1, mid, GRID, dashes="[1 3] 0")
+            pg.line(sx0, mid, sx1, mid, GRID, dashes="[1 3] 0")
+            side_row(pg, "officer", ox0, ox1, y + 3, band_h, i, mirror=False)
+            side_row(pg, "soldier", sx0, sx1, y + 3, band_h, i, mirror=True)
+            if i < len(DATA) - 1:
+                nxt = y + bandh + (env_h if i == rows[-1] else 0)
+                pg.arrow(W / 2, y + 3 + band_h, W / 2, nxt + 2)
+            y += bandh
+        y += 0
 
     doc.set_metadata({"title": "Officer and Other Rank Leadership Development: Page 1",
                       "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
     with open(OUT_DATA, "w", encoding="utf-8") as fh:
-        json.dump({"sources": SOURCES, "levels": LEVELS, "transitions": DATA}, fh, indent=2)
+        json.dump({"sources": SOURCES, "environments": ENVIRONMENTS, "levels": LEVELS, "transitions": DATA}, fh, indent=2)
     print(f"Saved {OUT} and {OUT_DATA}")
 
 
