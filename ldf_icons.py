@@ -16,8 +16,16 @@ Drawn with PyMuPDF shapes inside a circular badge, so they print crisply.
 """
 
 import math
+import os
 
 import pymupdf
+
+# Glyphs taken directly from photographs of the poster, where a clean
+# straight-on close-up exists: level index -> (RGBA file, disc radius as a
+# fraction of the image half-width).  These override the drawn glyph.
+RASTER = {
+    3: ("./assets/ldf-icon-lead-systems.png", 338 / 365),
+}
 
 
 # ----------------------------------------------------------------- figure --
@@ -196,5 +204,10 @@ def badge(page, cx, cy, radius, level_index, color, fill=(1, 1, 1), ring=True):
     sh.draw_circle((cx, cy), radius)
     sh.finish(color=color if ring else None, fill=fill, width=max(0.7, radius * 0.07))
     sh.commit()
+    if level_index in RASTER and os.path.exists(RASTER[level_index][0]):
+        path, frac = RASTER[level_index]
+        half = radius / frac                       # image half-width so the disc matches the badge
+        page.insert_image(pymupdf.Rect(cx - half, cy - half, cx + half, cy + half), filename=path)
+        return
     sh = page.new_shape()
     ICONS[level_index](page, sh, cx, cy, radius * SCALE[level_index], color, fill)

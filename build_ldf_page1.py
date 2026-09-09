@@ -352,14 +352,14 @@ def main():
     badge_r = 14
     for i, (name, desc) in enumerate(LEVELS):
         y = top + i * bandh
-        # the poster's block language: dark block, white badge, gold LEAD, white level name
-        pg.box(spine_x, y, spine_w, lvl_h, fill=SWAMP, stroke=None, radius=3)
-        ldf_icons.badge(pg.p, spine_x + 5 + badge_r, y + lvl_h / 2, badge_r, i, SWAMP, WHITE, ring=False)
+        # the poster's block language and palette: black block, white badge, black glyph, gold LEAD, white name
+        pg.box(spine_x, y, spine_w, lvl_h, fill=BLACK, stroke=None, radius=3)
+        ldf_icons.badge(pg.p, spine_x + 5 + badge_r, y + lvl_h / 2, badge_r, i, BLACK, WHITE, ring=False)
         tx = spine_x + 5 + 2 * badge_r + (spine_w - 5 - 2 * badge_r) / 2
         lead, rest = name.split(" ", 1)
         pg.spaced(tx, y + 10, lead, 5.6, GOLD, bold=False, spacing=1.4, align=1)
         pg.text(tx, y + 20, rest, 7.6, WHITE, bold=True, align=1)
-        pg.text(tx, y + 29, desc, 5.8, MOAWHANGO, align=1)
+        pg.text(tx, y + 29, desc, 5.8, GRID, align=1)
         if i < 6:
             by = y + lvl_h + 4
             mid = by + band_h / 2
