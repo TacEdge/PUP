@@ -41,7 +41,7 @@ SOURCES = {
 }
 
 TITLE = "Army Leadership Development Continuums"
-SUBTITLE = "How do Officer and Soldier promotion continuums align to the intent and design of the LDF?"
+SUBTITLE = "Officer and Soldier promotion continuums mapped against the NZDF Leadership Development Framework"
 OBSERVATION = [
     "Soldier leadership development appears deliberately embedded within key promotion pathways.",
     "Equivalent officer leadership development exists at comparable LDF transitions, but its formal linkage to promotion varies across the continuum.",
@@ -192,7 +192,7 @@ CARD = rgb("FAFAF8")
 
 STATUS_STYLE = {
     "Mandated": (rgb("EEF3E8"), SWAMP),
-    "Not mandated": (rgb("F7ECEC"), rgb("8A2E2E")),
+    "Not mandated": (rgb("F4EEEE"), rgb("6B3A3A")),
     "Selected": (rgb("F5F0E3"), rgb("6F5C33")),
     TC: (rgb("F1F1EF"), MID),
 }
@@ -370,14 +370,16 @@ def side_row(pg, data_key, x0, x1, y, band_h, i, mirror):
 
 
 def transition_block(pg, x, y, w, h, label, level_index, name, desc):
-    """The unit of analysis: one LDF transition, shown as the level it enters."""
-    pg.box(x, y, w, h, fill=BLACK, stroke=None, radius=3)
+    """The unit of analysis: one LDF transition, shown as the level it enters.
+    The entry state is drawn a step quieter: it is not one of the six."""
+    entry = label == "ENTRY"
+    pg.box(x, y, w, h, fill=rgb("3A3A3A") if entry else BLACK, stroke=None, radius=3)
     br = 15
-    ldf_icons.badge(pg.p, x + 8 + br, y + h / 2, br, level_index, BLACK, WHITE, ring=True)
+    ldf_icons.badge(pg.p, x + 8 + br, y + h / 2, br, level_index, rgb("3A3A3A") if entry else BLACK, WHITE, ring=True)
     tw = w - 8 - 2 * br
     tx = x + 8 + 2 * br + tw / 2
     cy = y + h / 2
-    pg.spaced(tx, cy - 11, label, 6, GOLD, bold=True, spacing=1.6, align=1)
+    pg.spaced(tx, cy - 11, label, 6, GRID if entry else GOLD, bold=True, spacing=1.6, align=1)
     size = 9.5
     while pg.width(name, size, True) > tw - 10 and size > 7:
         size -= 0.25
@@ -416,9 +418,9 @@ def main():
         # the environment band: full width, so both continuums sit inside the same environment
         bh = env_h + len(rows) * bandh
         pg.box(M - 6, y, W - 2 * M + 12, bh, fill=rgb(ENV_TINTS[k]), stroke=None, radius=4)
-        pg.spaced(M + 6, y + 12, f"{env}  /  {reo}", 8, BLACK, bold=True, spacing=1.8)
-        lw = pg.width(f"{env}  /  {reo}", 8, True) + len(f"{env}  /  {reo}") * 1.8
-        pg.text(M + 6 + lw + 14, y + 12, subtitle, 7.2, MID)
+        pg.spaced(M + 6, y + 12.5, f"{env}  /  {reo}", 8.8, BLACK, bold=True, spacing=2.0)
+        lw = pg.width(f"{env}  /  {reo}", 8.8, True) + len(f"{env}  /  {reo}") * 2.0
+        pg.text(M + 6 + lw + 14, y + 12.5, subtitle, 7.6, INK)
         pg.line(M - 6, y + env_h - 1, W - M + 6, y + env_h - 1, GOLD, width=0.8)
         y += env_h
         for i in rows:
