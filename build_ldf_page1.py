@@ -269,8 +269,7 @@ def letterhead(pg):
     pg.line(M, 115, W - M, 115, ARMY_RED, width=2.2)
     pg.text(M, 127, "Army Command School", 8.5, SWAMP)
     x = W - M
-    for s, bold, col in (("Draft for AITC discussion", True, ARMY_RED), ("Status: ", True, BLACK), ("   ·   ", False, MID),
-                         ("September 2026", False, BLACK), ("Date: ", True, BLACK)):
+    for s, bold, col in (("September 2026", False, BLACK), ("Date: ", True, BLACK)):
         x -= pg.width(s, 8, bold)
         pg.text(x, 127, s, 8, col, bold=bold)
 
