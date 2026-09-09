@@ -33,11 +33,11 @@ SOURCES = {
     "LEVELS": "NZDF Leadership Levels poster: rank to transition alignment (stated by the poster to be an estimation)",
     "CDS": "NZALC course data sheets A18011, A18008, A18010: duration, provider, target learners, prerequisites, included courses",
     "MTG": "NZALC review of 9 Sep 2026 (transcript): mandate position and delivery practice as stated by ACS staff",
+    "AMEND": "Marked-up amendments to page 1, 9 Sep 2026: ELDA Command placed at T4, 7 days, NZALC, on request",
 }
 
-TITLE = "Two continuums. One leadership framework."
-SUBTITLE = ("How deliberately does Army link leadership development to progression "
-            "through its Officer and Soldier promotion continuums?")
+TITLE = "Two continuums. One leadership development framework."
+SUBTITLE = "How do Officer and Other Rank promotion continuums align to the intent and design of the LDF?"
 CLOSE = "Same leadership framework. Different mechanisms for ensuring development occurs."
 CAVEAT = ("Rank pairings place the two continuums against the same LDF transitions for comparison; "
           "they do not assert that rank itself defines an LDF level.")
@@ -110,12 +110,14 @@ DATA = [
     dict(transition="T4", frm="LEAD SYSTEMS", to="LEAD CAPABILITY",
          officer=dict(
              rank="MAJ  >  LTCOL", rank_src=["LEVELS", "MTG"],
-             elda=NO_ELDA,
+             elda=course("ELDA Command", "Not mandated", "7 training days", "NZALC",
+                         note="On request", src=["CDS", "AMEND"]),
              lds=course("LDS Lead Capability", TC, TC, "ILD",
                         note="High observed uptake", src=["LDS", "MTG"])),
          soldier=dict(
              rank="WO2  >  WO1", rank_src=["LEVELS", "MTG"],
-             elda=NO_ELDA,
+             elda=course("ELDA Command", "Not mandated", "7 training days", "NZALC",
+                         note="On request", src=["CDS", "AMEND"]),
              lds=course("LDS Lead Capability", TC, TC, "ILD",
                         note="Expected in practice; policy to check", src=["LDS", "MTG"]))),
     dict(transition="T5", frm="LEAD CAPABILITY", to="LEAD INTEGRATED CAPABILITY",
@@ -255,17 +257,16 @@ class Page:
 def letterhead(pg):
     pg.text(W / 2, 26, "UNCLASSIFIED", 9, BLACK, bold=True, align=1)
     pg.text(W / 2, H - 30, "UNCLASSIFIED", 9, BLACK, bold=True, align=1)
-    pg.text(M, H - 17, "NZALC | Leadership Development Discussion Piece", 8.5, BLACK)
+    pg.text(M, H - 17, "Leadership Development Framework Discussion", 8.5, BLACK)
     pg.text(W / 2, H - 17, "ACS 2026", 8.5, BLACK, align=1)
     pg.text(W - M, H - 17, "Page 1 of 2", 8.5, BLACK, align=2)
     png, (iw, ih) = logo_png()
     lh = 26
     pg.p.insert_image(pymupdf.Rect(M, 34, M + lh * iw / ih, 34 + lh), stream=png)
-    pg.spaced(M, 74, "AITC DISCUSSION PIECE", 7.5, SWAMP, bold=True, spacing=1.8)
-    pg.text(M, 94, TITLE, 20, BLACK, bold=True)
-    pg.text(M, 108, SUBTITLE, 9.5, SWAMP)
+    pg.text(M, 88, TITLE, 20, BLACK, bold=True)
+    pg.text(M, 106, SUBTITLE, 11, SWAMP)
     pg.line(M, 115, W - M, 115, ARMY_RED, width=2.2)
-    pg.text(M, 127, "New Zealand Army Leadership Centre | Army Command School", 8.5, SWAMP)
+    pg.text(M, 127, "Army Command School", 8.5, SWAMP)
     x = W - M
     for s, bold, col in (("Draft for AITC discussion", True, ARMY_RED), ("Status: ", True, BLACK), ("   ·   ", False, MID),
                          ("September 2026", False, BLACK), ("Date: ", True, BLACK)):
@@ -276,7 +277,7 @@ def letterhead(pg):
 def field(pg, x, y, label, value, value_color=INK, bold=False):
     pg.spaced(x, y, label, 5.6, MID, bold=True, spacing=0.9)
     lw = pg.width(label, 5.6, True) + len(label) * 0.9 + 6
-    pg.text(x + lw, y, value, 7.4, value_color, bold=bold)
+    pg.text(x + lw, y, value, 7.6, value_color, bold=bold)
 
 
 def course_card(pg, x, y, w, h, c):
@@ -285,12 +286,12 @@ def course_card(pg, x, y, w, h, c):
         pg.text(x + w / 2, y + h / 2 + 2.5, c["note"], 7.2, MID, align=1)
         return
     pg.box(x, y, w, h, fill=CARD, stroke=GRID)
-    pg.text(x + 9, y + 11.5, c["course"], 8.8, BLACK, bold=True)
+    pg.text(x + 9, y + 12.5, c["course"], 9.2, BLACK, bold=True)
     if c["note"]:
-        nx = x + 9 + pg.width(c["course"], 8.8, True) + 8
-        pg.text(nx, y + 11.5, c["note"], 6.4, MID)
-    pg.pill(x + w - 7, y + 3.5, c["mandate"], right=True)
-    fx, fy = x + 9, y + 23.5
+        nx = x + 9 + pg.width(c["course"], 9.2, True) + 8
+        pg.text(nx, y + 12.5, c["note"], 6.6, MID)
+    pg.pill(x + w - 7, y + 4.5, c["mandate"], right=True)
+    fx, fy = x + 9, y + 25.5
     field(pg, fx, fy, "DURATION", c["duration"], MID if c["duration"] == TC else INK)
     fx += 106
     dcol = DELIVERY_STYLE.get(c["delivered"], MID if c["delivered"] == TC else INK)
@@ -344,13 +345,13 @@ def main():
         pg.box(x, hy, w, 18, fill=SWAMP, stroke=None)
         pg.spaced(x + w / 2, hy + 12.5, label, 7.2, WHITE, bold=True, spacing=sp, align=1)
 
-    top, bandh, lvl_h = 166, 91, 20
+    top, bandh, lvl_h = 168, 100, 22
     band_h = bandh - lvl_h - 8
     for i, (name, desc) in enumerate(LEVELS):
         y = top + i * bandh
         pg.box(spine_x, y, spine_w, lvl_h, fill=MOAWHANGO, stroke=None)
-        pg.text(spine_x + spine_w / 2, y + 8.8, name, 7, SWAMP, bold=True, align=1)
-        pg.text(spine_x + spine_w / 2, y + 16.5, desc, 5.9, SWAMP, align=1)
+        pg.text(spine_x + spine_w / 2, y + 9.5, name, 7.2, SWAMP, bold=True, align=1)
+        pg.text(spine_x + spine_w / 2, y + 17.8, desc, 6.2, SWAMP, align=1)
         if i < 6:
             by = y + lvl_h + 4
             mid = by + band_h / 2
@@ -360,30 +361,6 @@ def main():
     y0 = top + lvl_h + 4
     side_rows(pg, "officer", ox0, ox1, y0, band_h, bandh, mirror=False)
     side_rows(pg, "soldier", sx0, sx1, y0, band_h, bandh, mirror=True)
-
-    # legend
-    ly = top + 6 * bandh + lvl_h + 6
-    lx = M
-    pg.spaced(lx, ly + 9.5, "MANDATE", 6, MID, bold=True, spacing=1.2)
-    lx += 50
-    for s in ("Mandated", "Not mandated", TC):
-        lx += pg.pill(lx, ly, s) + 8
-    lx += 20
-    pg.spaced(lx, ly + 9.5, "DELIVERED BY", 6, MID, bold=True, spacing=1.2)
-    lx += 66
-    pg.text(lx, ly + 9.5, "NZALC", 7.4, SWAMP, bold=True)
-    lx += 40
-    pg.text(lx, ly + 9.5, "ILD", 7.4, GOLD, bold=True)
-    lx += 30
-    pg.text(lx, ly + 9.5, "Institute for Leader Development, tri-Service", 6.5, MID)
-
-    # close
-    cy = ly + 18
-    pg.box(M, cy, W - 2 * M, 26, fill=SWAMP, stroke=None)
-    pg.spaced(W / 2, cy + 17.5, CLOSE.upper(), 11, WHITE, bold=True, spacing=0.8, align=1)
-    pg.text(M, cy + 36, CAVEAT, 6.8, MID)
-    pg.text(W - M, cy + 36, "Sources: NZDF Leadership Framework v2; LDS and Leadership Levels posters; NZALC course data sheets "
-                            "A18011, A18008, A18010; NZALC review, 9 September 2026.", 6.8, MID, align=2)
 
     doc.set_metadata({"title": "Officer and Soldier Leadership Development: Page 1",
                       "author": "New Zealand Army Leadership Centre"})
