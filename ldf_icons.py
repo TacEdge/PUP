@@ -25,6 +25,7 @@ import pymupdf
 # fraction of the image half-width).  These override the drawn glyph.
 RASTER = {
     3: ("./assets/ldf-icon-lead-systems.png", 0.965),
+    5: ("./assets/ldf-icon-lead-integrated-capability.png", 0.965),
 }
 
 
