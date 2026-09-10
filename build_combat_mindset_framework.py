@@ -207,9 +207,8 @@ def page2(d):
     ]
     for head, col, body in defs:
         pg.box(M, y, W - 2 * M, 58, fill=FAINT, stroke=None, radius=4)
-        pg.box(M, y, 6, 58, fill=col, stroke=None)
-        pg.spaced(M + 16, y + 15, head, 7.5, col if col is not BLACK else BLACK, bold=True, spacing=1.4)
-        pg.textbox(M + 16, y + 20, W - 2 * M - 28, 38, body, 8, INK, lh=1.3)
+        pg.spaced(M + 12, y + 15, head, 7.5, col, bold=True, spacing=1.4)
+        pg.textbox(M + 12, y + 20, W - 2 * M - 24, 38, body, 8, INK, lh=1.3)
         y += 66
     y += 4
     pg.spaced(M, y + 8, "THE COMBAT-SPECIFICITY TEST", 7.5, SWAMP, bold=True, spacing=1.4)
