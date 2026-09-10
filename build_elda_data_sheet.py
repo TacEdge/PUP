@@ -658,8 +658,9 @@ def add_title_block(kicker, title, tag, reference=None, locator=None,
     tag_p.paragraph_format.space_after = Pt(6)
     tag_p.paragraph_format.keep_with_next = True
     set_border(tag_p, "bottom", ARMY_RED, 18, space=8)
-    r = _run(tag_p, tag.upper(), FONT_HEAD, Pt(9.5), True, False, SWAMP_GREEN)
-    letterspace(r, 30)
+    if tag:
+        r = _run(tag_p, tag.upper(), FONT_HEAD, Pt(9.5), True, False, SWAMP_GREEN)
+        letterspace(r, 30)
 
     org_p = doc.add_paragraph()
     org_p.paragraph_format.space_before = Pt(6)

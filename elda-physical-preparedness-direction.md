@@ -1,4 +1,4 @@
-# Direction to ELDA Wing: Physical Preparedness
+# Direction to SI ELDA Wing: Physical Preparedness
 
 ## Context
 

@@ -13,11 +13,11 @@ import build_elda_data_sheet as cds
 SOURCE = "./elda-physical-preparedness-direction.md"
 OUTPUT_DOCX = "./output/elda-physical-preparedness-direction.docx"
 TITLE = "Physical Preparedness"
-KICKER = "Direction to ELDA Wing"
-TAG = "COMDT ACS direction of 10 September 2026 applied to ELDA delivery"
+KICKER = "Direction to SI ELDA Wing"
+TAG = None
 REFERENCE = "COMDT ACS discussion, 10 September 2026"
-STATUS = "For action"
-FOOTER_LEFT = "NZALC | Direction to ELDA Wing"
+STATUS = None
+FOOTER_LEFT = "NZALC | Direction to SI ELDA Wing"
 
 
 def build():

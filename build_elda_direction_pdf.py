@@ -15,14 +15,14 @@ OUT = "./output/elda-physical-preparedness-direction.pdf"
 W, H = 595, 842
 M = 56
 
-KICKER = "DIRECTION TO ELDA WING"
+KICKER = "DIRECTION TO SI ELDA WING"
 TITLE = "Physical Preparedness"
 SUBTITLE = "COMDT ACS DIRECTION OF 10 SEPTEMBER 2026 APPLIED TO ELDA DELIVERY"
 ORIGINATOR = "New Zealand Army Leadership Centre | Army Command School"
 REFERENCE = "COMDT ACS discussion, 10 September 2026"
 DATE = "September 2026"
 STATUS = "For action"
-FOOTER_LEFT = "NZALC | Direction to ELDA Wing"
+FOOTER_LEFT = "NZALC | Direction to SI ELDA Wing"
 
 CONTEXT = ("COMDT ACS has identified a need to strengthen physical preparedness across promotion training. His direction is "
            "that soldiers should arrive on promotion courses having already met the required Army physical standards, with "
@@ -74,17 +74,15 @@ def build():
     pg.p.insert_image(pymupdf.Rect(M, 56, M + lh * iw / ih, 56 + lh), stream=png)
     pg.spaced(M, 108, KICKER, 8, SWAMP, bold=True, spacing=1.8)
     pg.text(M, 134, TITLE, 22, BLACK, bold=True)
-    pg.spaced(M, 152, SUBTITLE, 7.5, SWAMP, bold=True, spacing=1.4)
-    pg.line(M, 160, W - M, 160, ARMY_RED, width=2)
-    pg.text(M, 176, ORIGINATOR, 9, SWAMP)
+    pg.line(M, 144, W - M, 144, ARMY_RED, width=2)
+    pg.text(M, 160, ORIGINATOR, 9, SWAMP)
     x = M
     for s, bold, col in (("Reference: ", True, BLACK), (REFERENCE, False, BLACK), ("   ·   ", False, MID),
-                         ("Date: ", True, BLACK), (DATE, False, BLACK), ("   ·   ", False, MID),
-                         ("Status: ", True, BLACK), (STATUS, True, ARMY_RED)):
-        pg.text(x, 190, s, 8, col, bold=bold)
+                         ("Date: ", True, BLACK), (DATE, False, BLACK)):
+        pg.text(x, 174, s, 8, col, bold=bold)
         x += pg.width(s, 8, bold)
 
-    y = heading(pg, 226, "Context")
+    y = heading(pg, 212, "Context")
     y = paragraph(pg, y + 6, CONTEXT) + 14
     y = heading(pg, y, "Direction")
     y = paragraph(pg, y + 6, LEAD) + 6
@@ -111,7 +109,7 @@ def build():
     card_h = 74
     pg.box(M, y + 2, W - 2 * M, card_h, fill=MOAWHANGO, stroke=None, radius=8)
     pg.textbox(M + 18, y + 16, W - 2 * M - 36, card_h - 20, BOTTOM_LINE, 11.5, SWAMP, bold=True, lh=1.35)
-    doc.set_metadata({"title": "Direction to ELDA Wing: Physical Preparedness", "author": "New Zealand Army Leadership Centre"})
+    doc.set_metadata({"title": "Direction to SI ELDA Wing: Physical Preparedness", "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
     print(f"Saved {OUT}")
 
