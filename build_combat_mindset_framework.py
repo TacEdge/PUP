@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Combat Mindset Framework v0.2, AITC Discussion Draft: a seven-page visual
+Combat Mindset Framework v0.3, AITC Discussion Draft: a seven-page visual
 draft in the NZ Army house style, drawn with PyMuPDF.
 
-    python3 build_combat_mindset_framework.py -> output/combat-mindset-framework-v0.2.pdf
+    python3 build_combat_mindset_framework.py -> output/combat-mindset-framework-v0.3.pdf
 
 Sources: NZ Army Combat Mindset Framework Proposal V1.0 (August 2026) and
 the COMDT ACS discussion of 10 September 2026 as summarised by ACS (ALC).
@@ -15,16 +15,16 @@ import pymupdf
 from army_onepager import (ARMY_RED, BLACK, FAINT, GOLD, GRID, INK, MID, MOAWHANGO, PALE, SWAMP, WHITE,
                            Page, logo_png, rgb)
 
-OUT = "./output/combat-mindset-framework-v0.2.pdf"
+OUT = "./output/combat-mindset-framework-v0.3.pdf"
 W, H = 595, 842                 # A4 portrait
 M = 40
 TOTAL = 7
 OLIVE = rgb("4A5A1E")
 CHARCOAL = rgb("2B2B2B")
 
-DOC_NAME = "Combat Mindset Framework v0.2"
-FOOTER_LEFT = "Combat Mindset Framework v0.2, AITC Discussion Draft"
-KICKER = "COMBAT MINDSET FRAMEWORK  V0.2   ·   AITC DISCUSSION DRAFT"
+DOC_NAME = "Combat Mindset Framework v0.3"
+FOOTER_LEFT = "Combat Mindset Framework v0.3, AITC Discussion Draft"
+KICKER = "COMBAT MINDSET FRAMEWORK  V0.3   ·   AITC DISCUSSION DRAFT"
 
 STEPS = [
     ("1", "UNDERSTAND SELF", "Recognise physiological and cognitive responses to pressure.",
@@ -44,20 +44,20 @@ STEPS = [
      "Field, tactical and collective training; mission-specific preparation", "All levels"),
 ]
 
+# Capability and pathway categories first; the current provider is secondary text.
 PATHWAYS = [
-    ("Physical training", "Routine practice of physiological regulation, composure, attention, communication and presence under genuine physical interference", [2, 1, 1, 0, 0]),
-    ("Recruit and initial training", "LDS Lead Self; first exposure to the model and the language", [2, 1, 0, 0, 0]),
-    ("JNCO, SNCO and WO promotion courses", "NZALC LDS and ELDA Lead Teams, Lead Leaders and Lead Systems", [1, 2, 2, 2, 1]),
-    ("Officer commissioning and ELDA", "NZCC with ELDA and LDS Lead Teams; ELDA Lead Leaders and Lead Systems", [1, 2, 2, 2, 1]),
-    ("Performance cognition (HPC)", "COGCON: developmental; role, evidence, ownership and scale assessed in Phase 2", [1, 2, 1, 0, 0]),
-    ("Army Psychology Services", "Mental skills, psychological support and professional advice", [2, 2, 1, 1, 0]),
-    ("Field, tactical and collective training", "Application against the defining demands of combat; unit-owned", [0, 1, 2, 2, 2]),
-    ("ILD, Lead Systems and above", "Tri-Service leadership development at senior levels", [0, 0, 1, 2, 1]),
+    ("Physical training", "Routine practice of physiological regulation, composure, attention, communication and presence under genuine physical interference", "Units; PTI cadre", [2, 1, 1, 0, 0]),
+    ("Recruit and initial training", "First exposure to the model and the language; LDS Lead Self", "TAD; OCS", [2, 1, 0, 0, 0]),
+    ("Promotion and leadership training", "JNCO, SNCO and WO courses, NZCC, and the LDS and ELDA courses within them", "NZALC; NCO School; OCS", [1, 2, 2, 2, 1]),
+    ("Performance cognition", "Cognitive conditioning under physical and cognitive load; developmental, assessed in Phase 2", "Currently HPC (COGCON)", [1, 2, 1, 0, 0]),
+    ("Mental skills and psychological capability", "Mental-skills training, psychological support and professional advice", "Currently APS", [2, 2, 1, 1, 0]),
+    ("Field, tactical and collective training", "Application against the defining demands of combat", "Units; formations", [0, 1, 2, 2, 2]),
+    ("Senior leadership development", "Lead Systems and above", "ILD; NZALC", [0, 0, 1, 2, 1]),
 ]
 
 GOVERNANCE = [
-    ("G7", "Doctrine and policy owner", "Owns Combat Mindset doctrine and policy; approves the framework as Army doctrine"),
-    ("ARMY TRAINING GROUP", "Training governance and approval", "Governs training; approves course data sheet changes through the ATRB"),
+    ("G7", "Doctrine and policy owner", "Owns Combat Mindset doctrine and policy; provides doctrinal authority for the framework"),
+    ("ARMY TRAINING GROUP", "Training governance", "Owns training governance; approves course data sheet changes through the ATRB"),
     ("ARMY COMMAND SCHOOL", "Learning provider", "Sponsors the framework; provides the learning system through which it is delivered"),
     ("NZALC AND ACS ELEMENTS", "Development, delivery and integration", "Develops the framework; delivers and integrates it through the leadership development system and course pathways"),
 ]
@@ -65,16 +65,15 @@ ADVISERS = [("ARMY PSYCHOLOGY SERVICES", "Psychological and mental-skills expert
             ("HUMAN PERFORMANCE CELL", "Human-performance and performance-cognition expertise"),
             ("ILD AND OTHER SMEs", "Tri-Service leadership development; evidence and assurance")]
 
-CDS_ROWS = [
-    ("Recruit training", "Lead Self", "1, 2", "Amend: carry Understand Self and Regulate Self outcomes"),
-    ("Unit physical training programme", "PT policy and unit programmes", "2", "Direct: embed regulation practice; no new course"),
-    ("A1530 JNCO Course with ELDA Lead Teams", "Lead Teams", "2, 3", "Amend A1530 and A18011 to carry the outcomes"),
-    ("NZCC with ELDA and LDS Lead Teams", "Lead Teams", "2, 3", "Amend NZCC CDS to carry the outcomes"),
-    ("A1531 SNCO Course with ELDA Lead Leaders", "Lead Leaders", "3, 4", "Amend A1531 and A18008 to carry the outcomes"),
-    ("A1532 WO Course with ELDA Lead Systems", "Lead Systems", "4", "Amend A1532 and A18010 to carry the outcomes"),
-    ("ELDA Command", "Command teams", "4, 5", "Amend A18009; collective application under representative demands"),
-    ("COGCON", "Developmental", "2", "Hold: Phase 2 assessment decides role, owner and scale"),
-    ("Field, tactical and collective training", "Unit-owned", "5", "Guidance: combat-specific application standards; no new course"),
+# Indicative allocation of outcomes to pathway categories.  Course-level
+# placement follows the Phase 2 mapping and goes through training governance.
+ALLOCATION = [
+    ("Recruit and initial training", "Lead Self", "1, 2", "Outcomes carried in initial training"),
+    ("Physical training", "All levels", "2", "Routine practice embedded in unit programmes; directed through policy"),
+    ("Promotion and leadership training", "Lead Teams to Lead Systems", "2, 3, 4", "Outcomes carried in the promotion and commissioning pathways and their LDS and ELDA components"),
+    ("Command team development", "Command teams", "4, 5", "Collective application under representative demands"),
+    ("Performance cognition and mental skills", "Lead Self to Lead Leaders", "1, 2", "Complementary components; role and scale confirmed in Phase 2"),
+    ("Field, tactical and collective training", "All levels", "5", "Combat-specific application; guidance rather than a course"),
 ]
 
 TIMELINE = [
@@ -176,7 +175,7 @@ def page1(d):
 
     # 6 governance
     pg.box(M, y, W - 2 * M, 58, fill=FAINT, stroke=None, radius=4)
-    label_pill(pg, W / 2, y - 6, "6   GOVERNANCE   ·   PROPOSED", fill=BLACK)
+    label_pill(pg, W / 2, y - 6, "6   PROPOSED GOVERNANCE   ·   FOR CONFIRMATION", fill=BLACK)
     chain = [("G7", "doctrine and policy"), ("ATG", "training governance"), ("ACS", "learning provider"), ("NZALC", "development and delivery")]
     bw = 84
     gx = M + 8
@@ -241,21 +240,24 @@ def page2(d):
         pg.textbox(M + 24, yy + 11, W - 2 * M - 24, 26, b, 7.5, INK, lh=1.25)
         yy += 36
     y = yy + 4
-    pg.box(M, y, W - 2 * M, 112, fill=PALE, stroke=None, radius=4)
-    pg.spaced(M + 12, y + 14, "WHAT HAS CHANGED SINCE V1.0", 6.5, SWAMP, bold=True, spacing=1.4)
-    changes = [
-        "The construct is endorsed: Combat Mindset as the combat-specific expression of Performance Under Pressure (Option 1).",
-        "Direction not to create a standalone course: organise, standardise and connect what exists, then embed it through existing training pathways.",
-        "A proposed governance chain, G7 to ATG to ACS to NZALC, with APS, HPC and ILD as technical advisers rather than owners.",
-        "A five-step developmental architecture in place of a product-by-product organisation.",
-        "Physical training identified as the routine environment for practising self-regulation.",
-        "A nearer decision point: AITC on or about 14 October 2026.",
-    ]
-    yy = y + 32
-    for c in changes:
-        pg.text(M + 14, yy, "•", 7.5, SWAMP)
-        pg.textbox(M + 22, yy - 7, W - 2 * M - 34, 14, c, 7, INK, lh=1.2)
-        yy += 12
+    pg.box(M, y, W - 2 * M, 104, fill=PALE, stroke=None, radius=4)
+    cw = (W - 2 * M - 36) / 2
+    does = ["Defines the capability Army develops and the outcomes it expects.",
+            "Sets a developmental architecture common to every pathway.",
+            "Maps existing products and pathways to those outcomes.",
+            "Proposes governance and assurance for the whole system."]
+    does_not = ["Create a new course or a standalone Combat Mindset programme.",
+                "Replace existing products or the organisations that deliver them.",
+                "Assign technical ownership before the Phase 2 assessment.",
+                "Make every pressure activity Combat Mindset."]
+    for k, (head, items) in enumerate((("WHAT THIS FRAMEWORK DOES", does), ("WHAT IT DOES NOT DO", does_not))):
+        x = M + 12 + k * (cw + 12)
+        pg.spaced(x, y + 14, head, 6.5, SWAMP, bold=True, spacing=1.4)
+        yy = y + 30
+        for it in items:
+            pg.text(x, yy, "•", 7.5, SWAMP)
+            pg.textbox(x + 8, yy - 7, cw - 10, 22, it, 7, INK, lh=1.2)
+            yy += 17
 
 
 def page3(d):
@@ -310,12 +312,13 @@ def page4(d):
         pg.text(x + cw / 2, y + 12, num, 8, GOLD, bold=True, align=1)
         pg.textbox(x + 2, y + 15, cw - 4, 24, name, 5, WHITE, bold=True, align=1, lh=1.1)
     y += 38
-    rh = 46
-    for r, (name, note, marks) in enumerate(PATHWAYS):
+    rh = 50
+    for r, (name, note, provider, marks) in enumerate(PATHWAYS):
         fill = rgb("F3F3EF") if r % 2 else WHITE
         pg.box(M, y, W - 2 * M, rh, fill=fill, stroke=GRID)
-        pg.textbox(M + 6, y + 8, lw - 10, 16, name, 7.5, BLACK, bold=True, lh=1.2)
-        pg.textbox(M + 6, y + 21, lw + dw - 14, rh - 22, note, 6.2, MID, lh=1.2)
+        pg.textbox(M + 6, y + 7, lw + dw - 14, 16, name, 7.5, BLACK, bold=True, lh=1.2)
+        pg.textbox(M + 6, y + 19, lw + dw - 14, 22, note, 6.2, INK, lh=1.2)
+        pg.text(M + 6, y + rh - 6, f"Current provider: {provider}", 5.6, MID)
         for k, m in enumerate(marks):
             cx = M + lw + dw + k * cw + cw / 2
             cy = y + rh / 2
@@ -333,10 +336,10 @@ def page4(d):
     pg.box(M, y, W - 2 * M, 70, fill=PALE, stroke=None, radius=4)
     pg.spaced(M + 12, y + 14, "HOW TO READ THE MAP", 6.5, SWAMP, bold=True, spacing=1.4)
     pg.textbox(M + 12, y + 20, W - 2 * M - 24, 48,
+               "Rows are capabilities and pathways, not organisations; the provider named beneath each is the current one and may change. "
                "Read down a column to see which pathways develop a step; read across a row to see how far a pathway reaches. "
                "No single pathway carries the whole capability, and no pathway is the framework. Performance cognition and mental skills sit inside "
-               "Performance Under Pressure as complementary components, psychological and cognitive skill alongside physiological self-regulation, "
-               "trained progressively and then applied under increasingly representative pressure. The map is not an organisational turf chart.",
+               "Performance Under Pressure as complementary components, trained progressively and applied under increasingly representative pressure.",
                7.5, INK, lh=1.3)
 
 
@@ -388,7 +391,7 @@ def page5(d):
 
 
 def page6(d):
-    pg = d.page("Syllabus and CDS Architecture", "What AITC would be approving: outcome statements carried into existing course data sheets, and where.")
+    pg = d.page("Outcomes and Pathway Allocation", "The five outcomes, the embedded-delivery principle, and an indicative allocation to pathways.")
     y = 122
     pg.spaced(M, y + 8, "DRAFT DEVELOPMENTAL OUTCOMES", 7.5, SWAMP, bold=True, spacing=1.4)
     outcomes = [
@@ -405,9 +408,9 @@ def page6(d):
         pg.textbox(M + 24, yy + 3, W - 2 * M - 24, 16, o, 7.8, INK, lh=1.2)
         yy += 22
     y = yy + 8
-    pg.spaced(M, y + 8, "WHERE THE OUTCOMES ARE CARRIED", 7.5, SWAMP, bold=True, spacing=1.4)
+    pg.spaced(M, y + 8, "INDICATIVE ALLOCATION TO PATHWAYS", 7.5, SWAMP, bold=True, spacing=1.4)
     y += 16
-    heads = ["PATHWAY OR COURSE", "LEVEL", "OUTCOMES", "CDS ACTION"]
+    heads = ["PATHWAY", "LEVEL", "OUTCOMES", "HOW THE OUTCOMES ARE CARRIED"]
     widths = [190, 90, 60, 175]
     xs = [M]
     for w in widths[:-1]:
@@ -416,8 +419,8 @@ def page6(d):
         pg.box(x, y, w, 16, fill=SWAMP, stroke=WHITE)
         pg.spaced(x + 5, y + 11, h, 5.6, WHITE, bold=True, spacing=0.9)
     y += 16
-    rh = 30
-    for r, (course, level, outs, action) in enumerate(CDS_ROWS):
+    rh = 34
+    for r, (course, level, outs, action) in enumerate(ALLOCATION):
         fill = rgb("F3F3EF") if r % 2 else WHITE
         pg.box(M, y, sum(widths), rh, fill=fill, stroke=GRID)
         pg.textbox(xs[0] + 5, y + 5, widths[0] - 10, rh - 6, course, 7, BLACK, bold=True, lh=1.2)
@@ -427,11 +430,11 @@ def page6(d):
         y += rh
     y += 12
     pg.box(M, y, W - 2 * M, 64, fill=PALE, stroke=None, radius=4)
-    pg.spaced(M + 12, y + 14, "WHAT AITC IS ASKED TO APPROVE", 6.5, SWAMP, bold=True, spacing=1.4)
+    pg.spaced(M + 12, y + 14, "WHAT AITC IS ASKED TO ENDORSE", 6.5, SWAMP, bold=True, spacing=1.4)
     pg.textbox(M + 12, y + 20, W - 2 * M - 24, 44,
-               "The outcome statements and the principle that they are carried in existing course data sheets rather than in a new course. "
-               "Individual CDS amendments follow through the ATRB once Framework v1.0 is approved. Course codes, levels and the outcome allocation "
-               "are indicative and rest on the Phase 2 assessment; the COGCON row is held pending that assessment.",
+               "The five outcomes, the embedded-delivery principle, and this indicative allocation. Detailed course data sheet amendments "
+               "will be developed following the Phase 2 mapping and submitted through the appropriate training governance process. "
+               "Nothing on this page places an outcome in a specific course.",
                7.5, INK, lh=1.3)
 
 
@@ -473,27 +476,19 @@ def page7(d):
     pg.spaced(M, y + 8, "BOUNDED PILOTS, OCTOBER TO NOVEMBER", 7.5, SWAMP, bold=True, spacing=1.4)
     pilots = ["PT-embedded self-regulation practice in one unit programme, with the PTI cadre.",
               "One JNCO Course or ELDA Lead Teams serial carrying outcomes 2 and 3 explicitly.",
-              "Stakeholder validation of the map, governance and CDS architecture with ACS, NZALC, HPC, APS, ILD and selected units."]
+              "Stakeholder validation of the map, governance model and pathway allocation with ACS, NZALC, HPC, APS, ILD and selected units."]
     yy = y + 20
     for p in pilots:
         pg.text(M + 2, yy, "•", 8, SWAMP)
         pg.textbox(M + 12, yy - 7, W - 2 * M - 12, 16, p, 7.5, INK, lh=1.2)
         yy += 14
-    y = yy + 8
-    pg.box(M, y, W - 2 * M, 54, fill=PALE, stroke=None, radius=4)
-    pg.spaced(M + 12, y + 14, "SEPARATE WORKSTREAM: LCFT CURRENCY", 6.5, SWAMP, bold=True, spacing=1.4)
-    pg.textbox(M + 12, y + 20, W - 2 * M - 24, 34,
-               "The 10 September discussion also produced a command decision on physical currency before promotion training: units certify LCFT currency, "
-               "NCO School enforces it, and ELDA remains a developmental environment rather than an informal fitness assessment. That is progressed as its own "
-               "workstream and is not part of the Combat Mindset Framework.",
-               7.2, INK, lh=1.3)
 
 
 def build():
     d = Doc()
     for fn in (page1, page2, page3, page4, page5, page6, page7):
         fn(d)
-    d.doc.set_metadata({"title": "Combat Mindset Framework v0.2, AITC Discussion Draft", "author": "Army Command School"})
+    d.doc.set_metadata({"title": "Combat Mindset Framework v0.3, AITC Discussion Draft", "author": "Army Command School"})
     d.doc.save(OUT, garbage=3, deflate=True)
     print(f"Saved {OUT}")
 
