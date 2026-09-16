@@ -25,15 +25,12 @@ FOOTER_LEFT = "Combat Mindset Framework v0.4 | AITC Discussion Draft"
 
 MODEL = [
     ("1", "THE NEED", "Operational imperative",
-     "Under operational pressure, trained individuals and teams do not always retain access to their full "
-     "capability. Army must prepare its people to remain effective and act decisively and ethically despite "
-     "that pressure."),
+     "Under operational pressure, trained individuals and teams can lose access to their full capability. "
+     "Army must prepare them to remain effective and act decisively and ethically."),
     ("2", "THE CAPABILITY", "Combat Mindset",
-     "Performance Under Pressure applied to the demands of military operations, with combat representing "
-     "its most demanding expression."),
-    ("3", "HOW ARMY BUILDS IT", "Combat Mindset Framework",
-     "Army's approach for progressively developing, embedding and measuring Combat Mindset through "
-     "existing training."),
+     "Performance Under Pressure applied to military operations, with combat its most demanding test."),
+    ("3", "HOW ARMY BUILDS IT", "Army Combat Mindset Development System",
+     "How Army progressively develops Combat Mindset."),
 ]
 STEPS = [
     ("1", "Understand Self", "Recognise how pressure affects your body, thinking and behaviour."),
@@ -160,10 +157,23 @@ def build():
         pg.box(x, y, spine + R, h, fill=BLACK, stroke=None, radius=R)
         pg.box(x + spine, y, R + 1, h, fill=FAINT, stroke=None)
         pg.text(x + spine / 2, y + 22, num, 13, GOLD, bold=True, align=1)
-        tx = x + spine + 10
-        pg.spaced(tx, y + 13, role, 5.6, SWAMP, bold=True, spacing=1.3)
-        pg.text(tx, y + 26, term, 9.5, BLACK, bold=True)
-        para(pg, tx, y + 38, desc, 6.9, cw - spine - 18, lh=8.6)
+        # body area to the right of the spine; label, heading and copy centred on it
+        bx = x + spine + 10
+        bw = cw - spine - 18
+        bcx = bx + bw / 2
+        heads = wrapped(pg, term, 9.5, bw, bold=True)
+        body = wrapped(pg, desc, 6.9, bw)
+        block = 13 + len(heads) * 11 + 1 + len(body) * 8.6
+        top_pad = (h - block) / 2
+        pg.spaced(bcx, y + top_pad + 5, role, 5.6, SWAMP, bold=True, spacing=1.3, align=1)
+        ty = y + top_pad + 18
+        for line in heads:
+            pg.text(bcx, ty, line, 9.5, BLACK, bold=True, align=1)
+            ty += 11
+        ty += 1
+        for line in body:
+            pg.text(bcx, ty, line, 6.9, INK, align=1)
+            ty += 8.6
         if i < 2:
             arrow_right(pg, x + cw + 4, x + cw + gap - 4, y + h / 2)
     y += h + 18
