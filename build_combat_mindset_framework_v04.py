@@ -19,7 +19,7 @@ R = 6
 
 KICKER = "COMBAT MINDSET FRAMEWORK  ·  V0.4  ·  AITC DISCUSSION DRAFT"
 TITLE = "Combat Mindset"
-ORIGINATOR = "New Zealand Army Leadership Centre | Army Command School"
+ORIGINATOR = "Army Command School"
 DATE = "September 2026"
 FOOTER_LEFT = "Combat Mindset Framework v0.4 | AITC Discussion Draft"
 
