@@ -157,22 +157,21 @@ def build():
         pg.box(x, y, spine + R, h, fill=BLACK, stroke=None, radius=R)
         pg.box(x + spine, y, R + 1, h, fill=FAINT, stroke=None)
         pg.text(x + spine / 2, y + 22, num, 13, GOLD, bold=True, align=1)
-        # body area to the right of the spine; label, heading and copy centred on it
+        # body area to the right of the spine; text block left aligned and vertically centred
         bx = x + spine + 10
         bw = cw - spine - 18
-        bcx = bx + bw / 2
         heads = wrapped(pg, term, 9.5, bw, bold=True)
         body = wrapped(pg, desc, 6.9, bw)
         block = 13 + len(heads) * 11 + 1 + len(body) * 8.6
         top_pad = (h - block) / 2
-        pg.spaced(bcx, y + top_pad + 5, role, 5.6, SWAMP, bold=True, spacing=1.3, align=1)
+        pg.spaced(bx, y + top_pad + 5, role, 5.6, SWAMP, bold=True, spacing=1.3)
         ty = y + top_pad + 18
         for line in heads:
-            pg.text(bcx, ty, line, 9.5, BLACK, bold=True, align=1)
+            pg.text(bx, ty, line, 9.5, BLACK, bold=True)
             ty += 11
         ty += 1
         for line in body:
-            pg.text(bcx, ty, line, 6.9, INK, align=1)
+            pg.text(bx, ty, line, 6.9, INK)
             ty += 8.6
         if i < 2:
             arrow_right(pg, x + cw + 4, x + cw + gap - 4, y + h / 2)
