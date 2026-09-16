@@ -18,7 +18,7 @@ CW = W - 2 * M
 R = 6
 
 KICKER = "COMBAT MINDSET FRAMEWORK  ·  V0.4  ·  AITC DISCUSSION DRAFT"
-TITLE = "The Framework on a Page"
+TITLE = "Combat Mindset"
 ORIGINATOR = "New Zealand Army Leadership Centre | Army Command School"
 DATE = "September 2026"
 FOOTER_LEFT = "Combat Mindset Framework v0.4 | AITC Discussion Draft"
@@ -128,7 +128,6 @@ def letterhead(pg):
     png, (iw, ih) = logo_png()
     lh = 22
     pg.p.insert_image(pymupdf.Rect(M, 30, M + lh * iw / ih, 30 + lh), stream=png)
-    pg.spaced(M, 68, KICKER, 7, SWAMP, bold=True, spacing=1.6)
     pg.text(M, 88, TITLE, 18, BLACK, bold=True)
     pg.line(M, 96, W - M, 96, ARMY_RED, width=2)
     pg.text(M, 108, ORIGINATOR, 8, SWAMP)
@@ -178,7 +177,7 @@ def build():
     y += h + 18
 
     # 2  the developmental pathway: four steps, the last black
-    section(pg, M, y, "2", "COMBAT MINDSET DEVELOPMENTAL PATHWAY")
+    section(pg, M, y, "2", "THE INDIVIDUAL DEVELOPMENTAL PATHWAY")
     y += 8
     gap = 16
     sw = (CW - gap * 3) / 4
@@ -224,7 +223,6 @@ def build():
     left_end = y + eh
 
     section(pg, rx, top, "4", "WHERE COMBAT MINDSET IS DEVELOPED")
-    pg.spaced(rx + 12, top + 11, WHERE_SUB, 5.4, MID, bold=True, spacing=1.2)
     y = top + 18
     label_w = 98
     col_w = (rw - label_w) / 4
