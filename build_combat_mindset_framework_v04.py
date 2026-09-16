@@ -21,7 +21,7 @@ KICKER = "COMBAT MINDSET FRAMEWORK  ·  V0.4  ·  AITC DISCUSSION DRAFT"
 TITLE = "Combat Mindset"
 ORIGINATOR = "Army Command School"
 DATE = "September 2026"
-FOOTER_LEFT = "Combat Mindset Framework v0.4 | AITC Discussion Draft"
+FOOTER_LEFT = "Combat Mindset | AITC Discussion Draft"
 
 MODEL = [
     ("1", "THE NEED", "Operational imperative",
