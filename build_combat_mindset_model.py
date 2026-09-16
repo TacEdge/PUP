@@ -74,6 +74,25 @@ ENABLERS = ("SPECIALIST ENABLERS", "ILD  \u00b7  APS  \u00b7  HPC", "Provide spe
 RESP_BOTTOM = ("G7 sets the direction. ATG oversees the training. ACS develops and delivers it. Specialist enablers "
                "provide the expertise and evidence that support the system.")
 
+WHERE_TITLE = "Where Combat Mindset Is Developed"
+WHERE_LEAD = ("Existing ACS providers train, reinforce and contribute to different stages of Combat Mindset development. "
+              "Delivery is embedded across the system; it is not a standalone course.")
+MATRIX_COLS = ["Understand Self", "Regulate Self", "Perform Under Pressure", "Combat Mindset"]
+MATRIX = [
+    ("NZALC", "LDS and ELDA", ["Trains", "Trains", "Trains", "Contributes"]),
+    ("HPC", "COGCON", ["Reinforces", "Trains", "Trains", "Contributes"]),
+    ("NCO School", "JNCO and SNCO", ["Reinforces", "Reinforces", "Reinforces", "Contributes"]),
+    ("OCS", "Officer Cadet School", ["Trains", "Reinforces", "Trains", "Contributes"]),
+]
+VERBS = [
+    ("Trains", "Deliberately teaches, develops and practises the capability."),
+    ("Reinforces", "Provides further practice and application of capability taught elsewhere."),
+    ("Contributes", "Supports readiness to apply the capability under operational demands but does not "
+                    "independently deliver Combat Mindset."),
+]
+WHERE_NOTE = ("No single ACS element delivers Combat Mindset on its own. Each contributes to preparing individuals "
+              "to perform their role under operational demands.")
+
 SPINE_W = 132
 CARD_R = 7
 
@@ -155,7 +174,7 @@ def arrow_right(pg, x0, x1, y):
 
 
 def pathway_page(doc):
-    pg = letterhead(doc, PATHWAY_TITLE, "Page 2 of 3", PATHWAY_TITLE)
+    pg = letterhead(doc, PATHWAY_TITLE, "Page 2 of 4", PATHWAY_TITLE)
     cw = W - 2 * M
     y = 212
 
@@ -189,7 +208,7 @@ def pathway_page(doc):
 
 
 def responsibilities_page(doc):
-    pg = letterhead(doc, RESP_TITLE, "Page 3 of 3", RESP_TITLE)
+    pg = letterhead(doc, RESP_TITLE, "Page 3 of 4", RESP_TITLE)
     cw = W - 2 * M
     y = 212
 
@@ -228,9 +247,76 @@ def responsibilities_page(doc):
     print(f"page 3 content ends at y={y:.0f}")
 
 
+def verb_pill(pg, cx, cy, verb, w=74, h=18):
+    x, y = cx - w / 2, cy - h / 2
+    if verb == "Trains":
+        pg.box(x, y, w, h, fill=BLACK, stroke=None, radius=9)
+        pg.text(cx, cy + 3.2, verb, 8.4, WHITE, bold=True, align=1)
+    elif verb == "Reinforces":
+        pg.box(x, y, w, h, fill=MOAWHANGO, stroke=None, radius=9)
+        pg.text(cx, cy + 3.2, verb, 8.4, SWAMP, bold=True, align=1)
+    else:
+        pg.box(x, y, w, h, fill=WHITE, stroke=GRID, width=0.8, radius=9)
+        pg.text(cx, cy + 3.2, verb, 8.4, MID, align=1)
+
+
+def where_page(doc):
+    pg = letterhead(doc, WHERE_TITLE, "Page 4 of 4", WHERE_TITLE)
+    cw = W - 2 * M
+    y = 206
+    for line in wrapped_lines(pg, WHERE_LEAD, 10, cw):
+        pg.text(M, y, line, 10, INK)
+        y += 14
+    y += 18
+
+    label_w = 128
+    col_w = (cw - label_w) / len(MATRIX_COLS)
+    head_h = 48
+    row_h = 46
+    # header row: step number and name, final column black like the pathway's destination step
+    for j, name in enumerate(MATRIX_COLS):
+        x = M + label_w + j * col_w
+        final = j == len(MATRIX_COLS) - 1
+        pg.box(x + 2, y, col_w - 4, head_h, fill=BLACK if final else FAINT, stroke=None, radius=5)
+        pg.text(x + 10, y + 19, str(j + 1), 12, GOLD, bold=True)
+        lines = wrapped_lines(pg, name, 8.4, col_w - 22, bold=True)
+        ty = y + 33 if len(lines) == 1 else y + 29
+        for line in lines:
+            pg.text(x + 10, ty, line, 8.4, WHITE if final else BLACK, bold=True)
+            ty += 10.5
+    pg.spaced(M, y + head_h - 8, "ACS PROVIDER", 6.6, SWAMP, bold=True, spacing=1.5)
+    y += head_h + 6
+    for org, sub, verbs in MATRIX:
+        pg.box(M, y, cw, row_h, fill=FAINT, stroke=None, radius=5)
+        pg.text(M + 12, y + 20, org, 10.5, BLACK, bold=True)
+        pg.text(M + 12, y + 33, sub, 8.2, MID)
+        for j, verb in enumerate(verbs):
+            cx = M + label_w + j * col_w + col_w / 2
+            verb_pill(pg, cx, y + row_h / 2, verb)
+        y += row_h + 6
+    y += 16
+
+    # key
+    pg.spaced(M, y, "KEY", 6.6, SWAMP, bold=True, spacing=1.5)
+    y += 14
+    for verb, definition in VERBS:
+        verb_pill(pg, M + 37, y + 6, verb)
+        lines = wrapped_lines(pg, definition, 9.2, cw - 96)
+        ty = y + 9.5
+        for line in lines:
+            pg.text(M + 92, ty, line, 9.2, INK)
+            ty += 12
+        y = max(y + 24, ty + 8)
+    y += 8
+    for line in wrapped_lines(pg, WHERE_NOTE, 10, cw, bold=True):
+        pg.text(M, y, line, 10, SWAMP, bold=True)
+        y += 14
+    print(f"page 4 content ends at y={y:.0f}")
+
+
 def build():
     doc = pymupdf.open()
-    pg = letterhead(doc, TITLE, "Page 1 of 3", FOOTER_LEFT)
+    pg = letterhead(doc, TITLE, "Page 1 of 4", FOOTER_LEFT)
 
     y = 212
 
@@ -252,6 +338,7 @@ def build():
 
     pathway_page(doc)
     responsibilities_page(doc)
+    where_page(doc)
     doc.set_metadata({"title": "Combat Mindset Model",
                       "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
