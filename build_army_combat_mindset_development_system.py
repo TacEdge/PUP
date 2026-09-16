@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Combat Mindset Framework v0.4, AITC Discussion Draft: the Framework on a
-Page, drawn as one A4 landscape sheet in the house style.
+Army Combat Mindset Development System, AITC Discussion: the system on a
+page, drawn as one A4 landscape sheet in the house style.
 
-    python3 build_combat_mindset_framework_v04.py -> output/combat-mindset-framework-v0.4.pdf
+    python3 build_army_combat_mindset_development_system.py -> output/army-combat-mindset-development-system.pdf
 """
 
 import pymupdf
@@ -11,17 +11,17 @@ import pymupdf
 from army_onepager import (ARMY_RED, BLACK, FAINT, GOLD, GRID, INK, MID, MOAWHANGO, PALE,
                            SWAMP, WHITE, Page, logo_png)
 
-OUT = "./output/combat-mindset-framework-v0.4.pdf"
+OUT = "./output/army-combat-mindset-development-system.pdf"
 W, H = 842, 595
 M = 40
 CW = W - 2 * M
 R = 6
 
 KICKER = "COMBAT MINDSET FRAMEWORK  ·  V0.4  ·  AITC DISCUSSION DRAFT"
-TITLE = "Combat Mindset"
+TITLE = "Army Combat Mindset Development System"
 ORIGINATOR = "Army Command School"
 DATE = "September 2026"
-FOOTER_LEFT = "Army Combat Mindset Development System v0.4 | AITC Discussion Draft"
+FOOTER_LEFT = "Army Combat Mindset Development System | AITC Discussion"
 
 MODEL = [
     ("1", "THE NEED", "Operational imperative",
@@ -256,7 +256,7 @@ def build():
     right_end = y + 8
     print(f"left ends {left_end:.0f}, right ends {right_end:.0f}, footer marking at {H - 30}")
 
-    doc.set_metadata({"title": "Army Combat Mindset Development System v0.4: AITC Discussion Draft",
+    doc.set_metadata({"title": "Army Combat Mindset Development System: AITC Discussion",
                       "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
     print(f"Saved {OUT}")
