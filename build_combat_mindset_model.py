@@ -263,11 +263,7 @@ def verb_pill(pg, cx, cy, verb, w=74, h=18):
 def where_page(doc):
     pg = letterhead(doc, WHERE_TITLE, "Page 4 of 4", WHERE_TITLE)
     cw = W - 2 * M
-    y = 206
-    for line in wrapped_lines(pg, WHERE_LEAD, 10, cw):
-        pg.text(M, y, line, 10, INK)
-        y += 14
-    y += 18
+    y = 212
 
     label_w = 128
     col_w = (cw - label_w) / len(MATRIX_COLS)
@@ -307,10 +303,6 @@ def where_page(doc):
             pg.text(M + 92, ty, line, 9.2, INK)
             ty += 12
         y = max(y + 24, ty + 8)
-    y += 8
-    for line in wrapped_lines(pg, WHERE_NOTE, 10, cw, bold=True):
-        pg.text(M, y, line, 10, SWAMP, bold=True)
-        y += 14
     print(f"page 4 content ends at y={y:.0f}")
 
 
