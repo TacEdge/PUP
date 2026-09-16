@@ -9,7 +9,9 @@ and how Army builds it.  Drawn directly as an A4 PDF in the house style.
 import pymupdf
 
 from army_onepager import (ARMY_RED, BLACK, FAINT, GOLD, GRID, INK, MID, MOAWHANGO, PALE,
-                           SWAMP, WHITE, Page, logo_png)
+                           SWAMP, WHITE, Page, logo_png, rgb)
+
+rgb_grey = rgb("EDEDEA")
 
 OUT = "./output/combat-mindset-conceptual-baseline.pdf"
 W, H = 595, 842
@@ -59,6 +61,18 @@ ROLE_EXAMPLES = ("For some people the role includes leading and influencing othe
 ROLES = ["Private soldier", "Section 2IC", "Platoon commander", "Specialist", "Brigade commander"]
 PATHWAY_BOTTOM = ("The final step is Combat Mindset. The pathway is the same for a private soldier, a section 2IC, a platoon "
                   "commander, a specialist or a brigade commander. Leadership is not the organising feature of the capability.")
+
+RESP_TITLE = "Proposed Responsibilities"
+RESP_LEAD = ("Four organisations carry the Framework. Each has one role, and the roles run in one direction: "
+             "direction, oversight, delivery, with specialist expertise supporting all three.")
+RESPONSIBILITIES = [
+    ("G7", "Doctrine and policy", "Sets Army direction for Combat Mindset."),
+    ("ATG", "Training authority", "Oversees the training approach and approves changes."),
+    ("ACS", "Learning provider", "Develops, integrates and delivers the learning."),
+]
+ENABLERS = ("SPECIALIST ENABLERS", "ILD  \u00b7  APS  \u00b7  HPC", "Provide specialist expertise, evidence and support.")
+RESP_BOTTOM = ("G7 sets the direction. ATG oversees the training. ACS develops and delivers it. Specialist enablers "
+               "provide the expertise and evidence that support the system.")
 
 SPINE_W = 132
 CARD_R = 7
@@ -143,7 +157,7 @@ def arrow_right(pg, x0, x1, y):
 
 
 def pathway_page(doc):
-    pg = letterhead(doc, KICKER + "  \u00b7  DEVELOPMENTAL PATHWAY", PATHWAY_TITLE, "Page 2 of 2")
+    pg = letterhead(doc, KICKER + "  \u00b7  DEVELOPMENTAL PATHWAY", PATHWAY_TITLE, "Page 2 of 3")
     cw = W - 2 * M
     y = 206
     for line in wrapped_lines(pg, PATHWAY_LEAD, 10, cw):
@@ -214,9 +228,64 @@ def pathway_page(doc):
     print(f"page 2 content ends at y={y + card_h:.0f}")
 
 
+def responsibilities_page(doc):
+    pg = letterhead(doc, KICKER + "  \u00b7  PROPOSED RESPONSIBILITIES", RESP_TITLE, "Page 3 of 3")
+    cw = W - 2 * M
+    # for-confirmation pill beside the title
+    label = "FOR CONFIRMATION"
+    lw = sum(pg.width(ch, 6.4, True) + 1.4 for ch in label) + 20
+    tx = M + pg.width(RESP_TITLE, 22, True) + 14
+    pg.box(tx, 120, lw, 16, fill=rgb_grey, stroke=None, radius=8)
+    pg.spaced(tx + 10, 131, label, 6.4, MID, bold=True, spacing=1.4)
+
+    y = 206
+    for line in wrapped_lines(pg, RESP_LEAD, 10, cw):
+        pg.text(M, y, line, 10, INK)
+        y += 14
+    y += 22
+
+    # three organisations in a row, direction flowing left to right
+    n = len(RESPONSIBILITIES)
+    gap = 18
+    bw = (cw - gap * (n - 1)) / n
+    bh = 128
+    for i, (org, role, desc) in enumerate(RESPONSIBILITIES):
+        x = M + i * (bw + gap)
+        pg.box(x, y, bw, bh, fill=FAINT, stroke=None, radius=CARD_R)
+        pg.box(x, y, bw, 34, fill=BLACK, stroke=None, radius=CARD_R)
+        pg.box(x, y + 20, bw, 14, fill=BLACK, stroke=None)
+        pg.text(x + 14, y + 23, org, 13, WHITE, bold=True)
+        pg.spaced(x + 14, y + 56, role.upper(), 6.6, SWAMP, bold=True, spacing=1.4)
+        ty = y + 76
+        for line in wrapped_lines(pg, desc, 10, bw - 28):
+            pg.text(x + 14, ty, line, 10, INK)
+            ty += 14
+        if i < n - 1:
+            arrow_right(pg, x + bw + 3, x + bw + gap - 3, y + 17)
+    y += bh + 18
+
+    # specialist enablers span the row and support all three
+    eh = 78
+    pg.box(M, y, cw, eh, fill=PALE, stroke=None, radius=CARD_R)
+    pg.spaced(M + 16, y + 24, ENABLERS[0], 8, SWAMP, bold=True, spacing=1.8)
+    pg.text(M + 16, y + 44, ENABLERS[1], 11, BLACK, bold=True)
+    pg.text(M + 16, y + 62, ENABLERS[2], 10, INK)
+    pg.spaced(W - M - 16, y + 24, "SUPPORTS ALL THREE", 6.6, MID, bold=True, spacing=1.4, align=2)
+    # three short gold ties up to the organisations above
+    for i in range(n):
+        cx = M + i * (bw + gap) + bw / 2
+        pg.line(cx, y, cx, y - 18, GOLD, width=1.2)
+    y += eh + 26
+
+    card_h = 66
+    pg.box(M, y, cw, card_h, fill=MOAWHANGO, stroke=None, radius=8)
+    pg.textbox(M + 18, y + 16, cw - 36, card_h - 16, RESP_BOTTOM, 11, SWAMP, bold=True, lh=1.35)
+    print(f"page 3 content ends at y={y + card_h:.0f}")
+
+
 def build():
     doc = pymupdf.open()
-    pg = letterhead(doc, KICKER, TITLE, "Page 1 of 2")
+    pg = letterhead(doc, KICKER, TITLE, "Page 1 of 3")
 
     y = 206
     for line in wrapped_lines(pg, LEAD, 10, W - 2 * M):
@@ -262,6 +331,7 @@ def build():
     pg.textbox(M + 18, y + 14, cw - 36, card_h - 16, BOTTOM, 11, SWAMP, bold=True, lh=1.35)
 
     pathway_page(doc)
+    responsibilities_page(doc)
     doc.set_metadata({"title": "Combat Mindset Framework: Conceptual Baseline",
                       "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
