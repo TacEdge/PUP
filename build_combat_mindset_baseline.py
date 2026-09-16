@@ -42,6 +42,24 @@ BLOCKS = [
 BOTTOM = ("Working baseline. Any element of the Framework that does not serve the need, define the capability, "
           "or describe how Army builds it is simplified or removed.")
 
+STEPS = [
+    ("1", "Understand Self", "Recognise how pressure affects your body, thinking and behaviour."),
+    ("2", "Regulate Self", "Control your response so your capability remains available."),
+    ("3", "Perform Under Pressure", "Practise fulfilling the requirements of your role in controlled but demanding situations."),
+    ("4", "Combat Mindset", "Perform your role effectively under operational demands."),
+]
+PATHWAY_TITLE = "How Combat Mindset Develops"
+PATHWAY_LEAD = ("Combat Mindset is a role-performance capability, not a leadership capability. The role changes by rank, "
+                "appointment and function. The requirement does not: perform your role effectively under operational demands.")
+PATHWAY_LINE = "Understand yourself  \u2192  regulate yourself  \u2192  perform under pressure  \u2192  perform your role under operational demands"
+ROLE_NOTE = ("What effective performance looks like depends on role and responsibility. It may involve leading others, "
+             "but leadership is not a requirement for Combat Mindset.")
+ROLE_EXAMPLES = ("For some people the role includes leading and influencing others. For others it means applying technical "
+                 "or tactical skills, following direction, communicating clearly and contributing to team performance.")
+ROLES = ["Private soldier", "Section 2IC", "Platoon commander", "Specialist", "Brigade commander"]
+PATHWAY_BOTTOM = ("The final step is Combat Mindset. The pathway is the same for a private soldier, a section 2IC, a platoon "
+                  "commander, a specialist or a brigade commander. Leadership is not the organising feature of the capability.")
+
 SPINE_W = 132
 CARD_R = 7
 
@@ -94,19 +112,18 @@ def connector(pg, x, y0, y1):
     sh.commit()
 
 
-def build():
-    doc = pymupdf.open()
+def letterhead(doc, kicker, title, page_label):
     pg = Page(doc, W, H)
     pg.text(W / 2, 28, "UNCLASSIFIED", 9, BLACK, bold=True, align=1)
     pg.text(W / 2, H - 34, "UNCLASSIFIED", 9, BLACK, bold=True, align=1)
     pg.text(M, H - 20, FOOTER_LEFT, 8, BLACK)
     pg.text(W / 2, H - 20, "ACS 2026", 8, BLACK, align=1)
-    pg.text(W - M, H - 20, "Page 1 of 1", 8, BLACK, align=2)
+    pg.text(W - M, H - 20, page_label, 8, BLACK, align=2)
     png, (iw, ih) = logo_png()
     lh = 26
     pg.p.insert_image(pymupdf.Rect(M, 56, M + lh * iw / ih, 56 + lh), stream=png)
-    pg.spaced(M, 108, KICKER, 8, SWAMP, bold=True, spacing=1.8)
-    pg.text(M, 134, TITLE, 22, BLACK, bold=True)
+    pg.spaced(M, 108, kicker, 8, SWAMP, bold=True, spacing=1.8)
+    pg.text(M, 134, title, 22, BLACK, bold=True)
     pg.line(M, 144, W - M, 144, ARMY_RED, width=2)
     pg.text(M, 160, ORIGINATOR, 9, SWAMP)
     x = M
@@ -114,6 +131,92 @@ def build():
                          ("Date: ", True, BLACK), (DATE, False, BLACK)):
         pg.text(x, 174, s, 8, col, bold=bold)
         x += pg.width(s, 8, bold)
+    return pg
+
+
+def arrow_right(pg, x0, x1, y):
+    pg.line(x0, y, x1 - 5, y, GOLD, width=1.2)
+    sh = pg.p.new_shape()
+    sh.draw_polyline([(x1 - 6, y - 3.5), (x1 - 6, y + 3.5), (x1, y)])
+    sh.finish(color=None, fill=GOLD, closePath=True)
+    sh.commit()
+
+
+def pathway_page(doc):
+    pg = letterhead(doc, KICKER + "  \u00b7  DEVELOPMENTAL PATHWAY", PATHWAY_TITLE, "Page 2 of 2")
+    cw = W - 2 * M
+    y = 206
+    for line in wrapped_lines(pg, PATHWAY_LEAD, 10, cw):
+        pg.text(M, y, line, 10, INK)
+        y += 14
+    y += 22
+
+    # the rising steps: bottom aligned, each taller than the last; the final step is black
+    n = len(STEPS)
+    gap = 14
+    sw = (cw - gap * (n - 1)) / n
+    base_h, rise = 118, 24
+    bottom = y + base_h + rise * (n - 1)
+    for i, (num, name, desc) in enumerate(STEPS):
+        h = base_h + rise * i
+        x = M + i * (sw + gap)
+        top = bottom - h
+        final = i == n - 1
+        pg.box(x, top, sw, h, fill=BLACK if final else FAINT, stroke=None, radius=CARD_R)
+        pg.text(x + 14, top + 30, num, 22, GOLD, bold=True)
+        ty = top + 52
+        for line in wrapped_lines(pg, name, 10.5, sw - 26, bold=True):
+            pg.text(x + 14, ty, line, 10.5, WHITE if final else BLACK, bold=True)
+            ty += 13.5
+        ty += 3
+        for line in wrapped_lines(pg, desc, 8.6, sw - 26):
+            pg.text(x + 14, ty, line, 8.6, GRID if final else INK)
+            ty += 11.5
+        if final:
+            pg.spaced(x + 14, bottom - 14, "THE CAPABILITY", 6.2, GOLD, bold=True, spacing=1.4)
+        else:
+            arrow_right(pg, x + sw + 2, x + sw + gap - 2, top + 26)
+    y = bottom + 24
+
+    # the intuitive line
+    pg.text(W / 2, y, PATHWAY_LINE, 8.2, SWAMP, bold=True, align=1)
+    y += 28
+
+    # role clarification
+    nl = wrapped_lines(pg, ROLE_NOTE, 10, cw - 36)
+    nh = 16 + len(nl) * 14 + 4
+    pg.box(M, y, cw, nh, fill=PALE, stroke=None, radius=6)
+    ly = y + 20
+    for line in nl:
+        pg.text(M + 18, ly, line, 10, SWAMP, bold=True)
+        ly += 14
+    y += nh + 16
+    for line in wrapped_lines(pg, ROLE_EXAMPLES, 10, cw):
+        pg.text(M, y, line, 10, INK)
+        y += 14
+    y += 14
+
+    # the same pathway, whatever the role
+    pg.spaced(M, y, "THE SAME PATHWAY, WHATEVER THE ROLE", 6.6, SWAMP, bold=True, spacing=1.5)
+    y += 12
+    pw = [pg.width(r, 8.6) + 22 for r in ROLES]
+    pgap = 8
+    x = M
+    for r, w in zip(ROLES, pw):
+        pg.box(x, y, w, 20, fill=WHITE, stroke=GRID, width=0.8, radius=10)
+        pg.text(x + w / 2, y + 13.5, r, 8.6, INK, align=1)
+        x += w + pgap
+    y += 20 + 24
+
+    card_h = 82
+    pg.box(M, y, cw, card_h, fill=MOAWHANGO, stroke=None, radius=8)
+    pg.textbox(M + 18, y + 16, cw - 36, card_h - 16, PATHWAY_BOTTOM, 11, SWAMP, bold=True, lh=1.35)
+    print(f"page 2 content ends at y={y + card_h:.0f}")
+
+
+def build():
+    doc = pymupdf.open()
+    pg = letterhead(doc, KICKER, TITLE, "Page 1 of 2")
 
     y = 206
     for line in wrapped_lines(pg, LEAD, 10, W - 2 * M):
@@ -158,6 +261,7 @@ def build():
     pg.box(M, y, cw, card_h, fill=MOAWHANGO, stroke=None, radius=8)
     pg.textbox(M + 18, y + 14, cw - 36, card_h - 16, BOTTOM, 11, SWAMP, bold=True, lh=1.35)
 
+    pathway_page(doc)
     doc.set_metadata({"title": "Combat Mindset Framework: Conceptual Baseline",
                       "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
