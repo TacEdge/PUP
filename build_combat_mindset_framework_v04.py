@@ -21,7 +21,7 @@ KICKER = "COMBAT MINDSET FRAMEWORK  ·  V0.4  ·  AITC DISCUSSION DRAFT"
 TITLE = "Combat Mindset"
 ORIGINATOR = "Army Command School"
 DATE = "September 2026"
-FOOTER_LEFT = "Combat Mindset | AITC Discussion Draft"
+FOOTER_LEFT = "Army Combat Mindset Development System v0.4 | AITC Discussion Draft"
 
 MODEL = [
     ("1", "THE NEED", "Operational imperative",
@@ -45,7 +45,7 @@ RESPONSIBILITIES = [
     ("ATG", "Training authority", "Oversees the training approach and approves changes."),
     ("ACS", "Learning provider", "Develops, integrates and delivers the learning."),
 ]
-ENABLERS = ("SPECIALIST ENABLERS", "ILD  ·  APS  ·  HPC",
+ENABLERS = ("SPECIALIST ENABLERS", "ILD  ·  APS",
             "Provide specialist expertise, evidence and support across the system.")
 WHERE_SUB = "EMBEDDED ACROSS EXISTING ACS TRAINING  ·  NOT A STANDALONE COURSE"
 MATRIX_COLS = ["Understand Self", "Regulate Self", "Perform Under Pressure", "Combat Mindset"]
@@ -177,7 +177,7 @@ def build():
     y += h + 18
 
     # 2  the developmental pathway: four steps, the last black
-    section(pg, M, y, "2", "THE INDIVIDUAL DEVELOPMENTAL PATHWAY")
+    section(pg, M, y, "2", "COMBAT MINDSET DEVELOPMENTAL PATHWAY")
     y += 8
     gap = 16
     sw = (CW - gap * 3) / 4
@@ -222,7 +222,7 @@ def build():
     para(pg, M + 12, y + 38, ENABLERS[2], 6.9, lw - 24, lh=8.4)
     left_end = y + eh
 
-    section(pg, rx, top, "4", "WHERE COMBAT MINDSET IS DEVELOPED")
+    section(pg, rx, top, "4", "HOW ACS DEVELOPS COMBAT MINDSET")
     y = top + 18
     label_w = 98
     col_w = (rw - label_w) / 4
@@ -256,7 +256,7 @@ def build():
     right_end = y + 8
     print(f"left ends {left_end:.0f}, right ends {right_end:.0f}, footer marking at {H - 30}")
 
-    doc.set_metadata({"title": "Combat Mindset Framework v0.4: The Framework on a Page",
+    doc.set_metadata({"title": "Army Combat Mindset Development System v0.4: AITC Discussion Draft",
                       "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
     print(f"Saved {OUT}")
