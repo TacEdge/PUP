@@ -12,14 +12,16 @@ import build_elda_data_sheet as cds
 
 SOURCE = "./2er-command-week.md"
 OUTPUT_DOCX = "./output/2er-command-week-nzalc-support.docx"
-TITLE = "Te Whi\u0101 Command Week 2026"
-KICKER = "NZALC Leadership Development Support to 2 ER"
+TITLE = "2 ER Command Week, 16 to 20 Nov 2026"
+KICKER = None
 TAG = None
 REFERENCE = None
-FOOTER_LEFT = "NZALC | Te Whi\u0101 Command Week 2026"
+FOOTER_LEFT = "NZALC | 2 ER Command Week 2026"
 
 
 def build():
+    cds.DATE = "17 September 2026"
+    cds.ORIGINATOR_LONG = "New Zealand Army Leadership Centre"
     doc = cds.new_document()
     doc.styles["Normal"].font.size = Pt(10)
     cds.add_header_footer(doc.sections[0], FOOTER_LEFT)

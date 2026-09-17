@@ -1,8 +1,8 @@
-# Te Whiā Command Week 2026: NZALC Leadership Development Support to 2 ER
+# 2 ER Command Week 2026: NZALC Leadership Development Support
 
 ## Purpose
 
-To outline NZALC's contribution to Te Whiā Command Week 2026.
+To outline NZALC's contribution to the 2 ER Command Week 2026.
 
 ## Context
 
@@ -24,16 +24,14 @@ NZALC support will conclude no later than 1400 Tuesday 17 November. The remainde
 ## Delivery
 
 * **Delivered by:** Leadership Development Wing, NZALC
-* **Participants:** Up to 17 personnel drawn from 2 ER unit and sub-unit command teams and relevant principal staff.
+* **Participants:** Up to 18 personnel drawn from 2 ER unit and sub-unit command teams and relevant principal staff.
 * **Location:** Off-site venue in the Palmerston North area; exact location to be confirmed.
-* **Participant requirement:** Each participant is to complete a Leadership Personality Report before the facilitated session.
+* **Participant requirement:** Each participant is to complete a Leadership Personality Report and ROCKET Model Survey before the facilitated session.
 
 ## Coordination Required
 
 2 ER and NZALC are to confirm:
 
 * final participant numbers and nominal roll;
-* relevant command relationships and team transitions;
-* venue and available training facilities;
-* arrangements and timelines for completing the Leadership Personality Reports; and
-* any specific command outcomes that should inform the facilitation.
+* venue and available training facilities; and
+* arrangements and timelines for completing the Leadership Personality Reports and ROCKET Model Survey.

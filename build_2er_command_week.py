@@ -15,14 +15,12 @@ W, H = 595, 842
 M = 56
 CW = W - 2 * M
 
-KICKER = "NZALC LEADERSHIP DEVELOPMENT SUPPORT  ·  INITIATING ONE-PAGER"
-KICKER = "NZALC LEADERSHIP DEVELOPMENT SUPPORT TO 2 ER"
-TITLE = "Te Whi\u0101 Command Week 2026"
-ORIGINATOR = "New Zealand Army Leadership Centre | Army Command School"
-DATE = "September 2026"
-FOOTER_LEFT = "NZALC | Te Whi\u0101 Command Week 2026"
+TITLE = "2 ER Command Week, 16 to 20 Nov 2026"
+ORIGINATOR = "New Zealand Army Leadership Centre"
+DATE = "17 September 2026"
+FOOTER_LEFT = "NZALC | 2 ER Command Week 2026"
 
-PURPOSE = "To outline NZALC's contribution to Te Whi\u0101 Command Week 2026."
+PURPOSE = "To outline NZALC's contribution to the 2 ER Command Week 2026."
 CONTEXT = ("2 ER intends to bring its new and future command teams together in a relaxed environment away from normal "
            "unit routines. The emphasis is on connection and reflection: building self-awareness, examining individual "
            "leadership styles and personality preferences, and strengthening key command relationships.")
@@ -40,17 +38,15 @@ PROGRAMME_NOTE = ("NZALC support will conclude no later than 1400 Tuesday 17 Nov
                   "will continue under 2 ER command arrangements.")
 DELIVERY = [
     ("DELIVERED BY", "Leadership Development Wing, NZALC"),
-    ("PARTICIPANTS", "Up to 17 personnel drawn from 2 ER unit and sub-unit command teams and relevant principal staff."),
+    ("PARTICIPANTS", "Up to 18 personnel drawn from 2 ER unit and sub-unit command teams and relevant principal staff."),
     ("LOCATION", "Off-site venue in the Palmerston North area; exact location to be confirmed."),
-    ("PARTICIPANT REQUIREMENT", "Each participant is to complete a Leadership Personality Report before the facilitated session."),
+    ("PARTICIPANT REQUIREMENT", "Each participant is to complete a Leadership Personality Report and ROCKET Model Survey before the facilitated session."),
 ]
 COORD_LEAD = "2 ER and NZALC are to confirm:"
 COORD = [
     "final participant numbers and nominal roll;",
-    "relevant command relationships and team transitions;",
-    "venue and available training facilities;",
-    "arrangements and timelines for completing the Leadership Personality Reports; and",
-    "any specific command outcomes that should inform the facilitation.",
+    "venue and available training facilities; and",
+    "arrangements and timelines for completing the Leadership Personality Reports and ROCKET Model Survey.",
 ]
 
 
@@ -93,7 +89,6 @@ def build():
     png, (iw, ih) = logo_png()
     lh = 26
     pg.p.insert_image(pymupdf.Rect(M, 56, M + lh * iw / ih, 56 + lh), stream=png)
-    pg.spaced(M, 108, KICKER, 8, SWAMP, bold=True, spacing=1.8)
     pg.text(M, 134, TITLE, 22, BLACK, bold=True)
     pg.line(M, 144, W - M, 144, ARMY_RED, width=2)
     pg.text(M, 160, ORIGINATOR, 9, SWAMP)
@@ -157,7 +152,7 @@ def build():
         y += 1
     print(f"content ends at y={y:.0f}")
 
-    doc.set_metadata({"title": "Te Whi\u0101 Command Week 2026: NZALC Leadership Development Support to 2 ER",
+    doc.set_metadata({"title": "2 ER Command Week 2026: NZALC Leadership Development Support",
                       "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
     print(f"Saved {OUT}")
