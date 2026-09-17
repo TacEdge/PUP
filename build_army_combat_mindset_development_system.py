@@ -60,7 +60,7 @@ MATRIX_COLS = ["Understand Self", "Regulate Self", "Perform Under Pressure", "Co
 MATRIX = [
     ("NZALC", "LDS and ELDA", ["Trains", "Trains", "Trains", "Contributes"]),
     ("NCO School", "JNCO and SNCO", ["Reinforces", "Reinforces", "Reinforces", "Contributes"]),
-    ("OCS", "COGCON", ["Reinforces", "Trains", "Trains", "Contributes"]),
+    ("OCS", "including COGCON", ["Reinforces", "Trains", "Trains", "Contributes"]),
 ]
 VERBS = [
     ("Trains", "deliberate instruction and practice"),
@@ -69,7 +69,7 @@ VERBS = [
 ]
 SECTIONS = {
     1: ("01", "MODEL", "What it is and why Army needs it.", "model"),
-    2: ("02", "DEVELOPMENT", "How the capability progressively develops.", "development"),
+    2: ("02", "DEVELOPMENT", "How the capability develops through training.", "development"),
     3: ("03", "RESPONSIBILITY", "Who directs, sponsors and supports it.", "responsibility"),
     4: ("04", "DELIVERY", "Where it is trained and reinforced.", "delivery"),
 }
@@ -162,7 +162,7 @@ def section(pg, x, y, n):
     nav_icon(pg, icon, x, y - 9)
     pg.text(x + 17, y, num, 9, GOLD, bold=True)
     pg.spaced(x + 34, y, label, 7.6, SWAMP, bold=True, spacing=1.8)
-    pg.text(x + 34, y + 10, desc, 6.6, GREY)
+    pg.text(x + 34, y + 10.5, desc, 7, GREY)
 
 
 def chip(pg, cx, cy, verb, w=64, h=15, size=7.4):
@@ -214,9 +214,9 @@ def masthead(pg):
     then a pale title field.  The only red on the page."""
     pg.text(W / 2, 20, "UNCLASSIFIED", 8, BLACK, bold=True, align=1)
     pg.text(W / 2, H - 22, "UNCLASSIFIED", 8, BLACK, bold=True, align=1)
-    pg.text(M, H - 11, FOOTER_LEFT, 7, BLACK)
-    pg.text(W / 2, H - 11, "ACS 2026", 7, BLACK, align=1)
-    pg.text(W - M, H - 11, "Page 1 of 1", 7, BLACK, align=2)
+    pg.text(M, H - 11, FOOTER_LEFT, 7.5, BLACK)
+    pg.text(W / 2, H - 11, "ACS 2026", 7.5, BLACK, align=1)
+    pg.text(W - M, H - 11, "Page 1 of 1", 7.5, BLACK, align=2)
 
     top, hh = 30, 46
     brand_w = 138
@@ -263,10 +263,6 @@ def build():
     # continuation: from the third card down and across into 02, the start of the system
     y = model_bottom + 9
     sec2_y = y + 20
-    pg.line(third_cx, model_bottom, third_cx, y, GOLD, width=0.9)
-    pg.line(M, y, W - M, y, GOLD, width=0.9)
-    pg.line(M, y, M, y + 5, GOLD, width=0.9)
-    pg.line(W - M, y, W - M, y + 5, GOLD, width=0.9)
 
     # ---- 02 DEVELOPMENT: a rising staircase, stage 4 the destination ----
     section(pg, M, sec2_y, 2)
@@ -276,6 +272,7 @@ def build():
     base_h, rise = 52, 8
     fills = [FAINT, PALE, OLIVE_LIGHT, BLACK]
     bottom = y + base_h + rise * 3
+    arrow_down(pg, third_cx, model_bottom + 3, bottom - (base_h + rise * 3) - 3)
     for i, (num, name, desc) in enumerate(STEPS):
         hh = base_h + rise * i
         top = bottom - hh
@@ -353,25 +350,25 @@ def build():
         for line in lines:
             pg.text(x + 8, ty, line, 6.8, WHITE if final else BLACK, bold=True)
             ty += 8
-    pg.spaced(rx, y + hh - 6, "ACS PROVIDER", 5.6, SWAMP, bold=True, spacing=1.3)
+    pg.spaced(rx, y + hh - 6, "ACS DELIVERY", 5.6, SWAMP, bold=True, spacing=1.3)
     y += hh + 5
     rh = 30
     for org, sub, verbs in MATRIX:
         pg.box(rx, y, rw, rh, fill=FAINT, stroke=None, radius=4)
         pg.text(rx + 10, y + 13, org, 8, BLACK, bold=True)
-        pg.text(rx + 10, y + 23, sub, 6.4, GREY)
+        pg.text(rx + 10, y + 23.5, sub, 6.8, GREY)
         for j, verb in enumerate(verbs):
             chip(pg, rx + label_w + j * col_w + col_w / 2, y + rh / 2, verb)
         y += rh + 5
     y += 6
     x = rx
     for verb, definition in VERBS:
-        item_w = 50 + pg.width(definition, 6.4)
+        item_w = 50 + pg.width(definition, 6.8)
         if x + item_w > rx + rw:
             x = rx
             y += 15
-        chip(pg, x + 22, y + 1, verb, w=44, h=13, size=6.2)
-        pg.text(x + 50, y + 3.2, definition, 6.4, INK)
+        chip(pg, x + 22, y + 1, verb, w=44, h=13, size=6.4)
+        pg.text(x + 50, y + 3.4, definition, 6.8, INK)
         x += item_w + 12
     right_end = y + 8
     print(f"left ends {left_end:.0f}, right ends {right_end:.0f}, footer marking at {H - 30}")
