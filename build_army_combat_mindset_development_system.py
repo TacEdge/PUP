@@ -46,7 +46,7 @@ RESPONSIBILITIES = [
     ("ACS", "Learning provider", "Develops, integrates and delivers the learning."),
 ]
 ENABLERS = ("SPECIALIST ADVISORS", "ILD  ·  APS  ·  HPC",
-            "Provide specialist expertise, evidence and support across the system.")
+            "Provide specialist expertise, evidence and advise across the system.")
 WHERE_SUB = "EMBEDDED ACROSS EXISTING ACS TRAINING  ·  NOT A STANDALONE COURSE"
 MATRIX_COLS = ["Understand Self", "Regulate Self", "Perform Under Pressure", "Combat Mindset"]
 MATRIX = [
