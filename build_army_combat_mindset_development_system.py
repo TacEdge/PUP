@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Army Combat Mindset Development System, AITC Discussion: the system on a
+Army Combat Mindset System, AITC Discussion: the system on a
 page, drawn as one A4 landscape sheet in the house style.
 
     python3 build_army_combat_mindset_development_system.py -> output/army-combat-mindset-development-system.pdf
@@ -18,10 +18,10 @@ CW = W - 2 * M
 R = 6
 
 KICKER = "COMBAT MINDSET FRAMEWORK  ·  V0.4  ·  AITC DISCUSSION DRAFT"
-TITLE = "Army Combat Mindset Development System"
+TITLE = "Army Combat Mindset System"
 ORIGINATOR = "Army Command School"
 DATE = "September 2026"
-FOOTER_LEFT = "Army Combat Mindset Development System | AITC Discussion"
+FOOTER_LEFT = "Army Combat Mindset System | AITC Discussion"
 
 MODEL = [
     ("1", "THE NEED", "Operational imperative",
@@ -29,7 +29,7 @@ MODEL = [
      "Army must prepare them to remain effective and act decisively and ethically."),
     ("2", "THE CAPABILITY", "Combat Mindset",
      "Performance Under Pressure applied to military operations, with combat its most demanding test."),
-    ("3", "HOW ARMY BUILDS IT", "Army Combat Mindset Development System",
+    ("3", "HOW ARMY BUILDS IT", "Army Combat Mindset System",
      "How Army progressively develops Combat Mindset."),
 ]
 STEPS = [
@@ -255,7 +255,7 @@ def build():
     right_end = y + 8
     print(f"left ends {left_end:.0f}, right ends {right_end:.0f}, footer marking at {H - 30}")
 
-    doc.set_metadata({"title": "Army Combat Mindset Development System: AITC Discussion",
+    doc.set_metadata({"title": "Army Combat Mindset System: AITC Discussion",
                       "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
     print(f"Saved {OUT}")
