@@ -12,7 +12,7 @@ import build_elda_data_sheet as cds
 
 SOURCE = "./2er-command-week.md"
 OUTPUT_DOCX = "./output/2er-command-week-nzalc-support.docx"
-TITLE = "2 ER Command Week, 16 to 20 Nov 2026"
+TITLE = "NZALC Support to 2 ER Command Week"
 KICKER = None
 TAG = None
 REFERENCE = None

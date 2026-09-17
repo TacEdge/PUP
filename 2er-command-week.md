@@ -1,4 +1,4 @@
-# 2 ER Command Week 2026: NZALC Leadership Development Support
+# NZALC Support to 2 ER Command Week
 
 ## Purpose
 
@@ -16,15 +16,14 @@ NZALC will support this through two linked phases.
 |---|---|---|
 | Monday 16 November, 1200 to 1700 | Leadership Personality Report | Facilitated exploration of individual leadership preferences, strengths, potential limitations and impact on others, including the implications for command relationships. |
 | Tuesday 17 November, 0800 to 1200 | ROCKET Model | Facilitated application of the ROCKET Model to establish the conditions required for effective command teams. |
-
-The period 1200 to 1400 Tuesday will be retained as flexibility to continue productive discussion or consolidate learning if required.
+| Tuesday 17 November, 1200 to 1400 | Flexibility | Retained to continue productive discussion or consolidate learning if required. |
 
 NZALC support will conclude no later than 1400 Tuesday 17 November. The remainder of Command Week will continue under 2 ER command arrangements.
 
 ## Delivery
 
 * **Delivered by:** Leadership Development Wing, NZALC
-* **Participants:** Up to 18 personnel drawn from 2 ER unit and sub-unit command teams and relevant principal staff.
+* **Participants:** Up to 18 personnel drawn from 2 ER unit, incl sub-unit command teams and relevant principal staff.
 * **Location:** Off-site venue in the Palmerston North area; exact location to be confirmed.
 * **Participant requirement:** Each participant is to complete a Leadership Personality Report and ROCKET Model Survey before the facilitated session.
 

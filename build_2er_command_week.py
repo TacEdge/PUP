@@ -15,7 +15,7 @@ W, H = 595, 842
 M = 56
 CW = W - 2 * M
 
-TITLE = "2 ER Command Week, 16 to 20 Nov 2026"
+TITLE = "NZALC Support to 2 ER Command Week"
 ORIGINATOR = "New Zealand Army Leadership Centre"
 DATE = "17 September 2026"
 FOOTER_LEFT = "NZALC | 2 ER Command Week 2026"
@@ -31,14 +31,14 @@ PROGRAMME = [
      "others, including the implications for command relationships."),
     ("TUE 17 NOV", "0800 \u2013 1200", "ROCKET Model",
      "Facilitated application of the ROCKET Model to establish the conditions required for effective command teams."),
+    ("TUE 17 NOV", "1200 \u2013 1400", "Flexibility",
+     "Retained to continue productive discussion or consolidate learning if required.", "subdued"),
 ]
-FLEX_NOTE = ("The period 1200 to 1400 Tuesday will be retained as flexibility to continue productive discussion or "
-             "consolidate learning if required.")
 PROGRAMME_NOTE = ("NZALC support will conclude no later than 1400 Tuesday 17 November. The remainder of Command Week "
                   "will continue under 2 ER command arrangements.")
 DELIVERY = [
     ("DELIVERED BY", "Leadership Development Wing, NZALC"),
-    ("PARTICIPANTS", "Up to 18 personnel drawn from 2 ER unit and sub-unit command teams and relevant principal staff."),
+    ("PARTICIPANTS", "Up to 18 personnel drawn from 2 ER unit, incl sub-unit command teams and relevant principal staff."),
     ("LOCATION", "Off-site venue in the Palmerston North area; exact location to be confirmed."),
     ("PARTICIPANT REQUIREMENT", "Each participant is to complete a Leadership Personality Report and ROCKET Model Survey before the facilitated session."),
 ]
@@ -108,23 +108,27 @@ def build():
     y = para(pg, M, y + 5, PROGRAMME_LEAD, 10, CW) + 1
     spine = 92
     r = 6
-    for day, time, activity, focus in PROGRAMME:
+    for entry in PROGRAMME:
+        day, time, activity, focus = entry[:4]
+        subdued = len(entry) > 4
+        spine_fill = MID if subdued else BLACK
+        title_col = MID if subdued else BLACK
+        body_col = MID if subdued else INK
         lines = wrapped(pg, focus, 9.2, CW - spine - 28)
         h = max(46, 28 + len(lines) * 12 + 6)
         pg.box(M, y, CW, h, fill=FAINT, stroke=None, radius=r)
-        pg.box(M, y, spine + r, h, fill=BLACK, stroke=None, radius=r)
+        pg.box(M, y, spine + r, h, fill=spine_fill, stroke=None, radius=r)
         pg.box(M + spine, y, r + 1, h, fill=FAINT, stroke=None)
-        pg.spaced(M + 12, y + 19, day, 6.4, GOLD, bold=True, spacing=1.4)
+        pg.spaced(M + 12, y + 19, day, 6.4, PALE if subdued else GOLD, bold=True, spacing=1.4)
         pg.text(M + 12, y + 34, time, 10, WHITE, bold=True)
         tx = M + spine + 14
-        pg.text(tx, y + 19, activity, 10.5, BLACK, bold=True)
+        pg.text(tx, y + 19, activity, 10.5, title_col, bold=True)
         ty = y + 33
         for line in lines:
-            pg.text(tx, ty, line, 9.2, INK)
+            pg.text(tx, ty, line, 9.2, body_col)
             ty += 12
         y += h + 6
     y += 4
-    y = para(pg, M, y, FLEX_NOTE, 9.6, CW) + 3
     y = para(pg, M, y, PROGRAMME_NOTE, 9.6, CW, color=SWAMP) + 8
 
     # delivery: two-column field grid
@@ -152,7 +156,7 @@ def build():
         y += 1
     print(f"content ends at y={y:.0f}")
 
-    doc.set_metadata({"title": "2 ER Command Week 2026: NZALC Leadership Development Support",
+    doc.set_metadata({"title": "NZALC Support to 2 ER Command Week 2026",
                       "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
     print(f"Saved {OUT}")
