@@ -105,7 +105,7 @@ def build():
 
     # programme: two timed cards with a black time block
     y = heading(pg, y, "Programme")
-    y = para(pg, M, y + 5, PROGRAMME_LEAD, 10, CW) + 1
+    y = para(pg, M, y + 5, PROGRAMME_LEAD, 10, CW) + 2
     spine = 92
     r = 6
     for entry in PROGRAMME:
@@ -128,12 +128,14 @@ def build():
             pg.text(tx, ty, line, 9.2, body_col)
             ty += 12
         y += h + 6
-    y += 4
+    # same breathing room below the last card as between the cards: 6pt clear
+    # of the card edge before the cap height of the next line
+    y += 14
     y = para(pg, M, y, PROGRAMME_NOTE, 9.6, CW, color=SWAMP) + 8
 
     # delivery: two-column field grid
     y = heading(pg, y, "Delivery")
-    y += 6
+    y += 4
     col_w = CW / 2
     row_y = y
     max_end = y
