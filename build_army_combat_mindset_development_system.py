@@ -51,9 +51,8 @@ WHERE_SUB = "EMBEDDED ACROSS EXISTING ACS TRAINING  ·  NOT A STANDALONE COURSE"
 MATRIX_COLS = ["Understand Self", "Regulate Self", "Perform Under Pressure", "Combat Mindset"]
 MATRIX = [
     ("NZALC", "LDS and ELDA", ["Trains", "Trains", "Trains", "Contributes"]),
-    ("HPC", "COGCON", ["Reinforces", "Trains", "Trains", "Contributes"]),
     ("NCO School", "JNCO and SNCO", ["Reinforces", "Reinforces", "Reinforces", "Contributes"]),
-    ("OCS", "Officer Cadet School", ["Trains", "Reinforces", "Trains", "Contributes"]),
+    ("OCS", "COGCON", ["Reinforces", "Trains", "Trains", "Contributes"]),
 ]
 VERBS = [
     ("Trains", "deliberate instruction and practice"),
