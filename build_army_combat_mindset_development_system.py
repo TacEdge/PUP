@@ -263,6 +263,9 @@ def build():
     # continuation: from the third card down and across into 02, the start of the system
     y = model_bottom + 9
     sec2_y = y + 20
+    # the system is expressed through the whole pathway: a short drop from the
+    # third card that stops level with the Development heading
+    arrow_down(pg, third_cx, model_bottom + 3, sec2_y + 2)
 
     # ---- 02 DEVELOPMENT: a rising staircase, stage 4 the destination ----
     section(pg, M, sec2_y, 2)
@@ -272,7 +275,6 @@ def build():
     base_h, rise = 52, 8
     fills = [FAINT, PALE, OLIVE_LIGHT, BLACK]
     bottom = y + base_h + rise * 3
-    arrow_down(pg, third_cx, model_bottom + 3, bottom - (base_h + rise * 3) - 3)
     for i, (num, name, desc) in enumerate(STEPS):
         hh = base_h + rise * i
         top = bottom - hh
