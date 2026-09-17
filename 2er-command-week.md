@@ -1,33 +1,39 @@
-# 2 ER Command Off-site: NZALC Leadership Development Support
+# Te Whiā Command Week 2026: NZALC Leadership Development Support to 2 ER
 
 ## Purpose
 
-NZALC will support the 2 ER Command Off-site by delivering a two-phase leadership development package for up to 18 personnel.
+To outline NZALC's contribution to Te Whiā Command Week 2026.
 
-The package is designed to build individual self-awareness before shifting the focus to team effectiveness and collective performance.
+## Context
+
+2 ER intends to bring its new and future command teams together in a relaxed environment away from normal unit routines. The emphasis is on connection and reflection: building self-awareness, examining individual leadership styles and personality preferences, and strengthening key command relationships.
 
 ## Programme
 
+NZALC will support this through two linked phases.
+
 | Date and timing | Activity | Focus |
 |---|---|---|
-| Monday 16 November, 1200 to 1700 | Leadership Personality Report | Facilitated exploration of individual leadership preferences, strengths, potential limitations and impact on others. |
-| Tuesday 17 November, 0800 to 1200 | ROCKET Model | Facilitated team development session focused on the conditions required for effective team performance. |
-| Tuesday 17 November, 1200 to 1400 | Protected white space | Available if required to continue productive discussion, consolidate learning or explore issues arising during the session. |
+| Monday 16 November, 1200 to 1700 | Leadership Personality Report | Facilitated exploration of individual leadership preferences, strengths, potential limitations and impact on others, including the implications for command relationships. |
+| Tuesday 17 November, 0800 to 1200 | ROCKET Model | Facilitated application of the ROCKET Model to establish the conditions required for effective command teams. |
 
-NZALC's contribution will conclude no later than 1400 Tuesday. The remainder of the week will continue under 2 ER's command arrangements.
+The period 1200 to 1400 Tuesday will be retained as flexibility to continue productive discussion or consolidate learning if required.
+
+NZALC support will conclude no later than 1400 Tuesday 17 November. The remainder of Command Week will continue under 2 ER command arrangements.
 
 ## Delivery
 
 * **Delivered by:** Leadership Development Wing, NZALC
-* **Participants:** Up to 18 personnel
-* **Location:** Off-site venue in the Palmerston North area; exact location to be confirmed
-* **Requirement:** Each participant will complete a Leadership Personality Report before the facilitated session
+* **Participants:** Up to 17 personnel drawn from 2 ER unit and sub-unit command teams and relevant principal staff.
+* **Location:** Off-site venue in the Palmerston North area; exact location to be confirmed.
+* **Participant requirement:** Each participant is to complete a Leadership Personality Report before the facilitated session.
 
 ## Coordination Required
 
 2 ER and NZALC are to confirm:
 
 * final participant numbers and nominal roll;
-* off-site venue and available training facilities;
+* relevant command relationships and team transitions;
+* venue and available training facilities;
 * arrangements and timelines for completing the Leadership Personality Reports; and
-* any specific command outcomes or team issues that should inform the facilitation.
+* any specific command outcomes that should inform the facilitation.
