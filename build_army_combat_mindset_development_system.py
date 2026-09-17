@@ -45,7 +45,7 @@ RESPONSIBILITIES = [
     ("ATG", "Training authority", "Oversees the training approach and approves changes."),
     ("ACS", "Learning provider", "Develops, integrates and delivers the learning."),
 ]
-ENABLERS = ("SPECIALIST ENABLERS", "ILD  ·  APS",
+ENABLERS = ("SPECIALIST ADVISORS", "ILD  ·  APS  ·  HPC",
             "Provide specialist expertise, evidence and support across the system.")
 WHERE_SUB = "EMBEDDED ACROSS EXISTING ACS TRAINING  ·  NOT A STANDALONE COURSE"
 MATRIX_COLS = ["Understand Self", "Regulate Self", "Perform Under Pressure", "Combat Mindset"]
