@@ -28,7 +28,8 @@ MODEL = [
      "Under operational pressure, trained individuals and teams can lose access to their full capability. "
      "Army must prepare them to remain effective and act decisively and ethically."),
     ("2", "THE CAPABILITY", "Combat Mindset",
-     "Performance Under Pressure applied to military operations, with combat its most demanding test."),
+     "A trainable capability: Performance Under Pressure applied to military operations, with combat its most "
+     "demanding test."),
     ("3", "HOW ARMY BUILDS IT", "Army Combat Mindset System",
      "How Army progressively develops Combat Mindset."),
 ]
@@ -40,6 +41,7 @@ STEPS = [
 ]
 STEPS_NOTE = ("Steps 1 to 3 build Performance Under Pressure. Step 4 applies that capability under operational "
               "demands. That is Combat Mindset.")
+STEPS_REINFORCE = "Combat Mindset is not a fixed trait. Like any skill, it improves through deliberate practice."
 RESPONSIBILITIES = [
     ("G7", "Doctrine and policy", "Sets Army direction for Combat Mindset."),
     ("ATG", "Training authority", "Oversees the training approach and approves changes."),
@@ -192,6 +194,8 @@ def build():
             arrow_right(pg, x + sw + 3, x + sw + gap - 3, y + 16)
     y += h + 12
     pg.text(M, y, STEPS_NOTE, 7.2, SWAMP)
+    y += 11
+    pg.text(M, y, STEPS_REINFORCE, 7.6, SWAMP, bold=True)
     y += 20
 
     # 3 and 4 side by side
