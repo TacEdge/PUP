@@ -21,6 +21,7 @@ CW = W - 2 * M
 R = 6
 OLIVE_LIGHT = rgb("E3E6D3")   # third step of the staircase, between PALE and MOAWHANGO
 CHARCOAL = rgb("222222")
+GREY = rgb("5F5F5A")       # secondary text: subtitles and provider descriptors
 
 TITLE = "Army Combat Mindset System"
 ORIGINATOR = "Army Command School"
@@ -161,7 +162,7 @@ def section(pg, x, y, n):
     nav_icon(pg, icon, x, y - 9)
     pg.text(x + 17, y, num, 9, GOLD, bold=True)
     pg.spaced(x + 34, y, label, 7.6, SWAMP, bold=True, spacing=1.8)
-    pg.text(x + 34, y + 10, desc, 6.6, MID)
+    pg.text(x + 34, y + 10, desc, 6.6, GREY)
 
 
 def chip(pg, cx, cy, verb, w=64, h=15, size=7.4):
@@ -218,11 +219,11 @@ def masthead(pg):
     pg.text(W - M, H - 11, "Page 1 of 1", 7, BLACK, align=2)
 
     top, hh = 30, 46
-    brand_w = 150
+    brand_w = 138
     pg.box(M, top, brand_w, hh, fill=ARMY_RED, stroke=None)
     pg.box(M + brand_w, top, CW - brand_w, hh, fill=FAINT, stroke=None)
     png, (iw, ih) = reversed_logo_png()
-    lh = 21
+    lh = 27
     lw = lh * iw / ih
     pg.p.insert_image(pymupdf.Rect(M + (brand_w - lw) / 2, top + (hh - lh) / 2,
                                    M + (brand_w + lw) / 2, top + (hh + lh) / 2), stream=png)
@@ -260,12 +261,12 @@ def build():
     third_cx = M + 2 * (cw + gap) + cw / 2
 
     # continuation: from the third card down and across into 02, the start of the system
-    y = model_bottom + 8
-    sec2_y = y + 22
+    y = model_bottom + 9
+    sec2_y = y + 20
     pg.line(third_cx, model_bottom, third_cx, y, GOLD, width=0.9)
-    pg.line(third_cx, y, M + 5.5, y, GOLD, width=0.9)
-    pg.line(M + 5.5, y, M + 5.5, sec2_y - 15, GOLD, width=0.9)
-    arrow_head_down(pg, M + 5.5, sec2_y - 11, size=3.2)
+    pg.line(M, y, W - M, y, GOLD, width=0.9)
+    pg.line(M, y, M, y + 5, GOLD, width=0.9)
+    pg.line(W - M, y, W - M, y + 5, GOLD, width=0.9)
 
     # ---- 02 DEVELOPMENT: a rising staircase, stage 4 the destination ----
     section(pg, M, sec2_y, 2)
@@ -359,7 +360,7 @@ def build():
     for org, sub, verbs in MATRIX:
         pg.box(rx, y, rw, rh, fill=FAINT, stroke=None, radius=4)
         pg.text(rx + 10, y + 13, org, 8, BLACK, bold=True)
-        pg.text(rx + 10, y + 23, sub, 6.4, MID)
+        pg.text(rx + 10, y + 23, sub, 6.4, GREY)
         for j, verb in enumerate(verbs):
             chip(pg, rx + label_w + j * col_w + col_w / 2, y + rh / 2, verb)
         y += rh + 5
