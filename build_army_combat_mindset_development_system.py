@@ -195,31 +195,49 @@ def spine_card(pg, x, y, w, h, spine_w, spine_text, spine_size=9.5):
 
 
 # ---- page ------------------------------------------------------------------
-def letterhead(pg):
+LOGO_REVERSED = "./assets/nz-army-logo-white.png"
+
+
+def reversed_logo_png():
+    import io
+    from PIL import Image
+    im = Image.open(LOGO_REVERSED).convert("RGBA")
+    im = im.crop(im.getchannel("A").getbbox())
+    buf = io.BytesIO()
+    im.save(buf, "PNG")
+    return buf.getvalue(), im.size
+
+
+def masthead(pg):
+    """Compact split masthead: Army-red brand block with the reversed logo,
+    then a pale title field.  The only red on the page."""
     pg.text(W / 2, 20, "UNCLASSIFIED", 8, BLACK, bold=True, align=1)
     pg.text(W / 2, H - 22, "UNCLASSIFIED", 8, BLACK, bold=True, align=1)
     pg.text(M, H - 11, FOOTER_LEFT, 7, BLACK)
     pg.text(W / 2, H - 11, "ACS 2026", 7, BLACK, align=1)
     pg.text(W - M, H - 11, "Page 1 of 1", 7, BLACK, align=2)
-    png, (iw, ih) = logo_png()
-    lh = 20
-    pg.p.insert_image(pymupdf.Rect(M, 28, M + lh * iw / ih, 28 + lh), stream=png)
-    pg.text(M, 74, TITLE, 20, BLACK, bold=True)
-    pg.line(M, 82, W - M, 82, ARMY_RED, width=2)
-    pg.text(M, 94, ORIGINATOR, 8, SWAMP)
-    x = W - M
-    for s, bold in ((DATE, False), ("Date: ", True)):
-        x -= pg.width(s, 7.5, bold)
-        pg.text(x, 94, s, 7.5, BLACK, bold=bold)
+
+    top, hh = 30, 46
+    brand_w = 150
+    pg.box(M, top, brand_w, hh, fill=ARMY_RED, stroke=None)
+    pg.box(M + brand_w, top, CW - brand_w, hh, fill=FAINT, stroke=None)
+    png, (iw, ih) = reversed_logo_png()
+    lh = 21
+    lw = lh * iw / ih
+    pg.p.insert_image(pymupdf.Rect(M + (brand_w - lw) / 2, top + (hh - lh) / 2,
+                                   M + (brand_w + lw) / 2, top + (hh + lh) / 2), stream=png)
+    tx = M + brand_w + 18
+    pg.text(tx, top + 27, TITLE, 18, BLACK, bold=True)
+    pg.text(tx, top + 39, f"{ORIGINATOR}  \u00b7  {DATE}", 7.5, INK)
+    return top + hh
 
 
 def build():
     doc = pymupdf.open()
     pg = Page(doc, W, H)
-    letterhead(pg)
+    y = masthead(pg) + 24
 
     # ---- 01 MODEL: three cards in sequence, the third opens the system ----
-    y = 118
     section(pg, M, y, 1)
     y += 18
     gap = 22
@@ -254,7 +272,7 @@ def build():
     y = sec2_y + 18
     gap = 14
     sw = (CW - gap * 3) / 4
-    base_h, rise = 48, 7
+    base_h, rise = 52, 8
     fills = [FAINT, PALE, OLIVE_LIGHT, BLACK]
     bottom = y + base_h + rise * 3
     for i, (num, name, desc) in enumerate(STEPS):
@@ -285,7 +303,7 @@ def build():
     section(pg, M, top, 3)
     y = top + 18
     sp = 70
-    rh = 28
+    rh = 30
     gapv = 6
     n = len(RESPONSIBILITIES)
     chain_x = M + sp / 2
@@ -304,8 +322,8 @@ def build():
         y += hh + gapv
     chain_bottom = y - gapv
     # advisers sit beside the chain, not in it: a dashed connector from the chain's right edge
-    y += 3
-    eh = 32
+    y += 4
+    eh = 34
     pg.box(M, y, lw, eh, fill=WHITE, stroke=GRID, width=0.8, radius=R)
     pg.spaced(M + 12, y + 12, ADVISERS[0], 5.8, SWAMP, bold=True, spacing=1.5)
     cx = M + 12
