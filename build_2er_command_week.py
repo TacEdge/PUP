@@ -16,15 +16,14 @@ M = 56
 CW = W - 2 * M
 
 KICKER = "NZALC LEADERSHIP DEVELOPMENT SUPPORT  ·  INITIATING ONE-PAGER"
-TITLE = "2nd Engineer Regiment Command Week"
+TITLE = "2 ER Command Off-site"
 ORIGINATOR = "New Zealand Army Leadership Centre | Army Command School"
-REFERENCE = "2 ER Command Week, 16 to 17 November 2026"
 DATE = "September 2026"
-FOOTER_LEFT = "NZALC | 2 ER Command Week"
+FOOTER_LEFT = "NZALC | 2 ER Command Off-site"
 
 PURPOSE = [
-    "The New Zealand Army Leadership Centre (NZALC) will support the 2nd Engineer Regiment Command Week by "
-    "delivering a focused, two-phase leadership development package for up to 17 personnel.",
+    "NZALC will support the 2 ER Command Off-site by delivering a two-phase leadership development package "
+    "for up to 18 personnel.",
     "The package is designed to build individual self-awareness before shifting the focus to team effectiveness "
     "and collective performance.",
 ]
@@ -36,11 +35,11 @@ PROGRAMME = [
     ("TUE 17 NOV", "1200 – 1400", "Protected white space",
      "Available if required to continue productive discussion, consolidate learning or explore issues arising during the session."),
 ]
-PROGRAMME_NOTE = ("NZALC's contribution will conclude no later than 1400 Tuesday. The remainder of Command Week will "
+PROGRAMME_NOTE = ("NZALC's contribution will conclude no later than 1400 Tuesday. The remainder of the week will "
                   "continue under 2 ER's command arrangements.")
 DELIVERY = [
     ("DELIVERED BY", "Leadership Development Wing, NZALC"),
-    ("PARTICIPANTS", "Up to 17 personnel"),
+    ("PARTICIPANTS", "Up to 18 personnel"),
     ("LOCATION", "Off-site venue in the Palmerston North area; exact location to be confirmed"),
     ("REQUIREMENT", "Each participant will complete a Leadership Personality Report before the facilitated session"),
 ]
@@ -92,14 +91,12 @@ def build():
     png, (iw, ih) = logo_png()
     lh = 26
     pg.p.insert_image(pymupdf.Rect(M, 56, M + lh * iw / ih, 56 + lh), stream=png)
-    pg.spaced(M, 108, KICKER, 8, SWAMP, bold=True, spacing=1.8)
     pg.text(M, 134, TITLE, 22, BLACK, bold=True)
     pg.line(M, 144, W - M, 144, ARMY_RED, width=2)
     pg.text(M, 160, ORIGINATOR, 9, SWAMP)
     x = M
-    for s, bold, col in (("Reference: ", True, BLACK), (REFERENCE, False, BLACK), ("   ·   ", False, MID),
-                         ("Date: ", True, BLACK), (DATE, False, BLACK)):
-        pg.text(x, 174, s, 8, col, bold=bold)
+    for s, bold in (("Date: ", True), (DATE, False)):
+        pg.text(x, 174, s, 8, BLACK, bold=bold)
         x += pg.width(s, 8, bold)
 
     # purpose
@@ -157,7 +154,7 @@ def build():
         y += 2
     print(f"content ends at y={y:.0f}")
 
-    doc.set_metadata({"title": "2nd Engineer Regiment Command Week: NZALC Leadership Development Support",
+    doc.set_metadata({"title": "2 ER Command Off-site: NZALC Leadership Development Support",
                       "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
     print(f"Saved {OUT}")

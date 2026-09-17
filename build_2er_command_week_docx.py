@@ -10,17 +10,17 @@ import build_elda_data_sheet as cds
 
 SOURCE = "./2er-command-week.md"
 OUTPUT_DOCX = "./output/2er-command-week-nzalc-support.docx"
-TITLE = "2nd Engineer Regiment Command Week"
-KICKER = "NZALC Leadership Development Support"
-TAG = "Initiating One-Pager"
-REFERENCE = "2 ER Command Week, 16 to 17 November 2026"
-FOOTER_LEFT = "NZALC | 2 ER Command Week"
+TITLE = "2 ER Command Off-site"
+KICKER = None
+TAG = None
+REFERENCE = None
+FOOTER_LEFT = "NZALC | 2 ER Command Off-site"
 
 
 def build():
     doc = cds.new_document()
     cds.add_header_footer(doc.sections[0], FOOTER_LEFT)
-    cds.add_title_block(KICKER, TITLE, TAG, reference=REFERENCE, status=None)
+    cds.add_title_block(KICKER, TITLE, TAG, reference=REFERENCE, status=None, date_only=True)
     with open(SOURCE, encoding="utf-8") as fh:
         cds.render_markdown(fh.read().splitlines())
     # tighten to one page: drop the empty spacer after the table and the

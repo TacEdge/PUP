@@ -626,7 +626,7 @@ def add_locator(current=None, size=Pt(8.5), align_left=True, arrow_color=None):
 
 def add_title_block(kicker, title, tag, reference=None, locator=None,
                     with_logo=True, title_style=None, status=None,
-                    page_break=False):
+                    page_break=False, date_only=False):
     """Layered document opening: small kicker (course code), the title as
     the anchor, a caps tag line closed by the red rule, then originator and
     reference details, then an optional pathway locator."""
@@ -668,11 +668,11 @@ def add_title_block(kicker, title, tag, reference=None, locator=None,
     org_p.paragraph_format.keep_with_next = True
     _run(org_p, ORIGINATOR_LONG, FONT_HEAD, Pt(10), False, False, SWAMP_GREEN)
 
-    if reference:
+    if reference or date_only:
         meta_p = doc.add_paragraph()
         meta_p.paragraph_format.space_after = Pt(0)
         meta_p.paragraph_format.keep_with_next = True
-        parts = [("Reference", reference), ("Date", DATE)]
+        parts = ([("Reference", reference)] if reference else []) + [("Date", DATE)]
         if status:
             parts.append(("Status", status))
         for i, (label, value) in enumerate(parts):

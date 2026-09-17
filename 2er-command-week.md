@@ -1,8 +1,8 @@
-# 2nd Engineer Regiment Command Week: NZALC Leadership Development Support
+# 2 ER Command Off-site: NZALC Leadership Development Support
 
 ## Purpose
 
-The New Zealand Army Leadership Centre (NZALC) will support the 2nd Engineer Regiment Command Week by delivering a focused, two-phase leadership development package for up to 17 personnel.
+NZALC will support the 2 ER Command Off-site by delivering a two-phase leadership development package for up to 18 personnel.
 
 The package is designed to build individual self-awareness before shifting the focus to team effectiveness and collective performance.
 
@@ -14,12 +14,12 @@ The package is designed to build individual self-awareness before shifting the f
 | Tuesday 17 November, 0800 to 1200 | ROCKET Model | Facilitated team development session focused on the conditions required for effective team performance. |
 | Tuesday 17 November, 1200 to 1400 | Protected white space | Available if required to continue productive discussion, consolidate learning or explore issues arising during the session. |
 
-NZALC's contribution will conclude no later than 1400 Tuesday. The remainder of Command Week will continue under 2 ER's command arrangements.
+NZALC's contribution will conclude no later than 1400 Tuesday. The remainder of the week will continue under 2 ER's command arrangements.
 
 ## Delivery
 
 * **Delivered by:** Leadership Development Wing, NZALC
-* **Participants:** Up to 17 personnel
+* **Participants:** Up to 18 personnel
 * **Location:** Off-site venue in the Palmerston North area; exact location to be confirmed
 * **Requirement:** Each participant will complete a Leadership Personality Report before the facilitated session
 
