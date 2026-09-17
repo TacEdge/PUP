@@ -39,8 +39,6 @@ STEPS = [
     ("3", "Perform Under Pressure", "Practise performing effectively in controlled but demanding situations."),
     ("4", "Combat Mindset", "Perform your role effectively under operational demands."),
 ]
-STEPS_NOTE = ("Steps 1 to 3 build Performance Under Pressure. Step 4 applies that capability under operational "
-              "demands. That is Combat Mindset.")
 STEPS_REINFORCE = "Combat Mindset is not a fixed trait. Like any skill, it improves through deliberate practice."
 RESPONSIBILITIES = [
     ("G7", "Doctrine and policy", "Sets Army direction for Combat Mindset."),
@@ -193,8 +191,6 @@ def build():
         if i < 3:
             arrow_right(pg, x + sw + 3, x + sw + gap - 3, y + 16)
     y += h + 12
-    pg.text(M, y, STEPS_NOTE, 7.2, SWAMP)
-    y += 11
     pg.text(M, y, STEPS_REINFORCE, 7.6, SWAMP, bold=True)
     y += 20
 
