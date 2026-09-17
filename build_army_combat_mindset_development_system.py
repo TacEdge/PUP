@@ -102,9 +102,37 @@ def arrow_down(pg, x, y0, y1):
     sh.commit()
 
 
-def section(pg, x, y, num, label):
-    pg.text(x, y, num, 9, GOLD, bold=True)
-    pg.spaced(x + 12, y, label, 7, SWAMP, bold=True, spacing=1.6)
+def nav_icon(pg, kind, x, y, size=11):
+    """Small line icon for a section header: x, y is the top-left of the icon box."""
+    sh = pg.p.new_shape()
+    s = size
+    if kind == "model":            # nested squares: the system and its parts
+        sh.draw_rect(pymupdf.Rect(x, y, x + s, y + s))
+        sh.draw_rect(pymupdf.Rect(x + s * 0.3, y + s * 0.3, x + s * 0.7, y + s * 0.7))
+    elif kind == "development":    # three rising steps
+        sh.draw_polyline([(x, y + s), (x + s / 3, y + s), (x + s / 3, y + 2 * s / 3), (x + 2 * s / 3, y + 2 * s / 3),
+                          (x + 2 * s / 3, y + s / 3), (x + s, y + s / 3), (x + s, y)])
+    elif kind == "responsibility": # one node over two
+        sh.draw_circle((x + s / 2, y + s * 0.2), s * 0.16)
+        sh.draw_circle((x + s * 0.2, y + s * 0.82), s * 0.16)
+        sh.draw_circle((x + s * 0.8, y + s * 0.82), s * 0.16)
+        sh.draw_line((x + s / 2, y + s * 0.36), (x + s / 2, y + s * 0.55))
+        sh.draw_line((x + s * 0.2, y + s * 0.55), (x + s * 0.8, y + s * 0.55))
+        sh.draw_line((x + s * 0.2, y + s * 0.55), (x + s * 0.2, y + s * 0.66))
+        sh.draw_line((x + s * 0.8, y + s * 0.55), (x + s * 0.8, y + s * 0.66))
+    elif kind == "delivery":       # target with a check
+        sh.draw_circle((x + s / 2, y + s / 2), s / 2)
+        sh.draw_polyline([(x + s * 0.28, y + s * 0.52), (x + s * 0.45, y + s * 0.68), (x + s * 0.74, y + s * 0.34)])
+    sh.finish(color=SWAMP, fill=None, width=0.9, closePath=False, lineJoin=1, lineCap=1)
+    sh.commit()
+
+
+def section(pg, x, y, num, label, desc, icon):
+    """Section header: icon, two-digit number, single-word title, one-line descriptor."""
+    nav_icon(pg, icon, x, y - 9)
+    pg.text(x + 17, y, num, 9, GOLD, bold=True)
+    pg.spaced(x + 34, y, label, 7.4, SWAMP, bold=True, spacing=1.8)
+    pg.text(x + 34, y + 10, desc, 6.4, MID)
 
 
 def verb_pill(pg, cx, cy, verb, w=64, h=15, size=7.4):
@@ -145,12 +173,12 @@ def build():
     y = letterhead(pg)
 
     # 1  the model: three cards across, black spines, gold arrows
-    section(pg, M, y, "1", "THE MODEL")
-    y += 8
+    section(pg, M, y, "01", "MODEL", "What it is and why Army needs it.", "model")
+    y += 18
     gap = 22
     cw = (CW - gap * 2) / 3
     spine = 28
-    h = 68
+    h = 64
     for i, (num, role, term, desc) in enumerate(MODEL):
         x = M + i * (cw + gap)
         pg.box(x, y, cw, h, fill=FAINT, stroke=None, radius=R)
@@ -175,14 +203,14 @@ def build():
             ty += 8.6
         if i < 2:
             arrow_right(pg, x + cw + 4, x + cw + gap - 4, y + h / 2)
-    y += h + 18
+    y += h + 14
 
     # 2  the developmental pathway: four steps, the last black
-    section(pg, M, y, "2", "COMBAT MINDSET DEVELOPMENTAL PATHWAY")
-    y += 8
+    section(pg, M, y, "02", "DEVELOPMENT", "How the capability progressively develops.", "development")
+    y += 18
     gap = 16
     sw = (CW - gap * 3) / 4
-    h = 62
+    h = 58
     for i, (num, name, desc) in enumerate(STEPS):
         x = M + i * (sw + gap)
         final = i == 3
@@ -192,9 +220,9 @@ def build():
         para(pg, x + 10, y + 36, desc, 6.9, sw - 20, color=GRID if final else INK, lh=8.6)
         if i < 3:
             arrow_right(pg, x + sw + 3, x + sw + gap - 3, y + 16)
-    y += h + 12
+    y += h + 11
     pg.text(M, y, STEPS_REINFORCE, 7.6, SWAMP, bold=True)
-    y += 20
+    y += 17
 
     # 3 and 4 side by side
     top = y
@@ -202,9 +230,9 @@ def build():
     rx = M + lw + 24
     rw = CW - lw - 24
 
-    section(pg, M, top, "3", "WHO IS RESPONSIBLE")
-    y = top + 8
-    rh = 34
+    section(pg, M, top, "03", "RESPONSIBILITY", "Who directs, sponsors and supports it.", "responsibility")
+    y = top + 18
+    rh = 33
     sp = 76
     n = len(RESPONSIBILITIES)
     for i, (lines, func, role) in enumerate(RESPONSIBILITIES):
@@ -222,18 +250,18 @@ def build():
         pg.spaced(M + sp + 10, y + 12, func.upper(), 5.6, SWAMP, bold=True, spacing=1.3)
         para(pg, M + sp + 10, y + 23, role, 7, lw - sp - 18, lh=8.6)
         if i < n - 1:
-            arrow_down(pg, M + sp / 2, y + rh, y + rh + 7)
-        y += rh + 7
+            arrow_down(pg, M + sp / 2, y + rh, y + rh + 6)
+        y += rh + 6
     y += 2
-    eh = 44
+    eh = 42
     pg.box(M, y, lw, eh, fill=PALE, stroke=None, radius=R)
     pg.spaced(M + 12, y + 13, ADVISERS[0], 6, SWAMP, bold=True, spacing=1.5)
     pg.text(M + 12, y + 26, ADVISERS[1], 8.5, BLACK, bold=True)
     para(pg, M + 12, y + 37, ADVISERS[2], 6.9, lw - 24, lh=8.4)
     left_end = y + eh
 
-    section(pg, rx, top, "4", "HOW ACS DEVELOPS COMBAT MINDSET")
-    y = top + 18
+    section(pg, rx, top, "04", "DELIVERY", "Where it is trained and reinforced.", "delivery")
+    y = top + 26
     label_w = 98
     col_w = (rw - label_w) / 4
     hh = 30
