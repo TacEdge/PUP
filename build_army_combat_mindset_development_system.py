@@ -41,12 +41,14 @@ STEPS = [
 ]
 STEPS_REINFORCE = "Combat Mindset is not a fixed trait. Like any skill, it improves through deliberate practice."
 RESPONSIBILITIES = [
-    ("G7", "Doctrine and policy", "Sets Army direction for Combat Mindset."),
-    ("ATG", "Training authority", "Oversees the training approach and approves changes."),
-    ("ACS", "Learning provider", "Develops, integrates and delivers the learning."),
+    # spine lines, function, role
+    (["G7"], "Army direction", "Sets the Army requirement, doctrine and policy direction."),
+    (["ATG HQ"], "Training governance", "Governs the training response, assurance and approval of changes."),
+    (["COMDT ACS"], "Army sponsor", "Accountable sponsor for the Combat Mindset System."),
+    (["NZALC \u00b7 OCS", "NCO SCHOOL", "EXTERNAL"], "Learning providers", "Develop and deliver the learning."),
 ]
-ENABLERS = ("SPECIALIST ADVISORS", "ILD  ·  APS  ·  HPC",
-            "Provide specialist expertise, evidence and advise across the system.")
+ADVISERS = ("SPECIALIST ADVISERS", "HPC  \u00b7  APS  \u00b7  ILD",
+            "Provide specialist advice, evidence and support.")
 WHERE_SUB = "EMBEDDED ACROSS EXISTING ACS TRAINING  ·  NOT A STANDALONE COURSE"
 MATRIX_COLS = ["Understand Self", "Regulate Self", "Perform Under Pressure", "Combat Mindset"]
 MATRIX = [
@@ -202,23 +204,32 @@ def build():
 
     section(pg, M, top, "3", "WHO IS RESPONSIBLE")
     y = top + 8
-    rh = 36
-    for i, (org, role, desc) in enumerate(RESPONSIBILITIES):
+    rh = 34
+    sp = 76
+    n = len(RESPONSIBILITIES)
+    for i, (lines, func, role) in enumerate(RESPONSIBILITIES):
         pg.box(M, y, lw, rh, fill=FAINT, stroke=None, radius=R)
-        pg.box(M, y, 54 + R, rh, fill=BLACK, stroke=None, radius=R)
-        pg.box(M + 54, y, R + 1, rh, fill=FAINT, stroke=None)
-        pg.text(M + 27, y + 23, org, 10.5, WHITE, bold=True, align=1)
-        pg.spaced(M + 64, y + 13, role.upper(), 5.6, SWAMP, bold=True, spacing=1.3)
-        para(pg, M + 64, y + 25, desc, 7.2, lw - 72, lh=9)
-        if i < 2:
-            arrow_down(pg, M + 27, y + rh, y + rh + 8)
-        y += rh + 8
+        pg.box(M, y, sp + R, rh, fill=BLACK, stroke=None, radius=R)
+        pg.box(M + sp, y, R + 1, rh, fill=FAINT, stroke=None)
+        if len(lines) == 1:
+            pg.text(M + sp / 2, y + rh / 2 + 3.5, lines[0], 9.5, WHITE, bold=True, align=1)
+        else:
+            step = 8.2
+            ty = y + rh / 2 - (len(lines) - 1) * step / 2 + 2.4
+            for line in lines:
+                pg.text(M + sp / 2, ty, line, 6.6, WHITE, bold=True, align=1)
+                ty += step
+        pg.spaced(M + sp + 10, y + 12, func.upper(), 5.6, SWAMP, bold=True, spacing=1.3)
+        para(pg, M + sp + 10, y + 23, role, 7, lw - sp - 18, lh=8.6)
+        if i < n - 1:
+            arrow_down(pg, M + sp / 2, y + rh, y + rh + 7)
+        y += rh + 7
     y += 2
-    eh = 46
+    eh = 44
     pg.box(M, y, lw, eh, fill=PALE, stroke=None, radius=R)
-    pg.spaced(M + 12, y + 14, ENABLERS[0], 6, SWAMP, bold=True, spacing=1.5)
-    pg.text(M + 12, y + 27, ENABLERS[1], 8.5, BLACK, bold=True)
-    para(pg, M + 12, y + 38, ENABLERS[2], 6.9, lw - 24, lh=8.4)
+    pg.spaced(M + 12, y + 13, ADVISERS[0], 6, SWAMP, bold=True, spacing=1.5)
+    pg.text(M + 12, y + 26, ADVISERS[1], 8.5, BLACK, bold=True)
+    para(pg, M + 12, y + 37, ADVISERS[2], 6.9, lw - 24, lh=8.4)
     left_end = y + eh
 
     section(pg, rx, top, "4", "HOW ACS DEVELOPS COMBAT MINDSET")
