@@ -291,8 +291,7 @@ def build():
     y = bottom + 8
     band_h = 20
     pg.box(M, y, CW, band_h, fill=PALE, stroke=None, radius=R)
-    pg.line(M + 14, y + band_h / 2, M + 30, y + band_h / 2, GOLD, width=1.4)
-    pg.text(M + 38, y + band_h / 2 + 3.3, STEPS_REINFORCE, 9, SWAMP, bold=True)
+    pg.text(W / 2, y + band_h / 2 + 3.3, STEPS_REINFORCE, 9, SWAMP, bold=True, align=1)
     y += band_h
 
     # ---- 03 RESPONSIBILITY (left) and 04 DELIVERY (right) ----
