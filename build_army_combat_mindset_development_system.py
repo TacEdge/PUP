@@ -218,8 +218,11 @@ def masthead(pg):
 
     top, hh = 30, 46
     brand_w = 138
-    pg.box(M, top, brand_w, hh, fill=ARMY_RED, stroke=None)
-    pg.box(M + brand_w, top, CW - brand_w, hh, fill=FAINT, stroke=None)
+    # one softened band: pale field with rounded outer corners, red brand block sharing
+    # the left corners and meeting the field on a straight seam
+    pg.box(M, top, CW, hh, fill=FAINT, stroke=None, radius=R)
+    pg.box(M, top, brand_w + R, hh, fill=ARMY_RED, stroke=None, radius=R)
+    pg.box(M + brand_w, top, R + 1, hh, fill=FAINT, stroke=None)
     png, (iw, ih) = reversed_logo_png()
     lh = 27
     lw = lh * iw / ih
