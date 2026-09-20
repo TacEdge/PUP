@@ -58,9 +58,9 @@ ADVISERS = ("SPECIALIST ADVISERS", ["HPC", "APS", "ILD"],
             "Provide specialist advice, evidence and support.")
 MATRIX_COLS = ["Understand Self", "Regulate Self", "Perform Under Pressure", "Combat Mindset"]
 MATRIX = [
-    ("NZALC", "LDS and ELDA", ["Trains", "Trains", "Trains", "Contributes"]),
-    ("NCO School", "JNCO and SNCO", ["Reinforces", "Reinforces", "Reinforces", "Contributes"]),
-    ("OCS", "including COGCON", ["Reinforces", "Trains", "Trains", "Contributes"]),
+    ("NZALC", "LDS and ELDA", ["Trains", "Trains", "Trains", "Reinforces"]),
+    ("NCO School", "JNCO and SNCO", ["Reinforces", "Reinforces", "Reinforces", "Reinforces"]),
+    ("OCS", "including COGCON", ["Reinforces", "Trains", "Trains", "Trains"]),
 ]
 VERBS = [
     ("Trains", "deliberate instruction and practice"),
