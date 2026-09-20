@@ -34,8 +34,7 @@ MODEL = [
      "Under operational pressure, trained individuals and teams can lose access to their full capability. "
      "Army must prepare them to remain effective and act decisively and ethically."),
     ("2", "THE CAPABILITY", "Combat Mindset",
-     "A trainable capability: Performance Under Pressure applied to military operations, with combat its most "
-     "demanding test."),
+     "Performance Under Pressure applied to operational demands, with combat its most demanding test."),
     ("3", "HOW ARMY BUILDS IT", "Army Combat Mindset System",
      "How Army progressively develops Combat Mindset."),
 ]
@@ -46,7 +45,8 @@ STEPS = [
      "controlled, demanding situations."),
     ("4", "Combat Mindset", "Perform your role effectively under operational demands."),
 ]
-STEPS_REINFORCE = "Combat Mindset is not a fixed trait. Like any skill, it improves through deliberate practice."
+STEPS_REINFORCE = ("Performance Under Pressure is a trainable skill. Combat Mindset develops as it is applied in "
+                   "increasingly realistic operational contexts.")
 RESPONSIBILITIES = [
     # spine, function, role
     ("G7", "Army direction", "Sets the Army requirement, doctrine and policy direction."),
