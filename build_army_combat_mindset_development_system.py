@@ -264,10 +264,10 @@ def build():
 
     # ---- 02 DEVELOPMENT: a rising staircase, stage 4 the destination ----
     section(pg, M, sec2_y, 2)
-    y = sec2_y + 14
+    y = sec2_y + 10
     gap = 14
     sw = (CW - gap * 3) / 4
-    base_h, rise = 44, 8
+    base_h, rise = 44, 6
     fills = [FAINT, PALE, OLIVE_LIGHT, BLACK]
     bottom = y + base_h + rise * 3
     for i, (num, name, desc) in enumerate(STEPS):
