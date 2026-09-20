@@ -39,11 +39,10 @@ MODEL = [
      "How Army progressively develops Combat Mindset."),
 ]
 STEPS = [
-    ("1", "Understand Self", "Recognise how pressure affects your body, thinking and behaviour."),
-    ("2", "Regulate Self", "Use practical tools to maintain effective thinking, decision-making and task focus."),
-    ("3", "Perform Under Pressure", "Apply and refine those skills through feedback and repeated exposure across "
-     "controlled, demanding situations."),
-    ("4", "Combat Mindset", "Perform your role effectively under operational demands."),
+    ("1", "Understand Self", "Recognise your response."),
+    ("2", "Regulate Self", "Control that response."),
+    ("3", "Perform Under Pressure", "Develop the transferable skill."),
+    ("4", "Combat Mindset", "Apply that skill to operational demands."),
 ]
 STEPS_REINFORCE = ("Performance Under Pressure is a trainable skill. Combat Mindset develops as it is applied in "
                    "increasingly realistic operational contexts.")
@@ -270,7 +269,7 @@ def build():
     y = sec2_y + 18
     gap = 14
     sw = (CW - gap * 3) / 4
-    base_h, rise = 52, 8
+    base_h, rise = 44, 8
     fills = [FAINT, PALE, OLIVE_LIGHT, BLACK]
     bottom = y + base_h + rise * 3
     for i, (num, name, desc) in enumerate(STEPS):
