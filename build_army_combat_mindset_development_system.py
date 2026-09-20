@@ -65,7 +65,6 @@ MATRIX = [
 VERBS = [
     ("Trains", "deliberate instruction and practice"),
     ("Reinforces", "further practice and application"),
-    ("Contributes", "prepares for operational demands"),
 ]
 SECTIONS = {
     1: ("01", "MODEL", "What it is and why Army needs it.", "model"),
