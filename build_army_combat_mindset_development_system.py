@@ -60,7 +60,7 @@ MATRIX_COLS = ["Understand Self", "Regulate Self", "Perform Under Pressure", "Co
 MATRIX = [
     ("NZALC", "LDS and ELDA", ["Trains", "Trains", "Trains", "Reinforces"]),
     ("NCO School", "JNCO and SNCO", ["Reinforces", "Reinforces", "Reinforces", "Reinforces"]),
-    ("OCS", "including COGCON", ["Reinforces", "Trains", "Trains", "Trains"]),
+    ("OCS", "including COGCON", ["Trains", "Trains", "Trains", "Trains"]),
 ]
 VERBS = [
     ("Trains", "deliberate instruction and practice"),
