@@ -260,7 +260,7 @@ def build():
 
     # continuation: from the third card down and across into 02, the start of the system
     y = model_bottom + 9
-    sec2_y = y + 14
+    sec2_y = y + 11
 
     # ---- 02 DEVELOPMENT: a rising staircase, stage 4 the destination ----
     section(pg, M, sec2_y, 2)
@@ -289,7 +289,7 @@ def build():
     y += band_h
 
     # ---- 03 RESPONSIBILITY (left) and 04 DELIVERY (right) ----
-    top = y + 16
+    top = y + 20
     lw = 300
     rx = M + lw + 30
     rw = CW - lw - 30
@@ -333,7 +333,7 @@ def build():
     left_end = y + eh
 
     section(pg, rx, top, 4)
-    y = top + 24
+    y = top + 20
     label_w = 96
     col_w = (rw - label_w) / 4
     hh = 32
