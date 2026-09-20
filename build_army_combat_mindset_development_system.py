@@ -41,8 +41,9 @@ MODEL = [
 ]
 STEPS = [
     ("1", "Understand Self", "Recognise how pressure affects your body, thinking and behaviour."),
-    ("2", "Regulate Self", "Control your response so your capability remains available."),
-    ("3", "Perform Under Pressure", "Practise performing effectively in controlled but demanding situations."),
+    ("2", "Regulate Self", "Use practical tools to maintain effective thinking, decision-making and task focus."),
+    ("3", "Perform Under Pressure", "Apply and refine those skills through feedback and repeated exposure across "
+     "controlled, demanding situations."),
     ("4", "Combat Mindset", "Perform your role effectively under operational demands."),
 ]
 STEPS_REINFORCE = "Combat Mindset is not a fixed trait. Like any skill, it improves through deliberate practice."
