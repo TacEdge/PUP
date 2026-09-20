@@ -157,11 +157,10 @@ def nav_icon(pg, kind, x, y, s=11):
 
 
 def section(pg, x, y, n):
-    num, label, desc, icon = SECTIONS[n]
-    nav_icon(pg, icon, x, y - 9)
-    pg.text(x + 17, y, num, 9, GOLD, bold=True)
-    pg.spaced(x + 34, y, label, 7.6, SWAMP, bold=True, spacing=1.8)
-    pg.text(x + 34, y + 10.5, desc, 7, GREY)
+    num, label, desc, _ = SECTIONS[n]
+    pg.text(x, y, num, 9, GOLD, bold=True)
+    pg.spaced(x + 17, y, label, 7.6, SWAMP, bold=True, spacing=1.8)
+    pg.text(x + 17, y + 10.5, desc, 7, GREY)
 
 
 def chip(pg, cx, cy, verb, w=64, h=15, size=7.4):
@@ -261,11 +260,11 @@ def build():
 
     # continuation: from the third card down and across into 02, the start of the system
     y = model_bottom + 9
-    sec2_y = y + 20
+    sec2_y = y + 14
 
     # ---- 02 DEVELOPMENT: a rising staircase, stage 4 the destination ----
     section(pg, M, sec2_y, 2)
-    y = sec2_y + 18
+    y = sec2_y + 14
     gap = 14
     sw = (CW - gap * 3) / 4
     base_h, rise = 44, 8
@@ -283,7 +282,7 @@ def build():
         if i < 3:
             arrow_right(pg, x + sw + 3, x + sw + gap - 3, top + 14)
     # anchor statement: a quiet band closing the pathway
-    y = bottom + 8
+    y = bottom + 7
     band_h = 20
     pg.box(M, y, CW, band_h, fill=PALE, stroke=None, radius=R)
     pg.text(W / 2, y + band_h / 2 + 3.3, STEPS_REINFORCE, 9, SWAMP, bold=True, align=1)
