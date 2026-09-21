@@ -62,6 +62,12 @@ MATRIX = [
     ("NCO School", "JNCO and SNCO", ["Reinforces", "Reinforces", "Reinforces", "Reinforces"]),
     ("OCS", "including COGCON", ["Trains", "Trains", "Trains", "Trains"]),
 ]
+# Scale option: what delivery looks like beyond ACS.  Drawn as a proposal,
+# outside the three ACS rows, so current delivery is never read as wider.
+MATRIX_SCALE = ("Wider Army", "Units and training establishments",
+                ["Reinforces", "Reinforces", "Trains", "Trains"])
+SCALE_LABEL = "BEYOND ACS  \u00b7  SCALE OPTION"
+SCALE_NOTE = "proposed, not current delivery"
 VERBS = [
     ("Trains", "deliberate instruction and practice"),
     ("Reinforces", "further practice and application"),
@@ -126,6 +132,18 @@ def dashed(pg, x0, y0, x1, y1):
     pg.line(x0, y0, x1, y1, GOLD, width=0.9, dashes="[2.5 2.5] 0")
 
 
+def dashed_box(pg, x, y, w, h, radius=0):
+    """Dashed gold outline: used where something is proposed rather than in place."""
+    sh = pg.p.new_shape()
+    r = pymupdf.Rect(x, y, x + w, y + h)
+    if radius:
+        sh.draw_rect(r, radius=(min(radius / w, 0.5), min(radius / h, 0.5)))
+    else:
+        sh.draw_rect(r)
+    sh.finish(color=GOLD, fill=None, width=0.9, dashes="[2.5 2.5] 0")
+    sh.commit()
+
+
 def nav_icon(pg, kind, x, y, s=11):
     """One monochrome line icon per section header; x, y is the icon box top-left."""
     sh = pg.p.new_shape()
@@ -163,9 +181,14 @@ def section(pg, x, y, n):
     pg.text(x + 17, y + 10.5, desc, 7, GREY)
 
 
-def chip(pg, cx, cy, verb, w=64, h=15, size=7.4):
+def chip(pg, cx, cy, verb, w=64, h=15, size=7.4, proposed=False):
     """Status chip.  Meaning is carried by the word; fill and outline only reinforce it."""
     x, y = cx - w / 2, cy - h / 2
+    if proposed:
+        ink = BLACK if verb == "Trains" else SWAMP
+        pg.box(x, y, w, h, fill=WHITE, stroke=ink, width=0.8, radius=h / 2)
+        pg.text(cx, cy + size * 0.36, verb, size, ink, bold=True, align=1)
+        return
     if verb == "Trains":
         pg.box(x, y, w, h, fill=BLACK, stroke=None, radius=h / 2)
         pg.text(cx, cy + size * 0.36, verb, size, WHITE, bold=True, align=1)
@@ -351,16 +374,33 @@ def build():
             pg.text(x + 8, ty, line, 6.8, WHITE if final else BLACK, bold=True)
             ty += 8
     pg.spaced(rx, y + hh - 6, "ACS DELIVERY", 5.6, SWAMP, bold=True, spacing=1.3)
-    y += hh + 5
-    rh = 30
+    y += hh + 4
+    rh = 28
     for org, sub, verbs in MATRIX:
         pg.box(rx, y, rw, rh, fill=FAINT, stroke=None, radius=4)
-        pg.text(rx + 10, y + 13, org, 8, BLACK, bold=True)
-        pg.text(rx + 10, y + 23.5, sub, 6.8, GREY)
+        pg.text(rx + 10, y + 12, org, 8, BLACK, bold=True)
+        pg.text(rx + 10, y + 22, sub, 6.8, GREY)
         for j, verb in enumerate(verbs):
             chip(pg, rx + label_w + j * col_w + col_w / 2, y + rh / 2, verb)
-        y += rh + 5
+        y += rh + 4
+
+    # ---- scale option: delivery beyond ACS, drawn as a proposal ----
+    y += 8
+    lab_w = pg.spaced(rx, y, SCALE_LABEL, 5.6, GOLD, bold=True, spacing=1.3)
+    pg.text(rx + lab_w + 8, y, SCALE_NOTE, 6.4, GREY)
     y += 6
+    org, sub, verbs = MATRIX_SCALE
+    srh = 32
+    dashed_box(pg, rx, y, rw, srh, radius=4)
+    pg.text(rx + 10, y + 12, org, 8, SWAMP, bold=True)
+    sy = y + 21
+    for line in wrapped(pg, sub, 6.2, label_w - 16):
+        pg.text(rx + 10, sy, line, 6.2, GREY)
+        sy += 7.5
+    for j, verb in enumerate(verbs):
+        chip(pg, rx + label_w + j * col_w + col_w / 2, y + srh / 2, verb, proposed=True)
+    y += srh + 8
+
     x = rx
     for verb, definition in VERBS:
         item_w = 50 + pg.width(definition, 6.8)
