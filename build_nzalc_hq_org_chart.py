@@ -70,6 +70,11 @@ CHANGES = [
 ]
 
 
+def coa_service_numbers():
+    """Service numbers of the people carried forward to the courses of action page."""
+    return {row[0][0] for row in COA_ROWS}
+
+
 def month_index(y, m):
     return (y - AXIS_START[0]) * 12 + (m - AXIS_START[1])
 
@@ -343,10 +348,17 @@ def masthead(pg, subtitle=SUBTITLE, page_label="Page 1 of 2"):
     return top + hh
 
 
-def person_card(pg, x, y, w, h, person, lead=False):
-    """Photo, rank and name, role, position number.  Lead cards carry a black spine."""
+def person_card(pg, x, y, w, h, person, lead=False, flag=False):
+    """Photo, rank and name, role, position number.
+
+    Cards flagged with ``flag`` carry an Army red outline, marking the people
+    whose courses of action are set out on page 2.
+    """
     sn, rank, name, role, pos = person
-    pg.box(x, y, w, h, fill=FAINT, stroke=None, radius=R)
+    if flag:
+        pg.box(x, y, w, h, fill=FAINT, stroke=ARMY_RED, width=1.1, radius=R)
+    else:
+        pg.box(x, y, w, h, fill=FAINT, stroke=None, radius=R)
     ph = h - 10
     px = x + 6
     pg.p.insert_image(pymupdf.Rect(px, y + 5, px + ph, y + 5 + ph), stream=photo_png(sn))
@@ -379,6 +391,7 @@ def build():
     pg = Page(doc, W, H)
     y0 = masthead(pg)
 
+    flagged = coa_service_numbers()
     card_h = 44
     gap = 7
     # ---- chief instructor, centred; storeperson reports directly to the CI ----
@@ -424,7 +437,7 @@ def build():
         vline(pg, sx + col_w / 2, lead_bottom + 4, y)
         yy = y
         for m in group:
-            person_card(pg, sx, yy, col_w, card_h, m)
+            person_card(pg, sx, yy, col_w, card_h, m, flag=m[0] in flagged)
             yy += card_h + gap
     elda_end = y + 5 * (card_h + gap)
 
@@ -435,7 +448,7 @@ def build():
     y += card_h + 8
     vline(pg, col_x[1] + col_w / 2, y - 8, y)
     for m in members:
-        person_card(pg, col_x[1], y, col_w, card_h, m)
+        person_card(pg, col_x[1], y, col_w, card_h, m, flag=m[0] in flagged)
         y += card_h + gap
 
     # Training
@@ -447,7 +460,12 @@ def build():
     y = unit_band(pg, col_x[3], col_top, col_w, "HQ Support")
     person_card(pg, col_x[3], y, col_w, card_h, STOREPERSON)
 
-    print(f"content ends at y={elda_end:.0f}, footer marking at {H - 30}")
+    # key: what the red outline means
+    ky = elda_end + 14
+    pg.box(x0, ky, 22, 11, fill=FAINT, stroke=ARMY_RED, width=1.1, radius=3)
+    pg.text(x0 + 29, ky + 8, "Courses of action set out on page 2", 7, GREY)
+
+    print(f"content ends at y={ky + 11:.0f}, footer marking at {H - 30}")
     coa_page(doc, SUBTITLE4, "Page 2 of 2", "01", "COURSES OF ACTION",
              None, COA_ROWS)
     doc.set_metadata({"title": "Army Leadership Centre: HQ ACS organisation", "author": "Army Command School"})
