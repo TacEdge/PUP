@@ -164,7 +164,7 @@ def staffing_page(doc):
 # ---- page 3: courses of action ----
 SUBTITLE3 = "Courses of action  \u00b7  Option 1"
 SUBTITLE4 = "Courses of action  \u00b7  Option 2"
-KATE_CONTEXT = "Parental leave from December 2026, returning January 2028."
+KATE_CONTEXT = "Parental leave from December 2026, returning at the end of January 2028."
 JAMES_CONTEXT = ("Wife relocating to Auckland for work from January 2027. Requested a flexible work "
                  "arrangement at 0.8 FTE, March to December 2027, reviewed three-monthly.")
 HILARY_CONTEXT = ("Looking to taper down toward retirement. Requested a flexible work arrangement at 0.6 FTE, "
@@ -172,7 +172,7 @@ HILARY_CONTEXT = ("Looking to taper down toward retirement. Requested a flexible
 KATE = (("S1066066", "", "Katherine Beckett", "Instructor ELDA Wing", "00109525"),
         ("leave", (2026, 12), (2028, 1)),
         [("Replacement instructor  \u00b7  fixed-term 12 months", (2027, 1), (2027, 12), False, "black")],
-        [("Kate returns", (2028, 1))], None, KATE_CONTEXT)
+        [("Kate returns  \u00b7  end Jan 2028", (2028, 2))], None, KATE_CONTEXT)
 # person, context (kind, start, end), action bars [(label, start, end, open_ended, style)], milestones, note
 COA_OPTION_1 = [
     KATE,
@@ -292,7 +292,7 @@ def coa_page(doc, subtitle, page_label, num, heading, desc, rows):
         for label, ym in milestones:
             mx = ax + month_index(*ym) * mw
             pg.line(mx, ry + 4, mx, ry + row_h - 4, GOLD, width=1.2)
-            pg.text(mx + 4, ry + row_h - 8, label, 6.4, SWAMP, bold=True)
+            pg.text(mx - 4, ry + row_h - 8, label, 6.4, SWAMP, bold=True, align=2)
         if note:
             pg.text(ax + 8, by + 14.3, note, 7.2, GREY)
 
