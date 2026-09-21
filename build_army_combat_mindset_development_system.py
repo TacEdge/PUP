@@ -30,8 +30,8 @@ FOOTER_LEFT = "Army Combat Mindset System | AITC Discussion"
 
 # ---- locked content --------------------------------------------------------
 MODEL = [
-    ("1", "THE NEED", "The performance challenge",
-     "Under pressure, trained individuals and teams can lose access to their full capability. "
+    ("1", "THE NEED", "Operational imperative",
+     "Under operational pressure, trained individuals and teams can lose access to their full capability. "
      "Army must prepare them to remain effective and act decisively and ethically."),
     ("2", "THE CAPABILITY", "Combat Mindset",
      "Performance Under Pressure applied to operational demands, with combat its most demanding test."),
