@@ -31,7 +31,7 @@ FOOTER_LEFT = "Army Combat Mindset System | AITC Discussion"
 # ---- locked content --------------------------------------------------------
 MODEL = [
     ("1", "THE NEED", "Operational imperative",
-     "Under operational pressure, trained individuals and teams can lose access to their full capability. "
+     "Under pressure, trained individuals and teams can lose access to their full capability. "
      "Army must prepare them to remain effective and act decisively and ethically."),
     ("2", "THE CAPABILITY", "Combat Mindset",
      "Performance Under Pressure applied to operational demands, with combat its most demanding test."),
@@ -64,7 +64,7 @@ MATRIX = [
 ]
 # Scale option: what delivery looks like beyond ACS.  Drawn as a proposal,
 # outside the three ACS rows, so current delivery is never read as wider.
-MATRIX_SCALE = ("Wider Army", "Units and training establishments",
+MATRIX_SCALE = ("Army-wide delivery", "Units \u00b7 PT \u00b7 exercises \u00b7\nother training establishments",
                 ["Reinforces", "Reinforces", "Trains", "Trains"])
 SCALE_LABEL = "BEYOND ACS  \u00b7  SCALE OPTION"
 SCALE_NOTE = "proposed, not current delivery"
@@ -394,7 +394,7 @@ def build():
     dashed_box(pg, rx, y, rw, srh, radius=4)
     pg.text(rx + 10, y + 12, org, 8, SWAMP, bold=True)
     sy = y + 21
-    for line in wrapped(pg, sub, 6.2, label_w - 16):
+    for line in sub.split("\n"):
         pg.text(rx + 10, sy, line, 6.2, GREY)
         sy += 7.5
     for j, verb in enumerate(verbs):
