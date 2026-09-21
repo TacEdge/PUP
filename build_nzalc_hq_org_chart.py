@@ -16,7 +16,6 @@ from army_onepager import ARMY_RED, BLACK, FAINT, GOLD, GRID, INK, MID, PALE, SW
 OUT = "./output/nzalc-hq-org-chart.pdf"
 PNG = "./output/nzalc-hq-org-chart.png"
 PNG2 = "./output/nzalc-hq-org-chart-p2.png"
-PNG3 = "./output/nzalc-hq-org-chart-p3.png"
 PHOTOS = "./assets/nzalc-hq-photos"
 LOGO_REVERSED = "./assets/nz-army-logo-white.png"
 W, H = 842, 595
@@ -162,8 +161,7 @@ def staffing_page(doc):
 
 
 # ---- page 3: courses of action ----
-SUBTITLE3 = "Courses of action  \u00b7  Option 1"
-SUBTITLE4 = "Courses of action  \u00b7  Option 2"
+SUBTITLE4 = "Courses of action  \u00b7  staffing changes"
 KATE_CONTEXT = "Parental leave from December 2026, returning at the end of January 2028."
 JAMES_CONTEXT = ("Wife relocating to Auckland for work from January 2027. Requested a flexible work "
                  "arrangement at 0.8 FTE, March to December 2027, reviewed three-monthly.")
@@ -174,17 +172,7 @@ KATE = (("S1066066", "", "Katherine Beckett", "Instructor ELDA Wing", "00109525"
         [("Replacement instructor  \u00b7  fixed-term 12 months", (2027, 1), (2027, 12), False, "black")],
         [("Kate returns  \u00b7  end Jan 2028", (2028, 2))], None, KATE_CONTEXT)
 # person, context (kind, start, end), action bars [(label, start, end, open_ended, style)], milestones, note
-COA_OPTION_1 = [
-    KATE,
-    (("Q1066133", "", "James Geddes", "Instructor NZALC", "00114499"),
-     ("flex", (2027, 3), (2027, 12)),
-     [("Recruit new full-time instructor", (2028, 1), (2028, 12), True, "black")],
-     [], None, JAMES_CONTEXT),
-    (("D1060188", "", "Hilary Cave", "Instructor NZALC", "00114495"),
-     ("flex", (2027, 1), (2028, 12)),
-     [], [], "No action at this stage", HILARY_CONTEXT),
-]
-COA_OPTION_2 = [
+COA_ROWS = [
     KATE,
     (("Q1066133", "", "James Geddes", "Instructor NZALC", "00114499"),
      None,
@@ -327,7 +315,7 @@ def reversed_logo_png():
     return buf.getvalue(), im.size
 
 
-def masthead(pg, subtitle=SUBTITLE, page_label="Page 1 of 3"):
+def masthead(pg, subtitle=SUBTITLE, page_label="Page 1 of 2"):
     pg.text(W / 2, 20, "UNCLASSIFIED", 8, BLACK, bold=True, align=1)
     pg.text(W / 2, H - 22, "UNCLASSIFIED", 8, BLACK, bold=True, align=1)
     pg.text(M, H - 11, FOOTER_LEFT, 7.5, BLACK)
@@ -453,16 +441,13 @@ def build():
     person_card(pg, col_x[3], y, col_w, card_h, STOREPERSON)
 
     print(f"content ends at y={elda_end:.0f}, footer marking at {H - 30}")
-    coa_page(doc, SUBTITLE3, "Page 2 of 3", "01", "COURSES OF ACTION  \u00b7  OPTION 1",
-             "Cover the absences as requested.", COA_OPTION_1)
-    coa_page(doc, SUBTITLE4, "Page 3 of 3", "02", "COURSES OF ACTION  \u00b7  OPTION 2",
-             "Time-limited flexible periods, then the roles return to 1.0 FTE.", COA_OPTION_2)
+    coa_page(doc, SUBTITLE4, "Page 2 of 2", "01", "COURSES OF ACTION",
+             "Time-limited flexible periods, then the roles return to 1.0 FTE.", COA_ROWS)
     doc.set_metadata({"title": "Army Leadership Centre: HQ ACS organisation", "author": "Army Command School"})
     doc.save(OUT, garbage=3, deflate=True)
     saved = pymupdf.open(OUT)
     saved[0].get_pixmap(dpi=200).save(PNG)
     saved[1].get_pixmap(dpi=200).save(PNG2)
-    saved[2].get_pixmap(dpi=200).save(PNG3)
     print(f"Saved {OUT} and {PNG}")
 
 
