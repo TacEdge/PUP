@@ -17,7 +17,6 @@ OUT = "./output/nzalc-hq-org-chart.pdf"
 PNG = "./output/nzalc-hq-org-chart.png"
 PNG2 = "./output/nzalc-hq-org-chart-p2.png"
 PNG3 = "./output/nzalc-hq-org-chart-p3.png"
-PNG4 = "./output/nzalc-hq-org-chart-p4.png"
 PHOTOS = "./assets/nzalc-hq-photos"
 LOGO_REVERSED = "./assets/nz-army-logo-white.png"
 W, H = 842, 595
@@ -165,34 +164,54 @@ def staffing_page(doc):
 # ---- page 3: courses of action ----
 SUBTITLE3 = "Courses of action  \u00b7  Option 1"
 SUBTITLE4 = "Courses of action  \u00b7  Option 2"
+KATE_CONTEXT = "Parental leave from December 2026, returning January 2028."
+JAMES_CONTEXT = ("Wife relocating to Auckland for work from January 2027. Requested a flexible work "
+                 "arrangement at 0.8 FTE, March to December 2027, reviewed three-monthly.")
+HILARY_CONTEXT = ("Looking to taper down toward retirement. Requested a flexible work arrangement at 0.6 FTE, "
+                  "three days a week, from January 2027, reviewed three-monthly.")
 KATE = (("S1066066", "", "Katherine Beckett", "Instructor ELDA Wing", "00109525"),
         ("leave", (2026, 12), (2028, 1)),
         [("Replacement instructor  \u00b7  fixed-term 12 months", (2027, 1), (2027, 12), False, "black")],
-        [("Kate returns", (2028, 1))], None)
+        [("Kate returns", (2028, 1))], None, KATE_CONTEXT)
 # person, context (kind, start, end), action bars [(label, start, end, open_ended, style)], milestones, note
 COA_OPTION_1 = [
     KATE,
     (("Q1066133", "", "James Geddes", "Instructor NZALC", "00114499"),
      ("flex", (2027, 3), (2027, 12)),
      [("Recruit new full-time instructor", (2028, 1), (2028, 12), True, "black")],
-     [], None),
+     [], None, JAMES_CONTEXT),
     (("D1060188", "", "Hilary Cave", "Instructor NZALC", "00114495"),
      ("flex", (2027, 1), (2028, 12)),
-     [], [], "No action at this stage"),
+     [], [], "No action at this stage", HILARY_CONTEXT),
 ]
 COA_OPTION_2 = [
     KATE,
     (("Q1066133", "", "James Geddes", "Instructor NZALC", "00114499"),
-     ("flex", (2027, 3), (2027, 12)),
+     None,
      [("0.8 / 0.6 FTE", (2027, 3), (2027, 5), False, "flex", "Mar to May 2027, from Auckland"),
       ("Returns to 1.0 FTE  \u00b7  on-site role", (2027, 6), (2028, 12), True, "black")],
-     [], None),
+     [], None, JAMES_CONTEXT),
     (("D1060188", "", "Hilary Cave", "Instructor NZALC", "00114495"),
-     ("flex", (2027, 1), (2028, 12)),
+     None,
      [("0.6 FTE", (2027, 1), (2027, 3), False, "flex", "Jan to Mar 2027, three months"),
       ("Role returns to 1.0 FTE", (2027, 4), (2028, 12), True, "black")],
-     [], None),
+     [], None, HILARY_CONTEXT),
 ]
+
+
+def wrap_lines(pg, text, size, avail):
+    words, lines, cur, cur_w = text.split(), [], [], 0
+    for w in words:
+        ww = pg.width(w + " ", size)
+        if cur and cur_w + ww > avail:
+            lines.append(" ".join(cur))
+            cur, cur_w = [w], ww
+        else:
+            cur.append(w)
+            cur_w += ww
+    if cur:
+        lines.append(" ".join(cur))
+    return lines
 
 
 def coa_page(doc, subtitle, page_label, num, heading, desc, rows):
@@ -224,7 +243,7 @@ def coa_page(doc, subtitle, page_label, num, heading, desc, rows):
                 pg.text((x0 + x1) / 2, top + 8.8, str(label_year), 6.8, SWAMP, bold=True, align=1)
             year_start = i
     rows_top = top + 32
-    row_h = 84
+    row_h = 92
     row_gap = 10
     rows_bottom = rows_top + len(COA) * (row_h + row_gap) - row_gap
     for i in range(AXIS_MONTHS + 1):
@@ -233,16 +252,22 @@ def coa_page(doc, subtitle, page_label, num, heading, desc, rows):
     def name_of(ym):
         return f"{months[ym[1] - 1]} {ym[0]}"
 
-    for k, (person, ctx, actions, milestones, note) in enumerate(COA):
+    for k, (person, ctx, actions, milestones, note, context) in enumerate(COA):
         ry = rows_top + k * (row_h + row_gap)
-        person_card(pg, M, ry + (row_h - 44) / 2, label_w - 14, 44, person)
-        # the existing change as a thin context bar along the top of the row
-        kind, cs, ce = ctx
-        cx0 = ax + month_index(*cs) * mw
-        cx1 = ax + min(month_index(*ce) + 1, AXIS_MONTHS) * mw
-        pg.box(cx0, ry + 8, cx1 - cx0, 9, fill=SWAMP if kind == "leave" else MOAWHANGO, stroke=None, radius=3)
-        pg.text(cx0 + 6, ry + 15, "Parental leave" if kind == "leave" else "Flexible work arrangement", 5.8,
-                WHITE if kind == "leave" else SWAMP, bold=True)
+        person_card(pg, M, ry + 2, label_w - 14, 44, person)
+        # context note beneath the card
+        cy = ry + 56
+        for line in wrap_lines(pg, context, 6.4, label_w - 20):
+            pg.text(M + 2, cy, line, 6.4, GREY)
+            cy += 8.2
+        # the existing absence as a thin context bar along the top of the row, where shown
+        if ctx:
+            kind, cs, ce = ctx
+            cx0 = ax + month_index(*cs) * mw
+            cx1 = ax + min(month_index(*ce) + 1, AXIS_MONTHS) * mw
+            pg.box(cx0, ry + 8, cx1 - cx0, 9, fill=SWAMP if kind == "leave" else MOAWHANGO, stroke=None, radius=3)
+            pg.text(cx0 + 6, ry + 15, "Parental leave" if kind == "leave" else "Flexible work arrangement", 5.8,
+                    WHITE if kind == "leave" else SWAMP, bold=True)
         # the course of action as the main bar
         by = ry + 30
         for action in actions:
@@ -302,7 +327,7 @@ def reversed_logo_png():
     return buf.getvalue(), im.size
 
 
-def masthead(pg, subtitle=SUBTITLE, page_label="Page 1 of 4"):
+def masthead(pg, subtitle=SUBTITLE, page_label="Page 1 of 3"):
     pg.text(W / 2, 20, "UNCLASSIFIED", 8, BLACK, bold=True, align=1)
     pg.text(W / 2, H - 22, "UNCLASSIFIED", 8, BLACK, bold=True, align=1)
     pg.text(M, H - 11, FOOTER_LEFT, 7.5, BLACK)
@@ -428,10 +453,9 @@ def build():
     person_card(pg, col_x[3], y, col_w, card_h, STOREPERSON)
 
     print(f"content ends at y={elda_end:.0f}, footer marking at {H - 30}")
-    staffing_page(doc)
-    coa_page(doc, SUBTITLE3, "Page 3 of 4", "01", "COURSES OF ACTION  \u00b7  OPTION 1",
+    coa_page(doc, SUBTITLE3, "Page 2 of 3", "01", "COURSES OF ACTION  \u00b7  OPTION 1",
              "Cover the absences as requested.", COA_OPTION_1)
-    coa_page(doc, SUBTITLE4, "Page 4 of 4", "02", "COURSES OF ACTION  \u00b7  OPTION 2",
+    coa_page(doc, SUBTITLE4, "Page 3 of 3", "02", "COURSES OF ACTION  \u00b7  OPTION 2",
              "Time-limited flexible periods, then the roles return to 1.0 FTE.", COA_OPTION_2)
     doc.set_metadata({"title": "Army Leadership Centre: HQ ACS organisation", "author": "Army Command School"})
     doc.save(OUT, garbage=3, deflate=True)
@@ -439,7 +463,6 @@ def build():
     saved[0].get_pixmap(dpi=200).save(PNG)
     saved[1].get_pixmap(dpi=200).save(PNG2)
     saved[2].get_pixmap(dpi=200).save(PNG3)
-    saved[3].get_pixmap(dpi=200).save(PNG4)
     print(f"Saved {OUT} and {PNG}")
 
 
