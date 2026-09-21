@@ -32,6 +32,7 @@ CI = ("P1023697", "MAJ", "Michael Coom", "Chief Instructor NZALC", "00114491")
 STOREPERSON = ("N1035127", "", "Emma Pritchard", "Storeperson NZALC", "00114506")
 WINGS = [
     ("ELDA Wing", ("D1030725", "CAPT", "Tony Calder-St…", "Senior Instructor ELDA Wing", "00114497"), [
+        ("Q50200", "", "Jim Masson", "ELDA Safety Manager NZALC", "00114496"),
         ("Q1066064", "", "Dave Ryan", "Instructor ELDA Wing", "00109524"),
         ("S1066066", "", "Katherine Beckett", "Instructor ELDA Wing", "00109525"),
         ("V1066161", "", "Phil Johnston-Coates", "Instructor ELDA Wing", "00109751"),
@@ -49,7 +50,6 @@ WINGS = [
     ]),
     ("Training", ("H1023944", "", "Dave Moore", "Training Manager NZALC", "00114507"), []),
 ]
-SAFETY_CELL = ("ELDA Safety Management Cell", ("Q50200", "", "Jim Masson", "ELDA Safety Manager NZALC", "00114496"))
 
 
 def photo_png(service_no):
@@ -172,12 +172,6 @@ def build():
             person_card(pg, sx, yy, col_w, card_h, m)
             yy += card_h + gap
     elda_end = y + 5 * (card_h + gap)
-    # safety cell under the ELDA Wing, beneath the right-hand sub-column
-    sc_name, sc_lead = SAFETY_CELL
-    sc_y = y + 4 * (card_h + gap) + 4
-    yy = unit_band(pg, sub_x[1], sc_y, col_w, sc_name)
-    person_card(pg, sub_x[1], yy, col_w, card_h, sc_lead, lead=True)
-    elda_end = max(elda_end, yy + card_h)
 
     # Leadership Development Wing
     name, lead, members = WINGS[1]
