@@ -31,7 +31,7 @@ FOOTER_LEFT = "NZALC | Organisation"
 CI = ("P1023697", "MAJ", "Michael Coom", "Chief Instructor NZALC", "00114491")
 STOREPERSON = ("N1035127", "", "Emma Pritchard", "Storeperson NZALC", "00114506")
 WINGS = [
-    ("ELDA Wing", ("D1030725", "CAPT", "Tony Calder-St…", "Senior Instructor ELDA Wing", "00114497"), [
+    ("ELDA Wing", ("D1030725", "CAPT", "Tony Calder-Steele", "Senior Instructor ELDA Wing", "00114497"), [
         ("Q50200", "", "Jim Masson", "ELDA Safety Manager NZALC", "00114496"),
         ("Q1066064", "", "Dave Ryan", "Instructor ELDA Wing", "00109524"),
         ("S1066066", "", "Katherine Beckett", "Instructor ELDA Wing", "00109525"),
