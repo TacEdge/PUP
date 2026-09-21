@@ -16,6 +16,7 @@ from army_onepager import ARMY_RED, BLACK, FAINT, GOLD, GRID, INK, MID, PALE, SW
 OUT = "./output/nzalc-hq-org-chart.pdf"
 PNG = "./output/nzalc-hq-org-chart.png"
 PNG2 = "./output/nzalc-hq-org-chart-p2.png"
+PNG3 = "./output/nzalc-hq-org-chart-p3.png"
 PHOTOS = "./assets/nzalc-hq-photos"
 LOGO_REVERSED = "./assets/nz-army-logo-white.png"
 W, H = 842, 595
@@ -76,7 +77,7 @@ def month_index(y, m):
 
 def staffing_page(doc):
     pg = Page(doc, W, H)
-    y0 = masthead(pg, SUBTITLE2, "Page 2 of 2")
+    y0 = masthead(pg, SUBTITLE2, "Page 2 of 3")
     pg.text(M, y0 + 30, "01", 9, GOLD, bold=True)
     pg.spaced(M + 17, y0 + 30, "STAFFING CHANGES", 7.6, SWAMP, bold=True, spacing=1.8)
     pg.text(M + 17, y0 + 40.5, "Parental leave and flexible work arrangements across the period.", 7, GREY)
@@ -160,6 +161,106 @@ def staffing_page(doc):
     print(f"page 2 content ends at y={ky + 9:.0f}")
 
 
+# ---- page 3: courses of action ----
+SUBTITLE3 = "Courses of action  \u00b7  staffing changes"
+COA = [
+    # person, context (kind, start, end), action bars [(label, start, end, open_ended)], milestones [(label, (y, m))], note
+    (("S1066066", "", "Katherine Beckett", "Instructor ELDA Wing", "00109525"),
+     ("leave", (2026, 12), (2028, 1)),
+     [("Replacement instructor  \u00b7  fixed-term 12 months", (2027, 1), (2027, 12), False)],
+     [("Kate returns", (2028, 1))], None),
+    (("Q1066133", "", "James Geddes", "Instructor NZALC", "00114499"),
+     ("flex", (2027, 3), (2027, 12)),
+     [("Recruit new full-time instructor", (2028, 1), (2028, 12), True)],
+     [], None),
+    (("D1060188", "", "Hilary Cave", "Instructor NZALC", "00114495"),
+     ("flex", (2027, 1), (2028, 12)),
+     [], [], "No action at this stage"),
+]
+
+
+def coa_page(doc):
+    pg = Page(doc, W, H)
+    y0 = masthead(pg, SUBTITLE3, "Page 3 of 3")
+    pg.text(M, y0 + 30, "01", 9, GOLD, bold=True)
+    pg.spaced(M + 17, y0 + 30, "COURSES OF ACTION", 7.6, SWAMP, bold=True, spacing=1.8)
+    pg.text(M + 17, y0 + 40.5, "How each absence or arrangement is covered.", 7, GREY)
+
+    label_w = 236
+    ax = M + label_w
+    aw = CW - label_w
+    mw = aw / AXIS_MONTHS
+    top = y0 + 62
+    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    year_start = 0
+    for i in range(AXIS_MONTHS + 1):
+        cur_y = AXIS_START[0] + (AXIS_START[1] - 1 + i) // 12
+        cur_m = (AXIS_START[1] - 1 + i) % 12 + 1
+        if i < AXIS_MONTHS:
+            pg.text(ax + i * mw + mw / 2, top + 24, months[cur_m - 1][0], 6.4, GREY, align=1)
+        if i == AXIS_MONTHS or cur_m == 1:
+            x0 = ax + year_start * mw
+            x1 = ax + i * mw
+            if i > year_start:
+                pg.box(x0 + 1, top, x1 - x0 - 2, 12, fill=PALE, stroke=None, radius=3)
+                label_year = AXIS_START[0] + (AXIS_START[1] - 1 + year_start) // 12
+                pg.text((x0 + x1) / 2, top + 8.8, str(label_year), 6.8, SWAMP, bold=True, align=1)
+            year_start = i
+    rows_top = top + 32
+    row_h = 84
+    row_gap = 10
+    rows_bottom = rows_top + len(COA) * (row_h + row_gap) - row_gap
+    for i in range(AXIS_MONTHS + 1):
+        pg.line(ax + i * mw, rows_top, ax + i * mw, rows_bottom, GRID, width=0.5)
+
+    def name_of(ym):
+        return f"{months[ym[1] - 1]} {ym[0]}"
+
+    for k, (person, ctx, actions, milestones, note) in enumerate(COA):
+        ry = rows_top + k * (row_h + row_gap)
+        person_card(pg, M, ry + (row_h - 44) / 2, label_w - 14, 44, person)
+        # the existing change as a thin context bar along the top of the row
+        kind, cs, ce = ctx
+        cx0 = ax + month_index(*cs) * mw
+        cx1 = ax + min(month_index(*ce) + 1, AXIS_MONTHS) * mw
+        pg.box(cx0, ry + 8, cx1 - cx0, 9, fill=SWAMP if kind == "leave" else MOAWHANGO, stroke=None, radius=3)
+        pg.text(cx0 + 6, ry + 15, "Parental leave" if kind == "leave" else "Flexible work arrangement", 5.8,
+                WHITE if kind == "leave" else SWAMP, bold=True)
+        # the course of action as the main bar
+        by = ry + 30
+        for label, a0, a1, open_ended in actions:
+            bx0 = ax + month_index(*a0) * mw
+            bx1 = ax + min(month_index(*a1) + 1, AXIS_MONTHS) * mw
+            pg.box(bx0, by, bx1 - bx0, 22, fill=BLACK, stroke=None, radius=5)
+            pg.text(bx0 + 8, by + 14.3, label, 7.2, WHITE, bold=True)
+            cap = f"{name_of(a0)} to {name_of(a1)}" if not open_ended else f"From {name_of(a0)}"
+            pg.text(bx0 + 8, by + 33, cap, 6.4, GREY)
+            if open_ended:
+                for j in range(3):
+                    pg.line(bx1 + 3 + j * 4, by + 11, bx1 + 5 + j * 4, by + 11, BLACK, width=2)
+        for label, ym in milestones:
+            mx = ax + month_index(*ym) * mw
+            pg.line(mx, ry + 4, mx, ry + row_h - 4, GOLD, width=1.2)
+            pg.text(mx + 4, ry + row_h - 8, label, 6.4, SWAMP, bold=True)
+        if note:
+            pg.text(ax + 8, by + 14.3, note, 7.2, GREY)
+
+    tx = ax + (month_index(TODAY[0], TODAY[1]) + (TODAY[2] - 1) / 30) * mw
+    pg.line(tx, rows_top - 4, tx, rows_bottom + 6, ARMY_RED, width=1)
+    pg.text(tx + 4, rows_bottom + 14, "Today", 6.2, ARMY_RED, bold=True)
+
+    ky = rows_bottom + 30
+    pg.box(M, ky, 14, 9, fill=BLACK, stroke=None, radius=2)
+    pg.text(M + 20, ky + 7.5, "Course of action", 7, INK)
+    pg.box(M + 100, ky, 14, 9, fill=SWAMP, stroke=None, radius=2)
+    pg.text(M + 120, ky + 7.5, "Parental leave", 7, INK)
+    pg.box(M + 190, ky, 14, 9, fill=MOAWHANGO, stroke=None, radius=2)
+    pg.text(M + 210, ky + 7.5, "Flexible work arrangement", 7, INK)
+    pg.line(M + 322, ky, M + 322, ky + 9, GOLD, width=1.2)
+    pg.text(M + 330, ky + 7.5, "Milestone", 7, INK)
+    print(f"page 3 content ends at y={ky + 9:.0f}")
+
+
 def photo_png(service_no):
     im = Image.open(f"{PHOTOS}/{service_no}.jpg").convert("RGB")
     buf = io.BytesIO()
@@ -175,7 +276,7 @@ def reversed_logo_png():
     return buf.getvalue(), im.size
 
 
-def masthead(pg, subtitle=SUBTITLE, page_label="Page 1 of 2"):
+def masthead(pg, subtitle=SUBTITLE, page_label="Page 1 of 3"):
     pg.text(W / 2, 20, "UNCLASSIFIED", 8, BLACK, bold=True, align=1)
     pg.text(W / 2, H - 22, "UNCLASSIFIED", 8, BLACK, bold=True, align=1)
     pg.text(M, H - 11, FOOTER_LEFT, 7.5, BLACK)
@@ -302,11 +403,13 @@ def build():
 
     print(f"content ends at y={elda_end:.0f}, footer marking at {H - 30}")
     staffing_page(doc)
+    coa_page(doc)
     doc.set_metadata({"title": "Army Leadership Centre: HQ ACS organisation", "author": "Army Command School"})
     doc.save(OUT, garbage=3, deflate=True)
     saved = pymupdf.open(OUT)
     saved[0].get_pixmap(dpi=200).save(PNG)
     saved[1].get_pixmap(dpi=200).save(PNG2)
+    saved[2].get_pixmap(dpi=200).save(PNG3)
     print(f"Saved {OUT} and {PNG}")
 
 
