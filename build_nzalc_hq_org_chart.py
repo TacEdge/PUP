@@ -213,14 +213,15 @@ def coa_page(doc, subtitle, page_label, num, heading, desc, rows):
     y0 = masthead(pg, subtitle, page_label)
     pg.text(M, y0 + 30, num, 9, GOLD, bold=True)
     pg.spaced(M + 17, y0 + 30, heading, 7.6, SWAMP, bold=True, spacing=1.8)
-    pg.text(M + 17, y0 + 40.5, desc, 7, GREY)
+    if desc:
+        pg.text(M + 17, y0 + 40.5, desc, 7, GREY)
     COA = rows
 
     label_w = 236
     ax = M + label_w
     aw = CW - label_w
     mw = aw / AXIS_MONTHS
-    top = y0 + 52
+    top = y0 + (52 if desc else 44)
     months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     year_start = 0
     for i in range(AXIS_MONTHS + 1):
@@ -448,7 +449,7 @@ def build():
 
     print(f"content ends at y={elda_end:.0f}, footer marking at {H - 30}")
     coa_page(doc, SUBTITLE4, "Page 2 of 2", "01", "COURSES OF ACTION",
-             "Time-limited flexible periods, then the roles return to 1.0 FTE.", COA_ROWS)
+             None, COA_ROWS)
     doc.set_metadata({"title": "Army Leadership Centre: HQ ACS organisation", "author": "Army Command School"})
     doc.save(OUT, garbage=3, deflate=True)
     saved = pymupdf.open(OUT)
