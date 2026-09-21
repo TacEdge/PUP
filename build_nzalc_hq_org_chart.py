@@ -15,6 +15,7 @@ from army_onepager import ARMY_RED, BLACK, FAINT, GOLD, GRID, INK, MID, PALE, SW
 
 OUT = "./output/nzalc-hq-org-chart.pdf"
 PNG = "./output/nzalc-hq-org-chart.png"
+PNG2 = "./output/nzalc-hq-org-chart-p2.png"
 PHOTOS = "./assets/nzalc-hq-photos"
 LOGO_REVERSED = "./assets/nz-army-logo-white.png"
 W, H = 842, 595
@@ -52,6 +53,102 @@ WINGS = [
 ]
 
 
+# ---- page 2: staffing changes ----
+from army_onepager import MOAWHANGO
+SUBTITLE2 = "Staffing changes  \u00b7  December 2026 to January 2028"
+AXIS_START = (2026, 9)      # September 2026
+AXIS_MONTHS = 17            # through January 2028
+TODAY = (2026, 9, 21)
+CHANGES = [
+    # person, kind, label, start (y, m), end (y, m) inclusive, open-ended
+    (("S1066066", "", "Katherine Beckett", "Instructor ELDA Wing", "00109525"),
+     "leave", "Parental leave", (2026, 12), (2028, 1), False),
+    (("D1060188", "", "Hilary Cave", "Instructor NZALC", "00114495"),
+     "flex", "Flexible work arrangement  \u00b7  three days a week", (2027, 1), (2028, 1), True),
+    (("Q1066133", "", "James Geddes", "Instructor NZALC", "00114499"),
+     "flex", "Flexible work arrangement", (2027, 3), (2027, 12), False),
+]
+
+
+def month_index(y, m):
+    return (y - AXIS_START[0]) * 12 + (m - AXIS_START[1])
+
+
+def staffing_page(doc):
+    pg = Page(doc, W, H)
+    y0 = masthead(pg, SUBTITLE2, "Page 2 of 2")
+    pg.text(M, y0 + 30, "01", 9, GOLD, bold=True)
+    pg.spaced(M + 17, y0 + 30, "STAFFING CHANGES", 7.6, SWAMP, bold=True, spacing=1.8)
+    pg.text(M + 17, y0 + 40.5, "Parental leave and flexible work arrangements across the period.", 7, GREY)
+
+    label_w = 236
+    ax = M + label_w
+    aw = CW - label_w
+    mw = aw / AXIS_MONTHS
+    top = y0 + 62
+    # month axis: year bands and month ticks
+    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    yy, mm = AXIS_START
+    year_start = 0
+    for i in range(AXIS_MONTHS + 1):
+        cur_y = AXIS_START[0] + (AXIS_START[1] - 1 + i) // 12
+        cur_m = (AXIS_START[1] - 1 + i) % 12 + 1
+        if i < AXIS_MONTHS:
+            pg.text(ax + i * mw + mw / 2, top + 24, months[cur_m - 1][0], 6.4, GREY, align=1)
+        if i == AXIS_MONTHS or cur_m == 1:
+            x0 = ax + year_start * mw
+            x1 = ax + i * mw
+            if i > year_start:
+                pg.box(x0 + 1, top, x1 - x0 - 2, 12, fill=PALE, stroke=None, radius=3)
+                pg.text((x0 + x1) / 2, top + 8.8, str(cur_y - (1 if cur_m == 1 and i < AXIS_MONTHS else 0)) if i < AXIS_MONTHS else str(cur_y if cur_m != 1 else cur_y - 1), 6.8, SWAMP, bold=True, align=1)
+            year_start = i
+    rows_top = top + 32
+    row_h = 74
+    row_gap = 10
+    # month gridlines behind the rows
+    rows_bottom = rows_top + len(CHANGES) * (row_h + row_gap) - row_gap
+    for i in range(AXIS_MONTHS + 1):
+        pg.line(ax + i * mw, rows_top, ax + i * mw, rows_bottom, GRID, width=0.5)
+
+    for k, (person, kind, label, start, end, open_ended) in enumerate(CHANGES):
+        ry = rows_top + k * (row_h + row_gap)
+        person_card(pg, M, ry + (row_h - 44) / 2, label_w - 14, 44, person)
+        i0 = month_index(*start)
+        i1 = month_index(*end) + 1
+        bx0 = ax + i0 * mw
+        bx1 = ax + min(i1, AXIS_MONTHS) * mw
+        by = ry + row_h / 2 - 10
+        if kind == "leave":
+            pg.box(bx0, by, bx1 - bx0, 20, fill=SWAMP, stroke=None, radius=5)
+            txt_col = WHITE
+        else:
+            pg.box(bx0, by, bx1 - bx0, 20, fill=MOAWHANGO, stroke=None, radius=5)
+            txt_col = SWAMP
+        pg.text(bx0 + 8, by + 13.3, label, 7.2, txt_col, bold=True)
+        # date caption beneath the bar
+        def name_of(ym):
+            return f"{months[ym[1] - 1]} {ym[0]}"
+        caption = f"{name_of(start)} to {name_of(end)}" if not open_ended else f"From {name_of(start)}, ongoing"
+        pg.text(bx0 + 8, by + 30, caption, 6.4, GREY)
+        if open_ended:
+            # fade-out tick to show the arrangement continues beyond the axis
+            for j in range(3):
+                pg.line(bx1 + 3 + j * 4, by + 10, bx1 + 5 + j * 4, by + 10, MOAWHANGO, width=2)
+
+    # today marker
+    tx = ax + (month_index(TODAY[0], TODAY[1]) + (TODAY[2] - 1) / 30) * mw
+    pg.line(tx, rows_top - 4, tx, rows_bottom + 6, ARMY_RED, width=1)
+    pg.text(tx + 4, rows_bottom + 14, "Today", 6.2, ARMY_RED, bold=True)
+
+    # key
+    ky = rows_bottom + 30
+    pg.box(M, ky, 14, 9, fill=SWAMP, stroke=None, radius=2)
+    pg.text(M + 20, ky + 7.5, "Parental leave", 7, INK)
+    pg.box(M + 100, ky, 14, 9, fill=MOAWHANGO, stroke=None, radius=2)
+    pg.text(M + 120, ky + 7.5, "Flexible work arrangement", 7, INK)
+    print(f"page 2 content ends at y={ky + 9:.0f}")
+
+
 def photo_png(service_no):
     im = Image.open(f"{PHOTOS}/{service_no}.jpg").convert("RGB")
     buf = io.BytesIO()
@@ -67,12 +164,12 @@ def reversed_logo_png():
     return buf.getvalue(), im.size
 
 
-def masthead(pg):
+def masthead(pg, subtitle=SUBTITLE, page_label="Page 1 of 2"):
     pg.text(W / 2, 20, "UNCLASSIFIED", 8, BLACK, bold=True, align=1)
     pg.text(W / 2, H - 22, "UNCLASSIFIED", 8, BLACK, bold=True, align=1)
     pg.text(M, H - 11, FOOTER_LEFT, 7.5, BLACK)
     pg.text(W / 2, H - 11, "ACS 2026", 7.5, BLACK, align=1)
-    pg.text(W - M, H - 11, "Page 1 of 1", 7.5, BLACK, align=2)
+    pg.text(W - M, H - 11, page_label, 7.5, BLACK, align=2)
     top, hh, brand_w = 30, 46, 138
     pg.box(M, top, CW, hh, fill=FAINT, stroke=None, radius=R)
     pg.box(M, top, brand_w + R, hh, fill=ARMY_RED, stroke=None, radius=R)
@@ -84,7 +181,7 @@ def masthead(pg):
                                    M + (brand_w + lw) / 2, top + (hh + lh) / 2), stream=png)
     tx = M + brand_w + 18
     pg.text(tx, top + 27, TITLE, 18, BLACK, bold=True)
-    pg.text(tx, top + 39, SUBTITLE, 7.5, INK)
+    pg.text(tx, top + 39, subtitle, 7.5, INK)
     return top + hh
 
 
@@ -193,9 +290,12 @@ def build():
     person_card(pg, col_x[3], y, col_w, card_h, STOREPERSON)
 
     print(f"content ends at y={elda_end:.0f}, footer marking at {H - 30}")
+    staffing_page(doc)
     doc.set_metadata({"title": "Army Leadership Centre: HQ ACS organisation", "author": "Army Command School"})
     doc.save(OUT, garbage=3, deflate=True)
-    pymupdf.open(OUT)[0].get_pixmap(dpi=200).save(PNG)
+    saved = pymupdf.open(OUT)
+    saved[0].get_pixmap(dpi=200).save(PNG)
+    saved[1].get_pixmap(dpi=200).save(PNG2)
     print(f"Saved {OUT} and {PNG}")
 
 
