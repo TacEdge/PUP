@@ -55,18 +55,18 @@ WINGS = [
 
 # ---- page 2: staffing changes ----
 from army_onepager import MOAWHANGO
-SUBTITLE2 = "Staffing changes  \u00b7  December 2026 to January 2028"
+SUBTITLE2 = "Staffing changes  \u00b7  December 2026 to December 2028"
 AXIS_START = (2026, 9)      # September 2026
-AXIS_MONTHS = 17            # through January 2028
+AXIS_MONTHS = 28            # through December 2028
 TODAY = (2026, 9, 21)
 CHANGES = [
     # person, kind, label, start (y, m), end (y, m) inclusive, open-ended
     (("S1066066", "", "Katherine Beckett", "Instructor ELDA Wing", "00109525"),
      "leave", "Parental leave", (2026, 12), (2028, 1), False),
     (("D1060188", "", "Hilary Cave", "Instructor NZALC", "00114495"),
-     "flex", "Flexible work arrangement  \u00b7  three days a week", (2027, 1), (2028, 1), True),
+     "flex", "Flexible work arrangement  \u00b7  0.6 FTE, three days a week", (2027, 1), (2028, 12), False),
     (("Q1066133", "", "James Geddes", "Instructor NZALC", "00114499"),
-     "flex", "Flexible work arrangement", (2027, 3), (2027, 12), False),
+     "flex", "Flexible work arrangement  \u00b7  0.8 FTE", (2027, 3), (2027, 12), False),
 ]
 
 
@@ -125,10 +125,19 @@ def staffing_page(doc):
             pg.box(bx0, by, bx1 - bx0, 20, fill=MOAWHANGO, stroke=None, radius=5)
             txt_col = SWAMP
         pg.text(bx0 + 8, by + 13.3, label, 7.2, txt_col, bold=True)
+        if kind == "flex":
+            # review points every three months from the start, marked on the bar's lower edge
+            k3 = 3
+            while i0 + k3 < i1:
+                rx = ax + (i0 + k3) * mw
+                pg.line(rx, by - 6, rx, by, GOLD, width=1.2)
+                k3 += 3
         # date caption beneath the bar
         def name_of(ym):
             return f"{months[ym[1] - 1]} {ym[0]}"
         caption = f"{name_of(start)} to {name_of(end)}" if not open_ended else f"From {name_of(start)}, ongoing"
+        if kind == "flex":
+            caption += "  \u00b7  reviewed three-monthly"
         pg.text(bx0 + 8, by + 30, caption, 6.4, GREY)
         if open_ended:
             # fade-out tick to show the arrangement continues beyond the axis
@@ -146,6 +155,8 @@ def staffing_page(doc):
     pg.text(M + 20, ky + 7.5, "Parental leave", 7, INK)
     pg.box(M + 100, ky, 14, 9, fill=MOAWHANGO, stroke=None, radius=2)
     pg.text(M + 120, ky + 7.5, "Flexible work arrangement", 7, INK)
+    pg.line(M + 232, ky, M + 232, ky + 9, GOLD, width=1.2)
+    pg.text(M + 240, ky + 7.5, "Three-monthly review point", 7, INK)
     print(f"page 2 content ends at y={ky + 9:.0f}")
 
 
