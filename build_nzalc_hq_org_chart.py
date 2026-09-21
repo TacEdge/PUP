@@ -167,6 +167,8 @@ JAMES_CONTEXT = ("Wife relocating to Auckland for work from January 2027. Reques
                  "arrangement at 0.8 FTE, March to December 2027, reviewed three-monthly.")
 HILARY_CONTEXT = ("Looking to taper down toward retirement. Requested a flexible work arrangement at 0.6 FTE, "
                   "three days a week, from January 2027, reviewed three-monthly.")
+JIM_CONTEXT = ("May retire before December 2027. Planning assumption is that he works through to the end of "
+               "2027, with a permanent replacement in post from January 2028.")
 KATE = (("S1066066", "", "Katherine Beckett", "Instructor ELDA Wing", "00109525"),
         ("leave", (2026, 12), (2028, 1)),
         [("Replacement instructor  \u00b7  fixed-term 12 months", (2027, 1), (2027, 12), False, "black")],
@@ -184,6 +186,10 @@ COA_ROWS = [
      [("0.6 FTE", (2027, 1), (2027, 3), False, "flex", "Jan to Mar 2027, three months"),
       ("Role returns to 1.0 FTE", (2027, 4), (2028, 12), True, "black")],
      [], None, HILARY_CONTEXT),
+    (("Q50200", "", "Jim Masson", "ELDA Safety Manager NZALC", "00114496"),
+     None,
+     [("Recruit", (2027, 10), (2027, 12), False, "black", "Recruit replacement Safety Manager, Oct to Dec 2027")],
+     [("Replacement starts  \u00b7  Jan 2028", (2028, 1))], None, JIM_CONTEXT),
 ]
 
 
@@ -214,7 +220,7 @@ def coa_page(doc, subtitle, page_label, num, heading, desc, rows):
     ax = M + label_w
     aw = CW - label_w
     mw = aw / AXIS_MONTHS
-    top = y0 + 62
+    top = y0 + 52
     months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     year_start = 0
     for i in range(AXIS_MONTHS + 1):
@@ -230,9 +236,9 @@ def coa_page(doc, subtitle, page_label, num, heading, desc, rows):
                 label_year = AXIS_START[0] + (AXIS_START[1] - 1 + year_start) // 12
                 pg.text((x0 + x1) / 2, top + 8.8, str(label_year), 6.8, SWAMP, bold=True, align=1)
             year_start = i
-    rows_top = top + 32
-    row_h = 92
-    row_gap = 10
+    rows_top = top + 30
+    row_h = 78
+    row_gap = 6
     rows_bottom = rows_top + len(COA) * (row_h + row_gap) - row_gap
     for i in range(AXIS_MONTHS + 1):
         pg.line(ax + i * mw, rows_top, ax + i * mw, rows_bottom, GRID, width=0.5)
@@ -244,10 +250,10 @@ def coa_page(doc, subtitle, page_label, num, heading, desc, rows):
         ry = rows_top + k * (row_h + row_gap)
         person_card(pg, M, ry + 2, label_w - 14, 44, person)
         # context note beneath the card
-        cy = ry + 56
+        cy = ry + 55
         for line in wrap_lines(pg, context, 6.4, label_w - 20):
             pg.text(M + 2, cy, line, 6.4, GREY)
-            cy += 8.2
+            cy += 8
         # the existing absence as a thin context bar along the top of the row, where shown
         if ctx:
             kind, cs, ce = ctx
@@ -266,7 +272,7 @@ def coa_page(doc, subtitle, page_label, num, heading, desc, rows):
             fill, col = (BLACK, WHITE) if style == "black" else (MOAWHANGO, SWAMP)
             pg.box(bx0, by, bx1 - bx0, 22, fill=fill, stroke=None, radius=5)
             size = 7.2
-            while pg.width(label, size, True) > bx1 - bx0 - 14 and size > 5.6:
+            while pg.width(label, size, True) > bx1 - bx0 - 14 and size > 5.4:
                 size -= 0.2
             pg.text(bx0 + 8, by + 14.3, label, size, col, bold=True)
             cap = custom_caption or (f"{name_of(a0)} to {name_of(a1)}" if not open_ended else f"From {name_of(a0)}")
@@ -288,7 +294,7 @@ def coa_page(doc, subtitle, page_label, num, heading, desc, rows):
     pg.line(tx, rows_top - 4, tx, rows_bottom + 6, ARMY_RED, width=1)
     pg.text(tx + 4, rows_bottom + 14, "Today", 6.2, ARMY_RED, bold=True)
 
-    ky = rows_bottom + 30
+    ky = rows_bottom + 26
     pg.box(M, ky, 14, 9, fill=BLACK, stroke=None, radius=2)
     pg.text(M + 20, ky + 7.5, "Course of action", 7, INK)
     pg.box(M + 100, ky, 14, 9, fill=SWAMP, stroke=None, radius=2)
