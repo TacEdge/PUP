@@ -100,7 +100,7 @@ async function build() {
     { text: { text: "ARMY TRAINING GROUP", options: { x: tx, y: HEAD.y + 0.09, w: tw, h: 0.16, fontFace: F, fontSize: 6.5, bold: true, color: SWAMP, charSpacing: 2.5, margin: 0 } } },
     { placeholder: { options: { name: "unit", type: "title", x: tx, y: HEAD.y + 0.25, w: tw, h: 0.32, fontFace: F, fontSize: 16, bold: true, color: BLACK, align: "left", margin: 0, valign: "middle", fit: "shrink" }, text: "Unit and sub-unit" } },
     { placeholder: { options: { name: "activity", type: "body", x: tx, y: HEAD.y + 0.57, w: tw, h: 0.22, fontFace: F, fontSize: 9, color: GREY, margin: 0, valign: "middle", fit: "shrink" }, text: "Activity name  ·  01 Jan – 31 Jan 20XX" } },
-    { placeholder: { options: { name: "badge", type: "pic", x: HEAD.x + HEAD.w - 0.86, y: HEAD.y + 0.08, w: 0.7, h: 0.7 }, text: "Unit badge" } },
+    { placeholder: { options: { name: "badge", type: "pic", x: HEAD.x + HEAD.w - 0.86, y: HEAD.y + 0.08, w: 0.7, h: 0.7, fontFace: F, fontSize: 6, color: MID, align: "center", valign: "top", margin: 0 }, text: "Badge" } },
     { text: { text: "ATG Storyboard", options: { x: M, y: FOOT_Y, w: 3, h: 0.16, fontFace: F, fontSize: 7, color: GREY, margin: 0 } } },
     { text: { text: "UNCLASSIFIED", options: { x: 0, y: FOOT_Y, w: W, h: 0.16, fontFace: F, fontSize: 7, bold: true, color: BLACK, align: "center", margin: 0 } } },
   ];
@@ -118,7 +118,8 @@ async function build() {
     y += h + 0.1;
   }
   // photo placeholders and caption line
-  PHOTOS.forEach((p, i) => objects.push({ placeholder: { options: { name: `photo${i + 1}`, type: "pic", x: p.x, y: p.y, w: p.w, h: p.h }, text: `Photo ${i + 1}` } }));
+  // prompt text is set small: PowerPoint otherwise renders it at the master's body size
+  PHOTOS.forEach((p, i) => objects.push({ placeholder: { options: { name: `photo${i + 1}`, type: "pic", x: p.x, y: p.y, w: p.w, h: p.h, fontFace: F, fontSize: 8, color: MID, align: "center", valign: "top", margin: 0 }, text: `Photo ${i + 1}` } }));
   objects.push({ placeholder: { options: { name: "captions", type: "body", x: CAPTION.x, y: CAPTION.y, w: CAPTION.w, h: CAPTION.h, fontFace: F, fontSize: 7.5, color: GREY, margin: 0, valign: "top", fit: "shrink" }, text: "1  Caption   ·   2  Caption   ·   3  Caption   ·   4  Caption" } });
 
   pres.defineSlideMaster({ title: "ATG_STORYBOARD", background: { color: WHITE }, objects });
