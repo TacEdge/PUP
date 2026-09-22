@@ -35,11 +35,12 @@ const PHOTOS = [0, 1, 2, 3].map((i) => ({
 }));
 const CAPTION = { x: GRID_BOX.x, y: GRID_BOX.y + GRID_BOX.h + 0.1, w: GRID_BOX.w, h: 0.42 };
 // left column: label 0.17, then body; sections separated by 0.1
+// storyboard format (as the NZALC boards use it): why, what happened and to
+// what effect, and a line in the participants' own words
 const SECTIONS = [
-  ["01", "INTRODUCTION", "intro", 0.58],
-  ["02", "PURPOSE", "purpose", 0.62],
-  ["03", "METHOD", "method", 1.02],
-  ["04", "END STATE", "endstate", 0.58],
+  ["01", "PURPOSE", "purpose", 0.7, "Why the activity was conducted."],
+  ["02", "DELIVERY AND EFFECT", "delivery", 1.72, "What was delivered, and the effect it had: three or four short points."],
+  ["03", "PARTICIPANT FEEDBACK", "feedback", 0.62, "A line of feedback, quoted, with its source."],
 ];
 const FOOT_Y = 5.28;
 
@@ -108,11 +109,12 @@ async function build() {
 
   // left column labels and body placeholders
   let y = GRID_BOX.y;
-  for (const [num, text, name, h] of SECTIONS) {
+  for (const [num, text, name, h, prompt] of SECTIONS) {
     objects.push({ text: { text: num, options: { x: LEFT.x, y, w: 0.25, h: 0.17, fontFace: F, fontSize: 8, bold: true, color: GOLD, margin: 0, valign: "top" } } });
     objects.push({ text: { text, options: { x: LEFT.x + 0.25, y, w: LEFT.w - 0.25, h: 0.17, fontFace: F, fontSize: 7, bold: true, color: SWAMP, charSpacing: 2, margin: 0, valign: "top" } } });
     y += 0.18;
-    objects.push({ placeholder: { options: { name, type: "body", x: LEFT.x, y, w: LEFT.w, h, fontFace: F, fontSize: 8.5, color: INK, margin: 0, valign: "top", fit: "shrink", paraSpaceAfter: 3 }, text: `${text.charAt(0)}${text.slice(1).toLowerCase()} text` } });
+    const quote = name === "feedback";
+    objects.push({ placeholder: { options: { name, type: "body", x: LEFT.x, y, w: LEFT.w, h, fontFace: F, fontSize: 8.5, color: quote ? SWAMP : INK, italic: quote, margin: 0, valign: "top", fit: "shrink", paraSpaceAfter: 3 }, text: prompt } });
     y += h + 0.1;
   }
   // photo placeholders and caption line
@@ -134,16 +136,16 @@ async function build() {
   const badge = await png(`${A}/badge-nz-onward.png`, { trim: true });
   const bb = fitBox(badge.ratio, { x: HEAD.x + HEAD.w - 0.86, y: HEAD.y + 0.08, w: 0.7, h: 0.7 });
   ex.addImage({ data: badge.data, x: bb.x, y: bb.y, w: bb.w, h: bb.h });
-  ex.addText("NZALC delivered ELDA Lead Systems to 27 NZ Army and Australian Defence Force personnel from 7 to 14 August 2026. The activity was a three-day rogaine culminating in a whitewater rafting descent.", { placeholder: "intro" });
   ex.addText("To enhance leadership and warrior ethos through the conduct of a challenging multisport activity, supported by leadership tools, psychometrics, reflection and behaviour selection.", { placeholder: "purpose" });
   ex.addText([
-    { text: "The rogaine forced planning and execution against incomplete information, giving direct evidence of resilience, judgement and teamwork under pressure.", options: { breakLine: true } },
-    { text: "Leadership diagnostics, structured debriefs and individual Leadership Development Plans converted reflection into readiness, building the combat mindset required at lead systems level. Training alongside ADF personnel strengthened joint leadership development ties." },
-  ], { placeholder: "method" });
+    { text: "27 NZ Army and Australian Defence Force personnel completed ELDA Lead Systems together, strengthening joint leadership development ties.", options: { bold: true, bullet: { indent: 9 }, breakLine: true } },
+    { text: "The three-day rogaine, culminating in a whitewater rafting descent, forced planning and execution against incomplete information: direct evidence of resilience, judgement and teamwork under pressure.", options: { bullet: { indent: 9 }, breakLine: true } },
+    { text: "Leadership diagnostics, structured debriefs and individual Leadership Development Plans converted reflection into readiness, building the combat mindset required at lead systems level.", options: { bullet: { indent: 9 } } },
+  ], { placeholder: "delivery", paraSpaceAfter: 4 });
   ex.addText([
-    { text: "All personnel completed ELDA Lead Systems. Student evaluations indicate a well-conducted course. ", options: {} },
-    { text: "“An excellent course that required a high level of personal drive and commitment, whilst also reinforcing the importance of working as a team towards a common goal.”", options: { italic: true, color: SWAMP } },
-  ], { placeholder: "endstate" });
+    { text: "“An excellent course that required a high level of personal drive and commitment, whilst also reinforcing the importance of working as a team towards a common goal.” ", options: {} },
+    { text: "Student evaluation", options: { italic: false, color: GREY } },
+  ], { placeholder: "feedback" });
   for (let i = 0; i < 4; i++) {
     const p = PHOTOS[i];
     ex.addImage({ data: await cover(`${A}/example-photo-${i + 1}.jpg`, p.w, p.h), x: p.x, y: p.y, w: p.w, h: p.h });
@@ -195,7 +197,7 @@ async function build() {
   section(g, M, cy, "02", "COMPLETING THE BOARD", "Fill each field on the template slide; the frame itself is locked in the layout.");
   const tips = [
     ["Header", "Unit and sub-unit, activity name and dates. Insert your unit badge from the set at right."],
-    ["Text", "Introduction, purpose, method and end state. Each field shrinks to fit; keep the board to one page."],
+    ["Text", "Purpose, then delivery and effect in three or four points, then a line of participant feedback. Each field shrinks to fit."],
     ["Photos", "Four landscape photos, numbered 1 to 4. Click a frame to insert; PowerPoint crops to fit."],
     ["Captions", "One line beneath the photos, numbered to match. Name the activity, place and date where useful."],
   ];
