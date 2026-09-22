@@ -55,7 +55,7 @@ async function png(path, opts = {}) {
 async function cover(path, w, h) {
   // crop to the placeholder aspect so the photo is never stretched
   const px = 1400;
-  const buf = await sharp(path).resize(px, Math.round((px * h) / w), { fit: "cover" }).jpeg({ quality: 82 }).toBuffer();
+  const buf = await sharp(path).resize(px, Math.round((px * h) / w), { fit: "cover", position: "attention" }).jpeg({ quality: 82 }).toBuffer();
   return "image/jpeg;base64," + buf.toString("base64");
 }
 function fitBox(ratio, box) {
@@ -129,37 +129,68 @@ async function build() {
     { image: { x: logoBox.x, y: logoBox.y, w: logoBox.w, h: logoBox.h, data: logo.data } },
   ] });
 
-  // ---- slide: worked example (NZALC ELDA Lead Systems) -------------------
-  const ex = pres.addSlide({ masterName: "ATG_STORYBOARD" });
-  ex.addText("Army Command School  ·  NZ Army Leadership Centre", { placeholder: "unit" });
-  ex.addText("ELDA Lead Systems NCO Course  ·  7 – 14 Aug 26", { placeholder: "activity" });
-  const badge = await png(`${A}/badge-nz-onward.png`, { trim: true });
-  const bb = fitBox(badge.ratio, { x: HEAD.x + HEAD.w - 0.86, y: HEAD.y + 0.08, w: 0.7, h: 0.7 });
-  ex.addImage({ data: badge.data, x: bb.x, y: bb.y, w: bb.w, h: bb.h });
-  ex.addText("To enhance leadership and warrior ethos through the conduct of a challenging multisport activity, supported by leadership tools, psychometrics, reflection and behaviour selection.", { placeholder: "purpose" });
-  ex.addText([
-    { text: "27 NZ Army and Australian Defence Force personnel completed ELDA Lead Systems together, strengthening joint leadership development ties.", options: { bold: true, bullet: { indent: 9 }, breakLine: true } },
-    { text: "The three-day rogaine, culminating in a whitewater rafting descent, forced planning and execution against incomplete information: direct evidence of resilience, judgement and teamwork under pressure.", options: { bullet: { indent: 9 }, breakLine: true } },
-    { text: "Leadership diagnostics, structured debriefs and individual Leadership Development Plans converted reflection into readiness, building the combat mindset required at lead systems level.", options: { bullet: { indent: 9 } } },
-  ], { placeholder: "delivery", paraSpaceAfter: 4 });
-  ex.addText([
-    { text: "“An excellent course that required a high level of personal drive and commitment, whilst also reinforcing the importance of working as a team towards a common goal.” ", options: {} },
-    { text: "Student evaluation", options: { italic: false, color: GREY } },
-  ], { placeholder: "feedback" });
-  for (let i = 0; i < 4; i++) {
-    const p = PHOTOS[i];
-    ex.addImage({ data: await cover(`${A}/example-photo-${i + 1}.jpg`, p.w, p.h), x: p.x, y: p.y, w: p.w, h: p.h });
+  // ---- worked examples --------------------------------------------------
+  async function exampleSlide(spec) {
+    const ex = pres.addSlide({ masterName: "ATG_STORYBOARD" });
+    ex.addText(spec.unit, { placeholder: "unit" });
+    ex.addText(spec.activity, { placeholder: "activity" });
+    const badge = await png(`${A}/${spec.badge}`, { trim: true });
+    const bb = fitBox(badge.ratio, { x: HEAD.x + HEAD.w - 0.86, y: HEAD.y + 0.08, w: 0.7, h: 0.7 });
+    ex.addImage({ data: badge.data, x: bb.x, y: bb.y, w: bb.w, h: bb.h });
+    ex.addText(spec.purpose, { placeholder: "purpose" });
+    ex.addText(spec.delivery.map((t, i) => ({ text: t, options: { bold: i === 0, bullet: { indent: 9 }, breakLine: i < spec.delivery.length - 1 } })),
+      { placeholder: "delivery", paraSpaceAfter: 4 });
+    ex.addText([
+      { text: spec.feedback[0] + " ", options: {} },
+      { text: spec.feedback[1], options: { italic: false, color: GREY } },
+    ], { placeholder: "feedback" });
+    for (let i = 0; i < 4; i++) {
+      const p = PHOTOS[i];
+      ex.addImage({ data: await cover(`${A}/${spec.photos}-${i + 1}.jpg`, p.w, p.h), x: p.x, y: p.y, w: p.w, h: p.h });
+    }
+    markers(ex);
+    const caps = [];
+    spec.captions.forEach((c, i) => {
+      caps.push({ text: `${i + 1}  `, options: { bold: true, color: BLACK } });
+      caps.push({ text: c + (i < 3 ? "   ·   " : "") });
+    });
+    ex.addText(caps, { placeholder: "captions" });
+    ex.addText("EXAMPLE", { x: M + 0.95, y: FOOT_Y - 0.05, w: 0.8, h: 0.24, fontFace: F, fontSize: 7, bold: true, color: GOLD, charSpacing: 2, align: "center", valign: "middle", margin: 0, isTextBox: true, line: { color: GOLD, width: 0.75 }, rectRadius: 0.12 });
+    ex.addNotes(spec.notes);
+    return ex;
   }
-  markers(ex);
-  ex.addText([
-    { text: "1  ", options: { bold: true, color: BLACK } }, { text: "Whitewater descent, day three   ·   " },
-    { text: "2  ", options: { bold: true, color: BLACK } }, { text: "Lake leg of the rogaine   ·   " },
-    { text: "3  ", options: { bold: true, color: BLACK } }, { text: "Night navigation planning   ·   " },
-    { text: "4  ", options: { bold: true, color: BLACK } }, { text: "Course group with ADF personnel" },
-  ], { placeholder: "captions" });
-  // example tag
-  ex.addText("EXAMPLE", { x: M + 0.95, y: FOOT_Y - 0.05, w: 0.8, h: 0.24, fontFace: F, fontSize: 7, bold: true, color: GOLD, charSpacing: 2, align: "center", valign: "middle", margin: 0, isTextBox: true, line: { color: GOLD, width: 0.75 }, rectRadius: 0.12 });
-  ex.addNotes("Worked example of the ATG storyboard. Content and photographs from the NZALC ELDA Lead Systems NCO Course storyboard; photo captions are illustrative.");
+
+  await exampleSlide({
+    unit: "Army Command School  ·  NZ Army Leadership Centre",
+    activity: "ELDA Lead Systems NCO Course  ·  7 – 14 Aug 26",
+    badge: "badge-nz-onward.png",
+    purpose: "To enhance leadership and warrior ethos through the conduct of a challenging multisport activity, supported by leadership tools, psychometrics, reflection and behaviour selection.",
+    delivery: [
+      "27 NZ Army and Australian Defence Force personnel completed ELDA Lead Systems together, strengthening joint leadership development ties.",
+      "The three-day rogaine, culminating in a whitewater rafting descent, forced planning and execution against incomplete information: direct evidence of resilience, judgement and teamwork under pressure.",
+      "Leadership diagnostics, structured debriefs and individual Leadership Development Plans converted reflection into readiness, building the combat mindset required at lead systems level.",
+    ],
+    feedback: ["“An excellent course that required a high level of personal drive and commitment, whilst also reinforcing the importance of working as a team towards a common goal.”", "Student evaluation"],
+    photos: "example-photo",
+    captions: ["Whitewater descent, day three", "Lake leg of the rogaine", "Night navigation planning", "Course group with ADF personnel"],
+    notes: "Worked example of the ATG storyboard. Content and photographs from the NZALC ELDA Lead Systems NCO Course storyboard; photo captions are illustrative.",
+  });
+
+  await exampleSlide({
+    unit: "Army Command School  ·  NZ Army Leadership Centre",
+    activity: "ELDA Lead Leaders, SNCO Promotion Course  ·  Christchurch and Wanaka",
+    badge: "badge-nz-onward.png",
+    purpose: "To enhance leadership and maintain warrior ethos in order to provide world-class, operationally focused leaders, through a challenging rock-climbing activity supported by leadership tools, a Hogan psychometric report, reflection and behaviour selection.",
+    delivery: [
+      "30 students completed the ELDA phase of Lead Leaders: 21 from the SNCO Promotion Course and seven junior officers, in syndicates of up to eight across Christchurch and Wanaka.",
+      "Facilitation content combined with rock climbing enabled behaviour-based peer feedback: an accurate snapshot of each student's current behaviour and its impact on others.",
+      "Peer-endorsed strategies gave every student a practical plan to lift intrapersonal and interpersonal effectiveness under the Domain Model.",
+    ],
+    feedback: ["Student evaluations indicate the course was well conducted, with students extremely pleased with the facilitation content and its delivery by instructors.", "Student evaluation summary"],
+    photos: "example2-photo",
+    captions: ["Lead climb on the main face", "Top-rope pitch, Wanaka", "Syndicate on the summit block", "Abseil descent"],
+    notes: "Second worked example, from the example board in the previous ATG template (Lead Leaders rock-climbing ELDA). The source carried no dates, so the activity line names the locations; photo captions are illustrative.",
+  });
 
   // ---- slide: how to use it ------------------------------------------------
   const g = pres.addSlide({ masterName: "ATG_PLAIN" });
