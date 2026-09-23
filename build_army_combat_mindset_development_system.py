@@ -41,10 +41,10 @@ MODEL = [
 STEPS = [
     ("1", "Understand Self", "Recognise your response."),
     ("2", "Regulate Self", "Control that response."),
-    ("3", "Perform Under Pressure", "Develop the transferable skill."),
-    ("4", "Combat Mindset", "Apply that skill to operational demands."),
+    ("3", "Perform Under Pressure", "Sustain performance under pressure."),
+    ("4", "Combat Mindset", "Apply it to operational demands."),
 ]
-STEPS_REINFORCE = ("Performance Under Pressure is a trainable skill. It can be developed in any demanding context and "
+STEPS_REINFORCE = ("Performance Under Pressure is a trainable capacity. It can be developed in any demanding context and "
                    "applied to increasingly realistic operational demands.")
 RESPONSIBILITIES = [
     # spine, function, role
