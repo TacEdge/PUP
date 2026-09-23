@@ -96,6 +96,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If lo.DataBodyRange Is Nothing Then Exit Sub
     If Intersect(Target, lo.DataBodyRange) Is Nothing Then Exit Sub
 
+    EnsureLineFormats lo
     FillTickBoxes
     StampRowsUpdated lo, Target
     If Not Intersect(Target, lo.ListColumns("Priority").DataBodyRange) Is Nothing Then
@@ -150,6 +151,17 @@ Private Function Archive() As ListObject
     Set Archive = Me.ListObjects("tblArchive")
     On Error GoTo 0
 End Function
+
+' A line edited or added here picks up the standard cell formats.
+Private Sub Worksheet_Change(ByVal Target As Range)
+    Dim lo As ListObject
+
+    Set lo = Archive()
+    If lo Is Nothing Then Exit Sub
+    If lo.DataBodyRange Is Nothing Then Exit Sub
+    If Intersect(Target, lo.DataBodyRange) Is Nothing Then Exit Sub
+    EnsureLineFormats lo
+End Sub
 
 ' A single click on an archived line's tick box sends it back to the
 ' active tracker, where it is slotted into its priority group.
@@ -442,6 +454,7 @@ Public Sub ArchiveLine(ByVal rowIndex As Long)
 
     Set dstRow = NextFreeRow(dst)
     CopyLine src, srcRow, dst, dstRow
+    FormatLine dst, dstRow
     dstRow.Range.Cells(1, dst.ListColumns(COL_COMPLETE).Index).Value = TickDone()
     dstRow.Range.Cells(1, dst.ListColumns(COL_COMPLETED_ON).Index).Value = Date
     DeleteLine src, srcRow
@@ -478,6 +491,7 @@ Public Sub RestoreLine(ByVal rowIndex As Long)
 
     Set dstRow = NextFreeRow(dst)
     CopyLine src, srcRow, dst, dstRow
+    FormatLine dst, dstRow
     dstRow.Range.Cells(1, dst.ListColumns(COL_COMPLETE).Index).Value = TickEmpty()
     DeleteLine src, srcRow
     mBusy = False
@@ -542,6 +556,78 @@ Private Function LineIsBlank(ByVal lo As ListObject, ByVal r As ListRow) As Bool
         LineIsBlank = (Len(Trim$(CStr(v))) = 0)
     End If
 End Function
+
+' ---------------------------------------------------------------------
+' Cell formats for new lines
+' ---------------------------------------------------------------------
+
+' A line typed under the table joins it without the grid rules, number
+' formats or alignment of the lines above.  Any line whose Line of
+' Effort cell has no left border is given the standard formats.
+Public Sub EnsureLineFormats(ByVal lo As ListObject)
+    Dim r As ListRow
+    Dim lineCol As Long
+
+    If lo Is Nothing Then Exit Sub
+    If lo.DataBodyRange Is Nothing Then Exit Sub
+    lineCol = lo.ListColumns(COL_LINE).Index
+    For Each r In lo.ListRows
+        If r.Range.Cells(1, lineCol).Borders(xlEdgeLeft).LineStyle = xlNone Then
+            FormatLine lo, r
+        End If
+    Next r
+End Sub
+
+' Applies the standard cell formats to one line: grid rules in every
+' cell, Arial 10 ink, centred vertically, with the number formats and
+' alignment each column uses.
+Public Sub FormatLine(ByVal lo As ListObject, ByVal r As ListRow)
+    Dim col As ListColumn
+    Dim c As Range
+    Dim edge As Long
+
+    With r.Range
+        For edge = xlEdgeLeft To xlInsideHorizontal
+            With .Borders(edge)
+                .LineStyle = xlContinuous
+                .Weight = xlThin
+                .Color = RGB(217, 217, 210)
+            End With
+        Next edge
+        .Font.Name = "Arial"
+        .Font.Size = 10
+        .Font.Color = RGB(34, 34, 34)
+        .VerticalAlignment = xlCenter
+        .HorizontalAlignment = xlLeft
+        .WrapText = True
+        .NumberFormat = "General"
+    End With
+    For Each col In lo.ListColumns
+        Set c = r.Range.Cells(1, col.Index)
+        Select Case col.Name
+            Case COL_NUMBER
+                c.HorizontalAlignment = xlCenter
+                c.WrapText = False
+                c.Font.Size = 9
+                c.Font.Color = RGB(138, 138, 138)
+            Case COL_PRIORITY
+                c.WrapText = False
+            Case "Progress %"
+                c.HorizontalAlignment = xlCenter
+                c.WrapText = False
+                c.NumberFormat = "0%"
+            Case "Last Updated", COL_COMPLETED_ON
+                c.HorizontalAlignment = xlCenter
+                c.WrapText = False
+                c.NumberFormat = "dd mmm yy"
+            Case COL_COMPLETE
+                c.HorizontalAlignment = xlCenter
+                c.WrapText = False
+                c.Font.Size = 14
+        End Select
+    Next col
+    If r.Range.RowHeight < MIN_ROW_HEIGHT Then r.Range.RowHeight = MIN_ROW_HEIGHT
+End Sub
 
 ' Excel's sort moves cell contents but not row heights, so re-fit the rows
 ' and keep them at least the standard height.
