@@ -388,6 +388,10 @@ def build():
         pg.box(rx, y, rw, rh, fill=FAINT, stroke=None, radius=4)
         pg.text(rx + 10, y + 12, org, 8, BLACK, bold=True)
         pg.text(rx + 10, y + 22, sub, 6.8, GREY)
+        if sub == "Combat Mindset Conditioning":
+            # red outline: points the reader to the CMC page in the pack
+            tw = max(pg.width(org, 8, True), pg.width(sub, 6.8))
+            pg.box(rx + 5, y + 2.5, tw + 9, rh - 5, fill=None, stroke=ARMY_RED, width=1.1, radius=3)
         for j, verb in enumerate(verbs):
             chip(pg, rx + label_w + j * col_w + col_w / 2, y + rh / 2, verb)
         y += rh + 4
