@@ -29,6 +29,7 @@ R = 6
 GREY = rgb("5F5F5A")
 
 TITLE = "Combat Mindset"
+DEFINITION = "The capacity to regulate and sustain effective performance under operational pressure."
 ORIGINATOR = "Army Command School"
 FOOTER_LEFT = "Army Combat Mindset | Design and development draft"
 
@@ -56,6 +57,7 @@ def build():
     y = 300
     pg.text(M, y, TITLE, 40, BLACK, bold=True)
     pg.line(M, y + 22, M + 60, y + 22, GOLD, width=1.4)
+    pg.text(M, y + 50, DEFINITION, 13, INK)
 
     doc.set_metadata({"title": "Army Combat Mindset", "author": ORIGINATOR})
     doc.save(OUT, garbage=3, deflate=True)
