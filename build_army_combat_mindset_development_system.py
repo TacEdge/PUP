@@ -50,7 +50,7 @@ MODEL = [
 STEPS = [
     ("1", "Understand Self", "Recognise your response."),
     ("2", "Regulate Self", "Manage response and redirect attention."),
-    ("3", "Perform Under Pressure", "Sustain performance under pressure."),
+    ("3", "Perform Under Pressure", "Practise sustaining performance under pressure across contexts."),
     ("4", "Combat Mindset", "Apply it to operational demands."),
 ]
 STEPS_REINFORCE = ("Performance Under Pressure is a trainable capacity. It can be developed in any demanding context and "
