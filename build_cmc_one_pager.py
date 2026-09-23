@@ -160,6 +160,19 @@ def seb_band(pg, x, y, w, h):
     pg.text(ox + 12, y + h / 2 + 10, SEB_OUTCOME[1], 6.4, GRID)
 
 
+def statement_band(pg, y, h, label, title, text):
+    """Black band: gold label in the spine, white title, grey statement.
+    Used for the opening definition and the closing outcome."""
+    spine = 96
+    pg.box(M, y, CW, h, fill=BLACK, stroke=None, radius=R)
+    size = 11 if len(label) <= 8 else 9.5
+    pg.text(M + spine / 2, y + h / 2 + size * 0.36, label, size, GOLD, bold=True, align=1)
+    pg.line(M + spine + 3, y + 9, M + spine + 3, y + h - 9, GOLD, width=0.8)
+    pg.text(M + spine + 14, y + h / 2 - 2, title, 12, WHITE, bold=True)
+    pg.text(M + spine + 14, y + h / 2 + 12, text, 8.5, GRID)
+    return y + h
+
+
 def band(pg, y, h, label, role, sub, items, arrows, provenance, note=None):
     spine = 96
     pg.box(M, y, CW, h, fill=FAINT, stroke=None, radius=R)
@@ -194,14 +207,15 @@ def band(pg, y, h, label, role, sub, items, arrows, provenance, note=None):
 def build():
     doc = pymupdf.open()
     pg = Page(doc, W, H)
-    y = masthead(pg) + 22
+    y = masthead(pg) + 14
 
-    # strapline: the product in one sentence
-    pg.text(W / 2, y, STRAP, 9.5, SWAMP, bold=True, align=1)
-    y += 16
+    # the opening question, answered: a black band that bookends the outcome
+    y = statement_band(pg, y, 44, "WHAT IS CMC?", "COMBAT MINDSET CONDITIONING", STRAP)
+    arrow_down(pg, M + 48, y, y + 9)
+    y += 9
 
-    bh = 52
-    gap = 11
+    bh = 48
+    gap = 9
     for label, role, sub, items, arrows, prov, note in BANDS:
         tall = prov == "seb" or (items and isinstance(items[0], tuple))
         y = band(pg, y, bh + 22 if tall else bh, label, role, sub, items, arrows, prov, note)
@@ -209,14 +223,7 @@ def build():
         y += gap
 
     # outcome: black band, the capacity the product exists to build
-    oh = 48
-    spine = 96
-    pg.box(M, y, CW, oh, fill=BLACK, stroke=None, radius=R)
-    pg.text(M + spine / 2, y + oh / 2 + 4, OUTCOME[0], 11, GOLD, bold=True, align=1)
-    pg.line(M + spine + 3, y + 10, M + spine + 3, y + oh - 10, GOLD, width=0.8)
-    pg.text(M + spine + 14, y + 22, OUTCOME[1], 12, WHITE, bold=True)
-    pg.text(M + spine + 14, y + 38, OUTCOME[2], 8.5, GRID)
-    y += oh + 14
+    y = statement_band(pg, y, 44, *OUTCOME) + 12
 
     # legend
     x = M
