@@ -1111,7 +1111,7 @@ def build_archive_sheet(ss: dict[str, int], source_sheet_xml: str) -> str:
         '<cfRule type="expression" dxfId="2" priority="3"><formula>$A7="Routine"</formula></cfRule>'
         '</conditionalFormatting>'
         f'<conditionalFormatting sqref="D{data}:D200"><cfRule type="dataBar" priority="4">'
-        '<dataBar><cfvo type="num" val="0"/><cfvo type="num" val="1"/><color rgb="FF9DBE85"/></dataBar>'
+        '<dataBar><cfvo type="num" val="0"/><cfvo type="num" val="1"/><color rgb="FFCDD2B7"/></dataBar>'
         f'<extLst><ext uri="{{B025F937-C7B1-47D3-B67F-A62EFF666E3E}}" {X14_NS}>'
         f'<x14:id>{ARCHIVE_DATABAR_ID}</x14:id></ext></extLst></cfRule></conditionalFormatting>'
         + page +
@@ -1122,7 +1122,7 @@ def build_archive_sheet(ss: dict[str, int], source_sheet_xml: str) -> str:
         f'<x14:cfRule type="dataBar" id="{ARCHIVE_DATABAR_ID}">'
         '<x14:dataBar minLength="0" maxLength="100" gradient="0" axisPosition="none">'
         '<x14:cfvo type="num"><xm:f>0</xm:f></x14:cfvo><x14:cfvo type="num"><xm:f>1</xm:f></x14:cfvo>'
-        '<x14:negativeFillColor rgb="FF9DBE85"/></x14:dataBar></x14:cfRule>'
+        '<x14:negativeFillColor rgb="FFCDD2B7"/></x14:dataBar></x14:cfRule>'
         f'<xm:sqref>D{data}:D200</xm:sqref></x14:conditionalFormatting>'
         '</x14:conditionalFormattings></ext></extLst>'
         '</worksheet>'
@@ -1147,7 +1147,7 @@ def build_archive_table() -> str:
 
 
 TICK_EMPTY = "☐"
-ARCHIVE_TITLE = "NZALC HQ - ARCHIVED LINES OF EFFORT"
+ARCHIVE_TITLE = "NZALC HQ Archived Lines of Effort"
 ARCHIVE_HINT = ("COMPLETED LINES LAND HERE AUTOMATICALLY - CLICK A LINE'S TICK BOX "
                 "TO SEND IT BACK TO THE ACTIVE TRACKER")
 
