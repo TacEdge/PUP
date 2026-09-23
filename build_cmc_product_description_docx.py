@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Combat Mindset Conditioning: product description as an editable Word
-document in the shared house style.
+document in the shared house style, set in the black and grey palette.
 
     python3 build_cmc_product_description_docx.py
     /usr/bin/python3 convert_to_pdf.py output/combat-mindset-conditioning.docx output/combat-mindset-conditioning.pdf
@@ -18,7 +18,19 @@ TAG = "An Army training product within the Army Combat Mindset System"
 FOOTER_LEFT = "Combat Mindset Conditioning | Draft for discussion"
 
 
+# black and grey palette for this document: the pipeline's greens are
+# swapped before any style is built (the constants are read at call time)
+CHARCOAL = "222222"
+LIGHT_GREY = "E6E6E2"
+PALE_GREY = "F3F3F0"
+MID_GREY = "8A8A8A"
+
+
 def build():
+    cds.SWAMP_GREEN = CHARCOAL
+    cds.MOAWHANGO = LIGHT_GREY
+    cds.PALE_GREEN = PALE_GREY
+    cds.WAIOURU_HILLS = MID_GREY
     cds.DATE = "23 September 2026"
     cds.ORIGINATOR_LONG = "Army Command School"
     doc = cds.new_document()
@@ -46,8 +58,9 @@ def build():
         if elm.tag.endswith("}p") and nxt.tag.endswith("}tbl"):
             Paragraph(elm, doc).paragraph_format.keep_with_next = True
     for table in doc.tables:
-        # keep each table on one page: rows hold on to the next
-        for row in table.rows[:-1]:
+        # keep short tables on one page: rows hold on to the next; long
+        # tables may break rather than leave a page mostly empty
+        for row in (table.rows[:-1] if len(table.rows) <= 6 else []):
             for cell in row.cells:
                 for para in cell.paragraphs:
                     para.paragraph_format.keep_with_next = True
