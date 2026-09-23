@@ -6,9 +6,12 @@ page numbering.
     python3 build_combat_mindset_pack.py
         -> output/combat-mindset-pack.pdf
 
-  1      Army Combat Mindset System (one-page system map, landscape)
-  2 - 5  Combat Mindset Conditioning (staff document, portrait)
-  6      Combat Mindset Conditioning: the product in one picture (landscape)
+  1  Cover
+  2  Army Combat Mindset System (one-page system map)
+  3  Combat Mindset Conditioning: the product in one picture
+
+The staff document (build_cmc_staff_document.py) is kept as a standalone
+design and development document and is not bound into the pack.
 """
 
 import os
@@ -18,10 +21,10 @@ import pymupdf
 
 import build_army_combat_mindset_development_system as acms
 import build_cmc_one_pager as model
-import build_cmc_staff_document as staff
+import build_combat_mindset_cover as cover
 
 OUT = "./output/combat-mindset-pack.pdf"
-ORDER = [acms, staff, model]
+ORDER = [cover, acms, model]
 
 
 def build():
