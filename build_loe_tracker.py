@@ -1037,10 +1037,7 @@ def add_complete_column(sheet_xml: str, ss: dict[str, int], last_row: int) -> st
     # Prompt on Last Updated cells so the double-click shortcut is discoverable.
     sheet_xml = sheet_xml.replace('<dataValidations count="2">', '<dataValidations count="3">', 1)
     sheet_xml = sheet_xml.replace(
-        "</dataValidations>",
-        '<dataValidation type="none" allowBlank="1" showInputMessage="1" '
-        'promptTitle="Last Updated" prompt="Double-click to stamp today\'s date." '
-        f'sqref="G8:G{TRACK_LIMIT_ROW}"/></dataValidations>', 1)
+        "</dataValidations>", date_validation(f"G8:G{TRACK_LIMIT_ROW}") + "</dataValidations>", 1)
     return sheet_xml
 
 
@@ -1114,6 +1111,7 @@ def build_archive_sheet(ss: dict[str, int], source_sheet_xml: str) -> str:
         '<dataBar><cfvo type="num" val="0"/><cfvo type="num" val="1"/><color rgb="FFCDD2B7"/></dataBar>'
         f'<extLst><ext uri="{{B025F937-C7B1-47D3-B67F-A62EFF666E3E}}" {X14_NS}>'
         f'<x14:id>{ARCHIVE_DATABAR_ID}</x14:id></ext></extLst></cfRule></conditionalFormatting>'
+        f'<dataValidations count="1">{date_validation(f"G{data}:G200")}</dataValidations>'
         + page +
         '<tableParts count="1"><tablePart r:id="rId1"/></tableParts>'
         f'<extLst><ext uri="{{78C0D931-6437-407d-A8EE-F0AAD7539E65}}" {X14_NS}>'
@@ -1127,6 +1125,41 @@ def build_archive_sheet(ss: dict[str, int], source_sheet_xml: str) -> str:
         '</x14:conditionalFormattings></ext></extLst>'
         '</worksheet>'
     )
+
+
+DATES_COUNT = 14   # today and the thirteen days before it
+
+
+def build_dates_sheet() -> str:
+    """Hidden 'Dates' tab: today and recent days, the source of the Last
+    Updated drop-down.  TODAY() is volatile, so Excel refreshes the list on
+    every open and recalculation."""
+    serial_today = (datetime.date.today() - datetime.date(1899, 12, 30)).days
+    rows = "".join(
+        f'<row r="{i + 1}" spans="1:1"><c r="A{i + 1}" s="{STYLE_DATE}"><f>TODAY()' + (f"-{i}" if i else "")
+        + f'</f><v>{serial_today - i}</v></c></row>'
+        for i in range(DATES_COUNT))
+    return (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        f'<worksheet {SHEET_NS}>'
+        '<sheetPr/>'
+        f'<dimension ref="A1:A{DATES_COUNT}"/>'
+        '<sheetViews><sheetView workbookViewId="0"/></sheetViews>'
+        '<sheetFormatPr defaultRowHeight="15"/>'
+        '<cols><col min="1" max="1" width="14" customWidth="1"/></cols>'
+        f'<sheetData>{rows}</sheetData>'
+        '<pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>'
+        '</worksheet>'
+    )
+
+
+def date_validation(sqref: str) -> str:
+    """Drop-down of recent dates on Last Updated cells, today first; the
+    double-click stamp remains for the one-action case."""
+    return ('<dataValidation type="list" allowBlank="1" showInputMessage="1" '
+            'promptTitle="Last Updated" '
+            'prompt="Pick a date from the drop-down (today is first), or double-click the cell to stamp today." '
+            f'sqref="{sqref}"><formula1>Dates!$A$1:$A${DATES_COUNT}</formula1></dataValidation>')
 
 
 def build_archive_table() -> str:
@@ -1279,11 +1312,15 @@ def build(src: str, dst: str) -> None:
         '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/table" '
         'Target="../tables/table2.xml"/></Relationships>').encode("utf-8")
     parts["xl/tables/table2.xml"] = build_archive_table().encode("utf-8")
+    parts["xl/worksheets/sheet3.xml"] = build_dates_sheet().encode("utf-8")
 
     workbook = parts["xl/workbook.xml"].decode("utf-8")
     workbook, n = re.subn(r"<workbookPr/>", '<workbookPr codeName="ThisWorkbook"/>', workbook, count=1)
     assert n == 1, "workbookPr not found"
-    workbook = workbook.replace("</sheets>", '<sheet name="Archive" sheetId="2" r:id="rIdArchive"/></sheets>', 1)
+    workbook = workbook.replace("</sheets>", '<sheet name="Archive" sheetId="2" r:id="rIdArchive"/>'
+                                '<sheet name="Dates" sheetId="3" state="hidden" r:id="rIdDates"/></sheets>', 1)
+    workbook, n = re.subn(r"<calcPr ", '<calcPr fullCalcOnLoad="1" ', workbook, count=1)
+    assert n == 1, "calcPr not found"
     workbook = workbook.replace("'Lines of Effort Tracker'!$A$1:$G$38",
                                 f"'Lines of Effort Tracker'!$A$1:$H${TRACK_LIMIT_ROW}", 1)
     parts["xl/workbook.xml"] = workbook.encode("utf-8")
@@ -1294,6 +1331,9 @@ def build(src: str, dst: str) -> None:
         '<Relationship Id="rIdArchive" '
         'Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" '
         'Target="worksheets/sheet2.xml"/>'
+        '<Relationship Id="rIdDates" '
+        'Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" '
+        'Target="worksheets/sheet3.xml"/>'
         '<Relationship Id="rIdVBA" '
         'Type="http://schemas.microsoft.com/office/2006/relationships/vbaProject" '
         'Target="vbaProject.bin"/></Relationships>')
@@ -1308,6 +1348,8 @@ def build(src: str, dst: str) -> None:
         "</Types>",
         '<Override PartName="/xl/worksheets/sheet2.xml" '
         'ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>'
+        '<Override PartName="/xl/worksheets/sheet3.xml" '
+        'ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>'
         '<Override PartName="/xl/tables/table2.xml" '
         'ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"/>'
         '<Override PartName="/xl/vbaProject.bin" '
@@ -1317,7 +1359,7 @@ def build(src: str, dst: str) -> None:
     parts["xl/vbaProject.bin"] = vba_bin
     order.insert(order.index("xl/workbook.xml") + 1, "xl/vbaProject.bin")
     at = order.index("xl/worksheets/sheet1.xml") + 1
-    order[at:at] = ["xl/worksheets/sheet2.xml"]
+    order[at:at] = ["xl/worksheets/sheet2.xml", "xl/worksheets/sheet3.xml"]
     order.insert(order.index("xl/worksheets/_rels/sheet1.xml.rels") + 1, "xl/worksheets/_rels/sheet2.xml.rels")
     order.insert(order.index("xl/tables/table1.xml") + 1, "xl/tables/table2.xml")
 
