@@ -50,13 +50,22 @@ LH = 11.2
 
 # ---- content ---------------------------------------------------------------
 CM_DEF = "The capacity to regulate and sustain effective performance under operational pressure."
-CMR_DEF = "A simple, repeatable method for restoring regulation and effective performance under pressure. Detailed sequence to be developed with Ken Franks."
+CMR_DEF = "A simple, repeatable method for restoring regulation and effective performance under pressure."
+# The SEB Cycle: the method through which the Combat Mindset Reset is executed.
+# Re-engage is the outcome of completing the cycle, not a fourth letter.
+SEB = [
+    ("S", "STATE", "Recognise your state", "Identify the physiological, cognitive and behavioural indicators that performance is beginning to degrade."),
+    ("E", "EYES UP", "Orient to your environment", "Break fixation, restore external attention and rebuild situational awareness."),
+    ("B", "BREATHE & BODY", "Regulate your state", "Use trained breathing and body control to regulate arousal and restore effective performance."),
+]
+SEB_OUTCOME = ("RE-ENGAGE", "Return attention to what matters now", "The outcome of completing the cycle: a return to the task.")
 TRAINING_EFFECT = "Individuals increasingly retain the capacity to regulate themselves and sustain effective performance as pressure and operational demands increase."
 PATHWAY = ["Understand Self", "Regulate Self", "Perform Under Pressure", "Combat Mindset"]
 TERMS = [
     ("COGCON", "Combat Mindset Conditioning (CMC)", "Proposed"),
     ("COG6, the six cognitive pillars", "Combat Mindset Pillars", "Proposed"),
     ("Operational Reset Tool", "Combat Mindset Reset (CMR)", "Proposed"),
+    ("SEB Cycle", "SEB Cycle, retained as the method within the Reset", "Proposed"),
     ("OPS4, the Operational Performance States", "Combat Mindset Performance States", "Proposed"),
     ("COGCON Coach", "CMC Coach", "Working"),
     ("COGCON Level 1 and Level 2", "CMC Coach and CMC Lead Coach", "Working"),
@@ -71,7 +80,6 @@ PILLARS = [
     ("Attentional Control", "Direct, maintain and shift attention appropriately despite distraction, pressure and threat."),
     ("Cognitive Control", "Inhibit ineffective responses and retain deliberate control over behaviour and decisions."),
 ]
-RESET = ["Recognise", "Regulate", "Reorient", "Re-engage"]
 STATES = [
     ("Task Focus", "Task focus and deliberate action.", "Working proposal replacing Performance Mindset; Ken Franks to confirm"),
     ("Command Presence", "Controlled posture, communication and pacing.", "COGCON name retained"),
@@ -92,7 +100,7 @@ ARCH = [
     ("SYSTEM", "Army Combat Mindset System", "The overarching Army training system."),
     ("PRODUCT", "Combat Mindset Conditioning", "The deliberate practice used to develop the capacity."),
     ("ELEMENT", "Combat Mindset Pillars", "What we develop."),
-    ("ELEMENT", "Combat Mindset Reset", "How we restore performance."),
+    ("ELEMENT", "Combat Mindset Reset", "How we restore performance.", "Executed through the SEB Cycle"),
     ("ELEMENT", "Combat Mindset Performance States", "What effective performance looks like."),
     ("ELEMENT", "CMC Training Methodology", "How we condition it under pressure."),
     ("ELEMENT", "CMC Coaching and Assurance", "How we maintain the standard."),
@@ -236,6 +244,58 @@ def chain(d, items, numbered=False, dark_last=False, h=24, after=15, provenance=
             pg.line(x + cw + 3, y + h / 2, x + cw + gap - 7, y + h / 2, GOLD, width=1.1)
             arrow_head_right(pg, x + cw + gap - 3, y + h / 2)
     d.y = y + h + after
+
+
+def seb_cycle(d, after=15):
+    """The SEB Cycle, grouped, then Re-engage as its outcome.  The cycle is
+    derived architecture (dashed gold); Re-engage is the return to task."""
+    h = 52
+    d.ensure(h + 12 + after)
+    pg, y = d.pg, d.y
+    pg.spaced(M, y + 6, "SEB CYCLE", 5.6, GOLD, bold=True, spacing=1.3)
+    pg.text(M + 52, y + 6, "the method through which the Combat Mindset Reset is executed", 6.6, GREY)
+    y += 12
+    out_w = 128
+    gap = 22
+    group_w = CW - out_w - gap
+    pg.box(M, y, group_w, h, fill=WHITE, stroke=None, radius=R)
+    dashed_box(pg, M, y, group_w, h, radius=R)
+    n = len(SEB)
+    inner_gap = 8
+    cw = (group_w - 16 - inner_gap * (n - 1)) / n
+    for i, (letter, name, line, _) in enumerate(SEB):
+        x = M + 8 + i * (cw + inner_gap)
+        pg.box(x, y + 8, cw, h - 16, fill=FAINT, stroke=None, radius=4)
+        pg.text(x + 9, y + 31, letter, 15, GOLD, bold=True)
+        pg.text(x + 26, y + 24, name, 7.6, BLACK, bold=True)
+        pg.text(x + 26, y + 34, line, 6.6, GREY)
+        if i < n - 1:
+            pg.line(x + cw + 1, y + h / 2, x + cw + inner_gap - 4, y + h / 2, GOLD, width=1.1)
+            arrow_head_right(pg, x + cw + inner_gap - 1, y + h / 2, size=3)
+    ax = M + group_w
+    pg.line(ax + 3, y + h / 2, ax + gap - 7, y + h / 2, GOLD, width=1.1)
+    arrow_head_right(pg, ax + gap - 3, y + h / 2)
+    ox = ax + gap
+    pg.box(ox, y, out_w, h, fill=BLACK, stroke=None, radius=R)
+    pg.text(ox + 12, y + 23, SEB_OUTCOME[0], 8.5, WHITE, bold=True)
+    for k, line in enumerate(wrapped(pg, SEB_OUTCOME[1], 6.6, out_w - 24)):
+        pg.text(ox + 12, y + 34 + k * 8.5, line, 6.6, GRID)
+    d.y = y + h + after
+
+
+def definitions(d, rows, after=8):
+    """Term and explanation rows: bold term, wrapped text."""
+    term_w = 108
+    for term, text in rows:
+        lines = wrapped(d.pg, text, BODY, CW - term_w)
+        d.ensure(len(lines) * LH + 4)
+        pg, y = d.pg, d.y
+        pg.text(M, y, term, BODY, BLACK, bold=True)
+        for line in lines:
+            pg.text(M + term_w, y, line, BODY, INK)
+            y += LH
+        d.y = y + 2
+    d.y += after - 2
 
 
 def status_chip(pg, cx, cy, text):
@@ -405,11 +465,13 @@ def architecture(d, after=15):
     d.ensure(0)
     pg = d.pg
     lw, ew = 66, 190
-    total = sum(max(24, 12 + len(wrapped(pg, r, 7.6, CW - lw - ew - 24)) * 9.6) + 4 for *_, r in ARCH)
+    total = sum(max(30 if len(row) > 3 else 24, 12 + len(wrapped(pg, row[2], 7.6, CW - lw - ew - 24)) * 9.6) + 4 for row in ARCH)
     d.ensure(total)
-    for layer, element, role in ARCH:
+    for row in ARCH:
+        layer, element, role = row[:3]
+        method = row[3] if len(row) > 3 else None
         lines = wrapped(pg, role, 7.6, CW - lw - ew - 24)
-        h = max(24, 12 + len(lines) * 9.6)
+        h = max(30 if method else 24, 12 + len(lines) * 9.6)
         d.ensure(h + 4)
         pg, y = d.pg, d.y
         dark = layer in ("SYSTEM", "OUTCOME")
@@ -417,7 +479,11 @@ def architecture(d, after=15):
         pg.box(M, y, lw + 4, h, fill=BLACK if dark else OLIVE_LIGHT, stroke=None, radius=4)
         pg.box(M + lw, y, 5, h, fill=FAINT, stroke=None)
         pg.spaced(M + 8, y + h / 2 + 2.2, layer, 5.6, GOLD if dark else SWAMP, bold=True, spacing=1.3)
-        pg.text(M + lw + 12, y + h / 2 + 3, element, 8, BLACK, bold=True)
+        if method:
+            pg.text(M + lw + 12, y + h / 2 - 1.5, element, 8, BLACK, bold=True)
+            pg.text(M + lw + 12, y + h / 2 + 8, method, 6.4, GREY)
+        else:
+            pg.text(M + lw + 12, y + h / 2 + 3, element, 8, BLACK, bold=True)
         ty = y + h / 2 + 3 - (len(lines) - 1) * 4.8
         for line in lines:
             pg.text(M + lw + ew, ty, line, 7.6, INK)
@@ -453,10 +519,12 @@ def build():
 
     heading(d, "04", "COMBAT MINDSET RESET", "How we restore performance.")
     callout(d, "CMR", "Combat Mindset Reset", CMR_DEF)
-    para(d, "The Reset gives the individual a short sequence that can be employed independently and under load. In use it should be as plain as: “Recognise the drop. Combat Mindset Reset. Re-engage.” The four stages below are a working conceptual model drawn from COGCON's description, not COGCON's reset sequence itself. The detailed sequence, cues and Army terminology are to be developed with Ken Franks.", after=6)
-    chain(d, RESET, provenance="working")
-    para(d, "The Reset is derived from COGCON's Operational Reset Tool, whose mechanism incorporates appraisal of state, perceptual reorientation, physiological modulation and re-anchoring attention onto the next relevant action. The detailed sequence is retained within the COGCON Master Doctrine and accredited coaching material. COGCON's internal terminology for the mechanism need not be exposed at Army level: the mechanism can remain substantially derived from COGCON while the Army-facing construct is the Combat Mindset Reset.")
-    requirement(d, "Work with Ken Franks to develop or adapt the Army-owned Reset and its terminology within the agreed IP arrangements.")
+    para(d, "The Combat Mindset Reset is executed through the SEB Cycle. SEB provides a simple sequence for recognising a change in state, restoring external orientation and regulating physiological arousal before re-engaging with the task.", after=8)
+    seb_cycle(d)
+    definitions(d, [(name, text) for _, name, line, text in SEB]
+                   + [(SEB_OUTCOME[0], f"{SEB_OUTCOME[1]}. The outcome of completing the cycle, not a fourth letter of the acronym.")])
+    para(d, "The Combat Mindset Reset is derived from COGCON's Operational Reset Tool and its SEB Cycle. The mnemonic is retained because it is short, memorable and already established within COGCON. The detailed technique, cues and coaching sit within the COGCON Master Doctrine and accredited coaching material: Army has not independently developed SEB, the detailed technique is not yet Army-owned, and the Reset remains subject to adaptation and the agreed IP arrangements with Ken Franks.")
+    requirement(d, "With Ken Franks, confirm the SEB Cycle terminology, detailed technique, coaching cues and application within the Combat Mindset Reset, and determine the final Army adaptation within agreed IP arrangements.")
 
     heading(d, "05", "COMBAT MINDSET PERFORMANCE STATES", "What effective performance looks like.", need=150)
     para(d, "CMC requires performance to be observable under pressure, not simply understood theoretically. The Performance States are the observable behavioural expression of the underlying regulation capacity. They answer a direct instructor question, “what does Combat Mindset look like?”, with “we observe it through the Combat Mindset Performance States.”")

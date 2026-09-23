@@ -51,9 +51,7 @@ BANDS = [
      ["Self-Awareness", "Arousal Control", "Operational Habit", "Working Memory", "Attentional Control", "Cognitive Control"],
      False, "derived", None),
     ("RESET", "How we restore performance", "Combat Mindset Reset",
-     [], False, "working",
-     ("Detailed mechanism and Army terminology to be developed with Ken Franks.",
-      "Working conceptual model: Recognise \u00b7 Regulate \u00b7 Reorient \u00b7 Re-engage")),
+     [], False, "seb", None),
     ("STATES", "What effective performance looks like", "Combat Mindset Performance States",
      ["Task Focus", "Command Presence", "Situational Awareness", "Resilience"], False, "derived", None),
     ("METHOD", "How we condition it under pressure", "CMC Training Methodology",
@@ -63,6 +61,12 @@ BANDS = [
      ("Army teaches, assesses and maintains the standard through trained CMC coaches, observed assessment, recertification and quality assurance.",
       "Draws on COGCON\u2019s existing coach accreditation and assurance architecture")),
 ]
+# The SEB Cycle: the method through which the Combat Mindset Reset is executed.
+# Re-engage is the outcome of completing the cycle, not a fourth letter.
+SEB = [("S", "STATE", "Recognise your state"),
+       ("E", "EYES UP", "Orient to your environment"),
+       ("B", "BREATHE & BODY", "Regulate your state")]
+SEB_OUTCOME = ("RE-ENGAGE", "Return attention to what matters now")
 OUTCOME = ("OUTCOME", "COMBAT MINDSET", "The capacity to regulate and sustain effective performance under operational pressure.")
 LEGEND = [("derived", "Derived architecture: COGCON, adapted by Army under the agreed IP arrangements"),
           ("army", "Army integration architecture: how ACS nests and delivers it")]
@@ -113,6 +117,36 @@ def gold_arrow_right(pg, x0, x1, y):
     sh.commit()
 
 
+def seb_band(pg, x, y, w, h):
+    """S, E and B grouped as the cycle (derived, dashed gold), then Re-engage
+    as the outcome of completing it."""
+    out_w = 150
+    gap = 22
+    group_w = w - out_w - gap
+    pg.box(x, y, group_w, h, fill=WHITE, stroke=None, radius=R)
+    dashed_box(pg, x, y, group_w, h, radius=R)
+    pg.spaced(x + 10, y + 11, "SEB CYCLE", 5.6, GOLD, bold=True, spacing=1.3)
+    n = len(SEB)
+    inner_gap = 8
+    top = y + 16
+    ch = h - 22
+    cw = (group_w - 20 - inner_gap * (n - 1)) / n
+    for i, (letter, name, line) in enumerate(SEB):
+        cx = x + 10 + i * (cw + inner_gap)
+        pg.box(cx, top, cw, ch, fill=FAINT, stroke=None, radius=4)
+        pg.text(cx + 9, top + ch / 2 + 5.5, letter, 15, GOLD, bold=True)
+        pg.text(cx + 27, top + ch / 2 - 1, name, 7.6, BLACK, bold=True)
+        pg.text(cx + 27, top + ch / 2 + 9, line, 6.4, GREY)
+        if i < n - 1:
+            gold_arrow_right(pg, cx + cw + 1, cx + cw + inner_gap - 1, top + ch / 2)
+    ax = x + group_w
+    gold_arrow_right(pg, ax + 3, ax + gap - 3, y + h / 2)
+    ox = ax + gap
+    pg.box(ox, y, out_w, h, fill=BLACK, stroke=None, radius=R)
+    pg.text(ox + 12, y + h / 2 - 1, SEB_OUTCOME[0], 8.5, WHITE, bold=True)
+    pg.text(ox + 12, y + h / 2 + 10, SEB_OUTCOME[1], 6.4, GRID)
+
+
 def band(pg, y, h, label, role, sub, items, arrows, provenance, note=None):
     spine = 96
     pg.box(M, y, CW, h, fill=FAINT, stroke=None, radius=R)
@@ -125,6 +159,9 @@ def band(pg, y, h, label, role, sub, items, arrows, provenance, note=None):
     pg.text(ix + pg.width(sub.upper(), 5.6, True) + len(sub) * 1.3 + 10, y + 13, role, 7, GREY)
     cy = y + 19
     ch = h - 26
+    if provenance == "seb":
+        seb_band(pg, ix, cy, iw_total, ch)
+        return y + h
     if not items:
         # a statement band: the element is described, not itemised
         pg.text(ix, cy + 13, note[0], 8.5, BLACK, bold=True)
@@ -153,7 +190,7 @@ def build():
     bh = 54
     gap = 12
     for label, role, sub, items, arrows, prov, note in BANDS:
-        y = band(pg, y, bh, label, role, sub, items, arrows, prov, note)
+        y = band(pg, y, bh + 22 if prov == "seb" else bh, label, role, sub, items, arrows, prov, note)
         arrow_down(pg, M + 48, y, y + gap)
         y += gap
 
