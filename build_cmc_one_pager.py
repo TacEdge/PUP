@@ -39,7 +39,7 @@ TITLE = "Combat Mindset Conditioning (CMC)"
 SUBTITLE = "An Army training product within the Army Combat Mindset System"
 ORIGINATOR = "Army Command School"
 DATE = "23 September 2026"
-STRAP = "The deliberate practice of an individual\u2019s capacity to regulate and sustain effective performance under operational pressure."
+STRAP = "The deliberate practice of an individual\u2019s ability to self-regulate and sustain effective performance under operational pressure."
 FOOTER_LEFT = "Combat Mindset Conditioning | Design and development draft"
 
 # (band label, role, element name, items, arrows between items, provenance, note)
@@ -72,7 +72,7 @@ SEB = [("S", "STATE", "Recognise your state"),
        ("E", "EYES UP", "Orient to your environment"),
        ("B", "BREATHE & BODY", "Regulate your state")]
 SEB_OUTCOME = ("RE-ENGAGE", "Return attention to what matters now")
-OUTCOME = ("OUTCOME", "COMBAT MINDSET", "The capacity to regulate and sustain effective performance under operational pressure.")
+OUTCOME = ("OUTCOME", "COMBAT MINDSET", "An individual’s ability to self-regulate and sustain effective performance under operational pressure.")
 LEGEND = [("derived", "Derived architecture: COGCON, adapted by Army under the agreed IP arrangements"),
           ("army", "Army integration architecture: how ACS nests and delivers it")]
 

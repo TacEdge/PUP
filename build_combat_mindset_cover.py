@@ -29,7 +29,7 @@ R = 6
 GREY = rgb("5F5F5A")
 
 TITLE = "Combat Mindset"
-DEFINITION = "The capacity to regulate and sustain effective performance under operational pressure."
+DEFINITION = "An individual’s ability to self-regulate and sustain effective performance under operational pressure."
 ORIGINATOR = "Army Command School"
 FOOTER_LEFT = "Army Combat Mindset | Design and development draft"
 

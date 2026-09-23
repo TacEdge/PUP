@@ -49,7 +49,7 @@ BODY = 8.4
 LH = 11.2
 
 # ---- content ---------------------------------------------------------------
-CM_DEF = "The capacity to regulate and sustain effective performance under operational pressure."
+CM_DEF = "An individual’s ability to self-regulate and sustain effective performance under operational pressure."
 CMR_DEF = "A simple, repeatable method for restoring regulation and effective performance under pressure."
 # The SEB Cycle: the method through which the Combat Mindset Reset is executed.
 # Re-engage is the outcome of completing the cycle, not a fourth letter.
@@ -498,7 +498,7 @@ def build():
     d.new_page()
 
     heading(d, "01", "PURPOSE", "Why CMC exists and what it develops.")
-    para(d, "Combat Mindset Conditioning (CMC) is the deliberate practice of an individual's capacity to regulate and sustain effective performance under operational pressure. It provides a structured method for developing Combat Mindset.")
+    para(d, "Combat Mindset Conditioning (CMC) is the deliberate practice of an individual's ability to self-regulate and sustain effective performance under operational pressure. It provides a structured method for developing Combat Mindset.")
     callout(d, "CM", "Combat Mindset", CM_DEF)
     callout(d, "EFFECT", "Training effect", TRAINING_EFFECT, spine_size=8)
     para(d, "CMC is nested within the Army Combat Mindset System (ACMS) and supports its developmental pathway.", after=6)

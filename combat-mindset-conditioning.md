@@ -2,9 +2,9 @@
 
 ## Purpose
 
-Combat Mindset Conditioning (CMC) is the deliberate practice of an individual's capacity to regulate and sustain effective performance under operational pressure. It provides a structured method for developing Combat Mindset.
+Combat Mindset Conditioning (CMC) is the deliberate practice of an individual's ability to self-regulate and sustain effective performance under operational pressure. It provides a structured method for developing Combat Mindset.
 
->! Combat Mindset: the capacity to regulate and sustain effective performance under operational pressure.
+>! Combat Mindset: an individual's ability to self-regulate and sustain effective performance under operational pressure.
 
 CMC is nested within the Army Combat Mindset System (ACMS) and supports its developmental pathway: **Understand Self → Regulate Self → Perform Under Pressure → Combat Mindset.**
 
@@ -112,7 +112,7 @@ The vocabulary nests the product inside the system and gives each element one jo
 | Element | Combat Mindset Performance States | What effective performance looks like. |
 | Element | CMC Training Methodology | How we progressively condition it under pressure. |
 | Element | CMC Coaching and Assurance | How Army teaches, assesses and maintains the standard. |
-| Outcome | Combat Mindset | The capacity to regulate and sustain effective performance under operational pressure. |
+| Outcome | Combat Mindset | An individual's ability to self-regulate and sustain effective performance under operational pressure. |
 
 This is the architecture to take into the next conversation with Ken Franks: not "we are renaming your product", but "here is how your proven architecture could translate into an Army-owned training product nested within the ACMS."
 
