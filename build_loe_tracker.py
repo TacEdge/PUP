@@ -97,6 +97,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Intersect(Target, lo.DataBodyRange) Is Nothing Then Exit Sub
 
     FillTickBoxes
+    StampRowsUpdated lo, Target
     If Not Intersect(Target, lo.ListColumns("Priority").DataBodyRange) Is Nothing Then
         EnsureGroupedByPriority
     End If
@@ -115,9 +116,18 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 End Sub
 
 ' Double-clicking a Last Updated cell stamps today's date into it.
+' Double-clicking a Progress cell adds 10% (past 100% it starts again at
+' 0%) and stamps the line as updated today.
 Private Sub Worksheet_BeforeDoubleClick(ByVal Target As Range, Cancel As Boolean)
-    If IsInColumn(Tracker(), "Last Updated", Target) Then
+    Dim lo As ListObject
+
+    Set lo = Tracker()
+    If IsInColumn(lo, "Last Updated", Target) Then
         StampToday Target
+        Cancel = True
+    ElseIf IsInColumn(lo, "Progress %", Target) Then
+        BumpProgress Target
+        StampToday Me.Cells(Target.Row, lo.ListColumns("Last Updated").Range.Column)
         Cancel = True
     End If
 End Sub
@@ -247,6 +257,39 @@ Public Sub StampToday(ByVal cell As Range)
     Application.EnableEvents = False
     cell.Value = Date
     Application.EnableEvents = eventsWereOn
+End Sub
+
+' Adds 10% to a Progress cell, starting again at 0% once it passes 100%.
+Public Sub BumpProgress(ByVal cell As Range)
+    Dim v As Double
+    Dim eventsWereOn As Boolean
+
+    If IsNumeric(cell.Value) Then v = CDbl(cell.Value) Else v = 0
+    v = Round(v * 10) / 10 + 0.1
+    If v > 1.0001 Then v = 0
+    eventsWereOn = Application.EnableEvents
+    Application.EnableEvents = False
+    cell.Value = v
+    Application.EnableEvents = eventsWereOn
+End Sub
+
+' Stamps Last Updated with today on every line touched by a change,
+' unless the change was to Last Updated or Complete itself.
+Public Sub StampRowsUpdated(ByVal lo As ListObject, ByVal Target As Range)
+    Dim body As Range
+    Dim r As Range
+    Dim updCol As Long
+
+    If lo Is Nothing Then Exit Sub
+    If lo.DataBodyRange Is Nothing Then Exit Sub
+    Set body = Intersect(Target, lo.DataBodyRange)
+    If body Is Nothing Then Exit Sub
+    If Not Intersect(body, lo.ListColumns("Last Updated").DataBodyRange) Is Nothing Then Exit Sub
+    If Not Intersect(body, lo.ListColumns("Complete").DataBodyRange) Is Nothing Then Exit Sub
+    updCol = lo.ListColumns("Last Updated").Range.Column
+    For Each r In body.Rows
+        StampToday lo.Parent.Cells(r.Row, updCol)
+    Next r
 End Sub
 
 ' ---------------------------------------------------------------------
@@ -1038,6 +1081,10 @@ def add_complete_column(sheet_xml: str, ss: dict[str, int], last_row: int) -> st
     sheet_xml = sheet_xml.replace('<dataValidations count="2">', '<dataValidations count="3">', 1)
     sheet_xml = sheet_xml.replace(
         "</dataValidations>", date_validation(f"G8:G{TRACK_LIMIT_ROW}") + "</dataValidations>", 1)
+    # Progress: the decimal check becomes a percentage drop-down.
+    sheet_xml, n = re.subn(r'<dataValidation type="decimal"[^>]*sqref="D8:D\d+"[^>]*>.*?</dataValidation>',
+                           progress_validation(f"D8:D{TRACK_LIMIT_ROW}"), sheet_xml, count=1, flags=re.S)
+    assert n == 1, "progress validation not found"
     return sheet_xml
 
 
@@ -1111,7 +1158,8 @@ def build_archive_sheet(ss: dict[str, int], source_sheet_xml: str) -> str:
         '<dataBar><cfvo type="num" val="0"/><cfvo type="num" val="1"/><color rgb="FFCDD2B7"/></dataBar>'
         f'<extLst><ext uri="{{B025F937-C7B1-47D3-B67F-A62EFF666E3E}}" {X14_NS}>'
         f'<x14:id>{ARCHIVE_DATABAR_ID}</x14:id></ext></extLst></cfRule></conditionalFormatting>'
-        f'<dataValidations count="1">{date_validation(f"G{data}:G200")}</dataValidations>'
+        f'<dataValidations count="2">{progress_validation(f"D{data}:D200")}'
+        f'{date_validation(f"G{data}:G200")}</dataValidations>'
         + page +
         '<tableParts count="1"><tablePart r:id="rId1"/></tableParts>'
         f'<extLst><ext uri="{{78C0D931-6437-407d-A8EE-F0AAD7539E65}}" {X14_NS}>'
@@ -1130,23 +1178,31 @@ def build_archive_sheet(ss: dict[str, int], source_sheet_xml: str) -> str:
 DATES_COUNT = 14   # today and the thirteen days before it
 
 
+PERCENT_STEPS = 11  # 0% to 100% in tens
+
+
 def build_dates_sheet() -> str:
-    """Hidden 'Dates' tab: today and recent days, the source of the Last
-    Updated drop-down.  TODAY() is volatile, so Excel refreshes the list on
-    every open and recalculation."""
+    """Hidden 'Lists' tab feeding the drop-downs: column A today and recent
+    days (TODAY() is volatile, so Excel refreshes it on every open), column
+    B the percentage steps for Progress."""
     serial_today = (datetime.date.today() - datetime.date(1899, 12, 30)).days
-    rows = "".join(
-        f'<row r="{i + 1}" spans="1:1"><c r="A{i + 1}" s="{STYLE_DATE}"><f>TODAY()' + (f"-{i}" if i else "")
-        + f'</f><v>{serial_today - i}</v></c></row>'
-        for i in range(DATES_COUNT))
+    rows = ""
+    for i in range(max(DATES_COUNT, PERCENT_STEPS)):
+        cells = ""
+        if i < DATES_COUNT:
+            cells += (f'<c r="A{i + 1}" s="{STYLE_DATE}"><f>TODAY()' + (f"-{i}" if i else "")
+                      + f'</f><v>{serial_today - i}</v></c>')
+        if i < PERCENT_STEPS:
+            cells += f'<c r="B{i + 1}" s="{STYLE_PERCENT}"><v>{i / 10:g}</v></c>'
+        rows += f'<row r="{i + 1}" spans="1:2">{cells}</row>'
     return (
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
         f'<worksheet {SHEET_NS}>'
         '<sheetPr/>'
-        f'<dimension ref="A1:A{DATES_COUNT}"/>'
+        f'<dimension ref="A1:B{max(DATES_COUNT, PERCENT_STEPS)}"/>'
         '<sheetViews><sheetView workbookViewId="0"/></sheetViews>'
         '<sheetFormatPr defaultRowHeight="15"/>'
-        '<cols><col min="1" max="1" width="14" customWidth="1"/></cols>'
+        '<cols><col min="1" max="2" width="14" customWidth="1"/></cols>'
         f'<sheetData>{rows}</sheetData>'
         '<pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>'
         '</worksheet>'
@@ -1159,7 +1215,15 @@ def date_validation(sqref: str) -> str:
     return ('<dataValidation type="list" allowBlank="1" showInputMessage="1" '
             'promptTitle="Last Updated" '
             'prompt="Pick a date from the drop-down (today is first), or double-click the cell to stamp today." '
-            f'sqref="{sqref}"><formula1>Dates!$A$1:$A${DATES_COUNT}</formula1></dataValidation>')
+            f'sqref="{sqref}"><formula1>Lists!$A$1:$A${DATES_COUNT}</formula1></dataValidation>')
+
+
+def progress_validation(sqref: str) -> str:
+    """Drop-down of percentage steps on Progress cells; double-click adds 10%."""
+    return ('<dataValidation type="list" allowBlank="1" showInputMessage="1" '
+            'promptTitle="Progress" '
+            'prompt="Pick a percentage from the drop-down, or double-click the cell to add 10%." '
+            f'sqref="{sqref}"><formula1>Lists!$B$1:$B${PERCENT_STEPS}</formula1></dataValidation>')
 
 
 def build_archive_table() -> str:
@@ -1318,7 +1382,7 @@ def build(src: str, dst: str) -> None:
     workbook, n = re.subn(r"<workbookPr/>", '<workbookPr codeName="ThisWorkbook"/>', workbook, count=1)
     assert n == 1, "workbookPr not found"
     workbook = workbook.replace("</sheets>", '<sheet name="Archive" sheetId="2" r:id="rIdArchive"/>'
-                                '<sheet name="Dates" sheetId="3" state="hidden" r:id="rIdDates"/></sheets>', 1)
+                                '<sheet name="Lists" sheetId="3" state="hidden" r:id="rIdDates"/></sheets>', 1)
     workbook, n = re.subn(r"<calcPr ", '<calcPr fullCalcOnLoad="1" ', workbook, count=1)
     assert n == 1, "calcPr not found"
     workbook = workbook.replace("'Lines of Effort Tracker'!$A$1:$G$38",
