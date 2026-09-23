@@ -60,7 +60,7 @@ MATRIX_COLS = ["Understand Self", "Regulate Self", "Perform Under Pressure", "Co
 MATRIX = [
     ("NZALC", "LDS and ELDA", ["Trains", "Trains", "Trains", "Trains"]),
     ("NCO School", "JNCO and SNCO", ["Reinforces", "Reinforces", "Reinforces", "Reinforces"]),
-    ("OCS", "including COGCON", ["Trains", "Trains", "Trains", "Trains"]),
+    ("OCS", "Combat Mindset Conditioning", ["Trains", "Trains", "Trains", "Trains"]),
 ]
 # Scale option: what delivery looks like beyond ACS.  Drawn as a proposal,
 # outside the three ACS rows, so current delivery is never read as wider.
