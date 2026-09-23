@@ -34,7 +34,7 @@ MODEL = [
      "Under pressure, trained individuals and teams can lose access to their full capability. "
      "Army must prepare them to remain effective and act decisively and ethically."),
     ("2", "THE CAPABILITY", "Combat Mindset",
-     "Performance Under Pressure applied to operational demands, with combat its most demanding test."),
+     "The capacity to regulate and sustain effective performance under operational pressure."),
     ("3", "HOW ARMY BUILDS IT", "Army Combat Mindset System",
      "How Army progressively develops Combat Mindset."),
 ]
