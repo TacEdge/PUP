@@ -20,6 +20,15 @@ from build_army_combat_mindset_development_system import (arrow_down, dashed_box
 
 OUT = "./output/combat-mindset-conditioning-model.pdf"
 PNG = "./output/combat-mindset-conditioning-model.png"
+
+# Page numbering: a combined pack sets these so numbering runs across documents.
+PAGE_OFFSET = 0
+PAGE_TOTAL = None
+
+
+def page_label(i, n):
+    return f"Page {PAGE_OFFSET + i} of {PAGE_TOTAL or n}"
+
 W, H = 842, 595
 M = 40
 CW = W - 2 * M
@@ -57,7 +66,7 @@ def masthead(pg):
     pg.text(W / 2, H - 22, "UNCLASSIFIED", 8, BLACK, bold=True, align=1)
     pg.text(M, H - 11, FOOTER_LEFT, 7.5, BLACK)
     pg.text(W / 2, H - 11, "ACS 2026", 7.5, BLACK, align=1)
-    pg.text(W - M, H - 11, "Page 1 of 1", 7.5, BLACK, align=2)
+    pg.text(W - M, H - 11, page_label(1, 1), 7.5, BLACK, align=2)
     top, hh = 30, 46
     brand_w = 138
     pg.box(M, top, CW, hh, fill=FAINT, stroke=None, radius=R)
