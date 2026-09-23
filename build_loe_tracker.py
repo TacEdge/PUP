@@ -180,6 +180,7 @@ Private Const COL_PRIORITY As String = "Priority"
 Private Const COL_LINE As String = "Line of Effort"
 Private Const COL_COMPLETE As String = "Complete"
 Private Const COL_COMPLETED_ON As String = "Completed"
+Private Const COL_NUMBER As String = "#"
 
 Private mBusy As Boolean
 
@@ -277,6 +278,7 @@ End Sub
 ' unless the change was to Last Updated or Complete itself.
 Public Sub StampRowsUpdated(ByVal lo As ListObject, ByVal Target As Range)
     Dim body As Range
+    Dim numCells As Range
     Dim r As Range
     Dim updCol As Long
 
@@ -284,6 +286,9 @@ Public Sub StampRowsUpdated(ByVal lo As ListObject, ByVal Target As Range)
     If lo.DataBodyRange Is Nothing Then Exit Sub
     Set body = Intersect(Target, lo.DataBodyRange)
     If body Is Nothing Then Exit Sub
+    ' the row numbers refilling themselves is not an edit
+    Set numCells = Intersect(body, lo.ListColumns("#").DataBodyRange)
+    If Not numCells Is Nothing Then If numCells.Address = body.Address Then Exit Sub
     If Not Intersect(body, lo.ListColumns("Last Updated").DataBodyRange) Is Nothing Then Exit Sub
     If Not Intersect(body, lo.ListColumns("Complete").DataBodyRange) Is Nothing Then Exit Sub
     updCol = lo.ListColumns("Last Updated").Range.Column
@@ -496,7 +501,7 @@ Private Sub CopyLine(ByVal src As ListObject, ByVal srcRow As ListRow, _
         Set dstCol = dst.ListColumns(col.Name)
         On Error GoTo 0
         If Not dstCol Is Nothing Then
-            If col.Name <> COL_COMPLETE And col.Name <> COL_COMPLETED_ON Then
+            If col.Name <> COL_COMPLETE And col.Name <> COL_COMPLETED_ON And col.Name <> COL_NUMBER Then
                 dstRow.Range.Cells(1, dstCol.Index).Value = srcRow.Range.Cells(1, col.Index).Value
             End If
         End If
@@ -520,6 +525,10 @@ Private Sub DeleteLine(ByVal lo As ListObject, ByVal r As ListRow)
         r.Delete
     Else
         r.Range.ClearContents
+        On Error Resume Next
+        r.Range.Cells(1, lo.ListColumns(COL_NUMBER).Index).Formula = _
+            "=ROW()-ROW(" & lo.Name & "[#Headers])"
+        On Error GoTo 0
     End If
 End Sub
 
@@ -1007,6 +1016,8 @@ HEADER_LEFT, HEADER_CENTRE = 3, 4
 STYLE_PRIORITY, STYLE_TEXT, STYLE_PERCENT, STYLE_DATE = 5, 6, 7, 8
 STYLE_TITLE, STYLE_BAND, STYLE_BAND_VALUE = 13, 14, 15
 STYLE_TICK = 16   # appended to styles.xml by add_tick_style()
+STYLE_NUM = 17    # appended by add_number_style(): the row numbers
+NUM_COL_WIDTH = 5
 
 
 def add_tick_style(styles_xml: str) -> str:
@@ -1027,6 +1038,127 @@ def add_tick_style(styles_xml: str) -> str:
         'applyFont="1" applyBorder="1" applyAlignment="1">'
         '<alignment horizontal="center" vertical="center"/></xf></cellXfs>', 1)
     return styles_xml
+
+
+def add_number_style(styles_xml: str) -> str:
+    """Append a centred 9pt mid-grey cell style for the row numbers (index 17)."""
+    fonts = re.search(r'<fonts count="(\d+)"', styles_xml)
+    n_fonts = int(fonts.group(1))
+    styles_xml = styles_xml.replace(fonts.group(0), f'<fonts count="{n_fonts + 1}"', 1)
+    styles_xml = styles_xml.replace(
+        "</fonts>",
+        '<font><sz val="9"/><color rgb="FF8A8A8A"/><name val="Arial"/><family val="2"/></font></fonts>', 1)
+    xfs = re.search(r'<cellXfs count="(\d+)"', styles_xml)
+    assert int(xfs.group(1)) == STYLE_NUM, "unexpected cellXfs count"
+    styles_xml = styles_xml.replace(xfs.group(0), f'<cellXfs count="{STYLE_NUM + 1}"', 1)
+    styles_xml = styles_xml.replace(
+        "</cellXfs>",
+        f'<xf numFmtId="0" fontId="{n_fonts}" fillId="0" borderId="1" xfId="0" '
+        'applyFont="1" applyBorder="1" applyAlignment="1">'
+        '<alignment horizontal="center" vertical="center"/></xf></cellXfs>', 1)
+    return styles_xml
+
+
+# ---------------------------------------------------------------------
+# Layout: the stat band goes, a numbered column comes in at the left
+# ---------------------------------------------------------------------
+
+def remove_stat_band(sheet_xml: str) -> str:
+    """Drop the summary band (rows 4-5) and its merges and format, leaving
+    thin spacer rows so nothing else moves."""
+    for r in (4, 5, 6):
+        sheet_xml, n = re.subn(rf'<row r="{r}"[^>]*?(?:/>|>.*?</row>)',
+                               f'<row r="{r}" spans="1:7" ht="2" customHeight="1"/>', sheet_xml,
+                               count=1, flags=re.S)
+        assert n == 1, f"row {r} not found"
+    for ref in ("A4:B4", "F4:G4", "A5:B5", "F5:G5"):
+        sheet_xml = sheet_xml.replace(f'<mergeCell ref="{ref}"/>', "", 1)
+    sheet_xml = sheet_xml.replace('<mergeCells count="5">', '<mergeCells count="1">', 1)
+    sheet_xml, n = re.subn(r'<conditionalFormatting sqref="F5">.*?</conditionalFormatting>', "",
+                           sheet_xml, count=1, flags=re.S)
+    assert n == 1, "stale-count format not found"
+    return sheet_xml
+
+
+def _col_num(letters: str) -> int:
+    n = 0
+    for ch in letters:
+        n = n * 26 + ord(ch) - 64
+    return n
+
+
+def _col_letters(n: int) -> str:
+    out = ""
+    while n:
+        n, r = divmod(n - 1, 26)
+        out = chr(65 + r) + out
+    return out
+
+
+# A cell or range reference not qualified by a sheet name (Lists!$A$1 is
+# left alone); ranges are matched whole so both ends move together.
+_REF_RE = re.compile(r'(?<![A-Za-z0-9_!$:])(\$?)([A-Z]{1,3})(\$?\d+)(?::(\$?)([A-Z]{1,3})(\$?\d+))?(?![A-Za-z0-9_(])')
+
+
+def shift_refs(text: str) -> str:
+    def bump(m: re.Match) -> str:
+        out = m.group(1) + _col_letters(_col_num(m.group(2)) + 1) + m.group(3)
+        if m.group(5):
+            out += ":" + m.group(4) + _col_letters(_col_num(m.group(5)) + 1) + m.group(6)
+        return out
+    return _REF_RE.sub(bump, text)
+
+
+def shift_columns_right(xml: str) -> str:
+    """Move every column of a sheet or table part one to the right: cell
+    refs, ranges, formulas, column widths and row spans."""
+    xml = re.sub(r'\b((?:r|ref|sqref|topLeftCell|activeCell)=")([^"]*)(")',
+                 lambda m: m.group(1) + shift_refs(m.group(2)) + m.group(3), xml)
+    xml = re.sub(r'(<(?:formula|f|formula1|formula2|xm:sqref)(?: [^>]*)?>)([^<]*)(</)',
+                 lambda m: m.group(1) + shift_refs(m.group(2)) + m.group(3), xml)
+    xml = re.sub(r'<col min="(\d+)" max="(\d+)"',
+                 lambda m: f'<col min="{int(m.group(1)) + 1}" max="{int(m.group(2)) + 1}"', xml)
+    xml = re.sub(r'spans="1:(\d+)"', lambda m: f'spans="1:{int(m.group(1)) + 1}"', xml)
+    return xml
+
+
+def number_formula(table_name: str) -> str:
+    return f"ROW()-ROW({table_name}[#Headers])"
+
+
+def prepend_cell(sheet_xml: str, row: int, cell_xml: str) -> str:
+    sheet_xml, n = re.subn(rf'(<row r="{row}"(?: [^>]*[^/])?>)', lambda m: m.group(1) + cell_xml,
+                           sheet_xml, count=1)
+    assert n == 1, f"row {row} not found"
+    return sheet_xml
+
+
+def insert_number_column(sheet_xml: str, ss: dict[str, int], table_name: str,
+                         header_row: int, last_row: int, extras: dict[int, str]) -> str:
+    """After shift_columns_right: column A becomes the row number, a
+    calculated table column that renumbers itself as lines come and go."""
+    sheet_xml = re.sub(r'<dimension ref="B(\d+):', r'<dimension ref="A\1:', sheet_xml, count=1)
+    sheet_xml = re.sub(r'topLeftCell="B(\d+)"', r'topLeftCell="A\1"', sheet_xml, count=1)
+    sheet_xml = sheet_xml.replace(
+        "<cols>", f'<cols><col min="1" max="1" width="{NUM_COL_WIDTH}" customWidth="1"/>', 1)
+    for row, cell_xml in extras.items():
+        sheet_xml = prepend_cell(sheet_xml, row, cell_xml)
+    sheet_xml = prepend_cell(sheet_xml, header_row, cell(f"A{header_row}", HEADER_CENTRE, ss["#"]))
+    for r in range(header_row + 1, last_row + 1):
+        sheet_xml = prepend_cell(
+            sheet_xml, r,
+            f'<c r="A{r}" s="{STYLE_NUM}"><f>{number_formula(table_name)}</f><v>{r - header_row}</v></c>')
+    return sheet_xml
+
+
+def insert_table_number_column(table_xml: str, table_name: str, col_id: int) -> str:
+    table_xml = re.sub(r'ref="B(\d+):', r'ref="A\1:', table_xml)
+    m = re.search(r'<tableColumns count="(\d+)">', table_xml)
+    table_xml = table_xml.replace(
+        m.group(0),
+        f'<tableColumns count="{int(m.group(1)) + 1}"><tableColumn id="{col_id}" name="#">'
+        f'<calculatedColumnFormula>{number_formula(table_name)}</calculatedColumnFormula></tableColumn>', 1)
+    return table_xml
 
 
 def add_shared_strings(sst_xml: str, texts: list[str]) -> tuple[str, dict[str, int]]:
@@ -1101,8 +1233,7 @@ def widen_table(table_xml: str, last_row: int, new_last_row: int) -> str:
 
 def build_archive_sheet(ss: dict[str, int], source_sheet_xml: str) -> str:
     """The Archive tab: title, hint band, and an empty tblArchive."""
-    cols = "".join(re.findall(r'<col [^>]*/>', source_sheet_xml))
-    cols += '<col min="8" max="8" width="11.5" customWidth="1"/>'
+    cols = "".join(re.findall(r'<col [^>]*/>', source_sheet_xml))   # A-H incl. Complete
     cols += '<col min="9" max="9" width="13.98828125" customWidth="1"/>'
     header = ARCHIVE_HEADER_ROW
     data = header + 1
@@ -1354,11 +1485,12 @@ def build(src: str, dst: str) -> None:
         parts["xl/sharedStrings.xml"].decode("utf-8"),
         ["Complete", "Completed", TICK_EMPTY, ARCHIVE_TITLE, ARCHIVE_HINT, "Priority",
          "Line of Effort", "End State / Output", "Progress %", "Next Action", "Notes",
-         "Last Updated"] + PRIORITY_ORDER)
+         "Last Updated", "#"] + PRIORITY_ORDER)
     parts["xl/sharedStrings.xml"] = sst_xml.encode("utf-8")
     strings = shared_strings(sst_xml)
 
-    parts["xl/styles.xml"] = add_tick_style(parts["xl/styles.xml"].decode("utf-8")).encode("utf-8")
+    parts["xl/styles.xml"] = add_number_style(
+        add_tick_style(parts["xl/styles.xml"].decode("utf-8"))).encode("utf-8")
 
     sheet = parts["xl/worksheets/sheet1.xml"].decode("utf-8")
     sheet = append_lines(sheet, ADDITIONAL_LINES, ss, source_last_row + 1)
@@ -1366,16 +1498,37 @@ def build(src: str, dst: str) -> None:
     sheet = sort_table_rows(sheet, strings, FIRST_DATA_ROW, last_row)
     sheet, n = re.subn(r"<sheetPr>", '<sheetPr codeName="Sheet1">', sheet, count=1)
     assert n == 1, "sheetPr not found"
+    sheet = remove_stat_band(sheet)
     sheet = add_complete_column(sheet, ss, last_row)
-    parts["xl/worksheets/sheet1.xml"] = sheet.encode("utf-8")
+    archive = build_archive_sheet(ss, sheet)
 
-    parts["xl/worksheets/sheet2.xml"] = build_archive_sheet(ss, sheet).encode("utf-8")
+    # Everything moves one column right to make room for the row numbers.
+    # The masthead field then runs A2:I2 with the brand block over A2:B2
+    # and the title from C2, as in the printed products.
+    sheet = shift_columns_right(sheet)
+    sheet = sheet.replace('<mergeCell ref="C2:H2"/>', '<mergeCell ref="C2:I2"/>', 1)
+    sheet = insert_number_column(sheet, ss, TABLE_NAME, FIRST_DATA_ROW - 1, last_row,
+                                 {2: cell("A2", STYLE_TITLE)})
+    parts["xl/worksheets/sheet1.xml"] = sheet.encode("utf-8")
+    parts["xl/tables/table1.xml"] = insert_table_number_column(
+        shift_columns_right(parts["xl/tables/table1.xml"].decode("utf-8")), TABLE_NAME, 9).encode("utf-8")
+
+    archive = shift_columns_right(archive)
+    archive = archive.replace('<mergeCell ref="B2:J2"/>', '<mergeCell ref="A2:J2"/>', 1)
+    archive = archive.replace('<mergeCell ref="B4:J4"/>', '<mergeCell ref="A4:J4"/>', 1)
+    archive = re.sub(r'<c r="B2" s="(\d+)" t="s"><v>(\d+)</v></c>', r'<c r="B2" s="\1"/>', archive, count=1)
+    archive = re.sub(r'<c r="B4" s="(\d+)" t="s"><v>(\d+)</v></c>', r'<c r="B4" s="\1"/>', archive, count=1)
+    archive = insert_number_column(archive, ss, "tblArchive", ARCHIVE_HEADER_ROW, ARCHIVE_HEADER_ROW + 1,
+                                   {2: cell("A2", STYLE_TITLE, ss[ARCHIVE_TITLE]),
+                                    4: cell("A4", STYLE_BAND, ss[ARCHIVE_HINT])})
+    parts["xl/worksheets/sheet2.xml"] = archive.encode("utf-8")
     parts["xl/worksheets/_rels/sheet2.xml.rels"] = (
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
         '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
         '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/table" '
         'Target="../tables/table2.xml"/></Relationships>').encode("utf-8")
-    parts["xl/tables/table2.xml"] = build_archive_table().encode("utf-8")
+    parts["xl/tables/table2.xml"] = insert_table_number_column(
+        shift_columns_right(build_archive_table()), "tblArchive", 10).encode("utf-8")
     parts["xl/worksheets/sheet3.xml"] = build_dates_sheet().encode("utf-8")
 
     workbook = parts["xl/workbook.xml"].decode("utf-8")
@@ -1386,7 +1539,7 @@ def build(src: str, dst: str) -> None:
     workbook, n = re.subn(r"<calcPr ", '<calcPr fullCalcOnLoad="1" ', workbook, count=1)
     assert n == 1, "calcPr not found"
     workbook = workbook.replace("'Lines of Effort Tracker'!$A$1:$G$38",
-                                f"'Lines of Effort Tracker'!$A$1:$H${TRACK_LIMIT_ROW}", 1)
+                                f"'Lines of Effort Tracker'!$A$1:$I${TRACK_LIMIT_ROW}", 1)
     parts["xl/workbook.xml"] = workbook.encode("utf-8")
 
     rels = parts["xl/_rels/workbook.xml.rels"].decode("utf-8")
