@@ -8,7 +8,8 @@ Three role surfaces, one hash-routed static app (`360/index.html`):
 
 | Route | Role | Purpose |
 |---|---|---|
-| `#/r/<token>` | Rater | Landing → statements → three short prompts → submit → done |
+| `#/r/<token>` | Rater | Confirm mobile → code → context → statements → two prompts → submit → done |
+| `#/start` | Rater | Opened without a link: mobile → code → list of pending requests |
 | `#/me` | Participant | My 360: purpose, progress by rater group, nominate raters, self-assessment, report when released |
 | `#/admin` | NZALC staff | Active 360s list |
 | `#/admin/a/<id>` | NZALC staff | One 360: completion by group, raters, reminders, close, preview report |
@@ -17,14 +18,31 @@ Three role surfaces, one hash-routed static app (`360/index.html`):
 A development-only "View as" bar at the foot of every screen switches role and
 resets the demo data. There is no authentication.
 
+## Identity (simulated)
+
+The rater's mobile number is their identifier. `src/lib/auth.js` exposes one
+interface (`requestCode`, `verify`, `session`, `signOut`); the prototype's
+`MockSmsIdentity` generates the code locally and drops it in the simulated
+SMS inbox, and also accepts the development code `000000`. A verified number
+is remembered on the device, so a second link for the same number goes
+straight to the context screen. A link is bound to one rater's number; a
+different number is refused without revealing the expected one beyond a
+masked hint. Mobile-number sign-in alone is not claimed to be adequate for
+production Defence use: authentication, privacy, hosting, classification and
+security need separate assessment before any operational deployment.
+
 ## Core journeys
 
 1. **Staff** creates a 360 for a participant on a course, sets a close date,
-   adds raters by relationship. Each rater gets a link (email simulated).
+   adds raters by relationship with a mobile number. Each rater gets an SMS
+   with a link (simulated; visible in the prototype inbox).
 2. **Participant** sees purpose, progress and close date, can nominate further
    raters, completes a short self-assessment on the same instrument.
-3. **Rater** opens the link, sees who / why / how long, rates 15 statements one
-   at a time, answers two or three short prompts, submits. About four minutes.
+3. **Rater** taps the SMS link, confirms their mobile number, enters the
+   code, sees who / why / how long, rates 15 statements one at a time with
+   their thumb, answers two short prompts, submits. About four minutes.
+   Progress is saved as a draft, so an interrupted rater resumes where they
+   left off.
 4. **Staff** monitors completion, sends reminders, closes the 360.
 5. **Participant** receives the report: at a glance, dimensions, strengths,
    development opportunities, perception gaps, written feedback.
@@ -36,8 +54,9 @@ resets the demo data. There is no authentication.
   quieter "Not observed". Keys 1–4 and N on desktop.
 - Selecting auto-advances after a short pause; Back always available; progress
   bar and "n of 15" text.
-- Three prompts at the end: Keep doing / More effective if / Anything else
-  (optional). Short answers explicitly welcomed.
+- Two prompts at the end: What should X keep doing? / What could X do to be
+  more effective? One or two sentences explicitly welcomed; on touch devices
+  the hint points to the keyboard's native dictation.
 - Submit screen restates confidentiality and how the feedback is used.
 
 ## Instrument (placeholder content)
@@ -72,5 +91,6 @@ desktop-first and responsive.
 - A rater link is a capability: whoever holds it can respond once.
 - Staff and participant identity is simulated; the participant view is Capt
   Alex Morgan unless another participant is chosen from the View-as bar.
-- Reminders and invitations are logged, not sent.
+- Invitations, reminders and verification codes are SMS in the product; the
+  prototype writes them to an in-browser inbox instead of sending them.
 - Persistence is browser localStorage; "Reset demo data" restores the seed.

@@ -34,6 +34,9 @@ export const assessment = (id) => state.assessments.find((a) => a.id === id);
 export const assessmentForParticipant = (pid) =>
   [...state.assessments].filter((a) => a.participantId === pid).sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))[0];
 export const responsesFor = (assessmentId) => state.responses.filter((r) => r.assessmentId === assessmentId);
+export const messages = () => [...(state.messages || [])].reverse();
+export const requestsForMobile = (mobile) =>
+  state.assessments.flatMap((a) => a.raters.filter((r) => r.mobile === mobile).map((r) => ({ assessment: a, rater: r })));
 export const raterByToken = (token) => {
   for (const a of state.assessments) {
     const r = a.raters.find((x) => x.token === token);
@@ -63,6 +66,18 @@ export function groupCompletion(a) {
 function log(a, text) { a.log.push({ at: state.today, text }); }
 const newId = (prefix) => `${prefix}-${Math.random().toString(36).slice(2, 8)}`;
 
+// Simulated SMS. Nothing leaves the browser; messages land in the prototype
+// inbox so the SMS → tap → verify → rate → submit path can be demonstrated.
+export function sendSms({ to, kind, text, token = null }) {
+  state.messages ||= [];
+  state.messages.push({ id: newId("sms"), to, kind, text, token, at: new Date().toISOString() });
+  persist();
+}
+export function inviteText(a, token) {
+  const p = participant(a.participantId);
+  return `NZALC 360 Feedback: You've been asked to provide feedback for ${p.firstName} ${p.lastName}. Approx. 4 minutes.`;
+}
+
 export function createAssessment({ rank, firstName, lastName, unit, courseId, closeDate }) {
   const p = { id: newId("p"), rank, firstName, lastName, unit };
   state.participants.push(p);
@@ -76,11 +91,12 @@ export function createAssessment({ rank, firstName, lastName, unit, courseId, cl
   return a;
 }
 
-export function addRater(assessmentId, { name, relationship, by = "NZALC staff" }) {
+export function addRater(assessmentId, { name, relationship, mobile, by = "NZALC staff" }) {
   const a = assessment(assessmentId);
-  const rater = { id: newId("r"), name, relationship, status: "invited", token: newId("t") };
+  const rater = { id: newId("r"), name, relationship, mobile, status: "invited", token: newId("t") };
   a.raters.push(rater);
-  log(a, `${by} added ${name} (${relationship}). Invitation sent (simulated).`);
+  log(a, `${by} added ${name} (${relationship}). Invitation sent by SMS (simulated).`);
+  if (a.status === "open") sendSms({ to: mobile, kind: "invite", text: inviteText(a, rater.token), token: rater.token });
   persist();
   return rater;
 }
@@ -97,8 +113,12 @@ export function removeRater(assessmentId, raterId) {
 export function remind(assessmentId, raterIds) {
   const a = assessment(assessmentId);
   const targets = a.raters.filter((r) => raterIds.includes(r.id) && r.status !== "completed");
-  targets.forEach((r) => { r.lastReminded = state.today; });
-  if (targets.length) log(a, `Reminder sent to ${targets.length} outstanding rater${targets.length === 1 ? "" : "s"} (simulated).`);
+  const p = participant(a.participantId);
+  targets.forEach((r) => {
+    r.lastReminded = state.today;
+    sendSms({ to: r.mobile, kind: "remind", text: `NZALC 360 Feedback: A reminder that ${p.firstName} ${p.lastName} is waiting on your feedback. Approx. 4 minutes.`, token: r.token });
+  });
+  if (targets.length) log(a, `Reminder sent by SMS to ${targets.length} outstanding rater${targets.length === 1 ? "" : "s"} (simulated).`);
   persist();
   return targets.length;
 }
@@ -106,7 +126,8 @@ export function remind(assessmentId, raterIds) {
 export function openAssessment(assessmentId) {
   const a = assessment(assessmentId);
   a.status = "open";
-  log(a, `Invitations sent to ${a.raters.length} raters (simulated). 360 is open.`);
+  a.raters.forEach((r) => sendSms({ to: r.mobile, kind: "invite", text: inviteText(a, r.token), token: r.token }));
+  log(a, `Invitations sent by SMS to ${a.raters.length} raters (simulated). 360 is open.`);
   persist();
 }
 
@@ -141,6 +162,11 @@ export function submitResponse({ assessmentId, raterId, relationship, ratings, c
   }
   persist();
 }
+
+// In-progress rater drafts, so an interrupted rater can pick up where they left off.
+export function draft(key) { return (state.drafts || {})[key] || null; }
+export function saveDraft(key, d) { state.drafts ||= {}; state.drafts[key] = d; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {} }
+export function clearDraft(key) { if (state.drafts) delete state.drafts[key]; }
 
 export function setView(patch) {
   state.view = { ...state.view, ...patch };

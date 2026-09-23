@@ -79,8 +79,9 @@ export function buildSeed() {
     { id: "p-priya", rank: "Sgt", firstName: "Priya", lastName: "Nathan", unit: "2 Engr Regt" },
   ];
 
-  // Raters. `token` is the capability in the rater's link. `status` is
-  // invited | completed. Names are fictional.
+  // Raters. `token` is the capability in the rater's link; `mobile` is the
+  // number the invitation goes to and the rater's identifier. `status` is
+  // invited | completed. Names and numbers are fictional.
   const alexRaters = [
     { id: "r-a1", name: "Maj Tom Whitfield", relationship: "superior", status: "completed", token: "alx-sup-1" },
     { id: "r-a2", name: "Maj Sarah Ngata", relationship: "superior", status: "completed", token: "alx-sup-2" },
@@ -218,10 +219,35 @@ export function buildSeed() {
   };
   for (const r of priyaRaters.filter((x) => x.status === "completed")) addResponse("a-priya", r.id, r.relationship, priyaProfile, priyaComments[r.id] || {});
 
+  // Give every rater a fictional NZ mobile number.
+  let n = 0;
+  for (const a of assessments) for (const r of a.raters) {
+    n += 1;
+    r.mobile = `02${[1, 7, 2][n % 3]}${String(1000000 + n * 37891).slice(-7)}`;
+  }
+  // A memorable number for the headline demo: Alex's outstanding peer.
+  alexRaters.find((r) => r.id === "r-a6").mobile = "0211234567";
+  alexRaters.find((r) => r.id === "r-a10").mobile = "0277654321";
+
+  // Simulated SMS already sent: invitations for open 360s, plus reminders.
+  const messages = [];
+  const sms = (to, kind, text, token, at) => messages.push({ id: `sms-${messages.length + 1}`, to, kind, text, token, at });
+  for (const a of assessments.filter((x) => x.status !== "draft")) {
+    const p = participants.find((x) => x.id === a.participantId);
+    const invite = `NZALC 360 Feedback: You've been asked to provide feedback for ${p.firstName} ${p.lastName}. Approx. 4 minutes.`;
+    for (const r of a.raters) sms(r.mobile, "invite", invite, r.token, `${a.createdAt}T09:00:00`);
+    const reminder = a.log.find((l) => l.text.startsWith("Reminder"));
+    if (reminder) for (const r of a.raters.filter((x) => x.status === "invited")) {
+      r.lastReminded = reminder.at;
+      sms(r.mobile, "remind", `NZALC 360 Feedback: A reminder that ${p.firstName} ${p.lastName} is waiting on your feedback. Approx. 4 minutes.`, r.token, `${reminder.at}T09:00:00`);
+    }
+  }
+  messages.sort((x, y) => (x.at < y.at ? -1 : 1));
+
   return {
     version: 1,
     today: TODAY,
-    courses, participants, assessments, responses,
+    courses, participants, assessments, responses, messages, drafts: {},
     // Development-only viewing state.
     view: { role: "admin", participantId: "p-alex" },
   };

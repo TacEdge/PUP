@@ -65,28 +65,21 @@ export const instrument = {
     },
   ],
 
-  // Short written prompts asked once, at the end.
+  // Short written prompts asked once, at the end. Two only, by design.
   prompts: [
     {
       id: "keep",
       heading: "Keep doing",
-      question: "One thing {first} should keep doing.",
-      hint: "A sentence is plenty.",
+      question: "What should {first} keep doing?",
+      hint: "One or two sentences is plenty.",
       optional: false,
     },
     {
       id: "more",
-      heading: "More effective if",
-      question: "One thing that would make {first} more effective.",
-      hint: "Specific beats polished.",
+      heading: "More effective",
+      question: "What could {first} do to be more effective?",
+      hint: "Specific beats polished. One or two sentences.",
       optional: false,
-    },
-    {
-      id: "other",
-      heading: "Anything else",
-      question: "Anything else that would help {first}'s development?",
-      hint: "Optional. Skip if nothing comes to mind.",
-      optional: true,
     },
   ],
 };

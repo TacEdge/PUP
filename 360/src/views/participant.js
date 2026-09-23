@@ -3,6 +3,7 @@ import { esc, fmtDate } from "../lib/html.js";
 import * as db from "../lib/store.js";
 import { toast } from "../lib/ui.js";
 import { topbar, statusPill, statusOf, dueText, groupBars, relLabel, relOptions, bar } from "./shared.js";
+import { normaliseMobile } from "../lib/auth.js";
 
 export function renderParticipant(participantId) {
   const p = db.participant(participantId);
@@ -62,10 +63,11 @@ export function renderParticipant(participantId) {
       <form class="inline-form" id="nominate-form">
         <div class="form-row">
           <div class="field"><label for="n-name">Rank and name</label><input class="input" id="n-name" required placeholder="e.g. Capt Sam Reid"></div>
+          <div class="field"><label for="n-mobile">Mobile</label><input class="input" id="n-mobile" type="tel" inputmode="tel" required placeholder="021 123 4567"></div>
           <div class="field"><label for="n-rel">Relationship</label><select class="select" id="n-rel">${relOptions("peer")}</select></div>
           <div class="field"><button class="btn btn-primary" type="submit">Add rater</button></div>
         </div>
-        <p class="hint">They will receive a link by email (simulated in this prototype). NZALC staff can see and adjust your nominations.</p>
+        <p class="hint">They will receive a text message with a link (simulated in this prototype). NZALC staff can see and adjust your nominations.</p>
       </form>
     </details>` : ""}
   </main>`;
@@ -78,10 +80,12 @@ export function renderParticipant(participantId) {
       if (form) form.addEventListener("submit", (e) => {
         e.preventDefault();
         const name = root.querySelector("#n-name").value.trim();
+        const mobile = normaliseMobile(root.querySelector("#n-mobile").value);
         const relationship = root.querySelector("#n-rel").value;
         if (!name) return;
-        db.addRater(a.id, { name, relationship, by: p.firstName });
-        toast(`${name} added. Invitation sent (simulated).`);
+        if (!mobile) { toast("Enter a valid NZ mobile number"); return; }
+        db.addRater(a.id, { name, mobile, relationship, by: p.firstName });
+        toast(`${name} added. ${a.status === "open" ? "Invitation sent by SMS (simulated)." : "Invited when the 360 opens."}`);
       });
     },
   };

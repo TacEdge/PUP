@@ -4,6 +4,7 @@ import * as db from "../lib/store.js";
 import { toast, go, ask, copyText, raterLink } from "../lib/ui.js";
 import { topbar, statusPill, statusOf, dueText, bar, groupBars, relLabel, relOptions } from "./shared.js";
 import { relationships } from "../data/instrument.js";
+import { normaliseMobile, formatMobile } from "../lib/auth.js";
 
 const NAV = [{ href: "#/admin", label: "360s" }];
 const head = (current = "#/admin") => topbar({ nav: NAV, current });
@@ -106,7 +107,7 @@ export function renderAdminDetail(id) {
     <ul class="list">${rs.map((r) => `
       <li>
         <div class="grow"><div class="name">${esc(r.name)}</div>
-          <div class="sub">${r.status === "completed" ? `${relLabel(r.relationship)} · submitted ${fmtDate(submittedAt(r.id))}` : `${relLabel(r.relationship)} · invited${r.lastReminded ? `, reminded ${fmtDate(r.lastReminded)}` : ""}`}</div></div>
+          <div class="sub">${esc(formatMobile(r.mobile))} · ${r.status === "completed" ? `submitted ${fmtDate(submittedAt(r.id))}` : `invited${r.lastReminded ? `, reminded ${fmtDate(r.lastReminded)}` : ""}`}</div></div>
         <span class="status ${r.status === "completed" ? "done" : "invited"}">${r.status === "completed" ? "Complete" : "Outstanding"}</span>
         ${a.status !== "closed" && r.status !== "completed" ? `<div class="rowbtns">
           <button class="btn btn-sm btn-ghost" data-act="remind" data-id="${r.id}">Remind</button>
@@ -164,6 +165,7 @@ export function renderAdminDetail(id) {
         <form class="inline-form" id="add-form">
           <div class="form-row">
             <div class="field"><label for="a-name">Rank and name</label><input class="input" id="a-name" required placeholder="e.g. Capt Sam Reid"></div>
+            <div class="field"><label for="a-mobile">Mobile</label><input class="input" id="a-mobile" type="tel" inputmode="tel" required placeholder="021 123 4567"></div>
             <div class="field"><label for="a-rel">Relationship</label><select class="select" id="a-rel">${relOptions("peer")}</select></div>
             <div class="field actions"><button class="btn btn-primary" type="submit">Add</button><button class="btn btn-ghost" type="button" data-act="cancel-add">Cancel</button></div>
           </div>
@@ -172,9 +174,11 @@ export function renderAdminDetail(id) {
         slot.querySelector("#add-form").addEventListener("submit", (e) => {
           e.preventDefault();
           const name = slot.querySelector("#a-name").value.trim();
+          const mobile = normaliseMobile(slot.querySelector("#a-mobile").value);
           if (!name) return;
-          db.addRater(a.id, { name, relationship: slot.querySelector("#a-rel").value });
-          toast(`${name} added. Invitation sent (simulated).`);
+          if (!mobile) { toast("Enter a valid NZ mobile number"); return; }
+          db.addRater(a.id, { name, mobile, relationship: slot.querySelector("#a-rel").value });
+          toast(a.status === "open" ? `${name} added. Invitation sent by SMS (simulated).` : `${name} added. Invited when the 360 opens.`);
         });
       };
       root.addEventListener("click", async (e) => {
