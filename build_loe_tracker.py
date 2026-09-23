@@ -24,6 +24,7 @@ Usage:  python3 build_loe_tracker.py [source.xlsx] [output.xlsm]
 from __future__ import annotations
 
 import datetime
+import html
 import re
 import struct
 import sys
@@ -610,7 +611,7 @@ Public Sub FormatLine(ByVal lo As ListObject, ByVal r As ListRow)
                 c.WrapText = False
                 c.Font.Size = 9
                 c.Font.Color = RGB(138, 138, 138)
-            Case COL_PRIORITY
+            Case COL_PRIORITY, "Function"
                 c.WrapText = False
             Case "Progress %"
                 c.HorizontalAlignment = xlCenter
@@ -1186,26 +1187,152 @@ def _col_letters(n: int) -> str:
 _REF_RE = re.compile(r'(?<![A-Za-z0-9_!$:])(\$?)([A-Z]{1,3})(\$?\d+)(?::(\$?)([A-Z]{1,3})(\$?\d+))?(?![A-Za-z0-9_(])')
 
 
-def shift_refs(text: str) -> str:
+def shift_refs(text: str, from_col: int = 1) -> str:
+    """Move column letters from from_col onwards one to the right, as Excel
+    does when a column is inserted there."""
+    def col(letters: str) -> str:
+        n = _col_num(letters)
+        return _col_letters(n + 1) if n >= from_col else letters
+
     def bump(m: re.Match) -> str:
-        out = m.group(1) + _col_letters(_col_num(m.group(2)) + 1) + m.group(3)
+        out = m.group(1) + col(m.group(2)) + m.group(3)
         if m.group(5):
-            out += ":" + m.group(4) + _col_letters(_col_num(m.group(5)) + 1) + m.group(6)
+            out += ":" + m.group(4) + col(m.group(5)) + m.group(6)
         return out
-    return _REF_RE.sub(bump, text)
+    # quoted string literals (list validations such as "S0 Command,...") stay
+    parts = re.split(r'("[^"]*")', text)
+    return "".join(part if i % 2 else _REF_RE.sub(bump, part) for i, part in enumerate(parts))
 
 
-def shift_columns_right(xml: str) -> str:
-    """Move every column of a sheet or table part one to the right: cell
-    refs, ranges, formulas, column widths and row spans."""
+def shift_columns_right(xml: str, from_col: int = 1) -> str:
+    """Insert a column at from_col in a sheet or table part: cell refs,
+    ranges, formulas, column widths and row spans from there move right."""
+    def num(n: str) -> int:
+        return int(n) + 1 if int(n) >= from_col else int(n)
     xml = re.sub(r'\b((?:r|ref|sqref|topLeftCell|activeCell)=")([^"]*)(")',
-                 lambda m: m.group(1) + shift_refs(m.group(2)) + m.group(3), xml)
+                 lambda m: m.group(1) + shift_refs(m.group(2), from_col) + m.group(3), xml)
     xml = re.sub(r'(<(?:formula|f|formula1|formula2|xm:sqref)(?: [^>]*)?>)([^<]*)(</)',
-                 lambda m: m.group(1) + shift_refs(m.group(2)) + m.group(3), xml)
+                 lambda m: m.group(1) + shift_refs(m.group(2), from_col) + m.group(3), xml)
     xml = re.sub(r'<col min="(\d+)" max="(\d+)"',
-                 lambda m: f'<col min="{int(m.group(1)) + 1}" max="{int(m.group(2)) + 1}"', xml)
+                 lambda m: f'<col min="{num(m.group(1))}" max="{num(m.group(2))}"', xml)
     xml = re.sub(r'spans="1:(\d+)"', lambda m: f'spans="1:{int(m.group(1)) + 1}"', xml)
     return xml
+
+
+# Staff functions a line can be tagged with, following the staff system.
+FUNCTIONS = ["S0 Command", "S1 Personnel", "S3 Course Delivery", "S4 Logistics",
+             "S7 Training System", "S9 Finance"]
+FUNCTION_COL_WIDTH = 19
+
+# Starting assignment for the lines already on the tracker, by line name.
+LINE_FUNCTIONS = {
+    "Combat Mindset Submission": "S7 Training System",
+    "Pacific Response Group (12 - 13 Aug 26)": "S3 Course Delivery",
+    "Lead Systems Adventure Race (7 - 14 Aug 26)": "S3 Course Delivery",
+    "Lead Systems, Alpine Tour (24 - 30 Aug 26)": "S3 Course Delivery",
+    "NZDF COTY Submission": "S0 Command",
+    "Request for Secondary Employment": "S1 Personnel",
+    "NZALC ORBAT": "S1 Personnel",
+    "1 CSR Support Session (11 Oct 26)": "S3 Course Delivery",
+    "Lead Leaders Officer Nominations": "S1 Personnel",
+    "Engineer Survival: Lighthouse Approval": "S3 Course Delivery",
+    "Staff and Contractor Onboarding SOP": "S1 Personnel",
+    "Contractor Engagement Close-out": "S1 Personnel",
+    "Nemesis and Lead Teams Alignment": "S7 Training System",
+    "H&S Audit Actions": "S0 Command",
+    "Junior Officer Leadership Training": "S7 Training System",
+    "2 CDO COMD ELDA": "S3 Course Delivery",
+    "2/1 Leadership Integration Series": "S3 Course Delivery",
+    "FY Summary Production Process": "S0 Command",
+    "ATG Professional Development": "S1 Personnel",
+    "2ER COMD ELDA": "S3 Course Delivery",
+    "TFCC Course Correction & TF Instructor Transition": "S7 Training System",
+    "Alpine Touring Resource Review": "S4 Logistics",
+    "ATG Submission Presentation": "S0 Command",
+    "Linton Team-Building Activity (16 to 17 Nov)": "S3 Course Delivery",
+    "End-of-Year Farewell Event": "S0 Command",
+    "NZALC Strategic Planning Tool": "S0 Command",
+    "Clothing Cards": "S4 Logistics",
+    "Anaphalaxis Submission": "S1 Personnel",
+    "Budget Builder": "S9 Finance",
+    "NZALC Operating Manual": "S0 Command",
+    "Course Nomination & Preparation SOP": "S3 Course Delivery",
+    "ELDA Comd Review": "S7 Training System",
+    "Support to HUMINT Platoon FTX": "S3 Course Delivery",
+}
+
+
+def function_validation(sqref: str) -> str:
+    return ('<dataValidation type="list" allowBlank="1" showErrorMessage="1" '
+            'errorTitle="Function" error="Choose a staff function from the list." '
+            f'sqref="{sqref}"><formula1>"{",".join(FUNCTIONS)}"</formula1></dataValidation>')
+
+
+def cell_text(sheet_xml: str, ref: str, strings: list[str]) -> str:
+    """The text in a cell, from the shared strings or an inline string."""
+    m = re.search(rf'<c r="{ref}"[^>]*?(?:/>|>(.*?)</c>)', sheet_xml, re.S)
+    if not m or not m.group(1):
+        return ""
+    v = re.search(r"<v>(\d+)</v>", m.group(1))
+    if 't="s"' in m.group(0) and v:
+        return html.unescape(strings[int(v.group(1))])
+    t = re.search(r"<t[^>]*>(.*?)</t>", m.group(1), re.S)
+    return html.unescape(t.group(1)) if t else ""
+
+
+def insert_function_column(sheet_xml: str, ss: dict[str, int], strings: list[str],
+                           header_row: int, last_row: int, dv_last_row: int) -> str:
+    """After shift_columns_right(xml, 2): column B becomes Function, a
+    drop-down of staff functions, pre-filled from LINE_FUNCTIONS by the
+    line name now sitting in column C."""
+    sheet_xml = re.sub(r'(<col min="1" max="1"[^>]*/>)',
+                       rf'\1<col min="2" max="2" width="{FUNCTION_COL_WIDTH}" customWidth="1"/>',
+                       sheet_xml, count=1)
+
+    def after_a(row: int, cell_xml: str) -> None:
+        nonlocal sheet_xml
+        sheet_xml, n = re.subn(rf'(<c r="A{row}"[^>]*?(?:/>|>.*?</c>))', lambda m: m.group(1) + cell_xml,
+                               sheet_xml, count=1, flags=re.S)
+        assert n == 1, f"cell A{row} not found"
+
+    after_a(header_row, cell(f"B{header_row}", HEADER_LEFT, ss["Function"]))
+    for r in range(header_row + 1, last_row + 1):
+        name = cell_text(sheet_xml, f"C{r}", strings).strip()
+        fn = LINE_FUNCTIONS.get(name, "")
+        if fn:
+            after_a(r, f'<c r="B{r}" s="{STYLE_PRIORITY}" t="inlineStr"><is><t>{_xml_text(fn)}</t></is></c>')
+        else:
+            after_a(r, cell(f"B{r}", STYLE_PRIORITY))
+    m = re.search(r'<dataValidations count="(\d+)">', sheet_xml)
+    sheet_xml = sheet_xml.replace(
+        m.group(0), f'<dataValidations count="{int(m.group(1)) + 1}">'
+        + function_validation(f"B{header_row + 1}:B{dv_last_row}"), 1)
+    return sheet_xml
+
+
+def insert_table_function_column(table_xml: str, col_id: int) -> str:
+    m = re.search(r'<tableColumns count="(\d+)">', table_xml)
+    table_xml = table_xml.replace(m.group(0), f'<tableColumns count="{int(m.group(1)) + 1}">', 1)
+    table_xml, n = re.subn(r'(<tableColumn id="1" [^>]*name="Priority"/>)',
+                           rf'\1<tableColumn id="{col_id}" name="Function"/>', table_xml, count=1)
+    assert n == 1, "Priority column not found"
+    return table_xml
+
+
+def masthead_row(sheet_xml: str, last_col: str) -> str:
+    """Row 2 across the full width: pale field, the brand block over A2:B2
+    and the title (the row's one shared string) from C2."""
+    row2 = re.search(r'<row r="2"[^>]*>(.*?)</row>', sheet_xml, re.S).group(1)
+    title_ss = int(re.search(r'<c r="[A-Z]+2" s="\d+" t="s"><v>(\d+)</v></c>', row2).group(1))
+    cells = "".join(cell(f"{c}2", STYLE_TITLE, title_ss if c == "C" else None)
+                    for c in (_col_letters(i) for i in range(1, _col_num(last_col) + 1)))
+    sheet_xml, n = re.subn(r'<row r="2"([^>]*)>.*?</row>', rf'<row r="2"\1>{cells}</row>', sheet_xml,
+                           count=1, flags=re.S)
+    assert n == 1, "row 2 not found"
+    sheet_xml, n = re.subn(r'<mergeCell ref="[A-Z]+2:[A-Z]+2"/>', f'<mergeCell ref="C2:{last_col}2"/>',
+                           sheet_xml, count=1)
+    assert n == 1, "title merge not found"
+    return sheet_xml
 
 
 def number_formula(table_name: str) -> str:
@@ -1571,7 +1698,7 @@ def build(src: str, dst: str) -> None:
         parts["xl/sharedStrings.xml"].decode("utf-8"),
         ["Complete", "Completed", TICK_EMPTY, ARCHIVE_TITLE, ARCHIVE_HINT, "Priority",
          "Line of Effort", "End State / Output", "Progress %", "Next Action", "Notes",
-         "Last Updated", "#"] + PRIORITY_ORDER)
+         "Last Updated", "#", "Function"] + PRIORITY_ORDER)
     parts["xl/sharedStrings.xml"] = sst_xml.encode("utf-8")
     strings = shared_strings(sst_xml)
 
@@ -1591,17 +1718,22 @@ def build(src: str, dst: str) -> None:
     # Everything moves one column right to make room for the row numbers.
     # The masthead field then runs A2:I2 with the brand block over A2:B2
     # and the title from C2, as in the printed products.
+    sheet = shift_columns_right(sheet, 2)
+    sheet = insert_function_column(sheet, ss, strings, FIRST_DATA_ROW - 1, last_row, TRACK_LIMIT_ROW)
     sheet = shift_columns_right(sheet)
-    sheet = sheet.replace('<mergeCell ref="C2:H2"/>', '<mergeCell ref="C2:I2"/>', 1)
-    sheet = insert_number_column(sheet, ss, TABLE_NAME, FIRST_DATA_ROW - 1, last_row,
-                                 {2: cell("A2", STYLE_TITLE)})
+    sheet = insert_number_column(sheet, ss, TABLE_NAME, FIRST_DATA_ROW - 1, last_row, {})
+    sheet = masthead_row(sheet, "J")
     parts["xl/worksheets/sheet1.xml"] = sheet.encode("utf-8")
+    table_xml = insert_table_function_column(
+        shift_columns_right(parts["xl/tables/table1.xml"].decode("utf-8"), 2), 10)
     parts["xl/tables/table1.xml"] = insert_table_number_column(
-        shift_columns_right(parts["xl/tables/table1.xml"].decode("utf-8")), TABLE_NAME, 9).encode("utf-8")
+        shift_columns_right(table_xml), TABLE_NAME, 9).encode("utf-8")
 
+    archive = shift_columns_right(archive, 2)
+    archive = insert_function_column(archive, ss, strings, ARCHIVE_HEADER_ROW, ARCHIVE_HEADER_ROW + 1, 200)
     archive = shift_columns_right(archive)
-    archive = archive.replace('<mergeCell ref="B2:J2"/>', '<mergeCell ref="A2:J2"/>', 1)
-    archive = archive.replace('<mergeCell ref="B4:J4"/>', '<mergeCell ref="A4:J4"/>', 1)
+    archive = re.sub(r'<mergeCell ref="B2:([A-Z]+)2"/>', r'<mergeCell ref="A2:\g<1>2"/>', archive, count=1)
+    archive = re.sub(r'<mergeCell ref="B4:([A-Z]+)4"/>', r'<mergeCell ref="A4:\g<1>4"/>', archive, count=1)
     archive = re.sub(r'<c r="B2" s="(\d+)" t="s"><v>(\d+)</v></c>', r'<c r="B2" s="\1"/>', archive, count=1)
     archive = re.sub(r'<c r="B4" s="(\d+)" t="s"><v>(\d+)</v></c>', r'<c r="B4" s="\1"/>', archive, count=1)
     archive = insert_number_column(archive, ss, "tblArchive", ARCHIVE_HEADER_ROW, ARCHIVE_HEADER_ROW + 1,
@@ -1614,7 +1746,8 @@ def build(src: str, dst: str) -> None:
         '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/table" '
         'Target="../tables/table2.xml"/></Relationships>').encode("utf-8")
     parts["xl/tables/table2.xml"] = insert_table_number_column(
-        shift_columns_right(build_archive_table()), "tblArchive", 10).encode("utf-8")
+        shift_columns_right(insert_table_function_column(
+            shift_columns_right(build_archive_table(), 2), 11)), "tblArchive", 10).encode("utf-8")
     parts["xl/worksheets/sheet3.xml"] = build_dates_sheet().encode("utf-8")
 
     workbook = parts["xl/workbook.xml"].decode("utf-8")
@@ -1625,7 +1758,7 @@ def build(src: str, dst: str) -> None:
     workbook, n = re.subn(r"<calcPr ", '<calcPr fullCalcOnLoad="1" ', workbook, count=1)
     assert n == 1, "calcPr not found"
     workbook = workbook.replace("'Lines of Effort Tracker'!$A$1:$G$38",
-                                f"'Lines of Effort Tracker'!$A$1:$I${TRACK_LIMIT_ROW}", 1)
+                                f"'Lines of Effort Tracker'!$A$1:$J${TRACK_LIMIT_ROW}", 1)
     parts["xl/workbook.xml"] = workbook.encode("utf-8")
 
     rels = parts["xl/_rels/workbook.xml.rels"].decode("utf-8")
