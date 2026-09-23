@@ -27,7 +27,7 @@ TITLE = "A Day in the Life: NZALC S6"
 SUBTITLE = "New Zealand Army Leadership Centre"
 DATE = "September 2026"
 FOOTER_LEFT = "NZALC | A Day in the Life"
-STRAP = "Every course NZALC runs starts and ends here: the kit that leaves the store, and the kit that comes back."
+STRAP = "NZALC\u2019s own S6, Asher March, doing what he does best"
 
 PHOTOS = [
     ("assets/nzalc-s6/s6-return.jpg", "BEFORE"),
