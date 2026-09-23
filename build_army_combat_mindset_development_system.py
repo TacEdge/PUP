@@ -32,7 +32,7 @@ OLIVE_LIGHT = rgb("E3E6D3")   # third step of the staircase, between PALE and MO
 CHARCOAL = rgb("222222")
 GREY = rgb("5F5F5A")       # secondary text: subtitles and provider descriptors
 
-TITLE = "Army Combat Mindset System"
+TITLE = "Army Combat Mindset System (ACMS)"
 ORIGINATOR = "Army Command School"
 DATE = "September 2026"
 FOOTER_LEFT = "Army Combat Mindset System | AITC Discussion"
@@ -261,8 +261,7 @@ def masthead(pg):
     pg.p.insert_image(pymupdf.Rect(M + (brand_w - lw) / 2, top + (hh - lh) / 2,
                                    M + (brand_w + lw) / 2, top + (hh + lh) / 2), stream=png)
     tx = M + brand_w + 18
-    pg.text(tx, top + 27, TITLE, 18, BLACK, bold=True)
-    pg.text(tx, top + 39, f"{ORIGINATOR}  \u00b7  {DATE}", 7.5, INK)
+    pg.text(tx, top + 30, TITLE, 18, BLACK, bold=True)
     return top + hh
 
 

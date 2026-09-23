@@ -35,7 +35,7 @@ CW = W - 2 * M
 R = 6
 GREY = rgb("5F5F5A")
 
-TITLE = "Combat Mindset Conditioning"
+TITLE = "Combat Mindset Conditioning (CMC)"
 SUBTITLE = "An Army training product within the Army Combat Mindset System"
 ORIGINATOR = "Army Command School"
 DATE = "23 September 2026"
@@ -94,8 +94,7 @@ def masthead(pg):
     pg.p.insert_image(pymupdf.Rect(M + (brand_w - lw) / 2, top + (hh - lh) / 2,
                                    M + (brand_w + lw) / 2, top + (hh + lh) / 2), stream=png)
     tx = M + brand_w + 18
-    pg.text(tx, top + 27, TITLE, 18, BLACK, bold=True)
-    pg.text(tx, top + 39, f"{SUBTITLE}  ·  {ORIGINATOR}  ·  {DATE}", 7.5, INK)
+    pg.text(tx, top + 30, TITLE, 18, BLACK, bold=True)
     return top + hh
 
 

@@ -28,17 +28,9 @@ CW = W - 2 * M
 R = 6
 GREY = rgb("5F5F5A")
 
-KICKER = "NEW ZEALAND ARMY"
 TITLE = "Army Combat Mindset"
-SUBTITLE = "The Army Combat Mindset System and Combat Mindset Conditioning"
 ORIGINATOR = "Army Command School"
-DATE = "September 2026"
-STATUS = "Design and development draft"
 FOOTER_LEFT = "Army Combat Mindset | Design and development draft"
-CONTENTS = [
-    ("01", "Army Combat Mindset System", "The system: model, development, responsibility and delivery."),
-    ("02", "Combat Mindset Conditioning", "The product in one picture: pillars, reset, states, method, assurance."),
-]
 
 
 def build():
@@ -60,24 +52,10 @@ def build():
     pg.p.insert_image(pymupdf.Rect(M + (brand_w - lw) / 2, top + (hh - lh) / 2,
                                    M + (brand_w + lw) / 2, top + (hh + lh) / 2), stream=png)
 
-    # title, set low in the page with the field above it left empty
-    y = 262
-    pg.spaced(M, y, KICKER, 8, SWAMP, bold=True, spacing=3)
-    pg.text(M, y + 46, TITLE, 40, BLACK, bold=True)
-    pg.text(M, y + 68, SUBTITLE, 11, INK)
-    pg.line(M, y + 90, M + 60, y + 90, GOLD, width=1.4)
-    pg.text(M, y + 108, f"{ORIGINATOR}  ·  {DATE}  ·  {STATUS}", 8, GREY)
-
-    # contents, quietly, at the foot of the page
-    cy = 468
-    pg.box(M, cy, CW, 58, fill=FAINT, stroke=None, radius=R)
-    x = M + 16
-    col = (CW - 32) / len(CONTENTS)
-    for i, (num, name, desc) in enumerate(CONTENTS):
-        cx = x + i * col
-        pg.text(cx, cy + 22, num, 10, GOLD, bold=True)
-        pg.text(cx + 20, cy + 22, name, 9.5, BLACK, bold=True)
-        pg.text(cx + 20, cy + 38, desc, 7.2, GREY)
+    # the title alone, set low in the page with the field above it left empty
+    y = 300
+    pg.text(M, y, TITLE, 40, BLACK, bold=True)
+    pg.line(M, y + 22, M + 60, y + 22, GOLD, width=1.4)
 
     doc.set_metadata({"title": "Army Combat Mindset", "author": ORIGINATOR})
     doc.save(OUT, garbage=3, deflate=True)
