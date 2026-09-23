@@ -36,7 +36,7 @@ MODEL = [
     ("2", "THE CAPABILITY", "Combat Mindset",
      "The capacity to regulate and sustain effective performance under operational pressure."),
     ("3", "HOW ARMY BUILDS IT", "Army Combat Mindset System",
-     "How Army progressively develops Combat Mindset."),
+     "The training pathway that progressively builds this capacity, from understanding self to applying it under operational demands."),
 ]
 STEPS = [
     ("1", "Understand Self", "Recognise your response."),
