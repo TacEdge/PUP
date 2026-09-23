@@ -42,19 +42,20 @@ TITLE = "Combat Mindset Conditioning"
 SUBTITLE = "An Army training product within the Army Combat Mindset System"
 ORIGINATOR = "Army Command School"
 DATE = "23 September 2026"
-STATUS = "Draft for discussion"
-FOOTER_LEFT = "Combat Mindset Conditioning | Draft for discussion"
+STATUS = "Design and development draft"
+FOOTER_LEFT = "Combat Mindset Conditioning | Design and development draft"
 
 BODY = 8.4
 LH = 11.2
 
 # ---- content ---------------------------------------------------------------
 CM_DEF = "The capacity to regulate and sustain effective performance under operational pressure."
-CMR_DEF = "A simple, repeatable method for restoring regulation and effective performance under pressure."
+CMR_DEF = "A simple, repeatable method for restoring regulation and effective performance under pressure. Detailed sequence to be developed with Ken Franks."
+TRAINING_EFFECT = "Individuals increasingly retain the capacity to regulate themselves and sustain effective performance as pressure and operational demands increase."
 PATHWAY = ["Understand Self", "Regulate Self", "Perform Under Pressure", "Combat Mindset"]
 TERMS = [
     ("COGCON", "Combat Mindset Conditioning (CMC)", "Proposed"),
-    ("COG6, the six cognitive pillars", "Combat Mindset Training Pillars", "Proposed"),
+    ("COG6, the six cognitive pillars", "Combat Mindset Pillars", "Proposed"),
     ("Operational Reset Tool", "Combat Mindset Reset (CMR)", "Proposed"),
     ("OPS4, the Operational Performance States", "Combat Mindset Performance States", "Proposed"),
     ("COGCON Coach", "CMC Coach", "Working"),
@@ -72,7 +73,7 @@ PILLARS = [
 ]
 RESET = ["Recognise", "Regulate", "Reorient", "Re-engage"]
 STATES = [
-    ("Task Focus", "Task focus and deliberate action.", "Proposed Army label for COGCON's Performance Mindset"),
+    ("Task Focus", "Task focus and deliberate action.", "Working proposal replacing Performance Mindset; Ken Franks to confirm"),
     ("Command Presence", "Controlled posture, communication and pacing.", "COGCON name retained"),
     ("Situational Awareness", "Active scanning, information gathering and resistance to fixation.", "COGCON name retained"),
     ("Resilience", "Rapid recovery following error, correction or performance disruption.", "COGCON name retained"),
@@ -90,11 +91,11 @@ STAGES = [
 ARCH = [
     ("SYSTEM", "Army Combat Mindset System", "The overarching Army training system."),
     ("PRODUCT", "Combat Mindset Conditioning", "The deliberate practice used to develop the capacity."),
-    ("ELEMENT", "Combat Mindset Training Pillars", "What we develop."),
-    ("ELEMENT", "Combat Mindset Reset", "How we restore performance when it drops."),
+    ("ELEMENT", "Combat Mindset Pillars", "What we develop."),
+    ("ELEMENT", "Combat Mindset Reset", "How we restore performance."),
     ("ELEMENT", "Combat Mindset Performance States", "What effective performance looks like."),
-    ("ELEMENT", "CMC Training Methodology", "How we progressively condition it under pressure."),
-    ("ELEMENT", "CMC Coaching and Assurance", "How Army teaches, assesses and maintains the standard."),
+    ("ELEMENT", "CMC Training Methodology", "How we condition it under pressure."),
+    ("ELEMENT", "CMC Coaching and Assurance", "How we maintain the standard."),
     ("OUTCOME", "Combat Mindset", CM_DEF),
 ]
 
@@ -184,7 +185,7 @@ def para(d, text, size=BODY, color=INK, bold=False, after=7, x=M, avail=CW):
     d.y += after
 
 
-def callout(d, spine, title, text):
+def callout(d, spine, title, text, spine_size=11):
     """Black spine card carrying a definition."""
     d.ensure(0)
     spine_w = 52
@@ -196,7 +197,7 @@ def callout(d, spine, title, text):
     pg.box(M, y, CW, h, fill=FAINT, stroke=None, radius=R)
     pg.box(M, y, spine_w + R, h, fill=BLACK, stroke=None, radius=R)
     pg.box(M + spine_w, y, R + 1, h, fill=FAINT, stroke=None)
-    pg.text(M + spine_w / 2, y + h / 2 + 4, spine, 11, GOLD, bold=True, align=1)
+    pg.text(M + spine_w / 2, y + h / 2 + 4, spine, spine_size, GOLD, bold=True, align=1)
     pg.text(bx, y + 14, title, 9, BLACK, bold=True)
     ty = y + 26
     for line in lines:
@@ -207,8 +208,12 @@ def callout(d, spine, title, text):
 
 def chain(d, items, numbered=False, dark_last=False, h=24, after=15, provenance=None):
     """Row of chips joined by gold arrows: a sequence."""
-    d.ensure(h + after)
+    label_h = 12 if provenance == "working" else 0
+    d.ensure(h + after + label_h)
     pg, y = d.pg, d.y
+    if label_h:
+        pg.spaced(M, y + 6, "WORKING CONCEPTUAL MODEL", 5.6, GREY, bold=True, spacing=1.3)
+        y += label_h
     n = len(items)
     gap = 16
     cw = (CW - gap * (n - 1)) / n
@@ -218,13 +223,15 @@ def chain(d, items, numbered=False, dark_last=False, h=24, after=15, provenance=
         if provenance == "cogcon":
             pg.box(x, y, cw, h, fill=WHITE, stroke=None, radius=R)
             dashed_box(pg, x, y, cw, h, radius=R)
+        elif provenance == "working":
+            pg.box(x, y, cw, h, fill=WHITE, stroke=GRID, width=0.8, radius=R)
         else:
             pg.box(x, y, cw, h, fill=BLACK if final else FAINT, stroke=None, radius=R)
         if numbered:
             pg.text(x + 9, y + h / 2 + 3.5, str(i + 1), 9, GOLD, bold=True)
             pg.text(x + 22, y + h / 2 + 3, text, 8, WHITE if final else BLACK, bold=True)
         else:
-            pg.text(x + cw / 2, y + h / 2 + 3, text, 8, WHITE if final else BLACK, bold=True, align=1)
+            pg.text(x + cw / 2, y + h / 2 + 3, text, 8, WHITE if final else (GREY if provenance == "working" else BLACK), bold=True, align=1)
         if i < n - 1:
             pg.line(x + cw + 3, y + h / 2, x + cw + gap - 7, y + h / 2, GOLD, width=1.1)
             arrow_head_right(pg, x + cw + gap - 3, y + h / 2)
@@ -427,42 +434,44 @@ def build():
     heading(d, "01", "PURPOSE", "Why CMC exists and what it develops.")
     para(d, "Combat Mindset Conditioning (CMC) is the deliberate practice of an individual's capacity to regulate and sustain effective performance under operational pressure. It provides a structured method for developing Combat Mindset.")
     callout(d, "CM", "Combat Mindset", CM_DEF)
+    callout(d, "EFFECT", "Training effect", TRAINING_EFFECT, spine_size=8)
     para(d, "CMC is nested within the Army Combat Mindset System (ACMS) and supports its developmental pathway.", after=6)
     chain(d, PATHWAY, numbered=True, dark_last=True)
     para(d, "Its purpose is not simply to teach individuals about pressure. It is to progressively condition the capacity to recognise, regulate and sustain performance as pressure and operational demands increase.")
 
     heading(d, "02", "WORKING TERMINOLOGY", "Army language for a product derived from COGCON.")
-    para(d, "If CMC is to be an Army product rather than COGCON delivered under another logo, its vocabulary should cohere with the ACMS. The substance of COGCON's architecture is preserved; the question is whether each label becomes Army language. The first four translations are proposed; the remainder are working terms and not yet locked.")
+    para(d, "If CMC is to be an Army product rather than COGCON delivered under another logo, its vocabulary should cohere with the ACMS. The substance of COGCON's architecture is preserved; the question is whether each label becomes Army language. The first four translations are proposed; the remainder are working terms and not yet locked. This translation belongs to the design conversation with Ken Franks: the eventual AITC description of CMC will describe CMC in its own terms and need not carry it.")
     table(d, [170, 245, 100], ["COGCON term", "CMC working term", "Status"], TERMS, chip_col=2)
-    para(d, "Together these give CMC a coherent vocabulary. In plain terms: what we develop, what we do when it drops, what we observe, how we train it, and how we maintain the standard.", after=6)
+    para(d, "Together these give CMC a coherent vocabulary. In plain terms: what we develop, how we restore performance, what effective performance looks like, how we condition it under pressure, and how we maintain the standard.", after=6)
     chain(d, VOCAB, h=20)
 
-    heading(d, "03", "COMBAT MINDSET TRAINING PILLARS", "What we develop.", need=200)
+    heading(d, "03", "COMBAT MINDSET PILLARS", "What we develop.", need=200)
     para(d, "CMC develops the underlying capacities required to maintain performance under pressure. The initial architecture draws directly from the six COGCON pillars, which COGCON treats as interdependent capacities in a deliberate sequence: self-awareness and arousal control are the foundation for downstream cognitive performance.")
     cards(d, PILLARS, 3, provenance="cogcon")
-    para(d, "The collective construct is renamed; the individual pillars are not renamed mechanically. COGCON holds that the pillars and their sequencing are part of the underlying mechanism rather than arbitrary categories, so the substance is preserved first and the language reviewed second. Several names, such as Self-Awareness, Working Memory and Attentional Control, may already be adequate for Army use.")
+    para(d, "The collective construct is renamed; the individual pillars are not renamed mechanically. COGCON holds that the pillars and their sequencing are part of the underlying mechanism rather than arbitrary categories: they are capacities with dependencies, not six areas of training content, which is why the plain “Combat Mindset Pillars” is preferred over “Training Pillars”. The substance is preserved first and the language reviewed second. Several names, such as Self-Awareness, Working Memory and Attentional Control, may already be adequate for Army use.")
     requirement(d, "With Ken Franks, confirm whether each pillar needs an Army-facing name, and whether the set is adopted directly, consolidated or supplemented.")
 
-    heading(d, "04", "COMBAT MINDSET RESET", "What we do when it drops.")
+    heading(d, "04", "COMBAT MINDSET RESET", "How we restore performance.")
     callout(d, "CMR", "Combat Mindset Reset", CMR_DEF)
-    para(d, "The Reset gives the individual a short sequence that can be employed independently and under load. In use it should be as plain as: “Recognise the drop. Combat Mindset Reset. Re-engage.”", after=6)
-    chain(d, RESET, provenance="cogcon")
+    para(d, "The Reset gives the individual a short sequence that can be employed independently and under load. In use it should be as plain as: “Recognise the drop. Combat Mindset Reset. Re-engage.” The four stages below are a working conceptual model drawn from COGCON's description, not COGCON's reset sequence itself. The detailed sequence, cues and Army terminology are to be developed with Ken Franks.", after=6)
+    chain(d, RESET, provenance="working")
     para(d, "The Reset is derived from COGCON's Operational Reset Tool, whose mechanism incorporates appraisal of state, perceptual reorientation, physiological modulation and re-anchoring attention onto the next relevant action. The detailed sequence is retained within the COGCON Master Doctrine and accredited coaching material. COGCON's internal terminology for the mechanism need not be exposed at Army level: the mechanism can remain substantially derived from COGCON while the Army-facing construct is the Combat Mindset Reset.")
     requirement(d, "Work with Ken Franks to develop or adapt the Army-owned Reset and its terminology within the agreed IP arrangements.")
 
     heading(d, "05", "COMBAT MINDSET PERFORMANCE STATES", "What effective performance looks like.", need=150)
     para(d, "CMC requires performance to be observable under pressure, not simply understood theoretically. The Performance States are the observable behavioural expression of the underlying regulation capacity. They answer a direct instructor question, “what does Combat Mindset look like?”, with “we observe it through the Combat Mindset Performance States.”")
     cards(d, STATES, 4, provenance="cogcon")
-    para(d, "Command Presence, Situational Awareness and Resilience are already readily understood Army concepts. Performance Mindset is the one label scrutinised: alongside Combat Mindset and Performance Under Pressure it is one “mindset” too many, and COGCON notes it was chosen internally to avoid collision with Army's umbrella term. Task Focus is the cleaner behavioural label.")
+    para(d, "Command Presence, Situational Awareness and Resilience are already readily understood Army concepts. Performance Mindset is the one label scrutinised: alongside Combat Mindset and Performance Under Pressure it is one “mindset” too many, and COGCON notes it was chosen internally to avoid collision with Army's umbrella term. Task Focus is the cleaner behavioural label. It is a strong working proposal rather than a resolved change: Ken Franks needs to confirm whether Performance Mindset carries a more precise doctrinal meaning that would be lost.")
     requirement(d, "Confirm the four states and their behavioural markers. They may be derived from OPS4 but should describe the behaviours Army expects to observe from its people under operational pressure.")
 
-    heading(d, "06", "CMC TRAINING METHODOLOGY", "How we progressively condition it under pressure.")
+    heading(d, "06", "CMC TRAINING METHODOLOGY", "How we condition it under pressure.")
     para(d, "CMC is conditioning through deliberate practice, not simply education about stress or cognition. Training progresses from understanding and practising the component skills in controlled conditions toward their application under increasingly representative pressure.", after=6)
     chain(d, METHOD, dark_last=True)
+    para(d, "This sequence is Army integration architecture: how ACS proposes to nest and deliver the capacities COGCON brings, rather than a renamed COGCON construct.", after=7)
     para(d, "Pressure is introduced progressively through physical, cognitive, emotional, environmental and task demands appropriate to the training context.")
     para(d, "CMC does not need to exist solely as a standalone course. Once foundational skills have been taught, they can be deliberately practised and reinforced within existing Army training. COGCON argues explicitly for this approach: conditioning should occur within existing training, under the load that training already generates, rather than remaining a separate classroom activity. This allows CMC to be reinforced through PT, leadership training, field exercises and other individual and collective training as the system matures. The ACMS already anticipates this model of deliberate instruction followed by continued practice and application.")
 
-    heading(d, "07", "CMC COACHING AND ASSURANCE", "How Army teaches, assesses and maintains the standard.")
+    heading(d, "07", "CMC COACHING AND ASSURANCE", "How we maintain the standard.")
     para(d, "CMC uses trained coaches and instructors to work a simple loop. Assessment focuses on whether the individual can demonstrate the required behaviours while under appropriate pressure, rather than simply recalling CMC knowledge.", after=6)
     chain(d, COACH_LOOP, h=20)
     para(d, "COGCON provides a useful starting model: Level 1 Coach, Level 2 Coach and Specialist, supported by observed assessment, recertification and quality assurance. The working CMC equivalents are CMC Coach and CMC Lead Coach. CMC does not necessarily need to replicate COGCON's tiers.")
@@ -488,14 +497,14 @@ def build():
     d.y += 14
     pg.spaced(M, d.y, "SOURCES AND STATUS", 5.6, SWAMP, bold=True, spacing=1.3)
     d.y += 11
-    para(d, "Derived from the COGCON Phase 2 Discussion Document (Ken Franks) and the Army Combat Mindset System one-pager (Army Command School, 2026). Elements derived from COGCON are subject to adaptation and to the IP arrangements agreed with Ken Franks. Working terminology is proposed for discussion and is not yet locked. The Army design requirements identify the elements Army still needs to design and endorse.", size=7.4, color=GREY, after=6)
+    para(d, "Derived from the COGCON Phase 2 Discussion Document (Ken Franks) and the Army Combat Mindset System one-pager (Army Command School, 2026). Elements derived from COGCON are subject to adaptation and to the IP arrangements agreed with Ken Franks. Working terminology is proposed for discussion and is not yet locked. This pack is a design and development document for the conversation with Ken Franks and AITC, not the final AITC description of CMC. The Army design requirements identify the elements Army still needs to design and endorse.", size=7.4, color=GREY, after=6)
     x, y = M, d.y
     pg.box(x, y, 26, 12, fill=WHITE, stroke=None, radius=4)
     dashed_box(pg, x, y, 26, 12, radius=4)
-    pg.text(x + 34, y + 9, "Derived from COGCON: substance preserved, labels working", 7, INK)
-    x += 34 + pg.width("Derived from COGCON: substance preserved, labels working", 7) + 20
+    pg.text(x + 34, y + 9, "Derived architecture: COGCON, adapted by Army", 7, INK)
+    x += 34 + pg.width("Derived architecture: COGCON, adapted by Army", 7) + 20
     pg.box(x, y, 26, 12, fill=FAINT, stroke=None, radius=4)
-    pg.text(x + 34, y + 9, "Army architecture", 7, INK)
+    pg.text(x + 34, y + 9, "Army integration architecture: how ACS nests and delivers it", 7, INK)
 
     d.finish()
     d.doc.set_metadata({"title": "Combat Mindset Conditioning", "author": "Army Command School"})

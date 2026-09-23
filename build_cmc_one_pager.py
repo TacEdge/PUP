@@ -5,10 +5,10 @@ Combat Mindset Conditioning: the product in one picture.
     python3 build_cmc_one_pager.py
         -> output/combat-mindset-conditioning-model.pdf (+ .png preview)
 
-Five bands, top to bottom: what we develop, what the individual does when
-performance degrades, what we observe, how we condition it, and the outcome.
-Elements derived from COGCON are drawn with a dashed gold outline so the
-provenance is visible; Army architecture is drawn solid.
+Five bands, top to bottom: what we develop, how we restore performance, what
+effective performance looks like, how we condition it, how we maintain the
+standard, and the outcome.  Derived architecture (COGCON, adapted by Army) is
+drawn with a dashed gold outline; Army integration architecture is drawn solid.
 """
 
 import pymupdf
@@ -39,26 +39,33 @@ TITLE = "Combat Mindset Conditioning"
 SUBTITLE = "An Army training product within the Army Combat Mindset System"
 ORIGINATOR = "Army Command School"
 DATE = "23 September 2026"
-FOOTER_LEFT = "Combat Mindset Conditioning | Draft for discussion"
-STRAP = "The deliberate practice used to develop the capacity: what we develop, what we do when it drops, what we observe, how we train it, how we maintain the standard."
+STRAP = "The deliberate practice of an individual\u2019s capacity to regulate and sustain effective performance under operational pressure."
+FOOTER_LEFT = "Combat Mindset Conditioning | Design and development draft"
 
-# (band label, role, element name, items, arrows between items, provenance)
+# (band label, role, element name, items, arrows between items, provenance, note)
+#   provenance: "derived" = COGCON architecture adapted by Army;
+#               "army"    = Army integration architecture (how ACS nests and delivers it);
+#               "working" = a working conceptual model, not yet the resolved mechanism
 BANDS = [
-    ("PILLARS", "What we develop", "Combat Mindset Training Pillars",
+    ("PILLARS", "What we develop", "Combat Mindset Pillars",
      ["Self-Awareness", "Arousal Control", "Operational Habit", "Working Memory", "Attentional Control", "Cognitive Control"],
-     False, "cogcon"),
-    ("RESET", "What we do when it drops", "Combat Mindset Reset",
-     ["Recognise", "Regulate", "Reorient", "Re-engage"], True, "cogcon"),
+     False, "derived", None),
+    ("RESET", "How we restore performance", "Combat Mindset Reset",
+     [], False, "working",
+     ("Detailed mechanism and Army terminology to be developed with Ken Franks.",
+      "Working conceptual model: Recognise \u00b7 Regulate \u00b7 Reorient \u00b7 Re-engage")),
     ("STATES", "What effective performance looks like", "Combat Mindset Performance States",
-     ["Task Focus", "Command Presence", "Situational Awareness", "Resilience"], False, "cogcon"),
-    ("METHOD", "How we progressively condition it under pressure", "CMC Training Methodology",
-     ["Learn", "Practise", "Pressure", "Apply", "Reinforce"], True, "army"),
-    ("ASSURANCE", "How Army teaches, assesses and maintains the standard", "CMC Coaching and Assurance",
-     ["CMC Coach", "CMC Lead Coach", "Observed assessment", "Recertification", "Quality assurance"], False, "cogcon"),
+     ["Task Focus", "Command Presence", "Situational Awareness", "Resilience"], False, "derived", None),
+    ("METHOD", "How we condition it under pressure", "CMC Training Methodology",
+     ["Learn", "Practise", "Pressure", "Apply", "Reinforce"], True, "army", None),
+    ("ASSURANCE", "How we maintain the standard", "CMC Coaching and Assurance",
+     [], False, "army",
+     ("Army teaches, assesses and maintains the standard through trained CMC coaches, observed assessment, recertification and quality assurance.",
+      "Draws on COGCON\u2019s existing coach accreditation and assurance architecture")),
 ]
 OUTCOME = ("OUTCOME", "COMBAT MINDSET", "The capacity to regulate and sustain effective performance under operational pressure.")
-LEGEND = [("cogcon", "Derived from COGCON: substance preserved, labels working, subject to adaptation and IP agreement with Ken Franks"),
-          ("army", "Army architecture")]
+LEGEND = [("derived", "Derived architecture: COGCON, adapted by Army under the agreed IP arrangements"),
+          ("army", "Army integration architecture: how ACS nests and delivers it")]
 
 
 def masthead(pg):
@@ -86,7 +93,7 @@ def masthead(pg):
 def item_chip(pg, x, y, w, h, text, provenance):
     """A named element: solid pale card for Army architecture, dashed gold
     outline on white for COGCON-derived elements."""
-    if provenance == "cogcon":
+    if provenance == "derived":
         pg.box(x, y, w, h, fill=WHITE, stroke=None, radius=R)
         dashed_box(pg, x, y, w, h, radius=R)
     else:
@@ -106,7 +113,7 @@ def gold_arrow_right(pg, x0, x1, y):
     sh.commit()
 
 
-def band(pg, y, h, label, role, sub, items, arrows, provenance):
+def band(pg, y, h, label, role, sub, items, arrows, provenance, note=None):
     spine = 96
     pg.box(M, y, CW, h, fill=FAINT, stroke=None, radius=R)
     pg.box(M, y, spine + R, h, fill=BLACK, stroke=None, radius=R)
@@ -116,11 +123,16 @@ def band(pg, y, h, label, role, sub, items, arrows, provenance):
     iw_total = CW - spine - 28
     pg.spaced(ix, y + 13, sub.upper(), 5.6, SWAMP, bold=True, spacing=1.3)
     pg.text(ix + pg.width(sub.upper(), 5.6, True) + len(sub) * 1.3 + 10, y + 13, role, 7, GREY)
+    cy = y + 19
+    ch = h - 26
+    if not items:
+        # a statement band: the element is described, not itemised
+        pg.text(ix, cy + 13, note[0], 8.5, BLACK, bold=True)
+        pg.text(ix, cy + 25, note[1], 7, GREY)
+        return y + h
     n = len(items)
     gap = 18 if arrows else 8
     cw = (iw_total - gap * (n - 1)) / n
-    cy = y + 19
-    ch = h - 26
     for i, text in enumerate(items):
         x = ix + i * (cw + gap)
         item_chip(pg, x, cy, cw, ch, text, provenance)
@@ -140,8 +152,8 @@ def build():
 
     bh = 54
     gap = 12
-    for label, role, sub, items, arrows, prov in BANDS:
-        y = band(pg, y, bh, label, role, sub, items, arrows, prov)
+    for label, role, sub, items, arrows, prov, note in BANDS:
+        y = band(pg, y, bh, label, role, sub, items, arrows, prov, note)
         arrow_down(pg, M + 48, y, y + gap)
         y += gap
 
