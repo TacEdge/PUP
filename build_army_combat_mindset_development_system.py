@@ -49,7 +49,7 @@ MODEL = [
 ]
 STEPS = [
     ("1", "Understand Self", "Recognise your response."),
-    ("2", "Regulate Self", "Control that response."),
+    ("2", "Regulate Self", "Manage response and redirect attention."),
     ("3", "Perform Under Pressure", "Sustain performance under pressure."),
     ("4", "Combat Mindset", "Apply it to operational demands."),
 ]
