@@ -1,0 +1,17 @@
+{
+  "name": "NZALC 360 Feedback (prototype)",
+  "short_name": "NZALC 360",
+  "description": "Prototype NZ Army Leadership Centre 360-degree leadership feedback tool. Synthetic data only.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#00261B",
+  "lang": "en-NZ",
+  "icons": [
+    { "src": "../icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "../icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "../icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
