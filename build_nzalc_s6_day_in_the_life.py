@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-NZALC S6: a day in the life.  One landscape page in the house style, two
-photographs and a few lines of copy.
+NZALC S6: a day in the life.  One landscape page in the house style: two
+photographs, before and after.
 
     python3 build_nzalc_s6_day_in_the_life.py
         -> output/nzalc-s6-day-in-the-life.pdf (+ .png preview)
@@ -30,15 +30,8 @@ FOOTER_LEFT = "NZALC | A Day in the Life"
 STRAP = "Every course NZALC runs starts and ends here: the kit that leaves the store, and the kit that comes back."
 
 PHOTOS = [
-    ("assets/nzalc-s6/s6-return.jpg", "THE RETURN",
-     "After a course, everything comes back at once: radios, cables, chargers, projectors, cases. Every item is checked, tested and accounted for before it goes anywhere near a shelf."),
-    ("assets/nzalc-s6/s6-store.jpg", "THE STANDARD",
-     "Cases labelled, batteries charged, cables coiled, every item in its place. The next course draws its kit in minutes, not hours."),
-]
-CARDS = [
-    ("ISSUE AND RETURN", "Kit drawn for every course and checked back in on return, with faults tagged for repair rather than discovered in the field."),
-    ("POWER AND CONNECTIVITY", "Charging, cabling and communications, so instructors stay connected in the classroom and on the ground."),
-    ("ACCOUNTABILITY", "Every serial number tracked. Stocktakes and audits are met from the register, not from a scramble."),
+    ("assets/nzalc-s6/s6-return.jpg", "BEFORE"),
+    ("assets/nzalc-s6/s6-store.jpg", "AFTER"),
 ]
 
 
@@ -88,39 +81,22 @@ def build():
     pg.text(W / 2, y, STRAP, 9.5, SWAMP, bold=True, align=1)
     y += 14
 
-    # two photographs, side by side, numbered
+    # two photographs, side by side, labelled before and after
     gap = 16
     pw = (CW - gap) / 2
-    ph = pw * 0.76
-    for i, (path, label, caption) in enumerate(PHOTOS):
+    avail = H - 44 - 30 - y           # leave room for the label beneath
+    ph = min(avail, pw * 0.92)
+    y += (avail - ph) / 2             # centre the pair in the space
+    for i, (path, label) in enumerate(PHOTOS):
         x = M + i * (pw + gap)
         pg.p.insert_image(pymupdf.Rect(x, y, x + pw, y + ph), stream=cover_jpeg(path, pw, ph))
         marker(pg, x + 14, y + 14, i + 1)
-    cy = y + ph + 16
-    for i, (path, label, caption) in enumerate(PHOTOS):
+    ly = y + ph + 22
+    for i, (path, label) in enumerate(PHOTOS):
         x = M + i * (pw + gap)
-        pg.text(x, cy, str(i + 1), 9, GOLD, bold=True)
-        pg.spaced(x + 12, cy, label, 7, SWAMP, bold=True, spacing=1.6)
-        ty = cy + 13
-        for line in wrapped(pg, caption, 8, pw):
-            pg.text(x, ty, line, 8, INK)
-            ty += 10.5
-    y = cy + 13 + 3 * 10.5 + 8
-
-    # what the day is made of
-    n = len(CARDS)
-    cgap = 12
-    cw = (CW - cgap * (n - 1)) / n
-    ch = min(66, H - 44 - y)
-    for i, (label, text) in enumerate(CARDS):
-        x = M + i * (cw + cgap)
-        pg.box(x, y, cw, ch, fill=FAINT, stroke=None, radius=R)
-        pg.spaced(x + 12, y + 16, label, 5.8, SWAMP, bold=True, spacing=1.4)
-        ty = y + 30
-        for line in wrapped(pg, text, 7.6, cw - 24):
-            pg.text(x + 12, ty, line, 7.6, INK)
-            ty += 10
-    print(f"cards {ch:.0f} high, end {y + ch:.0f}, footer marking at {H - 30}")
+        pg.text(x, ly, str(i + 1), 11, GOLD, bold=True)
+        pg.spaced(x + 16, ly, label, 10, SWAMP, bold=True, spacing=2.4)
+    print(f"photos {ph:.0f} high, labels at {ly:.0f}, footer marking at {H - 30}")
 
     doc.set_metadata({"title": TITLE, "author": "New Zealand Army Leadership Centre"})
     doc.save(OUT, garbage=3, deflate=True)
