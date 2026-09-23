@@ -55,7 +55,12 @@ BANDS = [
     ("STATES", "What effective performance looks like", "Combat Mindset Performance States",
      ["Task Focus", "Command Presence", "Situational Awareness", "Resilience"], False, "derived", None),
     ("METHOD", "How we condition it under pressure", "CMC Training Methodology",
-     ["Learn", "Practise", "Pressure", "Apply", "Reinforce"], True, "army", None),
+     [("Sequenced Development", "Develop the capacities in the required order."),
+      ("Progressive Load", "Condition them under increasing levels of pressure."),
+      ("Integrated Training", "Practise them within the training where they need to function."),
+      ("Conditioned Response", "Build effective responses that remain available when conscious capacity reduces."),
+      ("Behavioural Assessment", "Assess observable performance under load.")],
+     False, "army", None),
     ("ASSURANCE", "How we maintain the standard", "CMC Coaching and Assurance",
      [], False, "army",
      ("Army teaches, assesses and maintains the standard through trained CMC coaches, observed assessment, recertification and quality assurance.",
@@ -102,6 +107,15 @@ def item_chip(pg, x, y, w, h, text, provenance):
         dashed_box(pg, x, y, w, h, radius=R)
     else:
         pg.box(x, y, w, h, fill=PALE, stroke=None, radius=R)
+    if isinstance(text, tuple):
+        # a principle: name, then a one-line descriptor
+        name, desc = text
+        pg.text(x + 9, y + 15, name, 7.4, BLACK, bold=True)
+        ty = y + 26
+        for line in wrapped(pg, desc, 6.2, w - 18):
+            pg.text(x + 9, ty, line, 6.2, GREY)
+            ty += 8
+        return
     lines = wrapped(pg, text, 8, w - 14, bold=True)
     ty = y + h / 2 + 3 - (len(lines) - 1) * 5
     for line in lines:
@@ -187,15 +201,16 @@ def build():
     pg.text(W / 2, y, STRAP, 9.5, SWAMP, bold=True, align=1)
     y += 16
 
-    bh = 54
-    gap = 12
+    bh = 52
+    gap = 11
     for label, role, sub, items, arrows, prov, note in BANDS:
-        y = band(pg, y, bh + 22 if prov == "seb" else bh, label, role, sub, items, arrows, prov, note)
+        tall = prov == "seb" or (items and isinstance(items[0], tuple))
+        y = band(pg, y, bh + 22 if tall else bh, label, role, sub, items, arrows, prov, note)
         arrow_down(pg, M + 48, y, y + gap)
         y += gap
 
     # outcome: black band, the capacity the product exists to build
-    oh = 50
+    oh = 48
     spine = 96
     pg.box(M, y, CW, oh, fill=BLACK, stroke=None, radius=R)
     pg.text(M + spine / 2, y + oh / 2 + 4, OUTCOME[0], 11, GOLD, bold=True, align=1)
