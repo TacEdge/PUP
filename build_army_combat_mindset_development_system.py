@@ -32,7 +32,7 @@ OLIVE_LIGHT = rgb("E3E6D3")   # third step of the staircase, between PALE and MO
 CHARCOAL = rgb("222222")
 GREY = rgb("5F5F5A")       # secondary text: subtitles and provider descriptors
 
-TITLE = "Army Combat Mindset System (ACMS)"
+TITLE = "Combat Mindset System (CMS)"
 ORIGINATOR = "Army Command School"
 DATE = "September 2026"
 FOOTER_LEFT = "Army Combat Mindset System | AITC Discussion"

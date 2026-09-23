@@ -28,7 +28,7 @@ CW = W - 2 * M
 R = 6
 GREY = rgb("5F5F5A")
 
-TITLE = "Army Combat Mindset"
+TITLE = "Combat Mindset"
 ORIGINATOR = "Army Command School"
 FOOTER_LEFT = "Army Combat Mindset | Design and development draft"
 
