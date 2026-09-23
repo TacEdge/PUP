@@ -38,7 +38,19 @@ def build():
             para.paragraph_format.space_after = Pt(0)
             para.paragraph_format.space_before = Pt(0)
             para.paragraph_format.line_spacing = Pt(4)
+    # a lead-in paragraph stays with the table it introduces
+    from docx.text.paragraph import Paragraph
+    body = doc.element.body
+    children = list(body.iterchildren())
+    for elm, nxt in zip(children, children[1:]):
+        if elm.tag.endswith("}p") and nxt.tag.endswith("}tbl"):
+            Paragraph(elm, doc).paragraph_format.keep_with_next = True
     for table in doc.tables:
+        # keep each table on one page: rows hold on to the next
+        for row in table.rows[:-1]:
+            for cell in row.cells:
+                for para in cell.paragraphs:
+                    para.paragraph_format.keep_with_next = True
         for row in table.rows:
             for cell in row.cells:
                 for para in cell.paragraphs:

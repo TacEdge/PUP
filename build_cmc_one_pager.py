@@ -31,22 +31,24 @@ SUBTITLE = "An Army training product within the Army Combat Mindset System"
 ORIGINATOR = "Army Command School"
 DATE = "23 September 2026"
 FOOTER_LEFT = "Combat Mindset Conditioning | Draft for discussion"
-STRAP = "Deliberate practice of the capacity to regulate and sustain effective performance under operational pressure."
+STRAP = "The deliberate practice used to develop the capacity: what we develop, what we do when it drops, what we observe, how we train it, how we maintain the standard."
 
-# (band label, role, items, arrow between items, provenance)
+# (band label, role, element name, items, arrows between items, provenance)
 BANDS = [
-    ("TRAIN", "What we develop", "Six training pillars",
+    ("PILLARS", "What we develop", "Combat Mindset Training Pillars",
      ["Self-Awareness", "Arousal Control", "Operational Habit", "Working Memory", "Attentional Control", "Cognitive Control"],
      False, "cogcon"),
-    ("RESET", "What the individual does when performance degrades", "Operational reset tool",
+    ("RESET", "What we do when it drops", "Combat Mindset Reset",
      ["Recognise", "Regulate", "Reorient", "Re-engage"], True, "cogcon"),
-    ("PERFORM", "What we observe", "Performance standards",
+    ("STATES", "What effective performance looks like", "Combat Mindset Performance States",
      ["Task Focus", "Command Presence", "Situational Awareness", "Resilience"], False, "cogcon"),
-    ("CONDITION", "How we condition it so it stays accessible under pressure", "Training methodology",
+    ("METHOD", "How we progressively condition it under pressure", "CMC Training Methodology",
      ["Learn", "Practise", "Pressure", "Apply", "Reinforce"], True, "army"),
+    ("ASSURANCE", "How Army teaches, assesses and maintains the standard", "CMC Coaching and Assurance",
+     ["CMC Coach", "CMC Lead Coach", "Observed assessment", "Recertification", "Quality assurance"], False, "cogcon"),
 ]
-OUTCOME = ("OUTCOME", "COMBAT MINDSET", "Regulate and sustain effective performance under operational pressure.")
-LEGEND = [("cogcon", "Derived from COGCON: subject to adaptation and IP agreement with Ken Franks"),
+OUTCOME = ("OUTCOME", "COMBAT MINDSET", "The capacity to regulate and sustain effective performance under operational pressure.")
+LEGEND = [("cogcon", "Derived from COGCON: substance preserved, labels working, subject to adaptation and IP agreement with Ken Franks"),
           ("army", "Army architecture")]
 
 
@@ -100,7 +102,7 @@ def band(pg, y, h, label, role, sub, items, arrows, provenance):
     pg.box(M, y, CW, h, fill=FAINT, stroke=None, radius=R)
     pg.box(M, y, spine + R, h, fill=BLACK, stroke=None, radius=R)
     pg.box(M + spine, y, R + 1, h, fill=FAINT, stroke=None)
-    pg.text(M + spine / 2, y + h / 2 + 4, label, 11, WHITE, bold=True, align=1)
+    pg.text(M + spine / 2, y + h / 2 + 3.5, label, 9.5 if len(label) > 7 else 11, WHITE, bold=True, align=1)
     ix = M + spine + 14
     iw_total = CW - spine - 28
     pg.spaced(ix, y + 13, sub.upper(), 5.6, SWAMP, bold=True, spacing=1.3)
@@ -108,8 +110,8 @@ def band(pg, y, h, label, role, sub, items, arrows, provenance):
     n = len(items)
     gap = 18 if arrows else 8
     cw = (iw_total - gap * (n - 1)) / n
-    cy = y + 20
-    ch = h - 28
+    cy = y + 19
+    ch = h - 26
     for i, text in enumerate(items):
         x = ix + i * (cw + gap)
         item_chip(pg, x, cy, cw, ch, text, provenance)
@@ -127,15 +129,15 @@ def build():
     pg.text(W / 2, y, STRAP, 9.5, SWAMP, bold=True, align=1)
     y += 16
 
-    bh = 66
-    gap = 18
+    bh = 54
+    gap = 12
     for label, role, sub, items, arrows, prov in BANDS:
         y = band(pg, y, bh, label, role, sub, items, arrows, prov)
         arrow_down(pg, M + 48, y, y + gap)
         y += gap
 
     # outcome: black band, the capacity the product exists to build
-    oh = 56
+    oh = 50
     spine = 96
     pg.box(M, y, CW, oh, fill=BLACK, stroke=None, radius=R)
     pg.text(M + spine / 2, y + oh / 2 + 4, OUTCOME[0], 11, GOLD, bold=True, align=1)
