@@ -47,7 +47,7 @@ FOOTER_LEFT = "Combat Mindset Conditioning | Design and development draft"
 #               "army"    = Army integration architecture (how ACS nests and delivers it);
 #               "working" = a working conceptual model, not yet the resolved mechanism
 BANDS = [
-    ("PILLARS", "What we develop", "Combat Mindset Pillars",
+    ("PILLARS", "The capacities we develop", "Combat Mindset Pillars",
      ["Self-Awareness", "Arousal Control", "Operational Habit", "Working Memory", "Attentional Control", "Cognitive Control"],
      False, "derived", None),
     ("RESET", "How we restore performance", "Combat Mindset Reset",
